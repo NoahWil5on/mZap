@@ -1,0 +1,34 @@
+.ios, .md{
+    page-register {
+        scroll-content{
+                display: flex;
+                flex-direction: column;
+        }
+        ion-grid{
+            height: 100%;
+            padding: 0;
+            .flex{
+                flex: 1;
+            }
+            .flex-big{
+                flex: 3;
+            }
+            ion-label{
+                font-size: 16pt;
+            }
+            .input-row{
+                border-bottom: solid gray 1px;
+                ion-input{
+                    font-size: 16pt;
+                }
+            }
+            input{
+                margin: 0;
+                padding: 0;
+            }
+            ion-col{
+                padding: 0;
+            }
+        }
+    }
+}
