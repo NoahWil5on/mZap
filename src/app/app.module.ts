@@ -3,6 +3,8 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { Camera } from '@ionic-native/camera';
+
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule} from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -16,6 +18,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { MapPage } from '../pages/map/map';
 import { SettingsPage } from '../pages/settings/settings';
 import { AddPage } from '../pages/add/add';
+import { ImagesProvider } from '../providers/images/images';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
@@ -42,7 +45,7 @@ export const firebaseConfig = {
     IonicModule.forRoot(MyApp),
       AngularFireModule.initializeApp(firebaseConfig),
       AngularFireAuthModule,
-      AngularFireDatabaseModule
+      AngularFireDatabaseModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -58,7 +61,9 @@ export const firebaseConfig = {
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    Camera,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    ImagesProvider
   ]
 })
 export class AppModule {}

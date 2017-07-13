@@ -26,6 +26,18 @@
         <ion-input type="text" clearInput [(ngModel)]="desc"></ion-input>
     </ion-item>
     <ion-item>
+        <ion-grid no-padding>
+            <ion-row>
+                <ion-col col-6 no-padding>
+                    <button ion-button block (click)="cameraRequest()">Open Camera</button>
+                </ion-col>
+                <ion-col col-6 no-padding>
+                    <button ion-button block (click)="albumRequest()">Open Album</button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+    <ion-item>
         <ion-label>Show your username?</ion-label>
         <ion-checkbox [(ngModel)]="show"></ion-checkbox>
     </ion-item>

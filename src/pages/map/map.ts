@@ -1,7 +1,7 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
 import { AddPage } from '../add/add';
-import { AngularFireDatabase, FirebaseListObservable} from 'angularfire2/database';
+import { AngularFireDatabase} from 'angularfire2/database';
 
 declare var google;
 
@@ -40,7 +40,8 @@ export class MapPage {
                     title: data.title,
                     type: data.type,
                     show: data.show,
-                    email: data.email
+                    email: data.email,
+                    url: data.url
                 }
                 this.fireDB.list('positions').push(newMarker);
                 this.makeMarker(newMarker);
@@ -73,6 +74,9 @@ export class MapPage {
             contentString += "<p>"+data.email+"</p>";
         }
         contentString += "<p>"+data.description+"</p>";
+        if(data.url){
+            contentString += "<img src='"+ data.url + "' alt='image' />";
+        }
         
         this.infoWindow = new google.maps.InfoWindow({
             content: contentString
