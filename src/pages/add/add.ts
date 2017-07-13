@@ -45,10 +45,10 @@ error: string = "";
         this.viewCtrl.dismiss();
     }
     submit(){
-        if(this.title.length > 0 && this.desc.length > 0 && this.dataSet){
-            var promise = this.images.uploadToFirebase();
-            promise.then(res => {
-                this.url = res;
+        if(this.title.length > 0 && this.desc.length > 0 /*&& this.dataSet*/){
+            //var promise = this.images.uploadToFirebase();
+           // promise.then(res => {
+                //this.url = res;
                 
                 this.viewCtrl.dismiss({
                     title: this.title,
@@ -56,11 +56,11 @@ error: string = "";
                     type: this.data,
                     show: this.show,
                     email: this.afAuth.auth.currentUser.email,
-                    url: this.url
+                    //url: this.url
                 });
-            }).catch(e => {
-                alert("Error: " +e.message);
-            });
+            //}).catch(e => {
+             //   alert("Error: " +e.message);
+           // });
         }else{
             this.error = "Fill out all fields";
         }

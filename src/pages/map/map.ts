@@ -2,6 +2,8 @@ import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
 import { AddPage } from '../add/add';
 import { AngularFireDatabase} from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth'
+import * as firebase from 'firebase';
 
 declare var google;
 
@@ -16,7 +18,7 @@ export class MapPage {
     add: boolean = false;
     infoWindow: any = null;
   constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController,
-             public ngZone: NgZone, public fireDB: AngularFireDatabase) {
+             public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth) {
   }
 
   ionViewDidLoad() {
@@ -41,9 +43,10 @@ export class MapPage {
                     type: data.type,
                     show: data.show,
                     email: data.email,
-                    url: data.url
+                    //url: data.url
                 }
-                this.fireDB.list('positions').push(newMarker);
+                var key = this.fireDB.list('positions').push(newMarker).key;
+                this.fireDB.object('positions/'+key +'/key').set(key);
                 this.makeMarker(newMarker);
             }
         });
@@ -77,7 +80,10 @@ export class MapPage {
         if(data.url){
             contentString += "<img src='"+ data.url + "' alt='image' />";
         }
-        
+        if(data.email === this.afAuth.auth.currentUser.email){
+            contentString += "<button ion-button>Delete</button>";
+        }
+
         this.infoWindow = new google.maps.InfoWindow({
             content: contentString
         });
@@ -98,6 +104,12 @@ export class MapPage {
                     self.makeMarker(item.val());
                 });
             });
+        });
+    }
+    deletePost(url){
+        console.log("DELETING POSSST");
+        firebase.storage().ref('images/').child(url).delete().then().catch((error) => {
+            alert("Error: " + error);
         });
     }
 }

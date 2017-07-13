@@ -9,6 +9,9 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule} from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
+/*Custom Providers*/
+import { ImagesProvider } from '../providers/images/images';
+
 /*Import all pages into project*/
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -18,7 +21,16 @@ import { ProfilePage } from '../pages/profile/profile';
 import { MapPage } from '../pages/map/map';
 import { SettingsPage } from '../pages/settings/settings';
 import { AddPage } from '../pages/add/add';
-import { ImagesProvider } from '../providers/images/images';
+import { InfoWindowPage } from '../pages/info-window/info-window';
+
+/*Import all modules (Ionic SHOULD do this for you but it doesn't which causes an error)*/
+import { LoginPageModule } from '../pages/login/login.module';
+import { RegisterPageModule } from '../pages/register/register.module';
+import { ProfilePageModule } from '../pages/profile/profile.module';
+import { MapPageModule } from '../pages/map/map.module';
+import { SettingsPageModule } from '../pages/settings/settings.module';
+import { AddPageModule } from '../pages/add/add.module';
+import { InfoWindowPageModule } from '../pages/info-window/info-window.module';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
@@ -32,20 +44,21 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
       MyApp,
-      HomePage,
-      LoginPage,
-      RegisterPage,
-      ProfilePage,
-      MapPage,
-      SettingsPage,
-      AddPage
+      HomePage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-      AngularFireModule.initializeApp(firebaseConfig),
-      AngularFireAuthModule,
-      AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    LoginPageModule,
+    RegisterPageModule,
+    ProfilePageModule,
+    MapPageModule,
+    SettingsPageModule,
+    AddPageModule,
+    InfoWindowPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -56,7 +69,8 @@ export const firebaseConfig = {
       ProfilePage,
       MapPage,
       SettingsPage,
-      AddPage
+      AddPage,
+      InfoWindowPage
   ],
   providers: [
     StatusBar,

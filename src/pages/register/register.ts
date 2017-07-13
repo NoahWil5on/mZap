@@ -12,6 +12,7 @@ export class RegisterPage {
     email: string = "";
     pass1: string = "";
     pass2: string = "";
+    name: string = "";
 
     error: string = "";
 
@@ -22,11 +23,23 @@ export class RegisterPage {
   }
     async createAccount(){
         if(this.pass1 === this.pass2){
-            this.afAuth.auth.createUserWithEmailAndPassword(this.email,this.pass1).then(user => {
-                this.navCtrl.setRoot(HomePage);
-            }).catch(e => {
-                this.error = e.message;
-            });
+            if(this.pass1.length > 0 && this.email.length > 0 && this.name.length > 0){
+                this.afAuth.auth.createUserWithEmailAndPassword(this.email,this.pass1).then(_ => {
+                    this.afAuth.auth.currentUser.updateProfile({
+                        displayName: this.name,
+                        photoURL: ""
+                    }).then(_ =>{
+                        this.navCtrl.setRoot(HomePage);
+                    }).catch(e => {
+                        this.error = e.message;
+                    });
+                }).catch(e => {
+                    this.error = e.message;
+                });
+            }
+            else{
+                this.error = "Be sure to fill out all fields";
+            }
         }else{
             this.error = "Passwords must be identical";
         }
