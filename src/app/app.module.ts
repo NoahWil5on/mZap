@@ -22,6 +22,7 @@ import { MapPage } from '../pages/map/map';
 import { SettingsPage } from '../pages/settings/settings';
 import { AddPage } from '../pages/add/add';
 import { InfoWindowPage } from '../pages/info-window/info-window';
+import { TopRatedPage } from '../pages/top-rated/top-rated';
 
 /*Import all modules (Ionic SHOULD do this for you but it doesn't which causes an error)*/
 import { LoginPageModule } from '../pages/login/login.module';
@@ -31,6 +32,7 @@ import { MapPageModule } from '../pages/map/map.module';
 import { SettingsPageModule } from '../pages/settings/settings.module';
 import { AddPageModule } from '../pages/add/add.module';
 import { InfoWindowPageModule } from '../pages/info-window/info-window.module';
+import { TopRatedPageModule } from '../pages/top-rated/top-rated.module';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
@@ -58,7 +60,8 @@ export const firebaseConfig = {
     MapPageModule,
     SettingsPageModule,
     AddPageModule,
-    InfoWindowPageModule
+    InfoWindowPageModule,
+    TopRatedPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -70,7 +73,8 @@ export const firebaseConfig = {
       MapPage,
       SettingsPage,
       AddPage,
-      InfoWindowPage
+      InfoWindowPage,
+      TopRatedPage
   ],
   providers: [
     StatusBar,

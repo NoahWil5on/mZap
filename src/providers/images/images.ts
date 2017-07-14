@@ -11,30 +11,34 @@ export class ImagesProvider {
 
   }
     uploadToFirebase(){
-        return new Promise((resolve,reject) => {
-            var fileName = "sample-" + new Date().getTime() + ".png";
-            firebase.storage().ref('/images/').child(fileName).putString(this.data, 'base64', {contentType: 'image/png'}).then((data) => {
-                resolve(data.downloadURL+"");
-            }).catch((e) => {
-                reject(e);
-            });
-        });
+        var fileName = "sample-" + new Date().getTime() + ".png";
+        return {
+            promise: new Promise((resolve,reject) => {
+                    firebase.storage().ref('/images/').child(fileName).putString(this.data, 'base64', {contentType: 'image/png'}).then((data) => {
+                        resolve(data.downloadURL);
+                    }).catch((e) => {
+                        reject(e);
+                    })            
+                }),
+            refName: fileName
+        };
     }
     doGetCameraImage(){
         //get picture from camera
         return new Promise((resolve,reject) =>{ 
             this.camera.getPicture({
-                quality : 9100,
+                quality : 100,
                 destinationType : this.camera.DestinationType.DATA_URL,
                 sourceType : this.camera.PictureSourceType.CAMERA,
                 allowEdit : true,
                 encodingType: this.camera.EncodingType.PNG,
-                targetWidth: 100,
-                targetHeight: 100
+                targetWidth: 400,
+                targetHeight: 200
             }).then((imageData) => {
                 this.data = imageData;
                 resolve();
             }, (_error) => {
+                reject(_error);
             });
         });
     }
@@ -47,12 +51,13 @@ export class ImagesProvider {
                 sourceType : this.camera.PictureSourceType.SAVEDPHOTOALBUM,
                 allowEdit : true,
                 encodingType: this.camera.EncodingType.PNG,
-                targetWidth: 100,
-                targetHeight: 100
+                targetWidth: 400,
+                targetHeight: 200
             }).then((imageData) => {
                 this.data = imageData;
                 resolve();
             }, (_error) => {
+                reject(_error);
             });
         });
     }

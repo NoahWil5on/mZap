@@ -1,9 +1,11 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
-import { AddPage } from '../add/add';
 import { AngularFireDatabase} from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth'
+import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
+
+import { AddPage } from '../add/add';
+import { InfoWindowPage } from '../info-window/info-window';
 
 declare var google;
 
@@ -17,6 +19,7 @@ export class MapPage {
     map: any;
     add: boolean = false;
     infoWindow: any = null;
+    setOnce: boolean = true;
   constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController,
              public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth) {
   }
@@ -43,49 +46,33 @@ export class MapPage {
                     type: data.type,
                     show: data.show,
                     email: data.email,
-                    //url: data.url
+                    url: data.url,
+                    refName: data.refName,
+                    key: ""
                 }
                 var key = this.fireDB.list('positions').push(newMarker).key;
                 this.fireDB.object('positions/'+key +'/key').set(key);
+                newMarker.key = key;
                 this.makeMarker(newMarker);
             }
         });
         addModal.present();
     }
-    async makeMarker(data){
+    makeMarker(data){
         let marker = new google.maps.Marker({
             position: new google.maps.LatLng(data.lat,data.lng),
             map: this.map
         });
         var self = this;
         google.maps.event.addListener(marker, 'click', function(e){
-            if(self.infoWindow)
-                self.infoWindow.close();
-            self.makeInfoWindow(data);
-            self.infoWindow.open(self.map,marker);
-        });
-    }
-
-    makeInfoWindow(data){
-        if(this.infoWindow){
-            this.infoWindow.close();
-        }
-        var contentString = "";
-        contentString += "<p>"+data.type+"</p>";
-        contentString += "<p>"+data.title+"</p>";
-        if(data.show){
-            contentString += "<p>"+data.email+"</p>";
-        }
-        contentString += "<p>"+data.description+"</p>";
-        if(data.url){
-            contentString += "<img src='"+ data.url + "' alt='image' />";
-        }
-        if(data.email === this.afAuth.auth.currentUser.email){
-            contentString += "<button ion-button>Delete</button>";
-        }
-
-        this.infoWindow = new google.maps.InfoWindow({
-            content: contentString
+            let infoModal = self.modal.create(InfoWindowPage, {data: data});
+            infoModal.onDidDismiss(callBack => {
+                if(callBack){
+                    marker.setMap(null);
+                    marker = null;
+                }
+            });
+            infoModal.present();
         });
     }
     async initMap(){
@@ -100,16 +87,13 @@ export class MapPage {
         google.maps.event.addListenerOnce(this.map, 'idle', function(event){
             self.fireDB.list('positions', {preserveSnapshot: true})
             .subscribe(snaps => {
-                snaps.forEach(function(item){
-                    self.makeMarker(item.val());
-                });
+                if(self.setOnce){
+                    snaps.forEach(function(item){
+                        self.makeMarker(item.val());
+                    });
+                    self.setOnce = false;
+                }
             });
-        });
-    }
-    deletePost(url){
-        console.log("DELETING POSSST");
-        firebase.storage().ref('images/').child(url).delete().then().catch((error) => {
-            alert("Error: " + error);
         });
     }
 }

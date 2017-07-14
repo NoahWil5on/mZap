@@ -13,6 +13,7 @@ export class RegisterPage {
     pass1: string = "";
     pass2: string = "";
     name: string = "";
+    startTrue: boolean = true;
 
     error: string = "";
 
@@ -22,6 +23,7 @@ export class RegisterPage {
   ionViewDidLoad() {
   }
     async createAccount(){
+        this.startTrue = false;
         if(this.pass1 === this.pass2){
             if(this.pass1.length > 0 && this.email.length > 0 && this.name.length > 0){
                 this.afAuth.auth.createUserWithEmailAndPassword(this.email,this.pass1).then(_ => {
@@ -43,5 +45,23 @@ export class RegisterPage {
         }else{
             this.error = "Passwords must be identical";
         }
+    }
+    checkContent(data){
+        if(this.startTrue) return false;
+        if(data.length > 0){
+            switch(this.error){
+                case "The email address is badly formatted.":
+                    if(data == this.email) return true
+                    else return false
+                case "Password should be at least 6 characters":
+                    if(data == this.pass1 || data == this.pass2) return true
+                    else return false
+                case "Passwords must be identical":
+                    if(data == this.pass1 || data == this.pass2) return true
+                    else return false
+                default:
+                    return false;
+            }
+        }return true;
     }
 }

@@ -7,7 +7,10 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Title</ion-title>
+    <ion-title>{{data.title}}</ion-title>
+    <ion-buttons end>
+        <button ion-button clear (click)="dismiss()">X</button>
+      </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -15,10 +18,11 @@
 
 <ion-content padding>
     <div text-center>
-        <img src="http://www.placehold.it/400x200" />
+        <img [src]="data.url" alt="Image of Location"/>
     </div>
-    <h3>Description of everything that this is about</h3>
-    <p>Posted by: ntw9049@g.rit.edu</p>
+    <h3>{{data.description}}</h3>
+    <p *ngIf="data.show">Posted by: {{data.email}}</p>
+    <p *ngIf="!data.show">Posted anonymously</p>
     <ion-buttons>
         <button ion-button color="danger" (click)="showPrompt()">Delete</button>
     </ion-buttons>

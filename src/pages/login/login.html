@@ -38,7 +38,11 @@
                     </ion-col>
                 </ion-row>
                 <button ion-button full (click)="login()">Login</button>
-                <p class="error">{{error}}</p>
+                <p class="error">{{error}}</p> 
+                <div text-center>
+                    <button ion-button clear>Sign in anonymously</button>
+                    <button ion-button clear icon-only (click)="info()">?</button>
+                </div>
             </ion-col>
         </ion-row>
         <ion-row class="flex">

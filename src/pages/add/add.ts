@@ -10,27 +10,27 @@ import { ImagesProvider } from '../../providers/images/images';
   templateUrl: 'add.html',
 })
 export class AddPage {
-data: any;
-dataSet: boolean = false;
-title: string = "";
-desc: string = "";
-url: any = "";
-show: boolean = false;
+    data: any;
+    dataSet: boolean = false;
+    title: string = "";
+    desc: string = "";
+    url: any = "";
+    refName: any = "";
+    show: boolean = false;
+    error: string = "";
+    
+    constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
+         public afAuth: AngularFireAuth, public images: ImagesProvider) {
+    }
 
-error: string = "";
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
-             public afAuth: AngularFireAuth, public images: ImagesProvider) {
-  }
-
-  ionViewDidLoad() {
-    this.data = this.navParams.get('type');
-  }
+    ionViewDidLoad() {
+        this.data = this.navParams.get('type');
+    }
     cameraRequest(){
         var promise = this.images.doGetCameraImage();
         promise.then(res => {
            this.dataSet = true; 
         }).catch(e => {
-            alert("Error: " + e.message);
         });
     }
     albumRequest(){
@@ -38,29 +38,29 @@ error: string = "";
         promise.then(res => {
            this.dataSet = true; 
         }).catch(e => {
-            alert("Error: " + e.message);
         });
     }
     dismiss(){
         this.viewCtrl.dismiss();
     }
     submit(){
-        if(this.title.length > 0 && this.desc.length > 0 /*&& this.dataSet*/){
-            //var promise = this.images.uploadToFirebase();
-           // promise.then(res => {
-                //this.url = res;
-                
+        if(this.title.length > 0 && this.desc.length > 0 && this.dataSet){
+            var promiseObject = this.images.uploadToFirebase();
+            promiseObject.promise.then(res => {
+                this.url = res;
+                this.refName = promiseObject.refName;
                 this.viewCtrl.dismiss({
                     title: this.title,
                     desc: this.desc,
                     type: this.data,
                     show: this.show,
                     email: this.afAuth.auth.currentUser.email,
-                    //url: this.url
+                    url: this.url,
+                    refName: this.refName
                 });
-            //}).catch(e => {
-             //   alert("Error: " +e.message);
-           // });
+            }).catch(e => {
+                alert("Error: " +e.message);
+            });
         }else{
             this.error = "Fill out all fields";
         }

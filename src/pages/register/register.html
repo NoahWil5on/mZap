@@ -7,13 +7,14 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>register</ion-title>
+    <ion-title>Create an Account</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+    <!--
     <ion-grid>
         <ion-row class="flex">
             <ion-col>
@@ -54,4 +55,25 @@
             </ion-col>
         </ion-row>
     </ion-grid>
+-->
+    <ion-item>
+        <ion-label floating [class.redText]="checkContent(name)">*Name</ion-label>
+        <ion-input type="text" clearInput [(ngModel)]="name"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label floating [class.redText]="checkContent(email)">*Email</ion-label>
+        <ion-input type="email" clearInput [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label floating [class.redText]="checkContent(pass1)">*Password</ion-label>
+        <ion-input type="password" clearInput [(ngModel)]="pass1"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label floating [class.redText]="checkContent(pass2)">*Re-enter Password</ion-label>
+        <ion-input type="password" clearInput [(ngModel)]="pass2"></ion-input>
+    </ion-item>
+    <div padding-top>
+        <button ion-button full (click)="createAccount()">Register</button>
+    </div>
+    <p class="error">{{error}}</p>
 </ion-content>
