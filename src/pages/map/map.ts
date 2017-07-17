@@ -1,8 +1,8 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController} from 'ionic-angular';
 import { AngularFireDatabase} from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase';
+//import * as firebase from 'firebase';
 
 import { AddPage } from '../add/add';
 import { InfoWindowPage } from '../info-window/info-window';
@@ -21,7 +21,8 @@ export class MapPage {
     infoWindow: any = null;
     setOnce: boolean = true;
   constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController,
-             public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth) {
+             public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth,
+              public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -57,6 +58,11 @@ export class MapPage {
             }
         });
         addModal.present();
+    }
+    isLoggedIn(){
+        if(this.afAuth.auth.currentUser)
+            return true;
+        return false;
     }
     makeMarker(data){
         let marker = new google.maps.Marker({

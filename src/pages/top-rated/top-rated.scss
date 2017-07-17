@@ -1,3 +1,10 @@
-page-top-rated {
-
+.ios,.md{
+    page-top-rated {
+        ion-content{
+            background-color: #eee;
+        }
+        ion-list{
+            background-color: #fff;
+        }
+    }
 }

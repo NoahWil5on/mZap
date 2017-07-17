@@ -20,4 +20,12 @@ export class SettingsPage {
         this.navCtrl.setRoot(LoginPage);
     });   
   }
+    goLogin(){
+        this.navCtrl.setRoot(LoginPage)
+    }
+    isLoggedIn(){
+        if(this.afAuth.auth.currentUser)
+            return true;
+        return false;
+    }
 }

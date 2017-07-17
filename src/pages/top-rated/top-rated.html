@@ -7,12 +7,39 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>top-rated</ion-title>
+    <ion-title text-center>Top Rated Users</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
+<ion-content padding-vertical>
+    <ion-title text-center padding-bottom>Top 10</ion-title>
+    <ion-list>
+        <ion-item *ngFor="let user of users">
+            <ion-thumbnail item-start>
+                <img [src]="user.img">
+            </ion-thumbnail>
+            <h2>{{user.name}}</h2>
+            <p>
+                <ion-icon name="star" style="color: #eab609"></ion-icon>
+                {{user.rating}}
+            </p>
+        </ion-item>
+    </ion-list>
+    <ion-list>
+        <ion-item>
+            <ion-thumbnail item-start>
+                <img src="http://www.placehold.it/100x100">
+            </ion-thumbnail>
+            <h2>You</h2>
+            <p>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+            </p>
+        </ion-item>
+    </ion-list>
 </ion-content>

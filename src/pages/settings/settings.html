@@ -14,5 +14,6 @@
 
 
 <ion-content padding>
-    <button ion-button (click)="logout()">Logout</button>
+    <button ion-button (click)="logout()" *ngIf="isLoggedIn()">Logout</button>
+    <button ion-button (click)="goLogin()" *ngIf="!isLoggedIn()">Return to Login</button>
 </ion-content>

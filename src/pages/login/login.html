@@ -40,7 +40,7 @@
                 <button ion-button full (click)="login()">Login</button>
                 <p class="error">{{error}}</p> 
                 <div text-center>
-                    <button ion-button clear>Sign in anonymously</button>
+                    <button ion-button clear (click)="goHome()">Sign in anonymously</button>
                     <button ion-button clear icon-only (click)="info()">?</button>
                 </div>
             </ion-col>

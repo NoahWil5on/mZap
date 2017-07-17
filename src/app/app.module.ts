@@ -81,7 +81,7 @@ export const firebaseConfig = {
     SplashScreen,
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ImagesProvider
+    ImagesProvider,
   ]
 })
 export class AppModule {}

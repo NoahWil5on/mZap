@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { RegisterPage } from '../register/register';
 import { HomePage } from '../home/home';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabase } from 'angularfire2/database';
+import * as firebase from 'firebase';
 
 @IonicPage()
 @Component({
@@ -15,13 +17,31 @@ export class LoginPage {
     password: string = "";
     error: string = "";
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController, public afDB: AngularFireDatabase) {
   }
 
   ionViewDidLoad() {
       this.afAuth.auth.onAuthStateChanged(user => {
           if(user){
-              this.navCtrl.setRoot(HomePage);
+              var today = new Date();
+              /*get current date and time*/
+              var date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+              var self = this;
+              /*upate user visits and last active time*/
+              if(firebase.database().ref('users/').child(user.uid+"")){
+                  firebase.database().ref('users/').child(user.uid+"").once("value", function(snapshot){
+                      if(snapshot.val() && snapshot.val().visits){
+                          self.afDB.object('users/'+ self.afAuth.auth.currentUser.uid).update({
+                              visits: snapshot.val().visits+1,
+                              lastActive: date 
+                          }).then(_ => {
+                              self.navCtrl.setRoot(HomePage);
+                          }).catch(e => {
+                              alert(e.message);
+                          });
+                      }
+                  });
+              }
           }
       });
   }
@@ -42,6 +62,9 @@ export class LoginPage {
             buttons: ['OK']
         });
         alert.present();
+    }
+    goHome(){
+        this.navCtrl.setRoot(HomePage);
     }
 
 }

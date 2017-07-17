@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { MapPage } from '../map/map';
 import { SettingsPage } from '../settings/settings';
 import { ProfilePage } from '../profile/profile';
+import { TopRatedPage } from '../top-rated/top-rated';
 import { AngularFireAuth } from 'angularfire2/auth'
 
 @Component({
@@ -10,12 +11,16 @@ import { AngularFireAuth } from 'angularfire2/auth'
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+    location: any = "";
     name: any = "";
   constructor(public navCtrl: NavController, public afAuth: AngularFireAuth) {
   }
     ionViewDidLoad(){
-        this.name = this.afAuth.auth.currentUser.displayName;
+        if(this.afAuth.auth.currentUser){
+            this.name = " "+this.afAuth.auth.currentUser.displayName;
+        }
+        //console.log(this.imageSource());
+        //this.location = "https://maps.googleapis.com/maps/api/staticmap?center=18.318407,-65.296514&zoom=12&size=800x400";
     }
     mapPage(){
         this.navCtrl.push(MapPage);
@@ -25,5 +30,8 @@ export class HomePage {
     }
     profilePage(){
         this.navCtrl.push(ProfilePage);
+    }
+    topRatedPage(){
+        this.navCtrl.push(TopRatedPage);
     }
 }

@@ -1,14 +1,14 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Welcome {{name}}!
+      Welcome{{name}}!
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content scroll="false">
     <div id="home-content">
-        <img src="http://placehold.it/200x100" alt="Image"/>
+        <img src="../../assets/culebra.png" alt="Map"/>
         <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vulputate convallis turpis, vel porttitor ipsum ornare sit amet. Duis id mi quam. Sed et metus nunc. Donec eu laoreet risus. Praesent venenatis maximus neque vitae suscipit. Curabitur iaculis a elit sit amet mattis. Integer luctus, libero ut consectetur fermentum, ante felis lobortis tellus, id aliquam lacus tortor porttitor nisl. Duis sed elit id magna molestie elementum eu quis enim. Pellentesque nec sagittis turpis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean vitae nisl ut nibh accumsan molestie.
         </p>
@@ -32,8 +32,8 @@
                 </button>
             </ion-col>
             <ion-col col-3>
-                <button ion-button clear icon-only>
-                    <ion-icon name="chatbubbles"></ion-icon>
+                <button ion-button (click)="topRatedPage()" clear icon-only>
+                    <ion-icon name="trophy"></ion-icon>
                 </button>
             </ion-col>
             <ion-col col-3>

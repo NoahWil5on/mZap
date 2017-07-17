@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController} from 'ionic-angular';
+import { AngularFireAuth } from 'angularfire2/auth'
 import * as firebase from 'firebase';
 
 @IonicPage()
@@ -18,7 +19,7 @@ export class InfoWindowPage {
         key: ""
     };
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
-              public viewCtrl: ViewController) {
+              public viewCtrl: ViewController, public afAuth: AngularFireAuth) {
   }
 
   ionViewDidLoad() {
@@ -51,6 +52,13 @@ export class InfoWindowPage {
         }else{
             this.viewCtrl.dismiss();
         }
+    }
+    checkLogin(){
+        if(this.afAuth.auth.currentUser){
+            if(this.afAuth.auth.currentUser.email == this.data.email)
+                return true;
+        }
+        return false;
     }
 
 }

@@ -23,7 +23,7 @@
     <h3>{{data.description}}</h3>
     <p *ngIf="data.show">Posted by: {{data.email}}</p>
     <p *ngIf="!data.show">Posted anonymously</p>
-    <ion-buttons>
+    <ion-buttons *ngIf="checkLogin()">
         <button ion-button color="danger" (click)="showPrompt()">Delete</button>
     </ion-buttons>
 </ion-content>

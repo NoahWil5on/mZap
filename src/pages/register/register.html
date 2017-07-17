@@ -72,6 +72,19 @@
         <ion-label floating [class.redText]="checkContent(pass2)">*Re-enter Password</ion-label>
         <ion-input type="password" clearInput [(ngModel)]="pass2"></ion-input>
     </ion-item>
+    <ion-item>
+        Add a Profile Picture
+        <ion-grid no-padding>
+            <ion-row>
+                <ion-col col-6 no-padding>
+                    <button ion-button block (click)="cameraRequest()">Open Camera</button>
+                </ion-col>
+                <ion-col col-6 no-padding>
+                    <button ion-button block (click)="albumRequest()">Open Album</button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
     <div padding-top>
         <button ion-button full (click)="createAccount()">Register</button>
     </div>

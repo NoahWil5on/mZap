@@ -16,7 +16,7 @@
 <ion-content>
     <div id="center-point">
     </div>
-    <div id="controls">
+    <div id="controls" *ngIf="isLoggedIn()">
         <div class="button-center">
             <button ion-button *ngIf="add" (click)="addPage('trash')">trash</button>
             <button ion-button *ngIf="add" (click)="addPage('bugs')">bugs</button>

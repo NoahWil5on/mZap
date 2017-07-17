@@ -23,7 +23,10 @@ export class ImagesProvider {
             refName: fileName
         };
     }
-    doGetCameraImage(){
+    doClear(){
+        this.data = null;
+    }
+    doGetCameraImage(width, height){
         //get picture from camera
         return new Promise((resolve,reject) =>{ 
             this.camera.getPicture({
@@ -32,8 +35,8 @@ export class ImagesProvider {
                 sourceType : this.camera.PictureSourceType.CAMERA,
                 allowEdit : true,
                 encodingType: this.camera.EncodingType.PNG,
-                targetWidth: 400,
-                targetHeight: 200
+                targetWidth: width,
+                targetHeight: height
             }).then((imageData) => {
                 this.data = imageData;
                 resolve();
@@ -42,7 +45,7 @@ export class ImagesProvider {
             });
         });
     }
-    doGetAlbumImage(){
+    doGetAlbumImage(width, height){
         //get picture from camera
         return new Promise((resolve,reject) =>{ 
             this.camera.getPicture({
@@ -51,8 +54,8 @@ export class ImagesProvider {
                 sourceType : this.camera.PictureSourceType.SAVEDPHOTOALBUM,
                 allowEdit : true,
                 encodingType: this.camera.EncodingType.PNG,
-                targetWidth: 400,
-                targetHeight: 200
+                targetWidth: width,
+                targetHeight: height
             }).then((imageData) => {
                 this.data = imageData;
                 resolve();
