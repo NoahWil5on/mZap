@@ -11,6 +11,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 /*Custom Providers*/
 import { ImagesProvider } from '../providers/images/images';
+import { ZonesProvider } from '../providers/zones/zones';
 
 /*Import all pages into project*/
 import { MyApp } from './app.component';
@@ -82,6 +83,7 @@ export const firebaseConfig = {
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ImagesProvider,
+    ZonesProvider,
   ]
 })
 export class AppModule {}

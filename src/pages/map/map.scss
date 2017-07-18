@@ -3,7 +3,6 @@
         #map{
             width: 100%;
             height: 100%;
-            background-color: green;
         }
         #controls{
             position: absolute;
@@ -25,10 +24,8 @@
             
         }
         #center-point{
-            width: 15px;
-            height: 15px;
+            width: 30px;
             border-radius: 100%;
-            background-color: green;
             position: absolute;
             z-index: 100;
             top: 50%;

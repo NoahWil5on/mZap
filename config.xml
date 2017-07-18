@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MyApp</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <name>mZAP</name>
+    <description>Environmental risk crowdsourcing app</description>
+    <author email="noahwilson.2015@gmail.com" href="http://google.com">mZAP team</author>
     <content original-src="index.html" src="http://10.162.15.249:8100" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
@@ -79,6 +79,9 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
     <engine name="android" spec="^6.2.3" />
+    <plugin name="cordova-background-geolocation-lt" spec="^2.7.4">
+        <variable name="LICENSE" value="4bbb513c013111eae951647fd4f9e79f127fce6f7a00e9d327db9ea2a053a0df" />
+    </plugin>
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
