@@ -1,19 +1,45 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
 import { LoginPage } from '../pages/login/login';
+import { TopRatedPage } from '../pages/top-rated/top-rated';
+import { MapPage } from '../pages/map/map';
+import { ProfilePage } from '../pages/profile/profile';
+import * as firebase from 'firebase';
+import { AngularFireAuth } from 'angularfire2/auth';
 
-//import { TopRatedPage } from '../pages/top-rated/top-rated';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
+    firstOpen: boolean = true;
+    name: any = '';
+    imgSrc: any = '';
     rootPage:any = LoginPage;
-
-    constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+    
+    mapPage: any;
+    ratedPage: any;
+    profilePage: any;
+    
+    constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth, private menuCtrl: MenuController) {
+        this.mapPage = MapPage;
+        this.ratedPage = TopRatedPage;
+        this.profilePage = ProfilePage;
         platform.ready().then(() => {
+            /*if(Network.connection == Connection.NONE){
+                var alert = this.alertCtrl.create({
+                    title: "No Internet Connection",
+                    subTitle: "Please try application again when you have connection",
+                    buttons: [{
+                        text: "OK",
+                        handler: () => {
+                        platform.exitApp();
+                    }
+                    }]
+                });
+                alert.present();
+            }*/
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
             statusBar.styleDefault();
@@ -67,6 +93,36 @@ export class MyApp {
                 }
             });*/
         });
+    }
+    topRated(){
+        this.rootPage = TopRatedPage;
+        this.menuCtrl.close();
+    }
+    map(){
+        this.rootPage = MapPage; 
+        this.menuCtrl.close();
+    }
+    profile(){
+        this.rootPage = ProfilePage;
+        this.menuCtrl.close();
+    }
+    openMenu(){
+        if(this.firstOpen){
+            this.rootPage = MapPage;
+            this.firstOpen = false;
+        }
+        if(this.checkLogin()){
+            firebase.database().ref('users').child(this.afAuth.auth.currentUser.uid).once('value').then((snapshot) => {
+                this.name = snapshot.val().name;
+                this.imgSrc = snapshot.val().url;
+            });
+        }
+    }
+    checkLogin(){
+        return (this.afAuth.auth.currentUser) ? true : false;
+    }
+    checkPage(root){
+        return (this.rootPage == root);
     }
 }
 

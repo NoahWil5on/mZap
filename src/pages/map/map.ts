@@ -5,6 +5,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { ZonesProvider } from '../../providers/zones/zones';
 import { AddPage } from '../add/add';
 import { InfoWindowPage } from '../info-window/info-window';
+import { MenuController } from 'ionic-angular';
+import { SettingsPage } from '../settings/settings';
 
 declare var google;
 
@@ -24,12 +26,18 @@ export class MapPage {
     /*Instantiate all imported classes*/
   constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController,
              public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth,
-              public alertCtrl: AlertController, public zones: ZonesProvider) {
+              public alertCtrl: AlertController, public zones: ZonesProvider, public menuCtrl: MenuController) {
   }
 
   ionViewDidLoad() {
       this.initMap();
   }
+    openMenu(){
+        this.menuCtrl.open();
+    }
+    openSettings(){
+        this.navCtrl.push(SettingsPage);
+    }
     /*Toggle add and update DOM*/
   doAdd(){
     this.add = !this.add;
@@ -101,6 +109,7 @@ export class MapPage {
         let mapOptions = {
             center: latLng,
             zoom: 12,
+            disableDefaultUI: true,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);

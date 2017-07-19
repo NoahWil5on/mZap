@@ -34,6 +34,7 @@ import { SettingsPageModule } from '../pages/settings/settings.module';
 import { AddPageModule } from '../pages/add/add.module';
 import { InfoWindowPageModule } from '../pages/info-window/info-window.module';
 import { TopRatedPageModule } from '../pages/top-rated/top-rated.module';
+import { UserInfoProvider } from '../providers/user-info/user-info';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
@@ -84,6 +85,7 @@ export const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ImagesProvider,
     ZonesProvider,
+    UserInfoProvider,
   ]
 })
 export class AppModule {}

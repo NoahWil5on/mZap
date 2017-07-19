@@ -22,4 +22,55 @@
         margin-right: auto;
         text-align: center;
     }
+    ion-header{
+        height: 50px;
+        div{
+            background-color: #3fbc05;
+            color: white;
+        }
+    }
+    header{
+        width: 100%;
+        height: 20%;
+        background: rgb(212,252,90); /* Old browsers */
+        background: -moz-linear-gradient(top, rgba(212,252,90,1) 2%, rgba(252,248,12,1) 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, rgba(212,252,90,1) 2%,rgba(252,248,12,1) 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, rgba(212,252,90,1) 2%,rgba(252,248,12,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4fc5a', endColorstr='#fcf80c',GradientType=0 ); /* IE6-9 */
+        div{
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            img{
+                height: 75px;
+                border-radius: 100%;
+                -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+                -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+                box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+            }
+            h2{
+                padding: 0;
+                margin: 0;
+            }
+        }
+    }
+    .nav-item{
+        background-color: #eee;
+    }
+    ion-col{
+        .option{
+            padding-left: 30px;
+            font-size: 16pt;
+            color: #666;
+        }
+    }
+    #login-content{
+        background: rgb(6,174,213); /* Old browsers */
+        background: -moz-linear-gradient(top, rgba(6,174,213,1) 0%, rgba(8,103,136,1) 99%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, rgba(6,174,213,1) 0%,rgba(8,103,136,1) 99%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, rgba(6,174,213,1) 0%,rgba(8,103,136,1) 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#06aed5', endColorstr='#086788',GradientType=0 ); /* IE6-9 */
+    }
 }

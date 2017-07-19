@@ -1,63 +1,48 @@
-<!--
-  Generated template for the LoginPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>login</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
+<ion-content padding id="login-content">
     <ion-grid>
         <ion-row class="flex">
             <ion-col>
             </ion-col>
         </ion-row>
-        <ion-row class="flex-big">
-            <ion-col>
-                <ion-row class="input-row">
-                    <ion-col col-auto>
-                        <ion-icon name="mail" isActive="false" ></ion-icon>
-                    </ion-col>
-                    <ion-col>
-                        <ion-input type="email" [(ngModel)]="email" clearInput></ion-input>
+        <ion-row class="flex-big" style="color: white; text-align: center;">
+            <ion-col style="max-width: 500px; text-align: center; margin-left: auto; margin-right: auto">
+                <ion-row style="max-height: 150px; height: 33%; border-radius: 20px; border: solid white 1px; background-color: #3fbc05; text-align: left;">
+                    <ion-col padding>
+                        <ion-row style="height: 50%; border-bottom: 1px solid white">
+                            <ion-col col-auto class="input-col">
+                                <img src="assets/mail.png" alt="lock" style="height: 100%" />
+                            </ion-col>
+                            <ion-col>
+                                <ion-input type="email" [(ngModel)]="email" clearInput class="login-input"></ion-input>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row style="height: 50%">
+                            <ion-col col-auto class="input-col">
+                                <img src="assets/lock.png" alt="lock" style="height: 100%" />
+                            </ion-col>
+                            <ion-col>
+                                <ion-input type="password" [(ngModel)]="password" clearInput class="login-input"></ion-input>
+                            </ion-col>
+                        </ion-row>
                     </ion-col>
                 </ion-row>
-                <ion-row class="input-row">
-                    <ion-col col-auto>
-                        <ion-icon name="lock" isActive="false"></ion-icon>
+
+                        <button ion-button clear style="width: 100%; max-height: 80px; height: 16%; border-radius: 20px; background-color: #f48a00; margin-top: 20px; font-size: 20pt; color: white;"
+                                (click)="login()">
+                            Login
+                        </button>
+                        <p class="error" style="color: black">{{error}}</p> 
+                        <p style="text-align: center">Don't have an account? <a (click)="register()" style="color: black; text-decoration: underline">Sign Up</a></p>
+
+                <ion-row style="padding-top: 40px;">
+                    <ion-col col-6>
+                        <button ion-button clear style="color: white">Forgot Password</button>
                     </ion-col>
-                    <ion-col>
-                        <ion-input type="password" [(ngModel)]="password" clearInput></ion-input>
-                    </ion-col>
-                </ion-row>
-                <button ion-button full (click)="login()">Login</button>
-                <p class="error">{{error}}</p> 
-                <div text-center>
-                    <button ion-button clear (click)="goHome()">Sign in anonymously</button>
-                    <button ion-button clear icon-only (click)="info()">?</button>
-                </div>
-            </ion-col>
-        </ion-row>
-        <ion-row class="flex">
-            <ion-col>
-                <ion-row>
-                    <ion-col class="border-right" no-padding>
-                        <button ion-button full clear>password</button>
-                    </ion-col>
-                    <ion-col no-padding>
-                        <button ion-button full clear (click)="register()">register</button>
+                    <ion-col col-6>
+                        <button ion-button clear style="color: white" (click)="goHome()">Sign in anonymously</button>
                     </ion-col>
                 </ion-row>
             </ion-col>
         </ion-row>
     </ion-grid>
-   <!-- <button ion-button (click)="register()">Register</button>
-    <button ion-button (click)="login()">Home</button> -->
 </ion-content>

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
-import { HomePage } from '../home/home';
+import { MapPage } from '../map/map'
+import { UserInfoProvider} from '../../providers/user-info/user-info';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
@@ -17,7 +18,7 @@ export class LoginPage {
     password: string = "";
     error: string = "";
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
-              public alertCtrl: AlertController, public afDB: AngularFireDatabase) {
+              public alertCtrl: AlertController, public afDB: AngularFireDatabase, public userInfo: UserInfoProvider) {
   }
 
   ionViewDidLoad() {
@@ -35,7 +36,7 @@ export class LoginPage {
                               visits: snapshot.val().visits+1,
                               lastActive: date 
                           }).then(_ => {
-                              self.navCtrl.setRoot(HomePage);
+                              self.navCtrl.setRoot(MapPage);
                           }).catch(e => {
                               alert(e.message);
                           });
@@ -47,7 +48,10 @@ export class LoginPage {
   }
     async login(){
         this.afAuth.auth.signInWithEmailAndPassword(this.email,this.password).then(data =>{
-            this.navCtrl.setRoot(HomePage);
+            firebase.database().ref('users').child(this.afAuth.auth.currentUser.uid).once('value').then((snapshot) => {
+               this.userInfo.user = snapshot.val(); 
+               this.navCtrl.setRoot(MapPage);
+            });
         }).catch(e => {
             this.error = e.message;
         });  
@@ -64,7 +68,7 @@ export class LoginPage {
         alert.present();
     }
     goHome(){
-        this.navCtrl.setRoot(HomePage);
+        this.navCtrl.setRoot(MapPage);
     }
 
 }

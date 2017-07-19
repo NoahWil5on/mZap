@@ -1,1 +1,64 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu side="left" type="push" [content]="mycontent" (ionOpen)="openMenu()">
+    <ion-content>
+        <header text-center>
+            <div *ngIf="checkLogin()">
+                <img [src]="imgSrc" alt="Profile Image" />
+                <h2>Jerry</h2>
+            </div>
+            <div *ngIf="!checkLogin()">
+                <img src="assets/profile.png" alt="Profile Image" />
+                <h2>Unknown User</h2>
+            </div>
+        </header>
+        <ion-item (click)="map()" [class.nav-item]="checkPage(mapPage)">
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-auto no-padding>
+                        <img src="assets/map.png" style="height: 34px; padding: 0" alt="map" />
+                    </ion-col>
+                    <ion-col>
+                        <p class="option">Map</p>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+        <ion-item (click)="profile()" [class.nav-item]="checkPage(profilePage)">
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-auto no-padding>
+                        <img src="assets/profile.png" style="height: 34px; padding: 0" alt="profile" />
+                    </ion-col>
+                    <ion-col>
+                        <p class="option">Profile</p>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+        <ion-item>
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-auto no-padding>
+                        <img src="assets/report.png" style="height: 34px; padding: 0" alt="reports" />
+                    </ion-col>
+                    <ion-col>
+                        <p class="option">Reports</p>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+        <ion-item (click)="topRated()" [class.nav-item]="checkPage(ratedPage)">
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-auto no-padding>
+                        <img src="../assets/trophy.png" style="height: 34px; padding: 0" alt="trophy" />
+                    </ion-col>
+                    <ion-col>
+                        <p class="option">Rankings</p>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-content>
+</ion-menu>
+
+<ion-nav #mycontent [root]="rootPage"></ion-nav>

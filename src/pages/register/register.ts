@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { HomePage } from '../home/home';
+import { MapPage } from '../map/map';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ImagesProvider } from '../../providers/images/images';
@@ -64,7 +64,7 @@ export class RegisterPage {
                                     refName: this.refName, 
                                     url: this.url}
                                 ).then(_ => {
-                                    this.navCtrl.setRoot(HomePage);
+                                    this.navCtrl.setRoot(MapPage);
                                 }).catch(e => {
                                     alert(e.message);
                                 });
@@ -83,7 +83,7 @@ export class RegisterPage {
                                 firstActive: date, 
                                 name: this.name}
                             ).then(_ => {
-                                this.navCtrl.setRoot(HomePage);
+                                this.navCtrl.setRoot(MapPage);
                             }).catch(e => {
                                 console.log(e.message);
                             })

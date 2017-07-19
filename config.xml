@@ -3,7 +3,7 @@
     <name>mZAP</name>
     <description>Environmental risk crowdsourcing app</description>
     <author email="noahwilson.2015@gmail.com" href="http://google.com">mZAP team</author>
-    <content original-src="index.html" src="http://10.162.15.249:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://10.162.15.249:8100" />
@@ -23,6 +23,7 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
+    <preference name="orientation" value="portrait" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />

@@ -4,16 +4,13 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>map</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
 <ion-content>
+    <div class="nav-button nav-button-left orange" (click)="openMenu()" >
+        <img class="hamburg"src="assets/hamburger.png" alt="nav"/>
+    </div>
+    <div class="nav-button nav-button-right green" (click)="openSettings()">
+        <img class="cog"src="assets/cog.png" alt="nav"/>
+    </div>
     <div id="center-div">
         <div id="center-point">
             <img src="../../assets/location_marker.png" alt="Drop Position" />
