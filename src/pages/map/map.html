@@ -13,17 +13,30 @@
     </div>
     <div id="center-div">
         <div id="center-point">
-            <img src="../../assets/location_marker.png" alt="Drop Position" />
+            <img src="assets/location_marker.png" alt="Drop Position" />
         </div>
     </div>
     <div id="controls" *ngIf="isLoggedIn()">
-        <div class="button-center">
-            <button ion-button *ngIf="add" (click)="addPage('trash')">trash</button>
-            <button ion-button *ngIf="add" (click)="addPage('bugs')">bugs</button>
-            <button ion-button *ngIf="add" (click)="addPage('water')">water</button>
+        <div class="button-center" *ngIf="add" >
+            <div (click)="addPage('trash')">
+                <img class="symbol" alt='Trash' src="assets/new/trash.png"/>
+                <img src="assets/new/empty-button.png" alt="Trash"/>
+            </div>
+            <div (click)="addPage('bugs')">
+                <img class="symbol" alt='Bugs' src="assets/mosquito_sm.png"/>
+                <img src="assets/new/empty-button.png" alt="Bugs"/>
+            </div>
+            <div (click)="addPage('water')">
+                <img class="symbol" alt='Water' src="assets/new/droplet.png"/>
+                <img src="assets/new/empty-button.png" alt="Water"/>
+            </div>
+            <div (click)="addPage('building')">
+                <img class="symbol" alt='Building' src="assets/new/building.png"/>
+                <img src="assets/new/empty-button.png" alt="Building"/>
+            </div>
         </div>
         <div class="button-center">
-            <button ion-button (click)="doAdd()">Add</button>
+            <img src="assets/new/add-button.png" alt="Add" (click)="doAdd()" />
         </div>
     </div>
     <div #map id="map"></div>

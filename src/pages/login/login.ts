@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { MapPage } from '../map/map'
 import { UserInfoProvider} from '../../providers/user-info/user-info';
@@ -18,7 +18,7 @@ export class LoginPage {
     password: string = "";
     error: string = "";
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
-              public alertCtrl: AlertController, public afDB: AngularFireDatabase, public userInfo: UserInfoProvider) {
+              public alertCtrl: AlertController, public afDB: AngularFireDatabase, public userInfo: UserInfoProvider, public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
@@ -42,17 +42,24 @@ export class LoginPage {
                           });
                       }
                   });
+              }else{
               }
           }
       });
   }
     async login(){
+        let loader = this.loadingCtrl.create({
+            content: 'Verifying User...'
+        });
+        loader.present();
         this.afAuth.auth.signInWithEmailAndPassword(this.email,this.password).then(data =>{
             firebase.database().ref('users').child(this.afAuth.auth.currentUser.uid).once('value').then((snapshot) => {
+                loader.dismiss();
                this.userInfo.user = snapshot.val(); 
                this.navCtrl.setRoot(MapPage);
             });
         }).catch(e => {
+            loader.dismiss();
             this.error = e.message;
         });  
     }

@@ -3,7 +3,7 @@
         <header text-center>
             <div *ngIf="checkLogin()">
                 <img [src]="imgSrc" alt="Profile Image" />
-                <h2>Jerry</h2>
+                <h2>{{name}}</h2>
             </div>
             <div *ngIf="!checkLogin()">
                 <img src="assets/profile.png" alt="Profile Image" />
@@ -50,7 +50,7 @@
             <ion-grid>
                 <ion-row>
                     <ion-col col-auto no-padding>
-                        <img src="../assets/trophy.png" style="height: 34px; padding: 0" alt="trophy" />
+                        <img src="assets/trophy.png" style="height: 34px; padding: 0" alt="trophy" />
                     </ion-col>
                     <ion-col>
                         <p class="option">Rankings</p>

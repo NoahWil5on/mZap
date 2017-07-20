@@ -7,16 +7,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{data}}</ion-title>
+    <ion-title>{{type}}</ion-title>
       <ion-buttons end>
-        <button ion-button clear (click)="dismiss()">X</button>
+        <button ion-button clear style="color: white;" (click)="dismiss()">X</button>
       </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding style="background-color: #fcf80c">
     <ion-item>
         <ion-label floating>Title</ion-label>
         <ion-input type="text" clearInput [(ngModel)]="title"></ion-input>
@@ -29,10 +29,14 @@
         <ion-grid no-padding>
             <ion-row>
                 <ion-col col-6 no-padding>
-                    <button ion-button block (click)="cameraRequest()">Open Camera</button>
+                    <button ion-button block clear style="color: black;" (click)="cameraRequest()">
+                        <img src="assets/new/camera.png" style="width: 40px; padding-right: 10px;" alt="Camera" />
+                        Open Camera</button>
                 </ion-col>
                 <ion-col col-6 no-padding>
-                    <button ion-button block (click)="albumRequest()">Open Album</button>
+                    <button ion-button block clear style="color: black;" (click)="albumRequest()">
+                        <img src="assets/new/album.png" style="width: 40px; padding-right: 10px;" alt="Album" />
+                        Open Album</button>
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -41,6 +45,6 @@
         <ion-label>Show your username?</ion-label>
         <ion-checkbox [(ngModel)]="show"></ion-checkbox>
     </ion-item>
-    <button ion-button block (click)="submit()">Submit</button>
+    <button ion-button block (click)="submit()" class="submit-button">Submit</button>
     <p class="error">{{error}}</p>
 </ion-content>

@@ -13,7 +13,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding style="background-color: #fcf80c">
     <!--
     <ion-grid>
         <ion-row class="flex">
@@ -73,20 +73,24 @@
         <ion-input type="password" clearInput [(ngModel)]="pass2"></ion-input>
     </ion-item>
     <ion-item>
-        Add a Profile Picture
+        <p style="color: #3fbc05">Add a Profile Picture</p>
         <ion-grid no-padding>
             <ion-row>
                 <ion-col col-6 no-padding>
-                    <button ion-button block (click)="cameraRequest()">Open Camera</button>
+                    <button ion-button block clear style="color: black;" (click)="cameraRequest()">
+                        <img src="assets/new/camera.png" style="width: 40px; padding-right: 10px;" alt="Camera" />
+                        Open Camera</button>
                 </ion-col>
                 <ion-col col-6 no-padding>
-                    <button ion-button block (click)="albumRequest()">Open Album</button>
+                    <button ion-button block clear style="color: black;" (click)="albumRequest()">
+                        <img src="assets/new/album.png" style="width: 40px; padding-right: 10px;" alt="Album" />
+                        Open Album</button>
                 </ion-col>
             </ion-row>
         </ion-grid>
     </ion-item>
     <div padding-top>
-        <button ion-button full (click)="createAccount()">Register</button>
+        <button ion-button full (click)="createAccount()" class="submit-button">Register</button>
     </div>
     <p class="error">{{error}}</p>
 </ion-content>

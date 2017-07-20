@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Camera } from '@ionic-native/camera';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule} from 'angularfire2/auth';
@@ -12,10 +13,10 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 /*Custom Providers*/
 import { ImagesProvider } from '../providers/images/images';
 import { ZonesProvider } from '../providers/zones/zones';
+import { UserInfoProvider } from '../providers/user-info/user-info';
 
 /*Import all pages into project*/
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 import { ProfilePage } from '../pages/profile/profile';
@@ -24,6 +25,7 @@ import { SettingsPage } from '../pages/settings/settings';
 import { AddPage } from '../pages/add/add';
 import { InfoWindowPage } from '../pages/info-window/info-window';
 import { TopRatedPage } from '../pages/top-rated/top-rated';
+import { ConfirmationPage } from '../pages/confirmation/confirmation';
 
 /*Import all modules (Ionic SHOULD do this for you but it doesn't which causes an error)*/
 import { LoginPageModule } from '../pages/login/login.module';
@@ -34,7 +36,7 @@ import { SettingsPageModule } from '../pages/settings/settings.module';
 import { AddPageModule } from '../pages/add/add.module';
 import { InfoWindowPageModule } from '../pages/info-window/info-window.module';
 import { TopRatedPageModule } from '../pages/top-rated/top-rated.module';
-import { UserInfoProvider } from '../providers/user-info/user-info';
+import { ConfirmationPageModule } from '../pages/confirmation/confirmation.module';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
@@ -48,7 +50,6 @@ export const firebaseConfig = {
 @NgModule({
   declarations: [
       MyApp,
-      HomePage
   ],
   imports: [
     BrowserModule,
@@ -63,12 +64,12 @@ export const firebaseConfig = {
     SettingsPageModule,
     AddPageModule,
     InfoWindowPageModule,
-    TopRatedPageModule
+    TopRatedPageModule,
+    ConfirmationPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
       MyApp,
-      HomePage,
       LoginPage,
       RegisterPage,
       ProfilePage,
@@ -76,12 +77,14 @@ export const firebaseConfig = {
       SettingsPage,
       AddPage,
       InfoWindowPage,
-      TopRatedPage
+      TopRatedPage,
+      ConfirmationPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Camera,
+    SocialSharing,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ImagesProvider,
     ZonesProvider,

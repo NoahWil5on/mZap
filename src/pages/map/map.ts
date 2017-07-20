@@ -4,6 +4,7 @@ import { AngularFireDatabase} from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ZonesProvider } from '../../providers/zones/zones';
 import { AddPage } from '../add/add';
+import { ConfirmationPage } from '../confirmation/confirmation'
 import { InfoWindowPage } from '../info-window/info-window';
 import { MenuController } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
@@ -68,6 +69,8 @@ export class MapPage {
                 this.fireDB.object('positions/'+key +'/key').set(key);
                 newMarker.key = key;
                 this.makeMarker(newMarker);
+                let confirm = this.modal.create(ConfirmationPage, newMarker);
+                confirm.present();
             }
         });
         addModal.present();
@@ -84,9 +87,27 @@ export class MapPage {
     }
     /*Is called anytime a point is found in the database or created*/
     makeMarker(data){
+        var selection = '';
+        switch(data.type){
+            case 'water':
+                selection = 'assets/new/droplet.png';
+                break;
+            case 'bugs':
+                selection = 'assets/mosquito_sm.png';
+                break;
+            case 'trash':
+                selection = 'assets/new/trash.png';
+                break;
+            case 'building':
+                selection = 'assets/new/building.png';
+                break;
+            default:
+                selection = 'assets/mosquito_sm.png';
+                break;
+        };
         let marker = new google.maps.Marker({
             position: new google.maps.LatLng(data.lat,data.lng),
-            icon: '../../assets/mosquito_sm.png',
+            icon: selection,
             map: this.map
         });
         var self = this;

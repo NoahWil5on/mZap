@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController, LoadingController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ImagesProvider } from '../../providers/images/images';
@@ -13,6 +13,7 @@ import * as firebase from 'firebase';
 })
 export class AddPage {
     data: any;
+    type: any = '';
     dataSet: boolean = false;
     title: string = "";
     desc: string = "";
@@ -20,14 +21,17 @@ export class AddPage {
     refName: any = "";
     show: boolean = false;
     error: string = "";
-    
+    pos: any;
     constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
-         public afAuth: AngularFireAuth, public images: ImagesProvider, public afDB: AngularFireDatabase) {
+         public afAuth: AngularFireAuth, public images: ImagesProvider, public afDB: AngularFireDatabase, public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
         this.images.doClear();
     }
 
     ionViewDidLoad() {
         this.data = this.navParams.get('type');
+        this.pos = this.navParams.get('pos');
+        this.type += this.data;
+        this.type = this.type.charAt(0).toUpperCase() + this.type.slice(1);
     }
     cameraRequest(){
         var promise = this.images.doGetCameraImage(400,200);
@@ -47,7 +51,11 @@ export class AddPage {
         this.viewCtrl.dismiss();
     }
     submit(){
+        let loader = this.loadingCtrl.create({
+            content: 'Submitting Content...'
+        })
         if(this.title.length > 0 && this.desc.length > 0 && this.dataSet){
+            loader.present();
             var promiseObject = this.images.uploadToFirebase();
             promiseObject.promise.then(res => {
                 this.url = res;
@@ -57,6 +65,7 @@ export class AddPage {
                     self.afDB.object('users/'+ self.afAuth.auth.currentUser.uid).update({
                         posts: snapshot.val().posts+1
                     }).then(_ => {
+                        loader.dismiss();
                         self.viewCtrl.dismiss({
                             title: self.title,
                             desc: self.desc,
@@ -71,6 +80,7 @@ export class AddPage {
                     });
                 });
             }).catch(e => {
+                loader.dismiss();
                 alert("Error: " +e.message);
             });
         }else{

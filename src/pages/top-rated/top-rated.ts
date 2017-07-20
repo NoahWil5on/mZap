@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, LoadingController } from 'ionic-angular';
 import * as firebase from 'firebase';
 
 /**
@@ -17,52 +17,16 @@ export class TopRatedPage {
 
     selfTop: boolean = false;
     users: any = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-      /*this.users = [
-          {
-              name: "Tom Cruise",
-              rating: 5,
-              img: "image"
-          },
-          {
-              name: "Billy Joe",
-              rating: 4,
-              img: "image"
-          },
-          {
-              name: "Deborah Name",
-              rating: 4,
-              img: "image"
-          },
-          {
-              name: "Bruce Willis",
-              rating: 3,
-              img: "image"
-          },
-          {
-              name: "Shane Wheeler",
-              rating: 3,
-              img: "image"
-          },
-          {
-              name: "Sydney Crawfit",
-              rating: 2,
-              img: "image"
-          },
-          {
-              name: "Samantha Jackson",
-              rating: 2,
-              img: "image"
-          },
-          {
-              name: "Laura Bush",
-              rating: 1,
-              img: "image"
-          }
-      ]*/
+  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, public loadingCtrl: LoadingController) {
   }
-
+    openMenu(){
+        this.menuCtrl.open();
+    }
     ionViewDidLoad() {
+        let loader = this.loadingCtrl.create({
+            content: 'Fetching Top Users...'
+        });
+        loader.present();
         var ref = firebase.database().ref('users/');
         var self = this;
         var i = 0;
@@ -80,7 +44,7 @@ export class TopRatedPage {
             }
             i++;
         });
-        
+        loader.dismiss();     
     }
 
 }

@@ -1,0 +1,48 @@
+<ion-content padding>
+    <h3 text-center style="color: #3fbc05; margin-top: 50px;" padding-bottom>Successfully Submitted!</h3>
+    <ion-card padding>
+        <h2>Report:</h2>
+        <ion-item text-wrap class="report-item">
+            <h4>Type:</h4>
+            <p>{{type}}</p>
+        </ion-item>
+        <ion-item text-wrap class="report-item">
+            <h4>Title:</h4>
+            <p>{{title}}</p>
+        </ion-item>
+        <ion-item text-wrap class="report-item">
+            <h4>Description:</h4>
+            <p>{{description}}</p>
+        </ion-item>
+        <ion-item text-wrap class="report-item">
+            <h4 *ngIf="showName()">Your name is viewable to other users on this post</h4>
+            <h4 *ngIf="!showName()">Your name is not viewable to other users on this post</h4>
+        </ion-item>
+        <ion-item text-wrap class="report-item">
+            <h4>Picture:</h4>
+            <img [src]="picture" alt="Your Photo" />
+        </ion-item>
+    </ion-card>
+    <div text-center>
+        <button ion-button (click)="dismiss()">Back to Map</button>
+    </div>
+    <ion-grid>
+        <ion-row>
+            <ion-col text-center>
+                <button ion-button icon-only clear (click)='shareTwitter()'>
+                    <ion-icon name="logo-twitter" style="color: #00aced; font-size: 24pt"></ion-icon>
+                </button>
+            </ion-col>
+            <ion-col text-center>
+                <button ion-button icon-only clear (click)='shareFacebook()'>
+                    <ion-icon name="logo-facebook" style="color: #3b5998; font-size: 24pt"></ion-icon>
+                </button>
+            </ion-col>
+            <ion-col text-center>
+                <button ion-button icon-only clear (click)='shareWhatsapp()'>
+                    <ion-icon name="logo-whatsapp" style="color: #34af23; font-size: 24pt"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
