@@ -7,24 +7,71 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{data.title}}</ion-title>
+    <ion-title>{{data.description}}</ion-title>
     <ion-buttons end>
         <button ion-button clear (click)="dismiss()">X</button>
       </ion-buttons>
   </ion-navbar>
-
+    <ion-toolbar>
+        <ion-segment [(ngModel)]="section" color="secondary">
+            <ion-segment-button value="info">
+                Information
+            </ion-segment-button>
+            <ion-segment-button value="resolve">
+                Resolve
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
 </ion-header>
 
-
 <ion-content padding>
-    <h2>{{data.type}}</h2>
-    <div text-center>
-        <img [src]="data.url" alt="Image of Location"/>
+    <div [(ngSwitch)]="section">
+        <div *ngSwitchCase="'info'">
+            <ion-slides #slides>
+                <ion-slide>
+                    <h1>Slide 1</h1>
+                </ion-slide>
+                <ion-slide>
+                    <h1>Slide 2</h1>
+                </ion-slide>
+                <ion-slide>
+                    <h1>Slide 3</h1>
+                </ion-slide>
+            </ion-slides>
+            <h2>{{data.type}}</h2>
+            <div text-center>
+                <img [src]="data.url" alt="Image of Location"/>
+            </div>
+            <h3>{{data.title}}</h3>
+            <p *ngIf="data.show">Posted by: {{data.email}}</p>
+            <p *ngIf="!data.show">Posted anonymously</p>
+            <ion-buttons *ngIf="checkLogin()">
+                <button ion-button color="danger" (click)="showPrompt()">Delete</button>
+            </ion-buttons>
+        </div>
+        <div *ngSwitchCase="'resolve'">
+            <ion-item>
+                <ion-label floating>Note (Optional)</ion-label>
+                <ion-input type='text'></ion-input>
+            </ion-item>
+            <ion-item>
+                Add Photo*
+                <ion-grid no-padding>
+                    <ion-row>
+                        <ion-col col-6 no-padding>
+                            <button ion-button block clear style="color: black;" (click)="cameraRequest()">
+                                <img src="assets/new/camera.png" style="width: 40px; padding-right: 10px;" alt="Camera" />
+                                Open Camera</button>
+                        </ion-col>
+                        <ion-col col-6 no-padding>
+                            <button ion-button block clear style="color: black;" (click)="albumRequest()">
+                                <img src="assets/new/album.png" style="width: 40px; padding-right: 10px;" alt="Album" />
+                                Open Album</button>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+            <button ion-button>Resolve!</button>
+        </div>
     </div>
-    <h3>{{data.description}}</h3>
-    <p *ngIf="data.show">Posted by: {{data.email}}</p>
-    <p *ngIf="!data.show">Posted anonymously</p>
-    <ion-buttons *ngIf="checkLogin()">
-        <button ion-button color="danger" (click)="showPrompt()">Delete</button>
-    </ion-buttons>
 </ion-content>

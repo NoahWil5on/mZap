@@ -23,6 +23,8 @@ export class MapPage {
     infoWindow: any = null;
     setOnce: boolean = true;
     points: any = [];
+    zonies: any = [];
+    markers: any = [];
     
     /*Instantiate all imported classes*/
   constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController,
@@ -71,6 +73,9 @@ export class MapPage {
                 this.makeMarker(newMarker);
                 let confirm = this.modal.create(ConfirmationPage, newMarker);
                 confirm.present();
+                confirm.onDidDismiss(_ => {
+                    this.navCtrl.setRoot(MapPage);
+                })
             }
         });
         addModal.present();
@@ -110,6 +115,7 @@ export class MapPage {
             icon: selection,
             map: this.map
         });
+        this.markers.push(marker);
         var self = this;
         /*Allows an info window to pop up when a point is clicked*/
         google.maps.event.addListener(marker, 'click', function(e){
@@ -146,7 +152,7 @@ export class MapPage {
                         self.points.push(item.val());
                     });
                     self.setOnce = false;
-                    var promiseObject = self.zones.runEval(self.points);
+                    var promiseObject = self.zones.runEval(self.points,600);
                     
                     //wait for runEval to finish
                     promiseObject.promise.then(_ => {
@@ -158,9 +164,8 @@ export class MapPage {
         });
     }
     applyZones(zones){
-        /*console.log("Apply Zones is working");
         for(var i = 0; i < zones.length; i++){
-            new google.maps.Circle({
+            this.zonies.push(new google.maps.Circle({
                 strokeColor: '#FF0000',
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
@@ -168,8 +173,8 @@ export class MapPage {
                 fillOpacity: 0.35,
                 map: this.map,
                 center: new google.maps.LatLng(zones[i].lat,zones[i].lng),
-                radius: 1000
-              });
-        }*/
+                radius: zones[i].dist
+              }));
+        }
     }
 }

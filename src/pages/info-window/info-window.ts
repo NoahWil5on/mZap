@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ViewController} from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController, ViewController, Slides} from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth'
 import * as firebase from 'firebase';
 
@@ -9,6 +9,8 @@ import * as firebase from 'firebase';
   templateUrl: 'info-window.html',
 })
 export class InfoWindowPage {
+    @ViewChild(Slides) slides: Slides;
+    section: any = "info";
     data: any = {
         description: "",
         title: "",
@@ -23,6 +25,7 @@ export class InfoWindowPage {
   }
 
   ionViewDidLoad() {
+      this.slides.startAutoplay();
       this.data = this.navParams.get('data');
   }
     showPrompt(){
