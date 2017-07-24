@@ -27,27 +27,48 @@
 <ion-content padding>
     <div [(ngSwitch)]="section">
         <div *ngSwitchCase="'info'">
-            <ion-slides #slides>
-                <ion-slide>
-                    <h1>Slide 1</h1>
-                </ion-slide>
-                <ion-slide>
-                    <h1>Slide 2</h1>
-                </ion-slide>
-                <ion-slide>
-                    <h1>Slide 3</h1>
+            <ion-slides>
+                <ion-slide *ngFor="let pic of pictures">
+                    <img src='{{pic}}' />
                 </ion-slide>
             </ion-slides>
+            <ion-grid *ngIf="pictures.length > 0">
+                <ion-row>
+                    <ion-col>
+                        <button ion-button clear full (click)="slideLeft()">
+                            <ion-icon name="arrow-back"></ion-icon>
+                        </button>
+                    </ion-col>
+                    <ion-col>
+                        <button ion-button clear full (click)="slideRight()">
+                            <ion-icon name="arrow-forward"></ion-icon>
+                        </button>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="status != 'Complete'">
+                    <ion-col>
+                        <h2 style="color: orange" text-center>Waiting to be marked as complete</h2>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
             <h2>{{data.type}}</h2>
-            <div text-center>
+            <div text-center *ngIf="data.url">
                 <img [src]="data.url" alt="Image of Location"/>
             </div>
             <h3>{{data.title}}</h3>
             <p *ngIf="data.show">Posted by: {{data.email}}</p>
             <p *ngIf="!data.show">Posted anonymously</p>
-            <ion-buttons *ngIf="checkLogin()">
-                <button ion-button color="danger" (click)="showPrompt()">Delete</button>
-            </ion-buttons>
+            <p>Status: {{status}}</p>
+            <ion-grid *ngIf="checkLogin()">
+                <ion-row>
+                    <ion-col col-6>
+                        <button ion-button color="danger" (click)="showPrompt()" block>Delete</button>
+                    </ion-col>
+                    <ion-col col-6>
+                        <button ion-button color="secondary" block (click)="markComplete()" *ngIf="status != 'Complete'">Mark Complete</button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </div>
         <div *ngSwitchCase="'resolve'">
             <ion-item>
@@ -71,7 +92,7 @@
                     </ion-row>
                 </ion-grid>
             </ion-item>
-            <button ion-button>Resolve!</button>
+            <button ion-button (click)="submit()">Resolve!</button>
         </div>
     </div>
 </ion-content>

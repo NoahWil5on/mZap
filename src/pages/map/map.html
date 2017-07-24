@@ -8,7 +8,7 @@
     <div class="nav-button nav-button-left orange" (click)="openMenu()" >
         <img class="hamburg"src="assets/hamburger.png" alt="nav"/>
     </div>
-    <div class="nav-button nav-button-right green" (click)="openSettings()">
+    <div class="nav-button nav-button-right green" (click)="setCenter()">
         <img class="cog"src="assets/cog.png" alt="nav"/>
     </div>
     <div id="center-div">
@@ -26,8 +26,8 @@
                 <img class="symbol" alt='Bugs' src="assets/mosquito_sm.png"/>
                 <img src="assets/new/empty-button.png" alt="Bugs"/>
             </div>
-            <div (click)="addPage('water')">
-                <img class="symbol" alt='Water' src="assets/new/droplet.png"/>
+            <div (click)="addPage('pest')">
+                <img class="symbol" alt='Rat' src="assets/new/rat.png"/>
                 <img src="assets/new/empty-button.png" alt="Water"/>
             </div>
             <div (click)="addPage('building')">

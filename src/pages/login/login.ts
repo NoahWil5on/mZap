@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, MenuController } from 'ionic-angular';
 import { RegisterPage } from '../register/register';
 import { MapPage } from '../map/map'
 import { UserInfoProvider} from '../../providers/user-info/user-info';
@@ -13,15 +13,15 @@ import * as firebase from 'firebase';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-
     email: string = "";
     password: string = "";
     error: string = "";
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
-              public alertCtrl: AlertController, public afDB: AngularFireDatabase, public userInfo: UserInfoProvider, public loadingCtrl: LoadingController) {
+              public alertCtrl: AlertController, public afDB: AngularFireDatabase, public userInfo: UserInfoProvider, public loadingCtrl: LoadingController, public menuCtrl: MenuController) {
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad() {           
+      this.menuCtrl.enable(false);
       this.afAuth.auth.onAuthStateChanged(user => {
           if(user){
               var today = new Date();
@@ -47,6 +47,9 @@ export class LoginPage {
           }
       });
   }
+    ionViewWillLeave(){
+        this.menuCtrl.enable(true);
+    }
     async login(){
         let loader = this.loadingCtrl.create({
             content: 'Verifying User...'

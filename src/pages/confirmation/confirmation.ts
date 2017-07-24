@@ -9,7 +9,6 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 })
 export class ConfirmationPage {
 
-    title: any;
     description: any;
     type: any;
     picture: any = '';
@@ -19,11 +18,15 @@ export class ConfirmationPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public socialSharing: SocialSharing) {
   }
   ionViewDidLoad() {
-      this.title = this.navParams.get('title');
       this.type = this.navParams.get('type');
       this.description = this.navParams.get('description');
       this.email = this.navParams.get('email');
-      this.picture = this.navParams.get('url');
+      if(this.navParams.get('url')){
+        this.picture = this.navParams.get('url');
+      }
+      else{
+          this.picture = true;
+      }
       this.pos = this.navParams.get('pos');
       this.show = this.navParams.get('show');
   }

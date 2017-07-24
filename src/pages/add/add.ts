@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ModalController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController, LoadingController, AlertController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ImagesProvider } from '../../providers/images/images';
@@ -15,7 +15,6 @@ export class AddPage {
     data: any;
     type: any = '';
     dataSet: boolean = false;
-    title: string = "";
     desc: string = "";
     url: any = "";
     refName: any = "";
@@ -23,7 +22,7 @@ export class AddPage {
     error: string = "";
     pos: any;
     constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
-         public afAuth: AngularFireAuth, public images: ImagesProvider, public afDB: AngularFireDatabase, public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
+         public afAuth: AngularFireAuth, public images: ImagesProvider, public afDB: AngularFireDatabase, public modalCtrl: ModalController, public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
         this.images.doClear();
     }
 
@@ -54,35 +53,70 @@ export class AddPage {
         let loader = this.loadingCtrl.create({
             content: 'Submitting Content...'
         })
-        if(this.title.length > 0 && this.desc.length > 0 && this.dataSet){
-            loader.present();
-            var promiseObject = this.images.uploadToFirebase();
-            promiseObject.promise.then(res => {
-                this.url = res;
-                this.refName = promiseObject.refName;
-                var self = this;
-                firebase.database().ref('users/').child(this.afAuth.auth.currentUser.uid+"").once("value", function(snapshot){
-                    self.afDB.object('users/'+ self.afAuth.auth.currentUser.uid).update({
-                        posts: snapshot.val().posts+1
-                    }).then(_ => {
-                        loader.dismiss();
-                        self.viewCtrl.dismiss({
-                            title: self.title,
-                            desc: self.desc,
-                            type: self.data,
-                            show: self.show,
-                            email: self.afAuth.auth.currentUser.email,
-                            url: self.url,
-                            refName: self.refName
+        if(this.desc.length > 0){
+            if(!this.dataSet){
+                let imageAlert = this.alertCtrl.create({
+                    title: "Are you sure you want to submit this without a photo?",
+                    subTitle: "Adding a photo will allow other users to better assess your report",
+                    buttons: [{
+                        text: 'Submit',
+                        handler:() => {
+                            loader.present();
+                            var self = this;
+                            firebase.database().ref('users/').child(this.afAuth.auth.currentUser.uid+"").once("value", function(snapshot){
+                                self.afDB.object('users/'+ self.afAuth.auth.currentUser.uid).update({
+                                    posts: snapshot.val().posts+1
+                                }).then(_ => {
+                                    loader.dismiss();
+                                    self.viewCtrl.dismiss({
+                                        desc: self.desc,
+                                        type: self.data,
+                                        show: self.show,
+                                        email: self.afAuth.auth.currentUser.email,
+                                        url: self.url,
+                                        refName: self.refName
+                                    });
+                                }).catch(e => {
+                                    loader.dismiss();
+                                    alert(e.message);
+                                });
+                            });
+                        }
+                     },
+                     {
+                        text: 'Cancel',
+                     }]
+                })
+                imageAlert.present();
+            }else{
+                loader.present();
+                var promiseObject = this.images.uploadToFirebase();
+                promiseObject.promise.then(res => {
+                    this.url = res;
+                    this.refName = promiseObject.refName;
+                    var self = this;
+                    firebase.database().ref('users/').child(this.afAuth.auth.currentUser.uid+"").once("value", function(snapshot){
+                        self.afDB.object('users/'+ self.afAuth.auth.currentUser.uid).update({
+                            posts: snapshot.val().posts+1
+                        }).then(_ => {
+                            loader.dismiss();
+                            self.viewCtrl.dismiss({
+                                desc: self.desc,
+                                type: self.data,
+                                show: self.show,
+                                email: self.afAuth.auth.currentUser.email,
+                                url: self.url,
+                                refName: self.refName
+                            });
+                        }).catch(e => {
+                            alert(e.message);
                         });
-                    }).catch(e => {
-                        alert(e.message);
                     });
+                }).catch(e => {
+                    loader.dismiss();
+                    alert("Error: " +e.message);
                 });
-            }).catch(e => {
-                loader.dismiss();
-                alert("Error: " +e.message);
-            });
+            }
         }else{
             this.error = "Fill out all fields";
         }

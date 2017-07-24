@@ -36,13 +36,14 @@
         background: -webkit-linear-gradient(top, rgba(212,252,90,1) 2%,rgba(252,248,12,1) 100%); /* Chrome10-25,Safari5.1-6 */
         background: linear-gradient(to bottom, rgba(212,252,90,1) 2%,rgba(252,248,12,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4fc5a', endColorstr='#fcf80c',GradientType=0 ); /* IE6-9 */
-        div{
+        .div-holder{
             margin-left: auto;
             margin-right: auto;
             position: relative;
             top: 50%;
             transform: translateY(-50%);
             img{
+                margin-top: 10px;
                 height: 75px;
                 width: 75px;
                 border-radius: 100%;

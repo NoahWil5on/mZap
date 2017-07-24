@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
-import { Platform, MenuController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, MenuController, Nav} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { TopRatedPage } from '../pages/top-rated/top-rated';
 import { MapPage } from '../pages/map/map';
+import { RegisterPage } from '../pages/register/register'
 import { ProfilePage } from '../pages/profile/profile';
+import { SettingsPage } from '../pages/settings/settings';
 import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 
@@ -13,19 +15,18 @@ import { AngularFireAuth } from 'angularfire2/auth';
   templateUrl: 'app.html'
 })
 export class MyApp {
+    @ViewChild(Nav) nav: Nav;
     firstOpen: boolean = true;
     name: any = '';
     imgSrc: any = '';
-    rootPage:any = LoginPage;
+    rootPage: any = LoginPage;
     
-    mapPage: any;
-    ratedPage: any;
-    profilePage: any;
+    mapPage = MapPage;
+    ratedPage = TopRatedPage;
+    profilePage = ProfilePage;
+    settingsPage = SettingsPage;
     
     constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth, private menuCtrl: MenuController) {
-        this.mapPage = MapPage;
-        this.ratedPage = TopRatedPage;
-        this.profilePage = ProfilePage;
         platform.ready().then(() => {
             /*if(Network.connection == Connection.NONE){
                 var alert = this.alertCtrl.create({
@@ -95,15 +96,23 @@ export class MyApp {
         });
     }
     topRated(){
-        this.rootPage = TopRatedPage;
+        this.nav.setRoot(TopRatedPage);
         this.menuCtrl.close();
     }
     map(){
-        this.rootPage = MapPage; 
+        this.nav.setRoot(MapPage);
         this.menuCtrl.close();
     }
     profile(){
-        this.rootPage = ProfilePage;
+        this.nav.setRoot(ProfilePage);
+        this.menuCtrl.close();
+    }
+    register(){
+        this.nav.push(RegisterPage);
+        this.menuCtrl.close();
+    }
+    settings(){
+        this.nav.setRoot(SettingsPage);
         this.menuCtrl.close();
     }
     openMenu(){
@@ -122,7 +131,8 @@ export class MyApp {
         return (this.afAuth.auth.currentUser) ? true : false;
     }
     checkPage(root){
-        return (this.rootPage == root);
+        console.log(this.nav.root);
+        return (this.nav.root == root);
     }
 }
 
