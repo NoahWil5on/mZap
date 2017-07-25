@@ -14,7 +14,7 @@
             <h4 *ngIf="showName()">Your name is viewable to other users on this post</h4>
             <h4 *ngIf="!showName()">Your name is not viewable to other users on this post</h4>
         </ion-item>
-        <ion-item text-wrap class="report-item" *ngIf="!picture">
+        <ion-item text-wrap class="report-item" *ngIf="picture">
             <h4>Picture:</h4>
             <img [src]="picture" alt="Your Photo" />
         </ion-item>

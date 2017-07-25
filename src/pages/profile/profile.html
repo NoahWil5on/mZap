@@ -10,5 +10,27 @@
 </ion-header>
 
 <ion-content padding>
-    <h2 text-center>Content coming soon!</h2>
+    <ion-grid>
+        <ion-row>
+            <ion-col col-auto>
+                <img [src]='imgSrc' alt="Profile Pic" *ngIf='imgSrc.length > 0' />
+            </ion-col>
+            <ion-col>
+                <h2>
+                    {{name}}
+                </h2>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <h2 text-left>My Reports:</h2>
+    <ion-card *ngFor="let report of reports">
+        <ion-card-header text-wrap>
+            <h2>{{report.description}}</h2>
+        </ion-card-header>
+        <ion-card-content>
+            <img [src]='report.url' alt="Image of Report" *ngIf="report.url" padding/>
+            <p >Type: {{report.type}}</p>
+            <p >Status: {{report.status}}</p>
+        </ion-card-content>
+    </ion-card>
 </ion-content>

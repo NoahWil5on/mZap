@@ -18,7 +18,7 @@
                     </button>
                 </div>
         </header>
-        <ion-item (click)="map()" [class.nav-item]="checkPage(mapPage)">
+        <ion-item (click)="map()" [class.nav-item]="checkPage('map')">
             <ion-grid>
                 <ion-row>
                     <ion-col col-auto no-padding>
@@ -42,7 +42,7 @@
                 </ion-row>
             </ion-grid>
         </ion-item>
-        <ion-item (click)="topRated()" [class.nav-item]="checkPage(ratedPage)">
+        <ion-item (click)="topRated()" [class.nav-item]="checkPage('top')">
             <ion-grid>
                 <ion-row>
                     <ion-col col-auto no-padding>
@@ -54,11 +54,11 @@
                 </ion-row>
             </ion-grid>
         </ion-item>
-        <ion-item (click)="settings()" [class.nav-item]="checkPage(settingsPage)">
+        <ion-item (click)="settings()" [class.nav-item]="checkPage('settings')">
             <ion-grid>
                 <ion-row>
                     <ion-col col-auto no-padding>
-                        <img src="assets/trophy.png" style="height: 34px; padding: 0" alt="trophy" />
+                        <img src="assets/cog.png" style="height: 34px; padding: 0" alt="trophy" />
                     </ion-col>
                     <ion-col>
                         <p class="option">Settings</p>

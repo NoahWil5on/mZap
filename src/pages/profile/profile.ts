@@ -1,24 +1,36 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import { AngularFireAuth } from 'angularfire2/auth'
+import * as firebase from 'firebase';
 
-/**
- * Generated class for the ProfilePage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 @IonicPage()
 @Component({
-  selector: 'page-profile',
-  templateUrl: 'profile.html',
+    selector: 'page-profile',
+    templateUrl: 'profile.html',
 })
 export class ProfilePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController) {
-  }
+    reports: any = [];
+    name: any = '';
+    imgSrc: any = '';
+    constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, public afAuth:    AngularFireAuth) {
+        
+    }
 
-  ionViewDidLoad() {
-  }
+    ionViewDidLoad() {
+        var self = this;
+        firebase.database().ref('/positions/').orderByChild('email').equalTo(this.afAuth.auth.currentUser.email)
+        .once('value').then(snapshot => {
+            snapshot.forEach(function(item){
+                self.reports.unshift(item.val());
+            });
+        })
+        firebase.database().ref('users').child(this.afAuth.auth.currentUser.uid).once('value').then((snapshot) => {
+            this.name = snapshot.val().name;
+            this.imgSrc = snapshot.val().url;
+        });
+    }
     openMenu(){
         this.menuCtrl.open();
     }

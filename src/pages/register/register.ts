@@ -4,6 +4,7 @@ import { MapPage } from '../map/map';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ImagesProvider } from '../../providers/images/images';
+import { UserInfoProvider } from '../../providers/user-info/user-info';
 
 @IonicPage()
 @Component({
@@ -23,7 +24,7 @@ export class RegisterPage {
     error: string = "";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
-              public afDB: AngularFireDatabase, public images: ImagesProvider) {
+              public afDB: AngularFireDatabase, public images: ImagesProvider, public userInfo: UserInfoProvider) {
       this.images.doClear();
   }
 
@@ -64,6 +65,7 @@ export class RegisterPage {
                                     refName: this.refName, 
                                     url: this.url}
                                 ).then(_ => {
+                                    this.userInfo.pageState = 'map';
                                     this.navCtrl.setRoot(MapPage);
                                 }).catch(e => {
                                     alert(e.message);
@@ -83,6 +85,7 @@ export class RegisterPage {
                                 firstActive: date, 
                                 name: this.name}
                             ).then(_ => {
+                                this.userInfo.pageState = 'map';
                                 this.navCtrl.setRoot(MapPage);
                             }).catch(e => {
                                 console.log(e.message);

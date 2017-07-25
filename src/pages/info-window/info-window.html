@@ -7,12 +7,12 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{data.description}}</ion-title>
+    <ion-title>{{data.type}}</ion-title>
     <ion-buttons end>
         <button ion-button clear (click)="dismiss()">X</button>
       </ion-buttons>
   </ion-navbar>
-    <ion-toolbar>
+    <ion-toolbar *ngIf="checkLoggedOn()">
         <ion-segment [(ngModel)]="section" color="secondary">
             <ion-segment-button value="info">
                 Information
@@ -51,14 +51,19 @@
                     </ion-col>
                 </ion-row>
             </ion-grid>
-            <h2>{{data.type}}</h2>
-            <div text-center *ngIf="data.url">
-                <img [src]="data.url" alt="Image of Location"/>
-            </div>
-            <h3>{{data.title}}</h3>
-            <p *ngIf="data.show">Posted by: {{data.email}}</p>
-            <p *ngIf="!data.show">Posted anonymously</p>
-            <p>Status: {{status}}</p>
+            <ion-card>
+                <ion-card-header>
+                    <h2>{{data.description}}</h2>
+                </ion-card-header>
+                <ion-card-content>
+                    <div text-center *ngIf="data.url">
+                        <img [src]="data.url" alt="Image of Location"/>
+                    </div>
+                    <p *ngIf="data.show">Posted by: {{data.email}}</p>
+                    <p *ngIf="!data.show">Posted anonymously</p>
+                    <p>Status: {{status}}</p>
+                </ion-card-content>
+            </ion-card>
             <ion-grid *ngIf="checkLogin()">
                 <ion-row>
                     <ion-col col-6>

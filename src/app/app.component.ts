@@ -8,6 +8,9 @@ import { MapPage } from '../pages/map/map';
 import { RegisterPage } from '../pages/register/register'
 import { ProfilePage } from '../pages/profile/profile';
 import { SettingsPage } from '../pages/settings/settings';
+
+import { UserInfoProvider } from '../providers/user-info/user-info';
+
 import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 
@@ -16,7 +19,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class MyApp {
     @ViewChild(Nav) nav: Nav;
-    firstOpen: boolean = true;
     name: any = '';
     imgSrc: any = '';
     rootPage: any = LoginPage;
@@ -26,7 +28,7 @@ export class MyApp {
     profilePage = ProfilePage;
     settingsPage = SettingsPage;
     
-    constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth, private menuCtrl: MenuController) {
+    constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider) {
         platform.ready().then(() => {
             /*if(Network.connection == Connection.NONE){
                 var alert = this.alertCtrl.create({
@@ -97,14 +99,17 @@ export class MyApp {
     }
     topRated(){
         this.nav.setRoot(TopRatedPage);
+        this.userInfo.pageState = 'top';
         this.menuCtrl.close();
     }
     map(){
         this.nav.setRoot(MapPage);
+        this.userInfo.pageState = 'map';
         this.menuCtrl.close();
     }
     profile(){
         this.nav.setRoot(ProfilePage);
+        this.userInfo.pageState = 'profile';
         this.menuCtrl.close();
     }
     register(){
@@ -113,13 +118,10 @@ export class MyApp {
     }
     settings(){
         this.nav.setRoot(SettingsPage);
+        this.userInfo.pageState = 'settings';
         this.menuCtrl.close();
     }
     openMenu(){
-        if(this.firstOpen){
-            this.rootPage = MapPage;
-            this.firstOpen = false;
-        }
         if(this.checkLogin()){
             firebase.database().ref('users').child(this.afAuth.auth.currentUser.uid).once('value').then((snapshot) => {
                 this.name = snapshot.val().name;
@@ -130,9 +132,8 @@ export class MyApp {
     checkLogin(){
         return (this.afAuth.auth.currentUser) ? true : false;
     }
-    checkPage(root){
-        console.log(this.nav.root);
-        return (this.nav.root == root);
+    checkPage(page){
+        return (this.userInfo.pageState == page);
     }
 }
 

@@ -11,7 +11,7 @@ export class ConfirmationPage {
 
     description: any;
     type: any;
-    picture: any = '';
+    picture: any;
     email: any;
     pos: any;
     show: any;
@@ -23,9 +23,6 @@ export class ConfirmationPage {
       this.email = this.navParams.get('email');
       if(this.navParams.get('url')){
         this.picture = this.navParams.get('url');
-      }
-      else{
-          this.picture = true;
       }
       this.pos = this.navParams.get('pos');
       this.show = this.navParams.get('show');

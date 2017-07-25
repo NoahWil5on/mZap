@@ -46,7 +46,7 @@ export class ImagesProvider {
         });
     }
     doGetAlbumImage(width, height){
-        //get picture from camera
+        //get picture from album
         return new Promise((resolve,reject) =>{ 
             this.camera.getPicture({
                 quality : 100,

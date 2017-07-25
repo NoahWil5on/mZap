@@ -36,6 +36,7 @@ export class LoginPage {
                               visits: snapshot.val().visits+1,
                               lastActive: date 
                           }).then(_ => {
+                              self.userInfo.pageState = 'map';
                               self.navCtrl.setRoot(MapPage);
                           }).catch(e => {
                               alert(e.message);
@@ -59,6 +60,7 @@ export class LoginPage {
             firebase.database().ref('users').child(this.afAuth.auth.currentUser.uid).once('value').then((snapshot) => {
                 loader.dismiss();
                this.userInfo.user = snapshot.val(); 
+               this.userInfo.pageState = 'map';
                this.navCtrl.setRoot(MapPage);
             });
         }).catch(e => {
@@ -78,7 +80,13 @@ export class LoginPage {
         alert.present();
     }
     goHome(){
+        try{
+        this.userInfo.pageState = 'map';
         this.navCtrl.setRoot(MapPage);
+        }
+        catch(e){
+            alert(e.message);
+        }
     }
 
 }

@@ -1,14 +1,22 @@
+//Ionic imports
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, AlertController} from 'ionic-angular';
-import { AngularFireDatabase} from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { ZonesProvider } from '../../providers/zones/zones';
+import { IonicPage, NavController, NavParams, ModalController, AlertController, MenuController} from 'ionic-angular';
+
+//page imports
 import { AddPage } from '../add/add';
 import { ConfirmationPage } from '../confirmation/confirmation'
 import { InfoWindowPage } from '../info-window/info-window';
-import { MenuController } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
 
+//provider imports
+import { ZonesProvider } from '../../providers/zones/zones';
+import { UserInfoProvider } from '../../providers/user-info/user-info';
+
+//firebase imports
+import { AngularFireDatabase} from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+
+//if not declared ionic will throw an error
 declare var google;
 
 @IonicPage()
@@ -17,6 +25,7 @@ declare var google;
   templateUrl: 'map.html',
 })
 export class MapPage {
+    //public fields
     @ViewChild('map') mapElement;
     map: any;
     add: boolean = false;
@@ -26,16 +35,41 @@ export class MapPage {
     points: any = [];
     zonies: any = [];
     markers: any = [];
-    myMarker: any;
-    myCircle: any;
+    myMarker: any = undefined;
+    myCircle: any = undefined;
     
     /*Instantiate all imported classes*/
     constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController,
              public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth,
-              public alertCtrl: AlertController, public zones: ZonesProvider, public menuCtrl: MenuController) {
+              public alertCtrl: AlertController, public zones: ZonesProvider, public menuCtrl: MenuController,
+                public userInfo: UserInfoProvider) {
     }
 
+    //as soon as page is loaded run
     ionViewDidLoad() {
+        //checks if this is NOT the first time you're opening up the map
+        if(this.userInfo.zoom != null){
+            //initializes map
+            let latLng = new google.maps.LatLng(this.userInfo.lat,this.userInfo.lng);
+            let options = {
+                center: latLng,
+                zoom: this.userInfo.zoom,
+                disableDefaultUI: true,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            this.initMap(options,false);
+            
+            //if the user allows you to see their position add a blinking dot to their location
+            if(this.userInfo.allowPosition){
+                var self = this;
+                navigator.geolocation.getCurrentPosition((position) => {
+                    let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    self.setPin(latLng);
+                });
+            }
+            return;
+        }
+        //if this is the first time opening up maps then run this function
         this.runNavigation();
     }
     setCenter(){
@@ -45,36 +79,45 @@ export class MapPage {
             self.map.setCenter(latLng);
             self.map.setZoom(17);
             
-            self.myCircle.setMap(null);
-            self.myMarker.setMap(null);
-            self.myCircle = null;
-            self.myMarker = null;
-            
-            var markerImage = new google.maps.MarkerImage('assets/new/dot.png',
-                new google.maps.Size(20, 20),
-                new google.maps.Point(0, 0),
-                new google.maps.Point(10, 10));
-            
-            self.myMarker = new google.maps.Marker({
-                    position: latLng,
-                    icon: markerImage,
-                    map: self.map
-                });
-            self.myCircle = new google.maps.Circle({
-                strokeColor: '#888',
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: '#aaa',
-                fillOpacity: 0.35,
-                map: self.map,
-                center: latLng,
-                radius: 150
-              });
+            self.setPin(latLng);
         });
+    }
+    setPin(latLng){
+        if(this.myCircle){
+            this.myCircle.setMap(null);
+            this.myMarker.setMap(null);
+            this.myCircle = null;
+            this.myMarker = null;
+        }
+
+        var markerImage = new google.maps.MarkerImage('assets/new/dot.png',
+            new google.maps.Size(20, 20),
+            new google.maps.Point(0, 0),
+            new google.maps.Point(10, 10));
+
+        this.myMarker = new google.maps.Marker({
+                position: latLng,
+                icon: markerImage,
+                map: this.map
+            });
+        this.myCircle = new google.maps.Circle({
+            strokeColor: '#444',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#aaa',
+            fillOpacity: 0.35,
+            map: this.map,
+            center: latLng,
+            radius: 150
+          });
+        this.animate(latLng);
     }
     runNavigation(){
         var self = this;
+        
+        //check if the user will let you see their position
         navigator.geolocation.getCurrentPosition(function(position){
+            self.userInfo.allowPosition = true;
             let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             let options = {
                 center: latLng,
@@ -94,9 +137,11 @@ export class MapPage {
             self.initMap(options,false);
         });
     }
+    //any time the "menu" button is clicked
     openMenu(){
         this.menuCtrl.open();
     }
+    //deprecated
     openSettings(){
         this.navCtrl.push(SettingsPage);
     }
@@ -109,6 +154,8 @@ export class MapPage {
     addPage(data){
         let title = "";
         let description = "";
+        
+        //switch for message to show user when they click on add button
         switch(data){
             case 'building':
                 title = "Abandoned building";
@@ -129,6 +176,7 @@ export class MapPage {
             default:
                 break;
         }
+        //tell the user what they're about to do
         let infoAlert = this.alertCtrl.create({
             title: title,
             subTitle: description,
@@ -143,7 +191,7 @@ export class MapPage {
                             if(data){
                                 //instantiates a marker with all specified fields
                                 var newMarker;
-                                if(data.title){
+                                if(data.url){
                                     newMarker = {
                                         lat: this.map.getCenter().lat(),
                                         lng: this.map.getCenter().lng(),
@@ -157,6 +205,7 @@ export class MapPage {
                                         key: ""
                                     }
                                 }
+                                //if there is an image available set the image location
                                 else{
                                      newMarker = {
                                         lat: this.map.getCenter().lat(),
@@ -191,6 +240,7 @@ export class MapPage {
         });
         infoAlert.present();
     }
+    
     /*Checks if user is logged in to prevent them from making changes if
     *They're signed in anonymously. Even if they try and make
     *changes anonymously the database won't accept the changes
@@ -204,6 +254,9 @@ export class MapPage {
     /*Is called anytime a point is found in the database or created*/
     makeMarker(data){
         var selection = '';
+        
+        //switch for positions markers around the map
+        //tells google what image to use as the marker
         switch(data.type){
             case 'water':
                 selection = 'assets/new/droplet.png';
@@ -217,13 +270,14 @@ export class MapPage {
             case 'building':
                 selection = 'assets/new/building.png';
                 break;
-            case 'rat':
+            case 'pest':
                 selection = 'assets/new/rat.png';
                 break;
             default:
                 selection = 'assets/mosquito_sm.png';
                 break;
         };
+        //creates the marker with the specified icon
         let marker = new google.maps.Marker({
             position: new google.maps.LatLng(data.lat,data.lng),
             icon: selection,
@@ -267,6 +321,16 @@ export class MapPage {
                 }
             });
         });
+        //anytime the bounds change update the "saved" position so if the 
+        //user changes pages and comes back they will be at the same lat/lng
+        //and same zoom as when they left the map
+        google.maps.event.addListener(this.map, 'bounds_changed', event => {
+            this.userInfo.lat = this.map.getCenter().lat();
+            this.userInfo.lng = this.map.getCenter().lng();
+            this.userInfo.zoom = this.map.getZoom();
+        })
+        //if the user let you see their position then place
+        //a blinking dot at their location
         if(bool){
             let latLng = new google.maps.LatLng(this.map.getCenter().lat(),this.map.getCenter().lng())
             var markerImage = new google.maps.MarkerImage('assets/new/dot.png',
@@ -280,7 +344,7 @@ export class MapPage {
                 map: this.map
             });
             this.myCircle = new google.maps.Circle({
-                strokeColor: '#888',
+                strokeColor: '#444',
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
                 fillColor: '#aaa',
@@ -289,8 +353,10 @@ export class MapPage {
                 center: latLng,
                 radius: 150
               });
+            this.animate(latLng);
         }
     }
+    //any "cluster" zone that is found on the map is drawn here
     applyZones(zones){
         for(var i = 0; i < zones.length; i++){
             this.zonies.push(new google.maps.Circle({
@@ -301,8 +367,39 @@ export class MapPage {
                 fillOpacity: 0.35,
                 map: this.map,
                 center: new google.maps.LatLng(zones[i].lat,zones[i].lng),
-                radius: zones[i].dist
+                radius: ((zones[i].dist/2) + 200)
               }));
         }
+    }
+    //animates the user's position
+    animate(latLng){
+        var self = this;
+        var options = {
+            strokeColor: '#444',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#aaa',
+            fillOpacity: 0.35,
+            map: this.map,
+            center: latLng,
+            radius: 150
+        }
+        var skip
+        setInterval(function(){
+            if(options.radius > 150){
+                options.radius = 0;
+                skip = true;
+            }
+            if(!skip){
+                options.strokeOpacity = (150-options.radius)/150;
+                options.fillOpacity = (150-options.radius)/150;
+            }
+            //fun little formula to make the circle's delta radius decrease at an inverse
+            //exponential rate overtime
+            options.radius += Math.pow((320-options.radius)/150, 2)/3;
+            self.myCircle.setOptions(options);     
+            skip = false;
+          //  }
+        },30)
     }
 }

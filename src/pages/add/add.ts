@@ -73,8 +73,6 @@ export class AddPage {
                                         type: self.data,
                                         show: self.show,
                                         email: self.afAuth.auth.currentUser.email,
-                                        url: self.url,
-                                        refName: self.refName
                                     });
                                 }).catch(e => {
                                     loader.dismiss();

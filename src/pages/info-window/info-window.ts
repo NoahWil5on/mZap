@@ -88,6 +88,11 @@ export class InfoWindowPage {
         }
         return false;
     }
+    checkLoggedOn(){
+        if(this.afAuth.auth.currentUser)
+            return true;
+        return false;
+    }
     submit(){
         if(this.dataSet){
             firebase.database().ref('/positions/').child(this.data.key).child('resolveImages').push('value.jpg');
@@ -95,6 +100,15 @@ export class InfoWindowPage {
         let loader = this.loadingCtrl.create({
             content: 'Submitting Content...'
         })
+        let successAlert = this.alertCtrl.create({
+            title: "Successfully Submitted",
+            buttons: [{
+                text: 'OK',
+                handler: () => {
+                    this.dismiss(false);
+                }
+            }]
+        });
         if(this.dataSet){
             loader.present();
             var promiseObject = this.images.uploadToFirebase();
@@ -103,14 +117,19 @@ export class InfoWindowPage {
                 let refName = promiseObject.refName;
                 let data = {url: url, refName: refName};
                 firebase.database().ref('/resolveImages/').child(this.data.key).push(data).then(key => {
-                    firebase.database().ref('/resolveImages/').child(this.data.key).child('key').set(key).then(_ => {
-                        this.ngZone.run(() => {
-                            this.section = 'info';
-                        })
+                    //Adds key for deletion later on
+                    /*firebase.database().ref('/resolveImages/').child(this.data.key).child('key').set(key.key).then(_ => {
                         loader.dismiss();
-                    })
-                }).catch(_ => {
+                        successAlert.present();
+                    }).catch(e => {
+                        loader.dismiss();
+                        alert("Error: " +e.message);
+                    })*/
                     loader.dismiss();
+                    successAlert.present();
+                }).catch(e => {
+                    loader.dismiss();
+                    alert("Error: " +e.message);                    
                 })
             }).catch(e => {
                 loader.dismiss();
@@ -147,7 +166,12 @@ export class InfoWindowPage {
         loader.present();
         let alert = this.alertCtrl.create({
             title: "Marked as complete!",
-            buttons: ['OK']
+            buttons: [{
+                text: 'OK',
+                handler: () => {
+                    this.dismiss(false);
+                }
+            }]
         });
         firebase.database().ref('/positions/').child(this.data.key).child('status').set('Complete').then(_ => {
             loader.dismiss();
