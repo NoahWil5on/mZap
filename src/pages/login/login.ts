@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, MenuController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { RegisterPage } from '../register/register';
 import { MapPage } from '../map/map'
 import { UserInfoProvider} from '../../providers/user-info/user-info';
@@ -17,37 +18,54 @@ export class LoginPage {
     password: string = "";
     error: string = "";
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
-              public alertCtrl: AlertController, public afDB: AngularFireDatabase, public userInfo: UserInfoProvider, public loadingCtrl: LoadingController, public menuCtrl: MenuController) {
+              public alertCtrl: AlertController, public afDB: AngularFireDatabase, public userInfo: UserInfoProvider, public loadingCtrl: LoadingController, public menuCtrl: MenuController, private storage: Storage) {
   }
 
-  ionViewDidLoad() {           
-      this.menuCtrl.enable(false);
-      this.afAuth.auth.onAuthStateChanged(user => {
-          if(user){
-              var today = new Date();
-              /*get current date and time*/
-              var date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-              var self = this;
-              /*upate user visits and last active time*/
-              if(firebase.database().ref('users/').child(user.uid+"")){
-                  firebase.database().ref('users/').child(user.uid+"").once("value", function(snapshot){
-                      if(snapshot.val() && snapshot.val().visits){
-                          self.afDB.object('users/'+ self.afAuth.auth.currentUser.uid).update({
-                              visits: snapshot.val().visits+1,
-                              lastActive: date 
-                          }).then(_ => {
-                              self.userInfo.pageState = 'map';
-                              self.navCtrl.setRoot(MapPage);
-                          }).catch(e => {
-                              alert(e.message);
-                          });
-                      }
+    ionViewWillEnter(){
+        this.storage.get('mzap_email').then(email => {
+            this.storage.get('mzap_password').then(pass => {
+                this.afAuth.auth.signInWithEmailAndPassword(email,pass).then(data => {
+                    console.log(data);
+                    this.runUser(this.afAuth.auth.currentUser);
+                }).catch(e => {
+                    console.log(e);
+                })
+            })
+        }).catch(e => {
+            return;
+        })
+    }
+    ionViewDidLoad() {           
+        this.menuCtrl.enable(false);
+        this.afAuth.auth.onAuthStateChanged(user => {
+            if(user){
+            this.runUser(user);
+            }
+        });
+    }
+    runUser(user){
+      var today = new Date();
+      /*get current date and time*/
+      var date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      var self = this;
+      /*upate user visits and last active time*/
+      if(firebase.database().ref('users/').child(user.uid+"")){
+          firebase.database().ref('users/').child(user.uid+"").once("value", function(snapshot){
+              if(snapshot.val() && snapshot.val().visits){
+                  self.afDB.object('users/'+ self.afAuth.auth.currentUser.uid).update({
+                      visits: snapshot.val().visits+1,
+                      lastActive: date 
+                  }).then(_ => {
+                      self.userInfo.pageState = 'map';
+                      self.navCtrl.setRoot(MapPage);
+                  }).catch(e => {
+                      alert(e.message);
                   });
-              }else{
               }
-          }
-      });
-  }
+          });
+      }else{
+      }
+    }
     ionViewWillLeave(){
         this.menuCtrl.enable(true);
     }
@@ -58,6 +76,8 @@ export class LoginPage {
         loader.present();
         this.afAuth.auth.signInWithEmailAndPassword(this.email,this.password).then(data =>{
             firebase.database().ref('users').child(this.afAuth.auth.currentUser.uid).once('value').then((snapshot) => {
+                this.storage.set('mzap_email', this.email);
+                this.storage.set('mzap_password', this.password);
                 loader.dismiss();
                this.userInfo.user = snapshot.val(); 
                this.userInfo.pageState = 'map';

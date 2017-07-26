@@ -5,6 +5,35 @@
   Ionic pages and navigation.
 -->
 <ion-content>
+    <div id="drop-down" [class.up]='dropDown' [class.down]='!dropDown' (pan)="dropFalse()">
+        <div class="controls-back"></div>
+        <ion-grid>
+            <ion-row>
+                <ion-col text-center>
+                    <button ion-button>
+                        <ion-icon name="thumbs-up"></ion-icon>
+                    </button>
+                </ion-col>
+                <ion-col text-center>
+                    <button ion-button>
+                        <ion-icon name="chatboxes"></ion-icon>
+                    </button>
+                </ion-col>
+                <ion-col text-center>
+                    <button ion-button color="secondary" (click)="doInfoWindow(myActiveData)">
+                        Go
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <div style="pointer-events:none; ">
+            <h2 text-center padding-top *ngIf="myActiveData.type" style="vertical-align: middle">
+                <img *ngIf="myActiveData.url" [src]="myActiveData.url" alt='User Image' width="50px" style="vertical-align: middle"/>
+                {{myActiveData.type}}
+            </h2>
+        </div>
+    </div>
     <div class="nav-button nav-button-left orange" (click)="openMenu()" >
         <img class="hamburg"src="assets/hamburger.png" alt="nav"/>
     </div>
@@ -16,27 +45,28 @@
             <img src="assets/location_marker.png" alt="Drop Position" />
         </div>
     </div>
-    <div id="controls">
-        <div class="button-center" *ngIf="add" >
-            <div (click)="addPage('trash')">
-                <img class="symbol" alt='Trash' src="assets/new/trash.png"/>
-                <img src="assets/new/empty-button.png" alt="Trash"/>
-            </div>
-            <div (click)="addPage('bugs')">
-                <img class="symbol" alt='Bugs' src="assets/mosquito_sm.png"/>
-                <img src="assets/new/empty-button.png" alt="Bugs"/>
-            </div>
-            <div (click)="addPage('pest')">
-                <img class="symbol" alt='Rat' src="assets/new/rat.png"/>
-                <img src="assets/new/empty-button.png" alt="Water"/>
-            </div>
-            <div (click)="addPage('building')">
-                <img class="symbol" alt='Building' src="assets/new/building.png"/>
-                <img src="assets/new/empty-button.png" alt="Building"/>
-            </div>
+    <div id="controls" (pan)="addFalse()">
+        <div class="controls-back"></div>
+        <div class="button-center" class="padding-top">
+            <button id="add-button" (click)="doAdd()"></button>
         </div>
-        <div class="button-center">
-            <img src="assets/new/add-button.png" alt="Add" (click)="doAdd()" />
+        <div class="button-center" [class.button-add]="add" [class.button-none]="!add">
+            <button class="add-type" (click)="addPage('trash')">
+                <img class="symbol" alt='Trash'style="width: 35px" src="assets/images/symbols/trash.png"/>
+                <img src="assets/images/buttons/empty_button.png" alt="Trash"/>
+            </button>
+            <button class="add-type" (click)="addPage('bugs')">
+                <img class="symbol" alt='Bugs' src="assets/images/symbols/mosquito.png"/>
+                <img src="assets/images/buttons/empty_button.png" alt="Bugs"/>
+            </button>
+            <button class="add-type" (click)="addPage('pest')">
+                <img class="symbol" alt='Rat' src="assets/images/symbols/pest.png"/>
+                <img src="assets/images/buttons/empty_button.png" alt="Water"/>
+            </button>
+            <button class="add-type" (click)="addPage('building')">
+                <img class="symbol" alt='Building' src="assets/images/symbols/building.png"/>
+                <img src="assets/images/buttons/empty_button.png" alt="Building"/>
+            </button>
         </div>
     </div>
     <div #map id="map"></div>

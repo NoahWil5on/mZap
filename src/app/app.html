@@ -30,7 +30,7 @@
                 </ion-row>
             </ion-grid>
         </ion-item>
-        <ion-item>
+        <ion-item (click)="reports()" [class.nav-item]="checkPage('reports')">
             <ion-grid>
                 <ion-row>
                     <ion-col col-auto no-padding>

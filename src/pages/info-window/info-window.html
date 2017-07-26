@@ -59,7 +59,7 @@
                     <div text-center *ngIf="data.url">
                         <img [src]="data.url" alt="Image of Location"/>
                     </div>
-                    <p *ngIf="data.show">Posted by: {{data.email}}</p>
+                    <p *ngIf="data.email && data.show">Posted by: {{data.email}}</p>
                     <p *ngIf="!data.show">Posted anonymously</p>
                     <p>Status: {{status}}</p>
                 </ion-card-content>

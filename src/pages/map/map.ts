@@ -37,6 +37,10 @@ export class MapPage {
     markers: any = [];
     myMarker: any = undefined;
     myCircle: any = undefined;
+    dropDown: boolean = true;
+    
+    myActiveData: any = {};
+    myActiveMarker: any;
     
     /*Instantiate all imported classes*/
     constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController,
@@ -79,7 +83,7 @@ export class MapPage {
             self.map.setCenter(latLng);
             self.map.setZoom(17);
             
-            self.setPin(latLng);
+            //self.setPin(latLng);
         });
     }
     setPin(latLng){
@@ -146,11 +150,19 @@ export class MapPage {
         this.navCtrl.push(SettingsPage);
     }
     /*Toggle add and update DOM*/
-  doAdd(){
-    this.add = !this.add;
-      this.ngZone.run(() =>{
-      });
-  }
+    doAdd(){
+        this.add = !this.add;
+        this.ngZone.run(() =>{
+        });
+    }
+    addFalse(){
+        this.add = false;
+        this.ngZone.run(() =>{
+        });
+    }
+    dropFalse(){
+        this.dropDown = true;
+    }
     addPage(data){
         let title = "";
         let description = "";
@@ -198,11 +210,14 @@ export class MapPage {
                                         description: data.desc,
                                         type: data.type,
                                         show: data.show,
-                                        email: data.email,
+                                        email: "",
                                         url: data.url,
                                         refName: data.refName,
                                         status: "To Do",
                                         key: ""
+                                    }
+                                    if(data.email){
+                                        newMarker.email = data.email;
                                     }
                                 }
                                 //if there is an image available set the image location
@@ -213,9 +228,12 @@ export class MapPage {
                                         description: data.desc,
                                         type: data.type,
                                         show: data.show,
-                                        email: data.email,
+                                        email: "",
                                         status: "To Do",
                                         key: ""
+                                    }
+                                    if(data.email){
+                                        newMarker.email = data.email;
                                     }
                                 }
                                 /*Push point to firebase and give it a reference*/
@@ -258,23 +276,20 @@ export class MapPage {
         //switch for positions markers around the map
         //tells google what image to use as the marker
         switch(data.type){
-            case 'water':
-                selection = 'assets/new/droplet.png';
-                break;
             case 'bugs':
-                selection = 'assets/mosquito_sm.png';
+                selection = 'assets/images/symbols/mosquito_black.png';
                 break;
             case 'trash':
-                selection = 'assets/new/trash.png';
+                selection = 'assets/images/symbols/trash_black.png';
                 break;
             case 'building':
-                selection = 'assets/new/building.png';
+                selection = 'assets/images/symbols/building_black.png';
                 break;
             case 'pest':
-                selection = 'assets/new/rat.png';
+                selection = 'assets/images/symbols/pest_black.png';
                 break;
             default:
-                selection = 'assets/mosquito_sm.png';
+                selection = 'assets/images/symbols/mosquito_black.png';
                 break;
         };
         //creates the marker with the specified icon
@@ -286,16 +301,24 @@ export class MapPage {
         this.markers.push(marker);
         var self = this;
         /*Allows an info window to pop up when a point is clicked*/
+        /*google.maps.event.addListener(marker, 'click', function(e){
+            
+        });*/
         google.maps.event.addListener(marker, 'click', function(e){
-            let infoModal = self.modal.create(InfoWindowPage, {data: data});
-            infoModal.onDidDismiss(callBack => {
-                if(callBack){
-                    marker.setMap(null);
-                    marker = null;
-                }
-            });
-            infoModal.present();
+            self.myActiveData = data;
+            self.myActiveMarker = marker
+            self.dropDown = false;
         });
+    }
+    doInfoWindow(){
+        let infoModal = this.modal.create(InfoWindowPage, {data: this.myActiveData});
+        infoModal.onDidDismiss(callBack => {
+            if(callBack){
+                this.myActiveMarker.setMap(null);
+                this.myActiveMarker = null;
+            }
+        });
+        infoModal.present();
     }
     initMap(options, bool){
         this.map = new google.maps.Map(this.mapElement.nativeElement, options);
@@ -321,6 +344,12 @@ export class MapPage {
                 }
             });
         });
+        google.maps.event.addListener(this.map, 'click', function(e){
+            self.dropDown = true;
+        })
+        google.maps.event.addListener(this.map, 'drag', function(e){
+            self.dropDown = true;
+        })
         //anytime the bounds change update the "saved" position so if the 
         //user changes pages and comes back they will be at the same lat/lng
         //and same zoom as when they left the map

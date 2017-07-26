@@ -8,6 +8,8 @@ import { MapPage } from '../pages/map/map';
 import { RegisterPage } from '../pages/register/register'
 import { ProfilePage } from '../pages/profile/profile';
 import { SettingsPage } from '../pages/settings/settings';
+import { ReportsPage } from '../pages/reports/reports';
+
 
 import { UserInfoProvider } from '../providers/user-info/user-info';
 
@@ -119,6 +121,11 @@ export class MyApp {
     settings(){
         this.nav.setRoot(SettingsPage);
         this.userInfo.pageState = 'settings';
+        this.menuCtrl.close();
+    }
+    reports(){
+        this.nav.setRoot(ReportsPage);
+        this.userInfo.pageState = 'reports';
         this.menuCtrl.close();
     }
     openMenu(){

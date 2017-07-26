@@ -131,7 +131,6 @@ export class RegisterPage {
            this.image = true; 
         }).catch(e => {
         });
-        console.log("camera");
     }
     /*Fetch image from album*/
     albumRequest(){
@@ -140,6 +139,5 @@ export class RegisterPage {
            this.image = true; 
         }).catch(e => {
         });
-        console.log("album");
     }
 }

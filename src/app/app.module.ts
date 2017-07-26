@@ -5,6 +5,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Camera } from '@ionic-native/camera';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpModule, Http } from '@angular/http';
+import { IonicStorageModule } from '@ionic/storage'
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule} from 'angularfire2/auth';
@@ -26,6 +30,7 @@ import { AddPage } from '../pages/add/add';
 import { InfoWindowPage } from '../pages/info-window/info-window';
 import { TopRatedPage } from '../pages/top-rated/top-rated';
 import { ConfirmationPage } from '../pages/confirmation/confirmation';
+import { ReportsPage } from '../pages/reports/reports';
 
 /*Import all modules (Ionic SHOULD do this for you but it doesn't which causes an error)*/
 import { LoginPageModule } from '../pages/login/login.module';
@@ -37,6 +42,7 @@ import { AddPageModule } from '../pages/add/add.module';
 import { InfoWindowPageModule } from '../pages/info-window/info-window.module';
 import { TopRatedPageModule } from '../pages/top-rated/top-rated.module';
 import { ConfirmationPageModule } from '../pages/confirmation/confirmation.module';
+import { ReportsPageModule } from '../pages/reports/reports.module';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
@@ -46,7 +52,9 @@ export const firebaseConfig = {
     storageBucket: "testdb-4ee5f.appspot.com",
     messagingSenderId: "605360272413"
   };
-
+export function createTranslateLoader(http: Http){
+    return new TranslateHttpLoader(http, './assets/il8n/', '.json');
+}
 @NgModule({
   declarations: [
       MyApp,
@@ -54,6 +62,15 @@ export const firebaseConfig = {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    HttpModule,
+    TranslateModule.forRoot({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: (createTranslateLoader),
+            deps: [Http]
+        }
+    }),
+    IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
@@ -65,7 +82,8 @@ export const firebaseConfig = {
     AddPageModule,
     InfoWindowPageModule,
     TopRatedPageModule,
-    ConfirmationPageModule
+    ConfirmationPageModule,
+    ReportsPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -78,7 +96,8 @@ export const firebaseConfig = {
       AddPage,
       InfoWindowPage,
       TopRatedPage,
-      ConfirmationPage
+      ConfirmationPage,
+      ReportsPage
   ],
   providers: [
     StatusBar,
