@@ -2,6 +2,7 @@ import { Component, ViewChild, NgZone} from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController, LoadingController, Slides} from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ImagesProvider } from '../../providers/images/images';
+import { TranslatorProvider } from '../../providers/translator/translator'
 import * as firebase from 'firebase';
 
 @IonicPage()
@@ -27,7 +28,7 @@ export class InfoWindowPage {
     dataSet: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
               public viewCtrl: ViewController, public afAuth: AngularFireAuth, public images: ImagesProvider,
-              public loadingCtrl: LoadingController, public ngZone: NgZone) {
+              public loadingCtrl: LoadingController, public ngZone: NgZone, public translate: TranslatorProvider) {
   }
 
   ionViewDidLoad() {
@@ -42,14 +43,14 @@ export class InfoWindowPage {
   }
     showPrompt(){
         var alert = this.alertCtrl.create({
-            title: "Are you sure?",
-            subTitle: "Deleting a post is permanent and cannot be undone",
+            title: this.translate.text.infoWindow.deleteAlertTitle,
+            subTitle: this.translate.text.infoWindow.deleteAlertSubTitle,
             buttons: [{
-                text: 'Delete',
+                text: this.translate.text.infoWindow.delete,
                 handler: data => {
                     this.deleteData();
                 }
-            }, 'Cancel']
+            }, this.translate.text.infoWindow.cancel]
         });
         alert.present();
     }
@@ -98,12 +99,12 @@ export class InfoWindowPage {
             firebase.database().ref('/positions/').child(this.data.key).child('resolveImages').push('value.jpg');
         }
         let loader = this.loadingCtrl.create({
-            content: 'Submitting Content...'
+            content: this.translate.text.infoWindow.submitting
         })
         let successAlert = this.alertCtrl.create({
-            title: "Successfully Submitted",
+            title: this.translate.text.infoWindow.submitted,
             buttons: [{
-                text: 'OK',
+                text: this.translate.text.infoWindow.ok,
                 handler: () => {
                     this.dismiss(false);
                 }
@@ -136,7 +137,7 @@ export class InfoWindowPage {
                 alert("Error: " +e.message);
             });
         }else{
-            this.error = "Fill out all fields";
+            this.error = this.translate.text.infoWindow.error;
         }
     }
     cameraRequest(){
@@ -161,13 +162,13 @@ export class InfoWindowPage {
     }
     markComplete(){
         let loader = this.loadingCtrl.create({
-            content: 'Marking as complete'
+            content: this.translate.text.infoWindow.marking
         });
         loader.present();
         let alert = this.alertCtrl.create({
-            title: "Marked as complete!",
+            title: this.translate.text.infoWindow.marked,
             buttons: [{
-                text: 'OK',
+                text: this.translate.text.infoWindow.ok,
                 handler: () => {
                     this.dismiss(false);
                 }

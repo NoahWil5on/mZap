@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { TranslatorProvider } from '../../providers/translator/translator';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,7 @@ export class ConfirmationPage {
     email: any;
     pos: any;
     show: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public socialSharing: SocialSharing) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public socialSharing: SocialSharing, public translate: TranslatorProvider) {
   }
   ionViewDidLoad() {
       this.type = this.navParams.get('type');

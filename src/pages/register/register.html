@@ -7,90 +7,48 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Create an Account</ion-title>
+    <ion-title>{{translate.text.register.create}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding style="background-color: #fcf80c">
-    <!--
-    <ion-grid>
-        <ion-row class="flex">
-            <ion-col>
-            </ion-col>
-        </ion-row>
-        <ion-row class="flex-big">
-            <ion-col>
-                <ion-label>Name:</ion-label>
-                <ion-row class="input-row">
-                    <ion-col>
-                        <ion-input type="text" [(ngModel)]="name" clearInput></ion-input>
-                    </ion-col>
-                </ion-row>
-                <ion-label>Email:</ion-label>
-                <ion-row class="input-row">
-                    <ion-col>
-                        <ion-input type="email" [(ngModel)]="email" clearInput></ion-input>
-                    </ion-col>
-                </ion-row>
-                <ion-label>Password:</ion-label>
-                <ion-row class="input-row">
-                    <ion-col>
-                        <ion-input type="password" [(ngModel)]="pass1" clearInput></ion-input>
-                    </ion-col>
-                </ion-row>
-                <ion-label>Re-enter Password:</ion-label>
-                <ion-row class="input-row">
-                    <ion-col>
-                        <ion-input type="password" [(ngModel)]="pass2" clearInput></ion-input>
-                    </ion-col>
-                </ion-row>
-            </ion-col>
-        </ion-row>
-        <ion-row class="flex">
-            <ion-col>
-                <button ion-button full (click)="createAccount()">Register</button>
-                <p class="error">{{error}}</p>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
--->
     <ion-item>
-        <ion-label floating [class.redText]="checkContent(name)">*Name</ion-label>
+        <ion-label floating [class.redText]="checkContent(name)">{{translate.text.register.name}}</ion-label>
         <ion-input type="text" clearInput [(ngModel)]="name"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label floating [class.redText]="checkContent(email)">*Email</ion-label>
+        <ion-label floating [class.redText]="checkContent(email)">{{translate.text.register.email}}</ion-label>
         <ion-input type="email" clearInput [(ngModel)]="email"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label floating [class.redText]="checkContent(pass1)">*Password</ion-label>
+        <ion-label floating [class.redText]="checkContent(pass1)">{{translate.text.register.pass1}}</ion-label>
         <ion-input type="password" clearInput [(ngModel)]="pass1"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label floating [class.redText]="checkContent(pass2)">*Re-enter Password</ion-label>
+        <ion-label floating [class.redText]="checkContent(pass2)">{{translate.text.register.pass2}}</ion-label>
         <ion-input type="password" clearInput [(ngModel)]="pass2"></ion-input>
     </ion-item>
     <ion-item>
-        <p style="color: #3fbc05">Add a Profile Picture</p>
+        <p style="color: #3fbc05">{{translate.text.register.pic}}</p>
         <ion-grid no-padding>
             <ion-row>
                 <ion-col col-6 no-padding>
                     <button ion-button block clear style="color: black;" (click)="cameraRequest()">
                         <img src="assets/new/camera.png" style="width: 40px; padding-right: 10px;" alt="Camera" />
-                        Open Camera</button>
+                        {{translate.text.register.openCam}}</button>
                 </ion-col>
                 <ion-col col-6 no-padding>
                     <button ion-button block clear style="color: black;" (click)="albumRequest()">
                         <img src="assets/new/album.png" style="width: 40px; padding-right: 10px;" alt="Album" />
-                        Open Album</button>
+                        {{translate.text.register.openAlb}}</button>
                 </ion-col>
             </ion-row>
         </ion-grid>
     </ion-item>
     <div padding-top>
-        <button ion-button full (click)="createAccount()" class="submit-button">Register</button>
+        <button ion-button full (click)="createAccount()" class="submit-button">{{translate.text.register.register}}</button>
     </div>
     <p class="error">{{error}}</p>
 </ion-content>

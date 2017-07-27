@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>Profile</ion-title>
+        <ion-title>{{translate.text.profile.profile}}</ion-title>
         <ion-buttons start>
             <button ion-button clear item-start (click)="openMenu()" class='nav-burg'>
                 <img class="nav-burg" src="assets/hamburger.png" alt="nav"/>
@@ -22,15 +22,15 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-    <h2 text-left>My Reports:</h2>
+    <h2 text-left>{{translate.text.profile.reports}}</h2>
     <ion-card *ngFor="let report of reports">
         <ion-card-header text-wrap>
             <h2>{{report.description}}</h2>
         </ion-card-header>
         <ion-card-content>
             <img [src]='report.url' alt="Image of Report" *ngIf="report.url" padding/>
-            <p >Type: {{report.type}}</p>
-            <p >Status: {{report.status}}</p>
+            <p >{{translate.text.profile.type}}{{report.type}}</p>
+            <p >{{translate.text.profile.status}}{{report.status}}</p>
         </ion-card-content>
     </ion-card>
 </ion-content>

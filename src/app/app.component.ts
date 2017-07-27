@@ -12,6 +12,7 @@ import { ReportsPage } from '../pages/reports/reports';
 
 
 import { UserInfoProvider } from '../providers/user-info/user-info';
+import { TranslatorProvider } from '../providers/translator/translator';
 
 import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -30,7 +31,7 @@ export class MyApp {
     profilePage = ProfilePage;
     settingsPage = SettingsPage;
     
-    constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider) {
+    constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider) {
         platform.ready().then(() => {
             /*if(Network.connection == Connection.NONE){
                 var alert = this.alertCtrl.create({

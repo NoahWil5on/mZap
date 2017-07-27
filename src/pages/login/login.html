@@ -29,17 +29,17 @@
 
                         <button ion-button clear class="login-button"
                                 (click)="login()">
-                            Login
+                            {{translate.text.login.login}}
                         </button>
                         <p class="error" style="color: black">{{error}}</p> 
-                        <p text-center>Don't have an account? <a (click)="register()" class="link">Sign Up</a></p>
+                        <p text-center>{{translate.text.login.account}}<a (click)="register()" class="link">{{translate.text.login.signUp}}</a></p>
 
                 <ion-row class="paddin-row">
                     <ion-col col-6>
-                        <button ion-button clear style="color: white">Forgot Password</button>
+                        <button ion-button clear style="color: white">{{translate.text.login.password}}</button>
                     </ion-col>
                     <ion-col col-6>
-                        <button ion-button clear style="color: white" (click)="goHome()">Sign in anonymously</button>
+                        <button ion-button clear style="color: white" (click)="goHome()">{{translate.text.login.anonymous}}</button>
                     </ion-col>
                 </ion-row>
             </ion-col>

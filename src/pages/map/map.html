@@ -21,7 +21,7 @@
                 </ion-col>
                 <ion-col text-center>
                     <button ion-button color="secondary" (click)="doInfoWindow(myActiveData)">
-                        Go
+                        {{translate.text.map.go}}
                     </button>
                 </ion-col>
             </ion-row>
@@ -45,7 +45,7 @@
             <img src="assets/location_marker.png" alt="Drop Position" />
         </div>
     </div>
-    <div id="controls" (pan)="addFalse()">
+    <div id="controls" (pan)="addFalse()" *ngIf="isLoggedIn()">
         <div class="controls-back"></div>
         <div class="button-center" class="padding-top">
             <button id="add-button" (click)="doAdd()"></button>

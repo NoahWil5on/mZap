@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController, LoadingController, AlertController } from 'ionic-angular';
-import { TranslateService} from '@ngx-translate/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ImagesProvider } from '../../providers/images/images';
+import { TranslatorProvider } from '../../providers/translator/translator';
 import * as firebase from 'firebase';
 
 
@@ -27,16 +27,7 @@ export class AddPage {
                  public viewCtrl: ViewController, public modalCtrl: ModalController, public loadingCtrl: LoadingController, public alertCtrl: AlertController, 
          
                  public afAuth: AngularFireAuth, public afDB: AngularFireDatabase, 
-                 
-                 public images: ImagesProvider, 
-                 
-                 private translate: TranslateService) {
-        
-        this.translate.setDefaultLang('en');
-        this.translate.use('en');
-        this.translate.get("HELLO").subscribe(res => {
-            console.log(res);
-        })
+                 public images: ImagesProvider, public translate: TranslatorProvider) {
         this.images.doClear();
     }
 
@@ -65,48 +56,38 @@ export class AddPage {
     }
     submit(){
         let loader = this.loadingCtrl.create({
-            content: 'Submitting Content...'
+            content: this.translate.text.add.submitting
         })
         if(this.desc.length > 0){
             if(!this.dataSet){
                 let imageAlert = this.alertCtrl.create({
-                    title: "Are you sure you want to submit this without a photo?",
-                    subTitle: "Adding a photo will allow other users to better assess your report",
+                    title: this.translate.text.add.imageAlertTitle,
+                    subTitle: this.translate.text.add.imageAlertSubTitle,
                     buttons: [{
-                        text: 'Submit',
+                        text: this.translate.text.add.submit,
                         handler:() => {
                             loader.present();
                             var self = this;
-                            if(this.afAuth.auth.currentUser){
-                                firebase.database().ref('users/').child(this.afAuth.auth.currentUser.uid+"").once("value", function(snapshot){
-                                    self.afDB.object('users/'+ self.afAuth.auth.currentUser.uid).update({
-                                        posts: snapshot.val().posts+1
-                                    }).then(_ => {
-                                        loader.dismiss();
-                                        self.viewCtrl.dismiss({
-                                            desc: self.desc,
-                                            type: self.data,
-                                            show: self.show,
-                                            email: self.afAuth.auth.currentUser.email,
-                                        });
-                                    }).catch(e => {
-                                        loader.dismiss();
-                                        alert(e.message);
+                            firebase.database().ref('users/').child(this.afAuth.auth.currentUser.uid+"").once("value", function(snapshot){
+                                self.afDB.object('users/'+ self.afAuth.auth.currentUser.uid).update({
+                                    posts: snapshot.val().posts+1
+                                }).then(_ => {
+                                    loader.dismiss();
+                                    self.viewCtrl.dismiss({
+                                        desc: self.desc,
+                                        type: self.data,
+                                        show: self.show,
+                                        email: self.afAuth.auth.currentUser.email,
                                     });
+                                }).catch(e => {
+                                    loader.dismiss();
+                                    alert(e.message);
                                 });
-                            }
-                            else{
-                                loader.dismiss();
-                                self.viewCtrl.dismiss({
-                                    desc: self.desc,
-                                    type: self.data,
-                                    show: self.show,
-                                });
-                            }
+                            });
                         }
                      },
                      {
-                        text: 'Cancel',
+                        text: this.translate.text.add.cancel,
                      }]
                 })
                 imageAlert.present();
@@ -117,42 +98,30 @@ export class AddPage {
                     this.url = res;
                     this.refName = promiseObject.refName;
                     var self = this;
-                    if(this.afAuth.auth.currentUser){
-                        firebase.database().ref('users/').child(this.afAuth.auth.currentUser.uid+"").once("value", function(snapshot){
-                            self.afDB.object('users/'+ self.afAuth.auth.currentUser.uid).update({
-                                posts: snapshot.val().posts+1
-                            }).then(_ => {
-                                loader.dismiss();
-                                self.viewCtrl.dismiss({
-                                    desc: self.desc,
-                                    type: self.data,
-                                    show: self.show,
-                                    email: self.afAuth.auth.currentUser.email,
-                                    url: self.url,
-                                    refName: self.refName
-                                });
-                            }).catch(e => {
-                                alert(e.message);
+                    firebase.database().ref('users/').child(this.afAuth.auth.currentUser.uid+"").once("value", function(snapshot){
+                        self.afDB.object('users/'+ self.afAuth.auth.currentUser.uid).update({
+                            posts: snapshot.val().posts+1
+                        }).then(_ => {
+                            loader.dismiss();
+                            self.viewCtrl.dismiss({
+                                desc: self.desc,
+                                type: self.data,
+                                show: self.show,
+                                email: self.afAuth.auth.currentUser.email,
+                                url: self.url,
+                                refName: self.refName
                             });
+                        }).catch(e => {
+                            alert(e.message);
                         });
-                    }
-                    else{
-                        loader.dismiss();
-                        self.viewCtrl.dismiss({
-                            desc: self.desc,
-                            type: self.data,
-                            show: self.show,
-                            url: self.url,
-                            refName: self.refName
-                        });
-                    }
+                    });
                 }).catch(e => {
                     loader.dismiss();
                     alert("Error: " +e.message);
                 });
             }
         }else{
-            this.error = "Fill out all fields";
+            this.error = this.translate.text.add.error;
         }
     }
 

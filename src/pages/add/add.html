@@ -12,7 +12,7 @@
 
 <ion-content padding style="background-color: #fcf80c">
     <ion-item>
-        <ion-label floating>Describe what you're reporting</ion-label>
+        <ion-label floating>{{translate.text.add.describe}}</ion-label>
         <ion-input type="text" clearInput [(ngModel)]="desc"></ion-input>
     </ion-item>
     <ion-item>
@@ -21,20 +21,20 @@
                 <ion-col col-6 no-padding>
                     <button ion-button block clear style="color: black;" (click)="cameraRequest()">
                         <img src="assets/new/camera.png" style="width: 40px; padding-right: 10px;" alt="Camera" />
-                        Open Camera</button>
+                        {{translate.text.add.openCam}}</button>
                 </ion-col>
                 <ion-col col-6 no-padding>
                     <button ion-button block clear style="color: black;" (click)="albumRequest()">
                         <img src="assets/new/album.png" style="width: 40px; padding-right: 10px;" alt="Album" />
-                        Open Album</button>
+                        {{translate.text.add.openAlb}}</button>
                 </ion-col>
             </ion-row>
         </ion-grid>
     </ion-item>
     <ion-item>
-        <ion-label>Show your username?</ion-label>
+        <ion-label>{{translate.text.add.username}}</ion-label>
         <ion-checkbox [(ngModel)]="show"></ion-checkbox>
     </ion-item>
-    <button ion-button block (click)="submit()" class="submit-button">Submit</button>
+    <button ion-button block (click)="submit()" class="submit-button">{{translate.text.add.submit}}</button>
     <p class="error">{{error}}</p>
 </ion-content>

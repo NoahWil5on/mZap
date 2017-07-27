@@ -11,6 +11,7 @@ import { SettingsPage } from '../settings/settings';
 //provider imports
 import { ZonesProvider } from '../../providers/zones/zones';
 import { UserInfoProvider } from '../../providers/user-info/user-info';
+import { TranslatorProvider } from '../../providers/translator/translator';
 
 //firebase imports
 import { AngularFireDatabase} from 'angularfire2/database';
@@ -46,7 +47,7 @@ export class MapPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController,
              public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth,
               public alertCtrl: AlertController, public zones: ZonesProvider, public menuCtrl: MenuController,
-                public userInfo: UserInfoProvider) {
+                public userInfo: UserInfoProvider, public translate: TranslatorProvider) {
     }
 
     //as soon as page is loaded run
@@ -316,6 +317,7 @@ export class MapPage {
             if(callBack){
                 this.myActiveMarker.setMap(null);
                 this.myActiveMarker = null;
+                this.navCtrl.setRoot(MapPage);
             }
         });
         infoModal.present();

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angul
 import { LoginPage } from '../login/login';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Storage } from '@ionic/storage';
+import { TranslatorProvider } from '../../providers/translator/translator';
 
 @IonicPage()
 @Component({
@@ -12,7 +13,7 @@ import { Storage } from '@ionic/storage';
 export class SettingsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
-              public menuCtrl: MenuController, private storage: Storage) {
+              public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider) {
   }
 
   ionViewDidLoad() {

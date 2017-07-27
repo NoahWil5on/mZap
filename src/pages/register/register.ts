@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { MapPage } from '../map/map';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ImagesProvider } from '../../providers/images/images';
 import { UserInfoProvider } from '../../providers/user-info/user-info';
+import { TranslatorProvider } from '../../providers/translator/translator';
 
 @IonicPage()
 @Component({
@@ -24,7 +26,8 @@ export class RegisterPage {
     error: string = "";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
-              public afDB: AngularFireDatabase, public images: ImagesProvider, public userInfo: UserInfoProvider) {
+              public afDB: AngularFireDatabase, public images: ImagesProvider, public userInfo: UserInfoProvider,
+              private storage: Storage, public translate: TranslatorProvider) {
       this.images.doClear();
   }
 
@@ -43,6 +46,8 @@ export class RegisterPage {
                         displayName: this.name,
                         photoURL: ""
                     }).then(_ =>{
+                        this.storage.set('mzap_email', this.email);
+                        this.storage.set('mzap_password', this.pass1);
                         var today = new Date();
                         let date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                         /*Checks if user submitted an image*/

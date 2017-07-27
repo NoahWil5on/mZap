@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController, LoadingController } from 'ionic-angular';
 import * as firebase from 'firebase';
+import { TranslatorProvider } from '../../providers/translator/translator';
 
 /**
  * Generated class for the TopRatedPage page.
@@ -17,7 +18,8 @@ export class TopRatedPage {
 
     selfTop: boolean = false;
     users: any = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, 
+               public loadingCtrl: LoadingController, public translate: TranslatorProvider) {
   }
     openMenu(){
         this.menuCtrl.open();

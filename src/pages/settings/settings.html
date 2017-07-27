@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>Settings</ion-title>
+        <ion-title>{{translate.text.settings.setting}}</ion-title>
         <ion-buttons start>
             <button ion-button clear item-start (click)="openMenu()" class='nav-burg'>
                 <img class="nav-burg" src="assets/hamburger.png" alt="nav"/>
@@ -10,6 +10,6 @@
 </ion-header>
 
 <ion-content padding>
-    <button ion-button (click)="logout()" *ngIf="isLoggedIn()">Logout</button>
-    <button ion-button (click)="goLogin()" *ngIf="!isLoggedIn()">Return to Login</button>
+    <button ion-button (click)="logout()" *ngIf="isLoggedIn()">{{translate.text.settings.logout}}</button>
+    <button ion-button (click)="goLogin()" *ngIf="!isLoggedIn()">{{translate.text.settings.return}}</button>
 </ion-content>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import { TranslatorProvider } from '../../providers/translator/translator';
 import { AngularFireAuth } from 'angularfire2/auth'
 import * as firebase from 'firebase';
 
@@ -14,7 +15,7 @@ export class ProfilePage {
     reports: any = [];
     name: any = '';
     imgSrc: any = '';
-    constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, public afAuth:    AngularFireAuth) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, public afAuth:    AngularFireAuth, public translate: TranslatorProvider) {
         
     }
 

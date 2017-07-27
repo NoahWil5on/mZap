@@ -1,26 +1,26 @@
 <ion-content padding>
-    <h3 text-center style="color: #3fbc05; margin-top: 50px;" padding-bottom>Successfully Submitted!</h3>
+    <h3 text-center style="color: #3fbc05; margin-top: 50px;" padding-bottom>{{translate.text.confirmation.success}}</h3>
     <ion-card padding>
-        <h2>Report:</h2>
+        <h2>{{translate.text.confirmation.report}}</h2>
         <ion-item text-wrap class="report-item">
-            <h4>Type:</h4>
+            <h4>{{translate.text.confirmation.type}}</h4>
             <p>{{type}}</p>
         </ion-item>
         <ion-item text-wrap class="report-item">
-            <h4>Description:</h4>
+            <h4>{{translate.text.confirmation.description}}</h4>
             <p>{{description}}</p>
         </ion-item>
         <ion-item text-wrap class="report-item">
-            <h4 *ngIf="showName()">Your name is viewable to other users on this post</h4>
-            <h4 *ngIf="!showName()">Your name is not viewable to other users on this post</h4>
+            <h4 *ngIf="showName()">{{translate.text.confirmation.viewable}}</h4>
+            <h4 *ngIf="!showName()">{{translate.text.confirmation.notViewable}}</h4>
         </ion-item>
         <ion-item text-wrap class="report-item" *ngIf="picture">
-            <h4>Picture:</h4>
+            <h4>{{translate.text.confirmation.pic}}</h4>
             <img [src]="picture" alt="Your Photo" />
         </ion-item>
     </ion-card>
     <div text-center>
-        <button ion-button (click)="dismiss()">Back to Map</button>
+        <button ion-button (click)="dismiss()">{{translate.text.confirmation.map}}</button>
     </div>
     <ion-grid>
         <ion-row>
