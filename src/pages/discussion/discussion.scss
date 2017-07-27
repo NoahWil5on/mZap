@@ -1,0 +1,71 @@
+.ios, .md{
+    page-discussion {
+        .scroll-content{
+            padding-bottom: 200px;
+        }
+        .messages{
+           overflow: auto;
+            div{ 
+                overflow: auto;
+                clear: both;
+                .message{
+                    p{
+                        padding: 10px 10px;
+                        margin: 8px 5px;
+                        margin-bottom: 0;
+                        width: auto;
+                        max-width: 70%;
+                        border-radius: 10px;
+                    }
+                    .other{
+                        color: black;
+                        background-color: #ddd;
+                        float: left;
+                    }
+                    .own{
+                        color: white;
+                        background-color: #22abf9;
+                        float: right;
+                    }
+                }
+                .name{
+                    font-size: 10pt;
+                    color: #888;
+                    margin: 0;
+                    padding: 0 5px;
+                    float: left;
+                }
+
+            }
+            padding-bottom: 40px;
+        }
+        
+        ion-grid{
+            position: fixed;
+            bottom: 0;
+            ion-row{
+                background-color: #ddd;
+                padding: 5px 10px;
+                ion-col{
+                    vertical-align: middle;
+                    button{
+                        height: 1em;
+                    }
+                    div{
+                        border-radius: 10px;
+                        padding-left: 5px;
+                        padding-right: 5px;
+                        background-color: white;
+                    }
+                    textarea{
+                        background: none;
+                        border: none;
+                        width: 100%;
+                        resize: none;
+                        overflow: hidden;
+                    }
+                }
+            }
+        }
+    }
+}

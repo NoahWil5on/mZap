@@ -13,15 +13,18 @@
                     <button ion-button>
                         <ion-icon name="thumbs-up"></ion-icon>
                     </button>
-                </ion-col>
-                <ion-col text-center>
                     <button ion-button>
-                        <ion-icon name="chatboxes"></ion-icon>
+                        <ion-icon name="thumbs-down"></ion-icon>
                     </button>
                 </ion-col>
                 <ion-col text-center>
                     <button ion-button color="secondary" (click)="doInfoWindow(myActiveData)">
                         {{translate.text.map.go}}
+                    </button>
+                </ion-col>
+                <ion-col text-center>
+                    <button ion-button (click)="doChat()">
+                        <ion-icon name="chatboxes"></ion-icon>
                     </button>
                 </ion-col>
             </ion-row>
@@ -52,20 +55,16 @@
         </div>
         <div class="button-center" [class.button-add]="add" [class.button-none]="!add">
             <button class="add-type" (click)="addPage('trash')">
-                <img class="symbol" alt='Trash'style="width: 35px" src="assets/images/symbols/trash.png"/>
-                <img src="assets/images/buttons/empty_button.png" alt="Trash"/>
+                <img src="assets/images/buttons/button_trash.png" alt="Trash"/>
             </button>
             <button class="add-type" (click)="addPage('bugs')">
-                <img class="symbol" alt='Bugs' src="assets/images/symbols/mosquito.png"/>
-                <img src="assets/images/buttons/empty_button.png" alt="Bugs"/>
+                <img src="assets/images/buttons/button_bug.png" alt="Bugs"/>
             </button>
             <button class="add-type" (click)="addPage('pest')">
-                <img class="symbol" alt='Rat' src="assets/images/symbols/pest.png"/>
-                <img src="assets/images/buttons/empty_button.png" alt="Water"/>
+                <img src="assets/images/buttons/button_pest.png" alt="Pest"/>
             </button>
             <button class="add-type" (click)="addPage('building')">
-                <img class="symbol" alt='Building' src="assets/images/symbols/building.png"/>
-                <img src="assets/images/buttons/empty_button.png" alt="Building"/>
+                <img src="assets/images/buttons/button_building.png" alt="Building"/>
             </button>
         </div>
     </div>

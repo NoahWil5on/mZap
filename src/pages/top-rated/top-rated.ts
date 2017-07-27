@@ -26,7 +26,7 @@ export class TopRatedPage {
     }
     ionViewDidLoad() {
         let loader = this.loadingCtrl.create({
-            content: 'Fetching Top Users...'
+            content: this.translate.text.topRated.fetch
         });
         loader.present();
         var ref = firebase.database().ref('users/');

@@ -9,8 +9,8 @@ export class ZonesProvider {
     constructor() {
 
     }
-    runEval(points,distance){
-        this.eval(points,distance);
+    runEval(points,distance, threshold){
+        this.eval(points,distance, threshold);
         return {
             promise: new Promise((resolve) => {
                 resolve("resolve");   
@@ -18,7 +18,7 @@ export class ZonesProvider {
             zones: this.nodeArray
         };
     }
-    eval(points,distance){  
+    eval(points,distance, threshold){  
         this.nodeArray = [];
         while(points.length > 1){
             var nodes = [];
@@ -52,7 +52,7 @@ export class ZonesProvider {
                     newPoints = temp;
                 }
             }
-            if(nodes.length > 2){
+            if(nodes.length >= threshold){
                 this.nodeArray.push(this.findCenter(nodes));
             }
         }

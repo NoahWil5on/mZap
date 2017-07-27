@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { ImageViewerController } from 'ionic-img-viewer'
 import { TranslatorProvider } from '../../providers/translator/translator';
 
 @IonicPage()
@@ -16,7 +17,7 @@ export class ConfirmationPage {
     email: any;
     pos: any;
     show: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public socialSharing: SocialSharing, public translate: TranslatorProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public socialSharing: SocialSharing, public translate: TranslatorProvider, public imageViewerCtrl: ImageViewerController) {
   }
   ionViewDidLoad() {
       this.type = this.navParams.get('type');
@@ -39,6 +40,10 @@ export class ConfirmationPage {
     }
     shareWhatsapp(){
         this.socialSharing.shareViaWhatsApp("", this.picture, null)
+    }
+    presentImage(image){
+        let imageViewer = this.imageViewerCtrl.create(image);
+        imageViewer.present();
     }
     showName(){
         if(this.show)

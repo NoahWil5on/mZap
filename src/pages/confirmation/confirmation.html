@@ -16,7 +16,7 @@
         </ion-item>
         <ion-item text-wrap class="report-item" *ngIf="picture">
             <h4>{{translate.text.confirmation.pic}}</h4>
-            <img [src]="picture" alt="Your Photo" />
+            <img [src]="picture" alt="Your Photo" #thisImage (click)="presentImage(thisImage)"/>
         </ion-item>
     </ion-card>
     <div text-center>

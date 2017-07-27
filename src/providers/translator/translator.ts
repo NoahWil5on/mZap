@@ -67,7 +67,17 @@ export class TranslatorProvider {
             ok: "OK"
         },
         map: {
-            go: "Go"
+            go: "Go",
+            buildingTitle: "Abandoned building",
+            buildingDescription: "Report an abandoned building at this location",
+            bugsTitle: "Mosquitos",
+            bugsDescription: "Report a breeding location of mosquitos at this location",
+            pestsTitle: "Pests",
+            pestsDescription: "Make a report on pests you found at this location",
+            trashTitle: "Garbage",
+            trashDescription: "Report an instance of garbage at this location",
+            ok: "OK",
+            cancel: "Cancel"
         },
         profile: {
             profile: "Profile",
@@ -84,7 +94,9 @@ export class TranslatorProvider {
             pic: "Add a Profile Picture",
             openCam: "Open Camera",
             openAlb: "Open Album",
-            register: "Register"
+            register: "Register",
+            fill: "Be sure to fill out all fields",
+            identical: "Passwords must be identical"
         },
         reports: {
             reports: "Reports",
@@ -97,7 +109,8 @@ export class TranslatorProvider {
         },
         topRated: {
             topRated: "Top Rated Users",
-            you: "You"
+            you: "You",
+            fetch: "Fetching Top Users..."
         },
         menu: {
             user: "Unknown User",
@@ -105,13 +118,14 @@ export class TranslatorProvider {
             reports: "Reports",
             rankings: "Rankings",
             settings: "Settings"
+        },
+        discussion: {
+            discussion: "Discussion"
         }
     }
     //Spanish Version of text
     es: any = {
-        add: {
-            describe: "Describe lo que estás informando",
-        }
+
     }
     
     constructor() {

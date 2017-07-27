@@ -38,14 +38,14 @@ export class AddPage {
         this.type = this.type.charAt(0).toUpperCase() + this.type.slice(1);
     }
     cameraRequest(){
-        var promise = this.images.doGetCameraImage(400,200);
+        var promise = this.images.doGetCameraImage(600,600);
         promise.then(res => {
            this.dataSet = true; 
         }).catch(e => {
         });
     }
     albumRequest(){
-        var promise = this.images.doGetAlbumImage(400,200);
+        var promise = this.images.doGetAlbumImage(600,600);
         promise.then(res => {
            this.dataSet = true; 
         }).catch(e => {

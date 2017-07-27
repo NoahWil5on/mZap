@@ -5,7 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Camera } from '@ionic-native/camera';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { IonicStorageModule } from '@ionic/storage'
+import { IonicStorageModule } from '@ionic/storage';
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule} from 'angularfire2/auth';
@@ -29,6 +30,7 @@ import { InfoWindowPage } from '../pages/info-window/info-window';
 import { TopRatedPage } from '../pages/top-rated/top-rated';
 import { ConfirmationPage } from '../pages/confirmation/confirmation';
 import { ReportsPage } from '../pages/reports/reports';
+import { DiscussionPage } from '../pages/discussion/discussion';
 
 /*Import all modules (Ionic SHOULD do this for you but it doesn't which causes an error)*/
 import { LoginPageModule } from '../pages/login/login.module';
@@ -41,6 +43,7 @@ import { InfoWindowPageModule } from '../pages/info-window/info-window.module';
 import { TopRatedPageModule } from '../pages/top-rated/top-rated.module';
 import { ConfirmationPageModule } from '../pages/confirmation/confirmation.module';
 import { ReportsPageModule } from '../pages/reports/reports.module';
+import { DiscussionPageModule } from '../pages/discussion/discussion.module';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
@@ -71,7 +74,9 @@ export const firebaseConfig = {
     InfoWindowPageModule,
     TopRatedPageModule,
     ConfirmationPageModule,
-    ReportsPageModule
+    ReportsPageModule,
+    IonicImageViewerModule,
+    DiscussionPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -85,7 +90,8 @@ export const firebaseConfig = {
       InfoWindowPage,
       TopRatedPage,
       ConfirmationPage,
-      ReportsPage
+      ReportsPage,
+      DiscussionPage
   ],
   providers: [
     StatusBar,

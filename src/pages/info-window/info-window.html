@@ -9,7 +9,7 @@
   <ion-navbar>
     <ion-title>{{data.type}}</ion-title>
     <ion-buttons end>
-        <button ion-button clear (click)="dismiss()">X</button>
+        <button ion-button clear (click)="dismiss()" style="color: white">X</button>
       </ion-buttons>
   </ion-navbar>
     <ion-toolbar *ngIf="checkLoggedOn()">
@@ -29,7 +29,7 @@
         <div *ngSwitchCase="'info'">
             <ion-slides>
                 <ion-slide *ngFor="let pic of pictures">
-                    <img src='{{pic}}' />
+                    <img src='{{pic}}' alt="Resolve Image" #thisImage (click)="presentImage(thisImage)" />
                 </ion-slide>
             </ion-slides>
             <ion-grid *ngIf="pictures.length > 0">
@@ -57,7 +57,7 @@
                 </ion-card-header>
                 <ion-card-content>
                     <div text-center *ngIf="data.url">
-                        <img [src]="data.url" alt="Image of Location"/>
+                        <img [src]="data.url" #thisImage (click)="presentImage(thisImage)" />
                     </div>
                     <p *ngIf="data.show">{{translate.text.infoWindow.author}}{{data.email}}</p>
                     <p *ngIf="!data.show">{{translate.text.infoWindow.noAuthor}}<p>

@@ -7,6 +7,7 @@ import { AddPage } from '../add/add';
 import { ConfirmationPage } from '../confirmation/confirmation'
 import { InfoWindowPage } from '../info-window/info-window';
 import { SettingsPage } from '../settings/settings';
+import { DiscussionPage } from '../discussion/discussion'
 
 //provider imports
 import { ZonesProvider } from '../../providers/zones/zones';
@@ -171,20 +172,20 @@ export class MapPage {
         //switch for message to show user when they click on add button
         switch(data){
             case 'building':
-                title = "Abandoned building";
-                description = "Report an abandoned building at this location";
+                title = this.translate.text.map.buildingTitle;
+                description = this.translate.text.map.buildingDescription;
                 break;
             case 'bugs':
-                title = "Mosquitos";
-                description = "Report a breeding location of mosquitos at this location";
+                title = this.translate.text.map.bugsTitle;
+                description = this.translate.text.map.bugsDescription;
                 break;
             case 'pest':
-                title = "Pests";
-                description = "Make a report on pests you found at this location";
+                title = this.translate.text.map.pestsTitle;
+                description = this.translate.text.map.pestsDescription;
                 break;
             case 'trash':
-                title = "Garbage";
-                description = "Report an instance of garbage at this location";
+                title = this.translate.text.map.trashTitle;
+                description = this.translate.text.map.trashDescription;
                 break;
             default:
                 break;
@@ -195,7 +196,7 @@ export class MapPage {
             subTitle: description,
             buttons: [
                 {
-                    text: "OK",
+                    text: this.translate.text.map.ok,
                     handler: () =>{
                         let addModal = this.modal.create(AddPage, {type: data, pos: this.map.getCenter()});
                         /*Create new point when modal is dismissed*/
@@ -253,7 +254,7 @@ export class MapPage {
                     }
                 },
                 {
-                    text: "Cancel",
+                    text: this.translate.text.map.cancel,
                 }
             ]
         });
@@ -311,6 +312,11 @@ export class MapPage {
             self.dropDown = false;
         });
     }
+    //open up a chat modal
+    doChat(){
+        let chatModal = this.modal.create(DiscussionPage, {id: this.myActiveData.key});
+        chatModal.present();
+    }
     doInfoWindow(){
         let infoModal = this.modal.create(InfoWindowPage, {data: this.myActiveData});
         infoModal.onDidDismiss(callBack => {
@@ -336,12 +342,21 @@ export class MapPage {
                         self.points.push(item.val());
                     });
                     self.setOnce = false;
-                    var promiseObject = self.zones.runEval(self.points,600);
+                    let redZone = self.zones.runEval(self.points, 500, 3);
+                    let orangeZone = self.zones.runEval(self.points, 1000, 5);
+                    let yellowZone = self.zones.runEval(self.points, 1500, 8);
+
+                    
                     
                     //wait for runEval to finish
-                    promiseObject.promise.then(_ => {
-                        //add zones to to all specified points
-                        self.applyZones(promiseObject.zones);
+                    redZone.promise.then(_ => {
+                        orangeZone.promise.then(_ => {
+                            yellowZone.promise.then(_ => {
+                                self.applyZones(yellowZone.zones, 1500, '#ffff00');
+                                self.applyZones(orangeZone.zones, 1000, '#ff8800');
+                                self.applyZones(redZone.zones, 500, '#ff0000');
+                            });
+                        });
                     });
                 }
             });
@@ -388,17 +403,18 @@ export class MapPage {
         }
     }
     //any "cluster" zone that is found on the map is drawn here
-    applyZones(zones){
+    applyZones(zones, radius, color){
         for(var i = 0; i < zones.length; i++){
             this.zonies.push(new google.maps.Circle({
-                strokeColor: '#FF0000',
+                strokeColor: color,
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
-                fillColor: '#FF0000',
+                fillColor: color,
                 fillOpacity: 0.35,
                 map: this.map,
                 center: new google.maps.LatLng(zones[i].lat,zones[i].lng),
-                radius: ((zones[i].dist/2) + 200)
+                //radius: ((zones[i].dist/2) + 200)
+                radius: radius
               }));
         }
     }

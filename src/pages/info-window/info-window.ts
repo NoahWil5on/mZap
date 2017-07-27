@@ -1,5 +1,6 @@
 import { Component, ViewChild, NgZone} from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController, LoadingController, Slides} from 'ionic-angular';
+import { ImageViewerController } from 'ionic-img-viewer';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ImagesProvider } from '../../providers/images/images';
 import { TranslatorProvider } from '../../providers/translator/translator'
@@ -28,7 +29,8 @@ export class InfoWindowPage {
     dataSet: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
               public viewCtrl: ViewController, public afAuth: AngularFireAuth, public images: ImagesProvider,
-              public loadingCtrl: LoadingController, public ngZone: NgZone, public translate: TranslatorProvider) {
+              public loadingCtrl: LoadingController, public ngZone: NgZone, public translate: TranslatorProvider,
+              public imageViewerCtrl: ImageViewerController) {
   }
 
   ionViewDidLoad() {
@@ -41,6 +43,10 @@ export class InfoWindowPage {
       });
       this.checkStatus();
   }
+    presentImage(myImage){
+        let imageViewer = this.imageViewerCtrl.create(myImage);
+        imageViewer.present();
+    }
     showPrompt(){
         var alert = this.alertCtrl.create({
             title: this.translate.text.infoWindow.deleteAlertTitle,
@@ -141,14 +147,14 @@ export class InfoWindowPage {
         }
     }
     cameraRequest(){
-        var promise = this.images.doGetCameraImage(400,200);
+        var promise = this.images.doGetCameraImage(600,600);
         promise.then(res => {
            this.dataSet = true; 
         }).catch(e => {
         });
     }
     albumRequest(){
-        var promise = this.images.doGetAlbumImage(400,200);
+        var promise = this.images.doGetAlbumImage(600,600);
         promise.then(res => {
            this.dataSet = true; 
         }).catch(e => {

@@ -13,7 +13,7 @@
     <ion-grid>
         <ion-row>
             <ion-col col-auto>
-                <img [src]='imgSrc' alt="Profile Pic" *ngIf='imgSrc.length > 0' />
+                <img [src]='imgSrc' width="100" alt="Profile Pic" *ngIf='imgSrc.length > 0' />
             </ion-col>
             <ion-col>
                 <h2>
@@ -28,7 +28,7 @@
             <h2>{{report.description}}</h2>
         </ion-card-header>
         <ion-card-content>
-            <img [src]='report.url' alt="Image of Report" *ngIf="report.url" padding/>
+            <img [src]='report.url' #thisImage (click)="presentImage(thisImage)" alt="Image of Report" *ngIf="report.url" padding/>
             <p >{{translate.text.profile.type}}{{report.type}}</p>
             <p >{{translate.text.profile.status}}{{report.status}}</p>
         </ion-card-content>

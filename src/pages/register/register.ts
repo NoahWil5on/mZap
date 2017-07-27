@@ -104,10 +104,10 @@ export class RegisterPage {
                 });
             }
             else{
-                this.error = "Be sure to fill out all fields";
+                this.error = this.translate.text.register.fill;
             }
         }else{
-            this.error = "Passwords must be identical";
+            this.error = this.translate.text.register.identical;
         }
     }
     /*Finds content that isn't filled in correctly*/
