@@ -1,10 +1,17 @@
+//vanilla ionic imports
 import { Component, ViewChild, NgZone} from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ViewController, LoadingController, Slides} from 'ionic-angular';
+
+//image popup viewing import
 import { ImageViewerController } from 'ionic-img-viewer';
-import { AngularFireAuth } from 'angularfire2/auth';
+
+//provider imports
 import { ImagesProvider } from '../../providers/images/images';
 import { TranslatorProvider } from '../../providers/translator/translator'
+
+//firebase imports
 import * as firebase from 'firebase';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 @IonicPage()
 @Component({
@@ -12,8 +19,11 @@ import * as firebase from 'firebase';
   templateUrl: 'info-window.html',
 })
 export class InfoWindowPage {
+    //resolve image slides
     @ViewChild(Slides) slide: Slides;
     section: any = "info";
+    
+    //info on report
     data: any = {
         description: "",
         title: "",
@@ -23,6 +33,7 @@ export class InfoWindowPage {
         refName: "",
         key: ""
     };
+    type: any = '';
     status: any = '';
     error: string = "";
     pictures: any = [];
@@ -35,7 +46,25 @@ export class InfoWindowPage {
 
   ionViewDidLoad() {
       this.data = this.navParams.get('data');
+      
+      //translate type
+      switch(this.data.type){
+            case 'bugs':
+                this.type = this.translate.text.other.bug;
+                break;
+            case 'building':
+                this.type = this.translate.text.other.building;
+                break;
+            case 'trash':
+                this.type = this.translate.text.other.trash;
+                break;
+            case 'pest':
+                this.type = this.translate.text.other.pest;
+                break;
+        }
       let self = this;
+      
+      //grab all of resolve images from db
       firebase.database().ref('/resolveImages/').child(this.data.key).once('value').then(snapshot => {
           snapshot.forEach(function(child){
               self.pictures.push(child.val().url);
@@ -43,10 +72,12 @@ export class InfoWindowPage {
       });
       this.checkStatus();
   }
+    //show pop up of image when image is clicked on
     presentImage(myImage){
         let imageViewer = this.imageViewerCtrl.create(myImage);
         imageViewer.present();
     }
+    //alert pops up before user deletes data
     showPrompt(){
         var alert = this.alertCtrl.create({
             title: this.translate.text.infoWindow.deleteAlertTitle,
@@ -60,7 +91,9 @@ export class InfoWindowPage {
         });
         alert.present();
     }
+    //if selected, this post and all data associated with it will be deleted
     deleteData(){
+        //checks to see if there are any images that need to be deleted
         if(this.checkForImage()){
             firebase.storage().ref('/images/').child(this.data.refName).delete().then(() => {
                firebase.database().ref('/positions/').child(this.data.key).remove().then(() => {
@@ -73,6 +106,7 @@ export class InfoWindowPage {
             });
         }
     }
+    //dismiss this modal
     dismiss(data){
         if(data){
             this.viewCtrl.dismiss(data);
@@ -80,6 +114,7 @@ export class InfoWindowPage {
             this.viewCtrl.dismiss();
         }
     }
+    //for checking if images exist that are related to this post
     checkForImage(){
         let returnVal = false;
         firebase.database().ref('/positions/').child(this.data.key).once('value').then(function(snapshot){
@@ -88,6 +123,7 @@ export class InfoWindowPage {
         });
         return returnVal;
     }
+    //check if the current user is the OP
     checkLogin(){
         if(this.afAuth.auth.currentUser){
             if(this.afAuth.auth.currentUser.email == this.data.email)
@@ -95,11 +131,13 @@ export class InfoWindowPage {
         }
         return false;
     }
+    //check if user is logged on
     checkLoggedOn(){
         if(this.afAuth.auth.currentUser)
             return true;
         return false;
     }
+    //submit a resolved image
     submit(){
         if(this.dataSet){
             firebase.database().ref('/positions/').child(this.data.key).child('resolveImages').push('value.jpg');
@@ -116,6 +154,7 @@ export class InfoWindowPage {
                 }
             }]
         });
+        //makes sure that an image was included in resolve post
         if(this.dataSet){
             loader.present();
             var promiseObject = this.images.uploadToFirebase();
@@ -146,6 +185,7 @@ export class InfoWindowPage {
             this.error = this.translate.text.infoWindow.error;
         }
     }
+    //request photo from user's camera
     cameraRequest(){
         var promise = this.images.doGetCameraImage(600,600);
         promise.then(res => {
@@ -153,6 +193,7 @@ export class InfoWindowPage {
         }).catch(e => {
         });
     }
+    //request photo from user's album
     albumRequest(){
         var promise = this.images.doGetAlbumImage(600,600);
         promise.then(res => {
@@ -160,41 +201,53 @@ export class InfoWindowPage {
         }).catch(e => {
         });
     }
+    //sliding for resolved images
     slideLeft(){
         this.slide.slidePrev(300,null);
     }
     slideRight(){
         this.slide.slideNext(300,null);
     }
+    
     markComplete(){
         let loader = this.loadingCtrl.create({
             content: this.translate.text.infoWindow.marking
         });
         loader.present();
+        
+        //alert pops up after successful submission
         let alert = this.alertCtrl.create({
             title: this.translate.text.infoWindow.marked,
             buttons: [{
                 text: this.translate.text.infoWindow.ok,
                 handler: () => {
+                    //dismiss this modal to refresh the screen
                     this.dismiss(false);
                 }
             }]
         });
+        //mark as complete on firebase
         firebase.database().ref('/positions/').child(this.data.key).child('status').set('Complete').then(_ => {
             loader.dismiss();
             alert.present();
         }).catch(_ => {
-            loader.dismiss
+            loader.dismiss()
         });
     }
+    //get the current status of the report
     checkStatus(){
         let ref = firebase.database().ref('/positions/').child(this.data.key);
         ref.once('value', snapshot => {
-            if(snapshot.hasChild('status')){
-                this.status = snapshot.val().status;
-            }else{
-                ref.child('status').set('To Do');
-                this.status = 'To Do';
+            var status = snapshot.val().status;
+            
+            //translate status
+            switch(status){
+                case 'Complete':
+                    this.status = this.translate.text.other.complete;
+                    break;
+                case 'To Do':
+                    this.status = this.translate.text.other.todo;
+                    break;
             }
         })
     }

@@ -1,7 +1,10 @@
+//vanilla ionic imports
 import { Component, ViewChild } from '@angular/core';
 import { Platform, MenuController, Nav} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
+//page imports
 import { LoginPage } from '../pages/login/login';
 import { TopRatedPage } from '../pages/top-rated/top-rated';
 import { MapPage } from '../pages/map/map';
@@ -10,10 +13,11 @@ import { ProfilePage } from '../pages/profile/profile';
 import { SettingsPage } from '../pages/settings/settings';
 import { ReportsPage } from '../pages/reports/reports';
 
-
+//provider imports
 import { UserInfoProvider } from '../providers/user-info/user-info';
 import { TranslatorProvider } from '../providers/translator/translator';
 
+//firebase imports
 import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 
@@ -100,35 +104,42 @@ export class MyApp {
             });*/
         });
     }
+    //open top page
     topRated(){
         this.nav.setRoot(TopRatedPage);
         this.userInfo.pageState = 'top';
         this.menuCtrl.close();
     }
+    //open map page
     map(){
         this.nav.setRoot(MapPage);
         this.userInfo.pageState = 'map';
         this.menuCtrl.close();
     }
+    //open profile page
     profile(){
         this.nav.setRoot(ProfilePage);
         this.userInfo.pageState = 'profile';
         this.menuCtrl.close();
     }
+    //open register page
     register(){
         this.nav.push(RegisterPage);
         this.menuCtrl.close();
     }
+    //open settings page
     settings(){
         this.nav.setRoot(SettingsPage);
         this.userInfo.pageState = 'settings';
         this.menuCtrl.close();
     }
+    //open reports page
     reports(){
         this.nav.setRoot(ReportsPage);
         this.userInfo.pageState = 'reports';
         this.menuCtrl.close();
     }
+    //open side nav
     openMenu(){
         if(this.checkLogin()){
             firebase.database().ref('users').child(this.afAuth.auth.currentUser.uid).once('value').then((snapshot) => {
@@ -137,9 +148,11 @@ export class MyApp {
             });
         }
     }
+    //check if current user is signed in
     checkLogin(){
         return (this.afAuth.auth.currentUser) ? true : false;
     }
+    //check which page the user is on
     checkPage(page){
         return (this.userInfo.pageState == page);
     }

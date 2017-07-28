@@ -12,4 +12,22 @@
 <ion-content padding>
     <button ion-button (click)="logout()" *ngIf="isLoggedIn()">{{translate.text.settings.logout}}</button>
     <button ion-button (click)="goLogin()" *ngIf="!isLoggedIn()">{{translate.text.settings.return}}</button>
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label>{{translate.text.settings.lang}}</ion-label>
+                    <ion-select [(ngModel)]="language">
+                        <ion-option value="en">English</ion-option>
+                        <ion-option value="es">Español</ion-option>
+                    </ion-select>
+                </ion-item>
+            </ion-col>
+            <ion-col col-auto>
+                <button ion-button clear icon-only (click)="setLang()">
+                    <ion-icon name="arrow-round-forward"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>

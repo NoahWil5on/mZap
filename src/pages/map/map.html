@@ -33,7 +33,7 @@
         <div style="pointer-events:none; ">
             <h2 text-center padding-top *ngIf="myActiveData.type" style="vertical-align: middle">
                 <img *ngIf="myActiveData.url" [src]="myActiveData.url" alt='User Image' width="50px" style="vertical-align: middle"/>
-                {{myActiveData.type}}
+                {{type}}
             </h2>
         </div>
     </div>
@@ -50,10 +50,13 @@
     </div>
     <div id="controls" (pan)="addFalse()" *ngIf="isLoggedIn()">
         <div class="controls-back"></div>
+        <!--
         <div class="button-center" class="padding-top">
             <button id="add-button" (click)="doAdd()"></button>
         </div>
-        <div class="button-center" [class.button-add]="add" [class.button-none]="!add">
+-->
+        <!-- <div class="button-center" [class.button-add]="add" [class.button-none]="!add"> -->
+        <div class="button-center add">
             <button class="add-type" (click)="addPage('trash')">
                 <img src="assets/images/buttons/button_trash.png" alt="Trash"/>
             </button>

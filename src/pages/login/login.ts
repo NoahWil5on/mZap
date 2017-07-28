@@ -1,11 +1,17 @@
+//vanilla ionic imports
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, MenuController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+
+//page imports
 import { RegisterPage } from '../register/register';
 import { MapPage } from '../map/map'
+
+//provider imports
 import { UserInfoProvider} from '../../providers/user-info/user-info';
 import { TranslatorProvider } from '../../providers/translator/translator';
 
+//fire base imports
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
@@ -16,6 +22,8 @@ import * as firebase from 'firebase';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+    
+    //user email and password
     email: string = "";
     password: string = "";
     error: string = "";
@@ -24,6 +32,7 @@ export class LoginPage {
               public translate: TranslatorProvider) {
   }
 
+    //on enter, check if the user has a saved sign in
     ionViewWillEnter(){
        this.menuCtrl.enable(false);
        this.afAuth.auth.onAuthStateChanged(user => {
@@ -41,6 +50,7 @@ export class LoginPage {
             return;
         })
     }
+    //once a user is signed in, update all necessary information and change page
     runUser(user){
       var today = new Date();
       /*get current date and time*/
@@ -66,12 +76,17 @@ export class LoginPage {
     ionViewWillLeave(){
         this.menuCtrl.enable(true);
     }
+    //login user
     async login(){
         let loader = this.loadingCtrl.create({
             content: this.translate.text.verify
         });
         loader.present();
+        
+        //try signing in user and updating their local sign in data
         this.afAuth.auth.signInWithEmailAndPassword(this.email,this.password).then(data =>{
+            this.storage.set('mzap_email', this.email);
+            this.storage.set('mzap_password', this.password);
             loader.dismiss();
             this.runUser(this.afAuth.auth.currentUser);
         }).catch(e => {
@@ -79,9 +94,11 @@ export class LoginPage {
             this.error = e.message;
         });  
     }
+    //send user to register page
     register(){
         this.navCtrl.push(RegisterPage);
     }
+    //display info about signing in anonymously
     info(){
         var alert = this.alertCtrl.create({
             title: this.translate.text.anonymousAlertTitle,

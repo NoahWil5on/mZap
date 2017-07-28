@@ -3,8 +3,12 @@
         <header text-center>
                 <div class="div-holder" *ngIf="checkLogin()">
                     <button ion-button style="height: 100%" clear (click)="profile()">
-                        <div>
-                            <img [src]="imgSrc" alt="Profile Image" />
+                        <div *ngIf="imgSrc">
+                            <img [src]="imgSrc" alt="" />
+                            <h2 style="color: black">{{name}}</h2>
+                        </div>
+                        <div *ngIf="!imgSrc">
+                            <img src="assets/profile.png" alt="" />
                             <h2 style="color: black">{{name}}</h2>
                         </div>
                     </button>

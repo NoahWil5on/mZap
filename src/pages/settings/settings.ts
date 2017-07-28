@@ -1,8 +1,15 @@
+//vanilla ionic imports
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
-import { LoginPage } from '../login/login';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Storage } from '@ionic/storage';
+
+//page imports
+import { LoginPage } from '../login/login';
+
+//firebase imports
+import { AngularFireAuth } from 'angularfire2/auth';
+
+//provider imports
 import { TranslatorProvider } from '../../providers/translator/translator';
 
 @IonicPage()
@@ -12,12 +19,14 @@ import { TranslatorProvider } from '../../providers/translator/translator';
 })
 export class SettingsPage {
 
+    language: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
               public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider) {
   }
 
   ionViewDidLoad() {
   }
+    //sign user out if signed in
   logout(){
     this.afAuth.auth.signOut().then(out => {
         this.storage.remove('mzap_password').then(_ => {
@@ -27,9 +36,11 @@ export class SettingsPage {
         })
     });   
   }
+    //if not logged in, send user back to homepage
     goLogin(){
         this.navCtrl.setRoot(LoginPage)
     }
+    //check if user is logged in
     isLoggedIn(){
         if(this.afAuth.auth.currentUser)
             return true;
@@ -37,5 +48,19 @@ export class SettingsPage {
     }
     openMenu(){
         this.menuCtrl.open();
+    }
+    //set language
+    setLang(){
+        //check which language is selected
+        switch(this.language){
+            case 'en':
+                this.translate.selectLanguage(this.translate.en);
+                break;
+            case 'es':
+                this.translate.selectLanguage(this.translate.es);
+                break;
+            default:
+                break;
+        }
     }
 }

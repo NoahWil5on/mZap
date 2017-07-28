@@ -42,6 +42,7 @@ export class MapPage {
     dropDown: boolean = true;
     
     myActiveData: any = {};
+    type: any = '';
     myActiveMarker: any;
     
     /*Instantiate all imported classes*/
@@ -80,6 +81,7 @@ export class MapPage {
     }
     setCenter(){
         var self = this;
+        //check if the user is allowing you to see their position
         navigator.geolocation.getCurrentPosition((position) => {
             let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             self.map.setCenter(latLng);
@@ -88,6 +90,7 @@ export class MapPage {
             //self.setPin(latLng);
         });
     }
+    //sets personal marker and circle
     setPin(latLng){
         if(this.myCircle){
             this.myCircle.setMap(null);
@@ -101,11 +104,13 @@ export class MapPage {
             new google.maps.Point(0, 0),
             new google.maps.Point(10, 10));
 
+        //personal marker
         this.myMarker = new google.maps.Marker({
                 position: latLng,
                 icon: markerImage,
                 map: this.map
             });
+        //personal circle
         this.myCircle = new google.maps.Circle({
             strokeColor: '#444',
             strokeOpacity: 0.8,
@@ -308,6 +313,22 @@ export class MapPage {
         });*/
         google.maps.event.addListener(marker, 'click', function(e){
             self.myActiveData = data;
+            
+            //translate data type
+            switch(data.type){
+                case 'bugs':
+                    self.type = self.translate.text.other.bug;
+                    break;
+                case 'building':
+                    self.type = self.translate.text.other.building;
+                    break;
+                case 'trash':
+                    self.type = self.translate.text.other.trash;
+                    break;
+                case 'pest':
+                    self.type = self.translate.text.other.pest;
+                    break;
+            }
             self.myActiveMarker = marker
             self.dropDown = false;
         });
@@ -317,8 +338,10 @@ export class MapPage {
         let chatModal = this.modal.create(DiscussionPage, {id: this.myActiveData.key});
         chatModal.present();
     }
+    //pull up info window
     doInfoWindow(){
         let infoModal = this.modal.create(InfoWindowPage, {data: this.myActiveData});
+        //if on did dismiss says to delete data, refresh page and remove marker
         infoModal.onDidDismiss(callBack => {
             if(callBack){
                 this.myActiveMarker.setMap(null);
@@ -343,14 +366,13 @@ export class MapPage {
                     });
                     self.setOnce = false;
                     let redZone = self.zones.runEval(self.points, 500, 3);
-                    let orangeZone = self.zones.runEval(self.points, 1000, 5);
-                    let yellowZone = self.zones.runEval(self.points, 1500, 8);
 
-                    
-                    
-                    //wait for runEval to finish
+                    //add all different types of zones based on (points, distance_threshold,
+                    //and point amount threshold)
                     redZone.promise.then(_ => {
+                        let orangeZone = self.zones.runEval(self.points, 1000, 5);
                         orangeZone.promise.then(_ => {
+                            let yellowZone = self.zones.runEval(self.points, 1500, 8);
                             yellowZone.promise.then(_ => {
                                 self.applyZones(yellowZone.zones, 1500, '#ffff00');
                                 self.applyZones(orangeZone.zones, 1000, '#ff8800');
@@ -406,9 +428,7 @@ export class MapPage {
     applyZones(zones, radius, color){
         for(var i = 0; i < zones.length; i++){
             this.zonies.push(new google.maps.Circle({
-                strokeColor: color,
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
+                strokeOpacity: 0,
                 fillColor: color,
                 fillOpacity: 0.35,
                 map: this.map,

@@ -1,6 +1,11 @@
+//vanilla ionic imports
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController, LoadingController } from 'ionic-angular';
+
+//firebase imports
 import * as firebase from 'firebase';
+
+//providers import
 import { TranslatorProvider } from '../../providers/translator/translator';
 
 /**
@@ -16,11 +21,11 @@ import { TranslatorProvider } from '../../providers/translator/translator';
 })
 export class TopRatedPage {
 
-    selfTop: boolean = false;
     users: any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, 
                public loadingCtrl: LoadingController, public translate: TranslatorProvider) {
   }
+    //open nav menu
     openMenu(){
         this.menuCtrl.open();
     }
@@ -32,12 +37,15 @@ export class TopRatedPage {
         var ref = firebase.database().ref('users/');
         var self = this;
         var i = 0;
+        
+        //look at and preserve the top 5 users on basis of visits
         ref.orderByChild("visits").limitToLast(5).on("child_added", function(snapshot) {
             var imageURL = "http://www.placehold.it/100x100";
             if(snapshot.val().url){
                 imageURL = snapshot.val().url;
             }
             if(i < 5){
+                //add user & user info to front of array
                 self.users.unshift({
                     name: snapshot.val().name,
                     rating: snapshot.val().visits,

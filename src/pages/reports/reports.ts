@@ -1,5 +1,8 @@
+//vanilla ionic imports
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+
+//provider imports
 import { TranslatorProvider } from '../../providers/translator/translator';
 
 @IonicPage()
@@ -14,6 +17,7 @@ export class ReportsPage {
 
   ionViewDidLoad() {
   }
+    //open nav menu
     openMenu(){
         this.menuCtrl.open();
     }

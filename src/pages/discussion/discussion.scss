@@ -1,15 +1,20 @@
 .ios, .md{
     page-discussion {
         .scroll-content{
-            padding-bottom: 200px;
+            padding: 0 !important;
         }
         .messages{
-           overflow: auto;
+            padding-bottom: 60px;
+            display: block;
+            position: relative;
+            overflow: auto;
             div{ 
                 overflow: auto;
                 clear: both;
                 .message{
                     p{
+                        display: block;
+                        position: relative;
                         padding: 10px 10px;
                         margin: 8px 5px;
                         margin-bottom: 0;
@@ -37,32 +42,41 @@
                 }
 
             }
-            padding-bottom: 40px;
         }
-        
-        ion-grid{
+        .chat{
+            width: 100%;
+            padding: 0;
+            margin: 0;
             position: fixed;
+            display: block;
             bottom: 0;
-            ion-row{
-                background-color: #ddd;
-                padding: 5px 10px;
-                ion-col{
-                    vertical-align: middle;
-                    button{
-                        height: 1em;
-                    }
-                    div{
-                        border-radius: 10px;
-                        padding-left: 5px;
-                        padding-right: 5px;
-                        background-color: white;
-                    }
-                    textarea{
-                        background: none;
-                        border: none;
-                        width: 100%;
-                        resize: none;
-                        overflow: hidden;
+            ion-grid{
+                padding: 0;
+                margin: 0;
+                
+                ion-row{
+                    position: relative;
+                    background-color: #ddd;
+                    padding: 5px 10px;
+                    ion-col{
+                        padding: 0 10px;
+                        button{
+                            height: 1em;
+                        }
+                        div{
+                            border: 1px solid #999;
+                            border-radius: 10px;
+                            padding-left: 5px;
+                            padding-right: 5px;
+                            background-color: white;
+                        }
+                        textarea{
+                            background: none;
+                            border: none;
+                            width: 100%;
+                            resize: none;
+                            overflow: hidden;
+                        }
                     }
                 }
             }

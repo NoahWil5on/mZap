@@ -1,9 +1,16 @@
+//vanilla ionic imports
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+
+//page imports
 import { MapPage } from '../map/map';
+
+//firebase imports
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
+
+//provider imports
 import { ImagesProvider } from '../../providers/images/images';
 import { UserInfoProvider } from '../../providers/user-info/user-info';
 import { TranslatorProvider } from '../../providers/translator/translator';
@@ -14,6 +21,8 @@ import { TranslatorProvider } from '../../providers/translator/translator';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+    
+    //user input data
     email: string = "";
     pass1: string = "";
     pass2: string = "";
@@ -36,11 +45,14 @@ export class RegisterPage {
     /*Tries to create account*/
     async createAccount(){
         this.startTrue = false;
+        
         /*Checks to make sure fields are filled in (no profile image required)*/
         if(this.pass1 === this.pass2){
             if(this.pass1.length > 0 && this.email.length > 0 && this.name.length > 0){
+                
                 /*Create user*/
                 this.afAuth.auth.createUserWithEmailAndPassword(this.email,this.pass1).then(_ => {
+                    
                     /*add user display name*/
                     this.afAuth.auth.currentUser.updateProfile({
                         displayName: this.name,
@@ -50,8 +62,10 @@ export class RegisterPage {
                         this.storage.set('mzap_password', this.pass1);
                         var today = new Date();
                         let date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                        
                         /*Checks if user submitted an image*/
                         if(this.image){
+                            
                             /*Fetches image*/
                             var promiseObject = this.images.uploadToFirebase();
                             promiseObject.promise.then(res => {
@@ -80,6 +94,7 @@ export class RegisterPage {
                             });
                         }
                         else{
+                            
                             /*If no image just add some basic info*/
                             this.afDB.object('users/'+this.afAuth.auth.currentUser.uid).update({
                                 rating: 0, 
