@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{translate.text.filter.filter}}</ion-title>
+        <ion-buttons end>
+            <button ion-button clear style="color: white;" (click)="dismiss()">X</button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <ion-item>
+        <ion-label>{{translate.text.filter.type}}</ion-label>
+        <ion-select [(ngModel)]="type" multiple="true" okText="OK" [cancelText]="translate.text.filter.cancel">
+            <ion-option value="building">{{translate.text.other.building}}</ion-option>
+            <ion-option value="bugs">{{translate.text.other.bug}}</ion-option>
+            <ion-option value="pest">{{translate.text.other.pest}}</ion-option>
+            <ion-option value="trash">{{translate.text.other.trash}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>{{translate.text.filter.status}}</ion-label>
+        <ion-select [(ngModel)]="status" multiple="true" okText="OK" [cancelText]="translate.text.filter.cancel">
+            <ion-option value="To Do">{{translate.text.other.todo}}</ion-option>
+            <ion-option value="Complete">{{translate.text.other.complete}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label floating>Rating Range</ion-label>
+        <ion-range dualKnobs="true" [(ngModel)]="range" min="-5" max="50" pin="true">
+            <ion-label range-left>-5</ion-label>
+            <ion-label range-right>50+</ion-label>
+        </ion-range>
+    </ion-item>
+    <button (click)="filter()" ion-button>Filter</button>
+    <p class="error">{{error}}</p>
+</ion-content>

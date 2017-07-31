@@ -7,12 +7,14 @@ import { AddPage } from '../add/add';
 import { ConfirmationPage } from '../confirmation/confirmation'
 import { InfoWindowPage } from '../info-window/info-window';
 import { SettingsPage } from '../settings/settings';
-import { DiscussionPage } from '../discussion/discussion'
+import { DiscussionPage } from '../discussion/discussion';
+import { FilterPage } from '../filter/filter';
 
 //provider imports
 import { ZonesProvider } from '../../providers/zones/zones';
 import { UserInfoProvider } from '../../providers/user-info/user-info';
 import { TranslatorProvider } from '../../providers/translator/translator';
+import { LikeProvider } from '../../providers/like/like';
 
 //firebase imports
 import { AngularFireDatabase} from 'angularfire2/database';
@@ -40,6 +42,7 @@ export class MapPage {
     myMarker: any = undefined;
     myCircle: any = undefined;
     dropDown: boolean = true;
+    likeValue: any = 0;
     
     myActiveData: any = {};
     type: any = '';
@@ -49,7 +52,7 @@ export class MapPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController,
              public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth,
               public alertCtrl: AlertController, public zones: ZonesProvider, public menuCtrl: MenuController,
-                public userInfo: UserInfoProvider, public translate: TranslatorProvider) {
+                public userInfo: UserInfoProvider, public translate: TranslatorProvider, public likeProvider: LikeProvider) {
     }
 
     //as soon as page is loaded run
@@ -78,6 +81,25 @@ export class MapPage {
         }
         //if this is the first time opening up maps then run this function
         this.runNavigation();
+    }
+    //called when user likes a post
+    like(value){
+        var self = this;
+        this.likeProvider.like(this.myActiveData.key, value, function(likes){
+            //updates post locally with callback function
+            self.myActiveData.likes = likes;
+        });
+        this.likeValue = value;
+    }
+    //used for style, checks user's like preference on any given report
+    likeable(){
+        var self = this;
+        this.likeProvider.likeable(this.myActiveData.key, function(value){
+            //ngZone.run updates the DOM otherwise change is not visible
+            self.ngZone.run(() =>{
+                self.likeValue = value;   
+            })
+        });
     }
     setCenter(){
         var self = this;
@@ -152,6 +174,15 @@ export class MapPage {
     openMenu(){
         this.menuCtrl.open();
     }
+    openFilter(){
+        var filterPage = this.modal.create(FilterPage, null);
+        filterPage.onDidDismiss(data => {
+            if(data){
+                this.navCtrl.setRoot(MapPage);
+            }
+        })
+        filterPage.present();
+    }
     //deprecated
     openSettings(){
         this.navCtrl.push(SettingsPage);
@@ -217,14 +248,11 @@ export class MapPage {
                                         description: data.desc,
                                         type: data.type,
                                         show: data.show,
-                                        email: "",
+                                        email: this.afAuth.auth.currentUser.email,
                                         url: data.url,
                                         refName: data.refName,
                                         status: "To Do",
                                         key: ""
-                                    }
-                                    if(data.email){
-                                        newMarker.email = data.email;
                                     }
                                 }
                                 //if there is an image available set the image location
@@ -235,12 +263,9 @@ export class MapPage {
                                         description: data.desc,
                                         type: data.type,
                                         show: data.show,
-                                        email: "",
+                                        email: this.afAuth.auth.currentUser.email,
                                         status: "To Do",
                                         key: ""
-                                    }
-                                    if(data.email){
-                                        newMarker.email = data.email;
                                     }
                                 }
                                 /*Push point to firebase and give it a reference*/
@@ -313,7 +338,9 @@ export class MapPage {
         });*/
         google.maps.event.addListener(marker, 'click', function(e){
             self.myActiveData = data;
-            
+            if(!self.myActiveData.likes){
+                self.myActiveData.likes = 0;
+            }
             //translate data type
             switch(data.type){
                 case 'bugs':
@@ -329,7 +356,8 @@ export class MapPage {
                     self.type = self.translate.text.other.pest;
                     break;
             }
-            self.myActiveMarker = marker
+            self.myActiveMarker = marker;
+            self.likeable();
             self.dropDown = false;
         });
     }
@@ -351,6 +379,34 @@ export class MapPage {
         });
         infoModal.present();
     }
+    //make sure each point passes filter
+    checkPoint(item){
+        if(!this.userInfo.filter) return true;
+        let check = false;
+        for(var i = 0; i < this.userInfo.filter.type.length; i++){
+            if(item.type == this.userInfo.filter.type[i]){
+                check = true;
+                break;
+            }
+        }
+        if(!check) return false;
+        check = false;
+        for(i = 0; i < this.userInfo.filter.status.length; i++){
+            if(item.status == this.userInfo.filter.status[i]){
+                check = true;
+                break;
+            }
+        }
+        if(!check) return false;   
+        if(!item.likes){
+            item.likes = 0;
+        }
+        if(item.likes <= this.userInfo.filter.upper &&
+          item.likes >= this.userInfo.filter.lower){
+            return true;
+        }
+        return false;
+    }
     initMap(options, bool){
         this.map = new google.maps.Map(this.mapElement.nativeElement, options);
         //Use self in event listeners because it moves out of the map's scope
@@ -360,7 +416,9 @@ export class MapPage {
             self.fireDB.list('positions', {preserveSnapshot: true})
             .subscribe(snaps => {
                 if(self.setOnce){
+                    //filter points and create markers
                     snaps.forEach(function(item){
+                        if(!self.checkPoint(item.val())) return;
                         self.makeMarker(item.val());
                         self.points.push(item.val());
                     });

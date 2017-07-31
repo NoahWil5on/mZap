@@ -14,7 +14,7 @@ export class TranslatorProvider {
             openCam: "Open Camera",
             openAlb: "Open Album",
             username: "Show Username?",
-            submit: "submit",
+            submit: "Submit",
             submitting: "Submitting Content...",
             imageAlertTitle: "Are you sure you want to submit this without a photo?",
             imageAlertSubTitle: "Adding a photo will allow other users to better assess your report",
@@ -123,6 +123,14 @@ export class TranslatorProvider {
         },
         discussion: {
             discussion: "Discussion"
+        },
+        filter: {
+            filter: "Filter",
+            type: "Type:",
+            status: "Status:",
+            rating: "Rating:",
+            cancel: "Cancel",
+            error: "Select at least one status and one type"
         },
         other: {
             complete: "Complete",
@@ -249,6 +257,14 @@ export class TranslatorProvider {
         },
         discussion: {
             discussion: "Discusión"
+        },
+        filter: {
+            filter: "Filtrar",
+            type: "Tipo:",
+            status: "Estado:",
+            rating: "Clasificación:",
+            cancel: "Cancelar",
+            error: "Seleccione al menos un estado y un tipo"
         },
         other: {
             complete: "Completar",

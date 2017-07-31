@@ -22,54 +22,62 @@
                     </button>
                 </div>
         </header>
-        <ion-item (click)="map()" [class.nav-item]="checkPage('map')">
-            <ion-grid>
-                <ion-row>
-                    <ion-col col-auto no-padding>
-                        <img src="assets/map.png" style="height: 34px; padding: 0" alt="map" />
-                    </ion-col>
-                    <ion-col>
-                        <p class="option">{{translate.text.menu.map}}</p>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
-        <ion-item (click)="reports()" [class.nav-item]="checkPage('reports')">
-            <ion-grid>
-                <ion-row>
-                    <ion-col col-auto no-padding>
-                        <img src="assets/report.png" style="height: 34px; padding: 0" alt="reports" />
-                    </ion-col>
-                    <ion-col>
-                        <p class="option">{{translate.text.menu.reports}}</p>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
-        <ion-item (click)="topRated()" [class.nav-item]="checkPage('top')">
-            <ion-grid>
-                <ion-row>
-                    <ion-col col-auto no-padding>
-                        <img src="assets/trophy.png" style="height: 34px; padding: 0" alt="trophy" />
-                    </ion-col>
-                    <ion-col>
-                        <p class="option">{{translate.text.menu.rankings}}</p>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
-        <ion-item (click)="settings()" [class.nav-item]="checkPage('settings')">
-            <ion-grid>
-                <ion-row>
-                    <ion-col col-auto no-padding>
-                        <img src="assets/cog.png" style="height: 34px; padding: 0" alt="trophy" />
-                    </ion-col>
-                    <ion-col>
-                        <p class="option">{{translate.text.menu.settings}}</p>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
+        <button class="menu-button" (click)="map()">
+            <ion-item [class.nav-item]="checkPage('map')">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-auto no-padding>
+                            <img src="assets/map.png" style="height: 34px; padding: 0" alt="map" />
+                        </ion-col>
+                        <ion-col>
+                            <p class="option">{{translate.text.menu.map}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </button>
+        <button class="menu-button" (click)="reports()">
+            <ion-item [class.nav-item]="checkPage('reports')">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-auto no-padding>
+                            <img src="assets/report.png" style="height: 34px; padding: 0" alt="reports" />
+                        </ion-col>
+                        <ion-col>
+                            <p class="option">{{translate.text.menu.reports}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </button>
+        <button class="menu-button" (click)="topRated()">
+            <ion-item [class.nav-item]="checkPage('top')">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-auto no-padding>
+                            <img src="assets/trophy.png" style="height: 34px; padding: 0" alt="trophy" />
+                        </ion-col>
+                        <ion-col>
+                            <p class="option">{{translate.text.menu.rankings}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </button>
+        <button class="menu-button" (click)="settings()">
+            <ion-item [class.nav-item]="checkPage('settings')">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-auto no-padding>
+                            <img src="assets/cog.png" style="height: 34px; padding: 0" alt="trophy" />
+                        </ion-col>
+                        <ion-col>
+                            <p class="option">{{translate.text.menu.settings}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </button>
     </ion-content>
 </ion-menu>
 

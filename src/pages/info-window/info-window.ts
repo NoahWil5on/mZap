@@ -36,8 +36,9 @@ export class InfoWindowPage {
     type: any = '';
     status: any = '';
     error: string = "";
-    pictures: any = [];
+    resolves: any = [];
     dataSet: boolean = false;
+    info: string = "";
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
               public viewCtrl: ViewController, public afAuth: AngularFireAuth, public images: ImagesProvider,
               public loadingCtrl: LoadingController, public ngZone: NgZone, public translate: TranslatorProvider,
@@ -65,9 +66,9 @@ export class InfoWindowPage {
       let self = this;
       
       //grab all of resolve images from db
-      firebase.database().ref('/resolveImages/').child(this.data.key).once('value').then(snapshot => {
+      firebase.database().ref('/resolves/').child(this.data.key).once('value').then(snapshot => {
           snapshot.forEach(function(child){
-              self.pictures.push(child.val().url);
+              self.resolves.push(child.val());
           })
       });
       this.checkStatus();
@@ -94,17 +95,37 @@ export class InfoWindowPage {
     //if selected, this post and all data associated with it will be deleted
     deleteData(){
         //checks to see if there are any images that need to be deleted
-        if(this.checkForImage()){
-            firebase.storage().ref('/images/').child(this.data.refName).delete().then(() => {
-               firebase.database().ref('/positions/').child(this.data.key).remove().then(() => {
-                   this.dismiss(true);
-               });
+        var self = this;
+        //check if there is an image
+        firebase.database().ref('/positions/').child(this.data.key).once('value').then(function(snapshot){
+            if(snapshot.hasChild('url')){
+                //if image delete image then delete rest of report
+                firebase.storage().ref('/images/').child(self.data.refName).delete().then(() => {
+                    self.deleteReport();
+                });   
+                //if no image delete rest of report
+            }else{
+                self.deleteReport();
+            }
+        });
+    }
+    //helper function for deleteDatat()
+    deleteReport(){
+        //delete each "resolve" image from db
+        firebase.database().ref('/resolves/').child(this.data.key).once('value').then(snapshot => {
+            //loop through resolve images and delete them from storage
+            snapshot.forEach(function(item){
+                firebase.storage().ref('/images/').child(item.val().refName).delete();
             });
-        }else{
-            firebase.database().ref('/positions/').child(this.data.key).remove().then(() => {
-                this.dismiss(true);
+        }).then(() => {
+            //delete the directory for resolve on this report
+            firebase.database().ref('/resolves/').child(this.data.key).remove().then(() => {
+                //delete root report
+                firebase.database().ref('/positions/').child(this.data.key).remove().then(() => {
+                    this.dismiss(true);
+                });
             });
-        }
+        })
     }
     //dismiss this modal
     dismiss(data){
@@ -113,15 +134,6 @@ export class InfoWindowPage {
         }else{
             this.viewCtrl.dismiss();
         }
-    }
-    //for checking if images exist that are related to this post
-    checkForImage(){
-        let returnVal = false;
-        firebase.database().ref('/positions/').child(this.data.key).once('value').then(function(snapshot){
-            if(snapshot.hasChild('url'))
-                returnVal = true;
-        });
-        return returnVal;
     }
     //check if the current user is the OP
     checkLogin(){
@@ -139,9 +151,6 @@ export class InfoWindowPage {
     }
     //submit a resolved image
     submit(){
-        if(this.dataSet){
-            firebase.database().ref('/positions/').child(this.data.key).child('resolveImages').push('value.jpg');
-        }
         let loader = this.loadingCtrl.create({
             content: this.translate.text.infoWindow.submitting
         })
@@ -157,26 +166,25 @@ export class InfoWindowPage {
         //makes sure that an image was included in resolve post
         if(this.dataSet){
             loader.present();
+            
+            //upload image
             var promiseObject = this.images.uploadToFirebase();
             promiseObject.promise.then(res => {
                 let url = res;
                 let refName = promiseObject.refName;
-                let data = {url: url, refName: refName};
-                firebase.database().ref('/resolveImages/').child(this.data.key).push(data).then(key => {
-                    //Adds key for deletion later on
-                    /*firebase.database().ref('/resolveImages/').child(this.data.key).child('key').set(key.key).then(_ => {
-                        loader.dismiss();
-                        successAlert.present();
-                    }).catch(e => {
-                        loader.dismiss();
-                        alert("Error: " +e.message);
-                    })*/
+                let data = {url: url, refName: refName, info: this.info}; 
+                
+                //get link to resolution info
+                var key = firebase.database().ref('/resolves/').child(this.data.key).push(data).key;
+                
+                //link resolution info to actual report
+                firebase.database().ref('/positions/').child(this.data.key).child('resolves').push(key).then(_ => {
                     loader.dismiss();
                     successAlert.present();
                 }).catch(e => {
                     loader.dismiss();
-                    alert("Error: " +e.message);                    
-                })
+                    alert("Error: " +e.message); 
+                });
             }).catch(e => {
                 loader.dismiss();
                 alert("Error: " +e.message);

@@ -11,6 +11,7 @@ export class UserInfoProvider {
     lng: any = null;
     zoom: any = null;
     allowPosition = false;
+    filter: any;
     constructor() {
     }
 }

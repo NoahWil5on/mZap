@@ -10,10 +10,10 @@
         <ion-grid>
             <ion-row>
                 <ion-col text-center>
-                    <button ion-button>
+                    <button ion-button (click)="like(1)" [class.greenButton]="likeValue == 1">
                         <ion-icon name="thumbs-up"></ion-icon>
                     </button>
-                    <button ion-button>
+                    <button ion-button (click)="like(-1)" [class.greenButton]="likeValue == -1">
                         <ion-icon name="thumbs-down"></ion-icon>
                     </button>
                 </ion-col>
@@ -35,13 +35,27 @@
                 <img *ngIf="myActiveData.url" [src]="myActiveData.url" alt='User Image' width="50px" style="vertical-align: middle"/>
                 {{type}}
             </h2>
+            <h3 text-center><ion-icon name="star" style="color: gold"></ion-icon>{{myActiveData.likes}}</h3>
         </div>
     </div>
-    <div class="nav-button nav-button-left orange" (click)="openMenu()" >
-        <img class="hamburg"src="assets/hamburger.png" alt="nav"/>
+    <div class="nav-div nav-div-left">
+        <button (click)="openMenu()">
+            <div class="nav-button orange">
+                <img class="hamburg" src="assets/hamburger.png" alt="nav"/>
+            </div>
+        </button>
     </div>
-    <div class="nav-button nav-button-right green" (click)="setCenter()">
-        <img class="cog"src="assets/target.png" alt="nav"/>
+    <div class="nav-div nav-div-right">
+        <button (click)="setCenter()">
+            <div class="nav-button green">
+                <img class="cog" src="assets/target.png" alt="nav"/>
+            </div>
+        </button>
+        <button (click)="openFilter()">
+            <div class="nav-button yellow">
+                <img class="filter" src="assets/images/buttons/filter.png" alt="nav"/>
+            </div>
+        </button>
     </div>
     <div id="center-div">
         <div id="center-point">

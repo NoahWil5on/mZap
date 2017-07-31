@@ -1,5 +1,8 @@
 .ios, .md{
     page-map {
+        .greenButton{
+            background-color: limegreen;
+        }
         #drop-down{
             color: white;
             top: 0;
@@ -19,7 +22,7 @@
         }
         .down{
             opacity: 1;
-            height: 120px;
+            height: 150px;
             transition: height .25s ease, opacity .2s linear;
         }
         
@@ -116,11 +119,30 @@
         .orange:active{
             background-color: #d46a00;
         }
-        .nav-button{
+        .yellow{
+            background-color: #fcf80c;
+        }
+        .yellow:active{
+            background-color: #dcd80c;
+        }
+        .nav-div{
+            top: 35px;
             position: absolute;
-            z-index: 100;
-            padding: 5px;
-            top: 28px;
+            z-index: 5;
+            button{
+                display: block;
+                background: none;
+            }
+        }
+        .nav-div-right{
+            right: 8px;
+        }
+        .nav-div-left{
+            left: 8px;
+        }
+        .nav-button{
+            position: relative;
+            margin: 5px;
             border-radius: 100%;
             width: 50px;
             height: 50px;
@@ -130,7 +152,7 @@
         }
         .hamburg{
             pointer-events:none; 
-            top: 9px;
+            top: 14px;
             position: relative;
             display: block;
             text-align: center;
@@ -139,18 +161,21 @@
         }
         .cog{
             pointer-events:none; 
-            top: 5px;
+            top: 10px;
             position: relative;
             display: block;
             text-align: center;
             margin: 0 auto;
             height: 30px;
         }
-        .nav-button-left{
-            left: 8px;
-        }
-        .nav-button-right{
-            right: 8px;
+        .filter{
+            pointer-events:none; 
+            top: 14px;
+            position: relative;
+            display: block;
+            text-align: center;
+            margin: 0 auto;
+            height: 25px;
         }
     }
 }

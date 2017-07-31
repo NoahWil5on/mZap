@@ -17,6 +17,7 @@ import { ImagesProvider } from '../providers/images/images';
 import { ZonesProvider } from '../providers/zones/zones';
 import { UserInfoProvider } from '../providers/user-info/user-info';
 import { TranslatorProvider } from '../providers/translator/translator';
+import { LikeProvider } from '../providers/like/like';
 
 /*Import all pages into project*/
 import { MyApp } from './app.component';
@@ -31,6 +32,7 @@ import { TopRatedPage } from '../pages/top-rated/top-rated';
 import { ConfirmationPage } from '../pages/confirmation/confirmation';
 import { ReportsPage } from '../pages/reports/reports';
 import { DiscussionPage } from '../pages/discussion/discussion';
+import { FilterPage } from '../pages/filter/filter';
 
 /*Import all modules (Ionic SHOULD do this for you but it doesn't which causes an error)*/
 import { LoginPageModule } from '../pages/login/login.module';
@@ -44,6 +46,7 @@ import { TopRatedPageModule } from '../pages/top-rated/top-rated.module';
 import { ConfirmationPageModule } from '../pages/confirmation/confirmation.module';
 import { ReportsPageModule } from '../pages/reports/reports.module';
 import { DiscussionPageModule } from '../pages/discussion/discussion.module';
+import { FilterPageModule } from '../pages/filter/filter.module';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
@@ -76,7 +79,8 @@ export const firebaseConfig = {
     ConfirmationPageModule,
     ReportsPageModule,
     IonicImageViewerModule,
-    DiscussionPageModule
+    DiscussionPageModule,
+    FilterPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -91,7 +95,8 @@ export const firebaseConfig = {
       TopRatedPage,
       ConfirmationPage,
       ReportsPage,
-      DiscussionPage
+      DiscussionPage,
+      FilterPage
   ],
   providers: [
     StatusBar,
@@ -103,6 +108,7 @@ export const firebaseConfig = {
     ZonesProvider,
     UserInfoProvider,
     TranslatorProvider,
+    LikeProvider,
   ]
 })
 export class AppModule {}
