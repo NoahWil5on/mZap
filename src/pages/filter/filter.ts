@@ -16,8 +16,10 @@ export class FilterPage {
     status: any = ["To Do", "Complete"];
     type: any = ["building", "bugs", "pest", "trash"];
     error: string = "";
+    target: string = "";
     constructor(public navCtrl: NavController, public navParams: NavParams, public translate: TranslatorProvider,
                 public viewCtrl: ViewController, public userInfo: UserInfoProvider) {
+        this.target = navParams.get('target');
     }
 
     ionViewDidLoad() {
@@ -41,7 +43,16 @@ export class FilterPage {
             status: this.status,
             type: this.type
         }
-        this.userInfo.filter = obj;
+        switch(this.target){
+            case 'reports':
+                this.userInfo.filterReports = obj;
+                break;
+            case 'map': 
+                this.userInfo.filter = obj;
+                break;
+            default: 
+                break;
+        }
         this.viewCtrl.dismiss(true);
     }
 }

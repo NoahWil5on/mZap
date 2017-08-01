@@ -28,7 +28,7 @@ export class InfoWindowPage {
         description: "",
         title: "",
         url: "",
-        email: "",
+        name: "",
         show: false,
         refName: "",
         key: ""
@@ -120,6 +120,8 @@ export class InfoWindowPage {
         }).then(() => {
             //delete the directory for resolve on this report
             firebase.database().ref('/resolves/').child(this.data.key).remove().then(() => {
+                firebase.database().ref('/messages/').child(this.data.key).remove();
+            }).then(() => {
                 //delete root report
                 firebase.database().ref('/positions/').child(this.data.key).remove().then(() => {
                     this.dismiss(true);
@@ -138,7 +140,7 @@ export class InfoWindowPage {
     //check if the current user is the OP
     checkLogin(){
         if(this.afAuth.auth.currentUser){
-            if(this.afAuth.auth.currentUser.email == this.data.email)
+            if(this.afAuth.auth.currentUser.uid == this.data.id)
                 return true;
         }
         return false;

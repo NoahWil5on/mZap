@@ -1,3 +1,16 @@
-page-reports {
-
+.ios, .md{
+    page-reports {
+        .flex-row{
+            padding-bottom: 10px;
+            ion-col{
+                display: flex;
+                flex-direction: column;
+                padding: 0;
+                ion-item{
+                    padding: 0;
+                    flex: 1;
+                }
+            }
+        }
+    }
 }

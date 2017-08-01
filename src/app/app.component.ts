@@ -45,7 +45,7 @@ export class MyApp {
             statusBar.styleDefault();
             splashScreen.hide();
             
-            this.storage.get('language').then(res => {
+            this.storage.get('mzap_language').then(res => {
                 if(!res) return;
                 switch(res){
                     case 'en':
@@ -137,6 +137,7 @@ export class MyApp {
     }
     //open profile page
     profile(){
+        this.userInfo.profileView = this.afAuth.auth.currentUser.uid;
         this.nav.setRoot(ProfilePage);
         this.userInfo.pageState = 'profile';
         this.menuCtrl.close();

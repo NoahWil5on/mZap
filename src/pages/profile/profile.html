@@ -1,9 +1,14 @@
 <ion-header>
     <ion-navbar>
         <ion-title>{{translate.text.profile.profile}}</ion-title>
-        <ion-buttons start>
+        <ion-buttons start *ngIf="!navCtrl.canGoBack()">
             <button ion-button clear item-start (click)="openMenu()" class='nav-burg'>
                 <img class="nav-burg" src="assets/hamburger.png" alt="nav"/>
+            </button>
+        </ion-buttons>
+        <ion-buttons end *ngIf="checkProfile()">
+            <button ion-button clear item-end class='nav-edit' (click)="openEdit()">
+                <img class="nav-edit" src="assets/images/buttons/edit.png" alt="nav"/>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -12,25 +17,57 @@
 <ion-content padding>
     <ion-grid>
         <ion-row>
-            <ion-col col-auto>
-                <img [src]='imgSrc' width="100" alt="Profile Pic" *ngIf='imgSrc' />
+            <ion-col col-auto *ngIf='user.url'>
+                <img [src]='user.url' width="100" alt="Profile Pic" #thisImage (click)="presentImage(thisImage)"/>
             </ion-col>
             <ion-col>
                 <h2>
-                    {{name}}
+                    {{user.name}}
                 </h2>
             </ion-col>
         </ion-row>
+        <ion-row>
+            <ion-col>
+                <p>{{translate.text.profile.post}}{{user.posts}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <p>{{translate.text.profile.last}}{{user.lastActive}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+                <p>{{translate.text.profile.first}}{{user.firstActive}}</p>
+            </ion-col>
+        </ion-row>
     </ion-grid>
-    <h2 text-left>{{translate.text.profile.reports}}</h2>
-    <ion-card *ngFor="let report of reports">
-        <ion-card-header text-wrap>
-            <h2>{{report.description}}</h2>
-        </ion-card-header>
-        <ion-card-content>
-            <img [src]='report.url' #thisImage (click)="presentImage(thisImage)" alt="Image of Report" *ngIf="report.url" padding/>
-            <p >{{translate.text.profile.type}}{{report.type}}</p>
-            <p >{{translate.text.profile.status}}{{report.status}}</p>
-        </ion-card-content>
-    </ion-card>
+    <div *ngIf="checkProfile()" padding-top>
+        <h2 text-left>{{translate.text.profile.reports}}</h2>
+        <ion-card *ngFor="let report of reports">
+            <ion-card-header text-wrap>
+                <h2>{{report.description}}</h2>
+            </ion-card-header>
+            <ion-card-content>
+                <ion-grid>
+                    <ion-row class='flex-row'>
+                        <ion-col col-6>
+                            <ion-item>
+                                <p text-wrap><b>{{translate.text.profile.type}}</b>{{report.type}}</p>
+                            </ion-item>
+                            <ion-item>
+                                <p text-wrap><b>{{translate.text.profile.status}}</b>{{report.status}}</p>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col col-6>
+                            <img [src]='report.url' #thisImage (click)="presentImage(thisImage)" alt="Image of Report" *ngIf="report.url"/>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-card-content>
+            <div padding>
+                <button block ion-button color="primary" (click)="showOnMap(report.lat,report.lng)">{{translate.text.profile.map}}</button>
+            </div>
+        </ion-card>
+    </div>
 </ion-content>

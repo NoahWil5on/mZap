@@ -1,3 +1,25 @@
-page-profile {
-
+.ios, .md{
+    page-profile {
+        ion-grid{
+            ion-row{
+                ion-col{
+                    p{
+                        margin: 0;
+                    }
+                }
+            }
+        }
+        .flex-row{
+            padding-bottom: 10px;
+            ion-col{
+                display: flex;
+                flex-direction: column;
+                padding: 0;
+                ion-item{
+                    padding: 0;
+                    flex: 1;
+                }
+            }
+        }
+    }
 }

@@ -75,7 +75,7 @@ export class MapPage {
                 navigator.geolocation.getCurrentPosition((position) => {
                     let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                     self.setPin(latLng);
-                });
+                },null,{enableHighAccuracy: true, maximumAge:3000, timeout: 5000});
             }
             return;
         }
@@ -175,7 +175,7 @@ export class MapPage {
         this.menuCtrl.open();
     }
     openFilter(){
-        var filterPage = this.modal.create(FilterPage, null);
+        var filterPage = this.modal.create(FilterPage, {target: 'map'});
         filterPage.onDidDismiss(data => {
             if(data){
                 this.navCtrl.setRoot(MapPage);
@@ -248,7 +248,8 @@ export class MapPage {
                                         description: data.desc,
                                         type: data.type,
                                         show: data.show,
-                                        email: this.afAuth.auth.currentUser.email,
+                                        name: this.afAuth.auth.currentUser.displayName,
+                                        id: this.afAuth.auth.currentUser.uid,
                                         url: data.url,
                                         refName: data.refName,
                                         status: "To Do",
@@ -263,7 +264,8 @@ export class MapPage {
                                         description: data.desc,
                                         type: data.type,
                                         show: data.show,
-                                        email: this.afAuth.auth.currentUser.email,
+                                        name: this.afAuth.auth.currentUser.displayName,
+                                        id: this.afAuth.auth.currentUser.uid,
                                         status: "To Do",
                                         key: ""
                                     }
@@ -383,6 +385,8 @@ export class MapPage {
     checkPoint(item){
         if(!this.userInfo.filter) return true;
         let check = false;
+        
+        //filter by type
         for(var i = 0; i < this.userInfo.filter.type.length; i++){
             if(item.type == this.userInfo.filter.type[i]){
                 check = true;
@@ -391,6 +395,8 @@ export class MapPage {
         }
         if(!check) return false;
         check = false;
+        
+        //fileter by status
         for(i = 0; i < this.userInfo.filter.status.length; i++){
             if(item.status == this.userInfo.filter.status[i]){
                 check = true;
@@ -401,6 +407,7 @@ export class MapPage {
         if(!item.likes){
             item.likes = 0;
         }
+        //filter by rating
         if(item.likes <= this.userInfo.filter.upper &&
           item.likes >= this.userInfo.filter.lower){
             return true;

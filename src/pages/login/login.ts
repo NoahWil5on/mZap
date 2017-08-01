@@ -35,15 +35,18 @@ export class LoginPage {
     //on enter, check if the user has a saved sign in
     ionViewWillEnter(){
        this.menuCtrl.enable(false);
-       this.afAuth.auth.onAuthStateChanged(user => {
+       /*this.afAuth.auth.onAuthStateChanged(user => {
            if(this.afAuth.auth.currentUser)
                 this.runUser(this.afAuth.auth.currentUser);
-       });
+       });*/
        this.storage.get('mzap_email').then(email => {
            if(!email)return;
             this.storage.get('mzap_password').then(pass => {
                 this.afAuth.auth.signInWithEmailAndPassword(email,pass).then(data => {
                     this.runUser(this.afAuth.auth.currentUser);
+                })
+                .catch(e => {
+                    alert(this.translate.text.login.noLogin);
                 })
             })
         }).catch(e => {
@@ -79,7 +82,7 @@ export class LoginPage {
     //login user
     async login(){
         let loader = this.loadingCtrl.create({
-            content: this.translate.text.verify
+            content: this.translate.text.login.verify
         });
         loader.present();
         
@@ -101,9 +104,9 @@ export class LoginPage {
     //display info about signing in anonymously
     info(){
         var alert = this.alertCtrl.create({
-            title: this.translate.text.anonymousAlertTitle,
-            subTitle: this.translate.text.anonymousAlertSubTitle,
-            buttons: [this.translate.text.ok]
+            title: this.translate.text.login.anonymousAlertTitle,
+            subTitle: this.translate.text.login.anonymousAlertSubTitle,
+            buttons: [this.translate.text.login.ok]
         });
         alert.present();
     }

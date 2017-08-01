@@ -107,7 +107,8 @@ export class AddPage {
                                         desc: self.desc,
                                         type: self.data,
                                         show: self.show,
-                                        email: self.afAuth.auth.currentUser.email,
+                                        name: self.afAuth.auth.currentUser.displayName,
+                                        id: self.afAuth.auth.currentUser.uid
                                     });
                                 }).catch(e => {
                                     loader.dismiss();
@@ -142,7 +143,8 @@ export class AddPage {
                                 desc: self.desc,
                                 type: self.data,
                                 show: self.show,
-                                email: self.afAuth.auth.currentUser.email,
+                                name: self.afAuth.auth.currentUser.displayName,
+                                id: self.afAuth.auth.currentUser.uid,
                                 url: self.url,
                                 refName: self.refName
                             });

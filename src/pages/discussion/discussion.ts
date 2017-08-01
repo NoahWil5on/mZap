@@ -1,5 +1,5 @@
 //vanilla ionic imports
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, Content } from 'ionic-angular';
 
 //provider imports
@@ -28,7 +28,7 @@ export class DiscussionPage {
     myId: any = this.afAuth.auth.currentUser.uid;
     
     constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
-                public afAuth: AngularFireAuth, public translate: TranslatorProvider) {
+                public afAuth: AngularFireAuth, public translate: TranslatorProvider, public ngZone: NgZone) {
     }
 
     ionViewDidLoad() {
@@ -68,6 +68,7 @@ export class DiscussionPage {
     }
     //submit a message
     submit(){
+        if(this.myText.trim().length < 1) return;
         let data = {
             name: this.afAuth.auth.currentUser.displayName,
             message: this.myText,
@@ -83,8 +84,10 @@ export class DiscussionPage {
     }
     //input box autoresizing
     resize(){
-        let el = this.msg.nativeElement;
-        el.style.cssText = 'height:auto; padding:0';
-        el.style.cssText = 'height:' + (el.scrollHeight+ 4) + 'px';
+        this.ngZone.run(() =>{
+            let el = this.msg.nativeElement;
+            el.style.cssText = 'height:auto; padding:0;';
+            el.style.cssText = 'height:' + (el.scrollHeight+ 4) + 'px';
+        });
     }
 }

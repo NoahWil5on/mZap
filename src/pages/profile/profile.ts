@@ -1,9 +1,14 @@
 //vanilla ionic imports
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, ModalController } from 'ionic-angular';
+
+//pages import
+import { MapPage } from '../map/map';
+import { EditProfilePage } from '../edit-profile/edit-profile';
 
 //provider imports
 import { TranslatorProvider } from '../../providers/translator/translator';
+import { UserInfoProvider } from '../../providers/user-info/user-info'
 
 //image pop up import
 import { ImageViewerController } from 'ionic-img-viewer';
@@ -21,16 +26,19 @@ import * as firebase from 'firebase';
 export class ProfilePage {
 
     reports: any = [];
-    name: any = '';
-    imgSrc: any = '';
-    constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, public afAuth:    AngularFireAuth, public translate: TranslatorProvider, public imageViewerCtrl: ImageViewerController) {
+    user: any = {};
+    constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, 
+                 public afAuth:    AngularFireAuth, public translate: TranslatorProvider, 
+                 public imageViewerCtrl: ImageViewerController, public userInfo: UserInfoProvider,
+                public modalCtrl: ModalController) {
         
     }
 
     ionViewDidLoad() {
+        this.reports = [];
         var self = this;
         //fetch user posts from firebase
-        firebase.database().ref('/positions/').orderByChild('email').equalTo(this.afAuth.auth.currentUser.email)
+        firebase.database().ref('/positions/').orderByChild('id').equalTo(this.userInfo.profileView)
         .once('value').then(snapshot => {
             snapshot.forEach(function(item){
                 //create object to hold data on each post
@@ -38,7 +46,9 @@ export class ProfilePage {
                     type: item.val().type,
                     status: item.val().status,
                     description: item.val().description,
-                    url: item.val().url
+                    url: item.val().url,
+                    lat: item.val().lat,
+                    lng: item.val().lng
                 }
                 //translate type
                 switch(item.val().type){
@@ -68,11 +78,20 @@ export class ProfilePage {
                 self.reports.unshift(obj);
             });
         })
-        firebase.database().ref('users').child(this.afAuth.auth.currentUser.uid).once('value').then((snapshot) => {
-            this.name = snapshot.val().name;
-            this.imgSrc = snapshot.val().url;
+        firebase.database().ref('users').child(this.userInfo.profileView).once('value').then((snapshot) => {
+            this.user = snapshot.val();
         });
     }
+    //Check if this is your own user profile
+    checkProfile(){
+        if(this.afAuth.auth.currentUser){
+            return (this.userInfo.profileView == this.afAuth.auth.currentUser.uid) ? true: false;
+        }
+        else{
+            return false;
+        }
+    }
+    
     //show pop up image
     presentImage(image){
         let imageViewer = this.imageViewerCtrl.create(image);
@@ -81,5 +100,29 @@ export class ProfilePage {
     //open menu
     openMenu(){
         this.menuCtrl.open();
+    }
+    //Bring up Edit Modal
+    openEdit(){
+        var editModal = this.modalCtrl.create(EditProfilePage, null);
+        editModal.onDidDismiss(res => {
+            if(res){
+                this.ionViewDidLoad();
+            }
+        })
+        editModal.present();
+    }
+    //bring user to location on map
+    showOnMap(lat, lng){    
+        //remove filters and update menu pageState
+        this.userInfo.filter = undefined;
+        this.userInfo.pageState = 'map';
+        
+        //set zoom and position of map
+        this.userInfo.lat = lat;
+        this.userInfo.lng = lng;
+        this.userInfo.zoom = 20;
+        
+        //go to map
+        this.navCtrl.setRoot(MapPage);
     }
 }

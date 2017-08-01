@@ -54,11 +54,11 @@ export class SettingsPage {
         //check which language is selected
         switch(this.language){
             case 'en':
-                this.storage.set('language', 'en');
+                this.storage.set('mzap_language', 'en');
                 this.translate.selectLanguage(this.translate.en);
                 break;
             case 'es':
-                this.storage.set('language', 'es');
+                this.storage.set('mzap_language', 'es');
                 this.translate.selectLanguage(this.translate.es);
                 break;
             default:

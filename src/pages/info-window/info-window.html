@@ -60,7 +60,7 @@
                     <div text-center *ngIf="data.url">
                         <img [src]="data.url" #thisImage (click)="presentImage(thisImage)" />
                     </div>
-                    <p *ngIf="data.show">{{translate.text.infoWindow.author}}{{data.email}}</p>
+                    <p *ngIf="data.show">{{translate.text.infoWindow.author}}{{data.name}}</p>
                     <p *ngIf="!data.show">{{translate.text.infoWindow.noAuthor}}<p>
                     <p>{{translate.text.infoWindow.status}}{{status}}</p>
                 </ion-card-content>

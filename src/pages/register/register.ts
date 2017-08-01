@@ -1,6 +1,6 @@
 //vanilla ionic imports
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 //page imports
@@ -36,12 +36,15 @@ export class RegisterPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
               public afDB: AngularFireDatabase, public images: ImagesProvider, public userInfo: UserInfoProvider,
-              private storage: Storage, public translate: TranslatorProvider) {
+              private storage: Storage, public translate: TranslatorProvider, public menuCtrl: MenuController) {
       this.images.doClear();
   }
 
   ionViewDidLoad() {
   }
+    ionViewWillLeave(){
+        this.menuCtrl.enable(true);
+    }
     /*Tries to create account*/
     async createAccount(){
         this.startTrue = false;
@@ -82,6 +85,7 @@ export class RegisterPage {
                                     firstActive: date, 
                                     name: this.name, 
                                     refName: this.refName, 
+                                    email: this.email,
                                     url: this.url}
                                 ).then(_ => {
                                     this.userInfo.pageState = 'map';
@@ -103,7 +107,9 @@ export class RegisterPage {
                                 visits: 1, 
                                 lastActive: date, 
                                 firstActive: date, 
-                                name: this.name}
+                                name: this.name,
+                                email: this.email
+                            }
                             ).then(_ => {
                                 this.userInfo.pageState = 'map';
                                 this.navCtrl.setRoot(MapPage);

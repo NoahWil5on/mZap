@@ -21,7 +21,7 @@ export class ConfirmationPage {
     description: any;
     type: any;
     picture: any;
-    email: any;
+    name: any;
     pos: any;
     show: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public socialSharing: SocialSharing, public translate: TranslatorProvider, public imageViewerCtrl: ImageViewerController) {
@@ -31,7 +31,7 @@ export class ConfirmationPage {
       //pulls in all data from modal.present()
       let myType = this.navParams.get('type');
       this.description = this.navParams.get('description');
-      this.email = this.navParams.get('email');
+      this.name = this.navParams.get('name');
       if(this.navParams.get('url')){
         this.picture = this.navParams.get('url');
       }

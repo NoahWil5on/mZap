@@ -1,9 +1,14 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>{{translate.text.reports.reports}}</ion-title>
+        <ion-title text-center>{{translate.text.reports.reports}}</ion-title>
         <ion-buttons start>
             <button ion-button clear item-start (click)="openMenu()" class='nav-burg'>
                 <img class="nav-burg" src="assets/hamburger.png" alt="nav"/>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button clear item-end class='nav-filter' (click)="openFilter()">
+                <img class="nav-filter" src="assets/images/buttons/filter.png" alt="nav"/>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -11,5 +16,40 @@
 
 
 <ion-content padding>
-    <h2 text-center>{{translate.text.reports.soon}}</h2>
+    <ion-card padding *ngFor="let report of reports">
+        <h1>{{report.description}}</h1>  
+        <ion-grid no-padding>
+            <ion-row class="flex-row">
+                <ion-col col-6>
+                    <ion-item>
+                        <p text-wrap><b>{{translate.text.reports.type}}</b>{{report.type}}</p>
+                    </ion-item>
+                    <ion-item>
+                        <p text-wrap><b>{{translate.text.reports.status}}</b>{{report.status}}</p>
+                    </ion-item>
+                    <ion-item *ngIf="report.show">
+                        <p text-wrap><b>{{translate.text.reports.by}}</b>{{report.name}}</p>
+                    </ion-item>
+                    <ion-item *ngIf="!report.show">
+                        <p text-wrap><b>{{translate.text.reports.by}}</b>{{translate.text.reports.anonymous}}</p>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-6>
+                    <img *ngIf="report.url" [src]="report.url" #thisImage (click)="presentImage(thisImage)"/>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col text-left no-padding>
+                    <button ion-button color="primary" (click)="showOnMap(report.lat,report.lng)">
+                        {{translate.text.reports.map}}
+                    </button>
+                </ion-col>
+                <ion-col text-right no-padding>
+                    <button ion-button color="secondary" *ngIf="report.show" (click)="doProfile(report.id)">
+                        {{translate.text.reports.profile}}
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card>
 </ion-content>

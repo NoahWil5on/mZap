@@ -59,6 +59,7 @@ export class TranslatorProvider {
         login: {
             login: "Login",
             account: "Don't have an account? ",
+            noLogin: "Unable to sign user in at this time",
             signUp: "Sign Up",
             password: "Forgot Password",
             anonymous: "Sign in anonymously",
@@ -82,9 +83,13 @@ export class TranslatorProvider {
         },
         profile: {
             profile: "Profile",
+            post: "Posts: ",
+            last: "Last Active: ",
+            first: "Account Created: ",
             reports: "My Reports:",
             type: "Type: ",
-            status: "Status: "
+            status: "Status: ",
+            map: "View on Map"
         },
         register: {
             create: "Creat an Account",
@@ -101,7 +106,12 @@ export class TranslatorProvider {
         },
         reports: {
             reports: "Reports",
-            soon: "Content Coming Soon!"
+            type: "Type: ",
+            status: "Status: ",
+            by: "Reported By: ",
+            anonymous: "Anonymous",
+            map: "View on Map",
+            profile: "View Profile"
         },
         settings: {
             settings: "Settings",
@@ -131,6 +141,17 @@ export class TranslatorProvider {
             rating: "Rating:",
             cancel: "Cancel",
             error: "Select at least one status and one type"
+        },
+        editProfile: {
+            edit: "Edit Profile",
+            loading: "Updating User Profile...",
+            name: "Name",
+            pic: "Picture",
+            submit: "Submit",
+            delete: "Delete",
+            error: "Name must be at least 2 characters in length",
+            openCam: "Open Camera",
+            openAlb: "Open Album"
         },
         other: {
             complete: "Complete",
@@ -192,6 +213,7 @@ export class TranslatorProvider {
         },
         login: {
             login: "Ingresar",
+            noLogin: "No se puede firmar usuario en este momento",
             account: "No tiene una cuenta? ",
             signUp: "Inscribirse",
             password: "Olvidó su contraseña",
@@ -216,9 +238,13 @@ export class TranslatorProvider {
         },
         profile: {
             profile: "Perfíl",
+            post: "Publicación: ",
+            last: "Último Activo: ",
+            first: "Cuenta Creada: ",
             reports: "Mis Reportes:",
             type: "Tipo: ",
-            status: "Estado: "
+            status: "Estado: ",
+            map: "Ver en el Mapa"
         },
         register: {
             create: "Crear una cuenta",
@@ -235,7 +261,12 @@ export class TranslatorProvider {
         },
         reports: {
             reports: "Reportes",
-            soon: "¡Contenido Próximamente!"
+            type: "Tipo: ",
+            status: "Estado:",
+            by: "Reportado Por: ",
+            anonymous: "Anónimo",
+            map: "Ver en el Mapa",
+            profile: "Ver Perfil"
         },
         settings: {
             settings: "Ajustes",
@@ -265,6 +296,17 @@ export class TranslatorProvider {
             rating: "Clasificación:",
             cancel: "Cancelar",
             error: "Seleccione al menos un estado y un tipo"
+        },
+        editProfile: {
+            edit: "Editar Perfil",
+            loading: "Actualización de Perfil de Usuario...",
+            name: "Nombre",
+            pic: "Imagen",
+            submit: "Enviar",
+            delete: "Borrar",
+            error: "El nombre debe tener al menos 2 caracteres de longitud",
+            openCam: "Abrir Cámara",
+            openAlb: "Abrir Album"
         },
         other: {
             complete: "Completar",

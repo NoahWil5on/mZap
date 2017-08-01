@@ -1,3 +1,4 @@
+//vanilla ionic imports
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -8,6 +9,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { IonicStorageModule } from '@ionic/storage';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 
+//Angular fire imports
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule} from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -33,6 +35,7 @@ import { ConfirmationPage } from '../pages/confirmation/confirmation';
 import { ReportsPage } from '../pages/reports/reports';
 import { DiscussionPage } from '../pages/discussion/discussion';
 import { FilterPage } from '../pages/filter/filter';
+import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 
 /*Import all modules (Ionic SHOULD do this for you but it doesn't which causes an error)*/
 import { LoginPageModule } from '../pages/login/login.module';
@@ -47,6 +50,7 @@ import { ConfirmationPageModule } from '../pages/confirmation/confirmation.modul
 import { ReportsPageModule } from '../pages/reports/reports.module';
 import { DiscussionPageModule } from '../pages/discussion/discussion.module';
 import { FilterPageModule } from '../pages/filter/filter.module';
+import { EditProfilePageModule } from '../pages/edit-profile/edit-profile.module';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
@@ -80,7 +84,8 @@ export const firebaseConfig = {
     ReportsPageModule,
     IonicImageViewerModule,
     DiscussionPageModule,
-    FilterPageModule
+    FilterPageModule,
+    EditProfilePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -96,7 +101,8 @@ export const firebaseConfig = {
       ConfirmationPage,
       ReportsPage,
       DiscussionPage,
-      FilterPage
+      FilterPage,
+      EditProfilePage
   ],
   providers: [
     StatusBar,
