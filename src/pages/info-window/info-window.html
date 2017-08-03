@@ -1,16 +1,15 @@
-<!--
-  Generated template for the InfoWindowPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
     <ion-title>{{type}}</ion-title>
-    <ion-buttons end>
+    <ion-buttons start>
         <button ion-button clear (click)="dismiss()" style="color: white">X</button>
-      </ion-buttons>
+    </ion-buttons>
+    <ion-buttons end *ngIf="checkLogin()">
+        <button ion-button clear item-end class='nav-edit' (click)="openEdit()">
+            <img class="nav-edit" src="assets/images/buttons/edit.png" alt="nav"/>
+        </button>
+    </ion-buttons>
   </ion-navbar>
     <ion-toolbar *ngIf="checkLoggedOn()">
         <ion-segment [(ngModel)]="section" color="secondary">

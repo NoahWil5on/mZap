@@ -7,23 +7,29 @@
 <ion-content>
     <div id="drop-down" [class.up]='dropDown' [class.down]='!dropDown' (pan)="dropFalse()">
         <div class="controls-back"></div>
-        <ion-grid>
-            <ion-row>
-                <ion-col text-center *ngIf="isLoggedIn()">
-                    <button ion-button (click)="like(1)" [class.greenButton]="likeValue == 1">
-                        <ion-icon name="thumbs-up"></ion-icon>
-                    </button>
-                    <button ion-button (click)="like(-1)" [class.greenButton]="likeValue == -1">
-                        <ion-icon name="thumbs-down"></ion-icon>
-                    </button>
+        <ion-grid no-padding>
+            <ion-row class="button-row">
+                <ion-col text-center *ngIf="isLoggedIn()" class="border-right">
+                    <ion-row>
+                        <ion-col no-padding>
+                            <button ion-button (click)="like(1)" full clear [class.greenButton]="likeValue == 1">
+                                <ion-icon name="thumbs-up"></ion-icon>
+                            </button>
+                        </ion-col>
+                        <ion-col no-padding>
+                            <button ion-button (click)="like(-1)" full clear [class.greenButton]="likeValue == -1">
+                                <ion-icon name="thumbs-down"></ion-icon>
+                            </button>
+                        </ion-col>
+                    </ion-row>
                 </ion-col>
                 <ion-col text-center>
-                    <button ion-button color="secondary" block (click)="doInfoWindow(myActiveData)">
+                    <button ion-button color="secondary" full clear (click)="doInfoWindow(myActiveData)">
                         {{translate.text.map.go}}
                     </button>
                 </ion-col>
-                <ion-col text-center *ngIf="isLoggedIn()">
-                    <button ion-button (click)="doChat()">
+                <ion-col text-center *ngIf="isLoggedIn()" class="border-left">
+                    <button ion-button full clear (click)="doChat()">
                         <ion-icon name="chatboxes"></ion-icon>
                     </button>
                 </ion-col>
@@ -35,7 +41,7 @@
                 <img *ngIf="myActiveData.url" [src]="myActiveData.url" alt='User Image' width="50px" style="vertical-align: middle"/>
                 {{type}}
             </h2>
-            <h3 text-center><ion-icon name="star" style="color: gold"></ion-icon>{{myActiveData.likes}}</h3>
+            <h3 text-center style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"><ion-icon name="star" style="color: gold"></ion-icon>{{myActiveData.likes}}</h3>
         </div>
     </div>
     <div class="nav-div nav-div-left">

@@ -9,7 +9,7 @@
             width: 100%;
             height: 100%;
             opacity: .5;
-            background-color: white;
+            background-color: #fff;
         }
         .scroll-content{
             margin: 0 !important;
@@ -27,7 +27,7 @@
                 text-align: center;
                 ion-card{
                     z-index: 10;
-                    border: solid white 3px;
+                   /* border: solid white 3px;*/
                     background-color: rgba(0,0,0,.7);
                     color: white;
                     border-radius: 5px;
@@ -37,6 +37,7 @@
                     flex-direction: column;
                     text-align: center;
                     h1{
+                        font-size: 2.5em;
                         color: white;
                     }
                 }

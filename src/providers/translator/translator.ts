@@ -153,6 +153,18 @@ export class TranslatorProvider {
             openCam: "Open Camera",
             openAlb: "Open Album"
         },
+        editPost: {
+            edit: "Edit Post",
+            description: "Description of Report",
+            type: "Type",
+            status: "Status",
+            change: "Change Picture",
+            openCam: "Open Camera",
+            openAlb: "Open Album",
+            submit: "Submit",
+            show: "Show Username",
+            error: "Report must contain a description"
+        },
         home: {
             view: "View Map",
             report: "Report",
@@ -320,6 +332,18 @@ export class TranslatorProvider {
             error: "El nombre debe tener al menos 2 caracteres de longitud",
             openCam: "Abrir Cámara",
             openAlb: "Abrir Album"
+        },
+        editPost: {
+            edit: "Editar post",
+            description: "Descripción del informe",
+            type: "Tipo",
+            status: "Estado",
+            change: "cambiar imagen",
+            openCam: "Abrir Cámara",
+            openAlb: "Abrir Album",
+            submit: "Enviar",
+            show: "Mostrar nombre de usuario",
+            error: "Informe debe contener una descripción"
         },
         home: {
             view: "Ver el Mapa",

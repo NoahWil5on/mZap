@@ -1,9 +1,13 @@
 //vanilla ionic imports
 import { Component, ViewChild, NgZone} from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ViewController, LoadingController, Slides} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ViewController, LoadingController, Slides,
+       ModalController } from 'ionic-angular';
 
 //image popup viewing import
 import { ImageViewerController } from 'ionic-img-viewer';
+
+//page imports
+import { EditPostPage } from '../edit-post/edit-post';
 
 //provider imports
 import { ImagesProvider } from '../../providers/images/images';
@@ -42,14 +46,13 @@ export class InfoWindowPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
               public viewCtrl: ViewController, public afAuth: AngularFireAuth, public images: ImagesProvider,
               public loadingCtrl: LoadingController, public ngZone: NgZone, public translate: TranslatorProvider,
-              public imageViewerCtrl: ImageViewerController) {
+              public imageViewerCtrl: ImageViewerController, public modalCtrl: ModalController) {
   }
+    ionViewDidLoad() {
+        this.data = this.navParams.get('data');
 
-  ionViewDidLoad() {
-      this.data = this.navParams.get('data');
-      
-      //translate type
-      switch(this.data.type){
+        //translate type
+        switch(this.data.type){
             case 'bugs':
                 this.type = this.translate.text.other.bug;
                 break;
@@ -63,16 +66,25 @@ export class InfoWindowPage {
                 this.type = this.translate.text.other.pest;
                 break;
         }
-      let self = this;
-      
-      //grab all of resolve images from db
-      firebase.database().ref('/resolves/').child(this.data.key).once('value').then(snapshot => {
-          snapshot.forEach(function(child){
-              self.resolves.push(child.val());
-          })
-      });
-      this.checkStatus();
-  }
+        let self = this;
+
+        //grab all of resolve images from db
+        firebase.database().ref('/resolves/').child(this.data.key).once('value').then(snapshot => {
+            snapshot.forEach(function(child){
+                self.resolves.push(child.val());
+            })
+        });
+        this.checkStatus();
+    }
+    openEdit(){
+        let editModal = this.modalCtrl.create(EditPostPage, {data: this.data});
+        editModal.onDidDismiss(data => {
+            if(data){
+                this.dismiss(true);
+            }
+        })
+        editModal.present();
+    }
     //show pop up of image when image is clicked on
     presentImage(myImage){
         let imageViewer = this.imageViewerCtrl.create(myImage);

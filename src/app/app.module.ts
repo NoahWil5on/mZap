@@ -38,6 +38,7 @@ import { FilterPage } from '../pages/filter/filter';
 import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { ForgotPage } from '../pages/forgot/forgot';
 import { HomePage } from '../pages/home/home';
+import { EditPostPage } from '../pages/edit-post/edit-post';
 
 /*Import all modules (Ionic SHOULD do this for you but it doesn't which causes an error)*/
 import { LoginPageModule } from '../pages/login/login.module';
@@ -55,6 +56,7 @@ import { FilterPageModule } from '../pages/filter/filter.module';
 import { EditProfilePageModule } from '../pages/edit-profile/edit-profile.module';
 import { ForgotPageModule } from '../pages/forgot/forgot.module';
 import { HomePageModule } from '../pages/home/home.module';
+import { EditPostPageModule } from '../pages/edit-post/edit-post.module';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
@@ -91,7 +93,8 @@ export const firebaseConfig = {
     FilterPageModule,
     EditProfilePageModule,
     ForgotPageModule,
-    HomePageModule
+    HomePageModule,
+    EditPostPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -110,7 +113,8 @@ export const firebaseConfig = {
       FilterPage,
       EditProfilePage,
       ForgotPage,
-      HomePage
+      HomePage,
+      EditPostPage
   ],
   providers: [
     StatusBar,

@@ -1,7 +1,7 @@
 .ios, .md{
     page-map {
         .greenButton{
-            background-color: limegreen;
+            color: limegreen;
         }
         #drop-down{
             color: white;
@@ -12,7 +12,7 @@
             ion-grid{
                 position: absolute;
                 bottom: 0;
-                transform: translateY(50%);
+                transform: translateY(100%);
             }
         }
         .up{
@@ -23,8 +23,18 @@
         }
         .down{
             opacity: 1;
-            height: 150px;
+            height: 110px;
             transition: height .25s ease, opacity .2s linear;
+        }
+        .button-row{
+            border: black solid 3px;
+            background-color: rgba(255,255,255,.8)
+        }
+        .border-right{
+            border-right: 1px solid #888;
+        }
+        .border-left{
+            border-left: 1px solid #888;
         }
         
         
