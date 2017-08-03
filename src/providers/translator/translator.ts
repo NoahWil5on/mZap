@@ -153,6 +153,19 @@ export class TranslatorProvider {
             openCam: "Open Camera",
             openAlb: "Open Album"
         },
+        home: {
+            view: "View Map",
+            report: "Report",
+            reports: "All Reports"
+        },
+        forgot: {
+            forgot: "Forgot Password",
+            loading: "Sending password reset email...",
+            sent: "Email sent successfully!",
+            check: "Check your email to reset your password",
+            enter: "Enter Email",
+            send: "Email Me"
+        },
         other: {
             complete: "Complete",
             todo: "To Do",
@@ -307,6 +320,19 @@ export class TranslatorProvider {
             error: "El nombre debe tener al menos 2 caracteres de longitud",
             openCam: "Abrir Cámara",
             openAlb: "Abrir Album"
+        },
+        home: {
+            view: "Ver el Mapa",
+            report: "Reportar",
+            reports: "Todos los Informes"
+        },
+        forgot: {
+            forgot: "Olvidó tu Contraseña",
+            loading: "Enviar correo electrónico de restablecimiento de contraseña...",
+            sent: "¡Correo enviado correctamente!",
+            check: "Revise su correo electrónico para restablecer su contraseña",
+            enter: "Ingrese Correo Electrónico",
+            send: "Envíeme un Correo Electrónico"
         },
         other: {
             complete: "Completar",

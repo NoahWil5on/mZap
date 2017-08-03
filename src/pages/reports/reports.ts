@@ -95,7 +95,6 @@ export class ReportsPage {
                     lat: item.val().lat,
                     lng: item.val().lng
                 }
-                console.log(item.val().type);
                 //translate type
                 switch(item.val().type){
                     case 'bugs':

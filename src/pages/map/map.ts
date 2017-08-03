@@ -54,7 +54,6 @@ export class MapPage {
               public alertCtrl: AlertController, public zones: ZonesProvider, public menuCtrl: MenuController,
                 public userInfo: UserInfoProvider, public translate: TranslatorProvider, public likeProvider: LikeProvider) {
     }
-
     //as soon as page is loaded run
     ionViewDidLoad() {
         //checks if this is NOT the first time you're opening up the map
@@ -81,6 +80,13 @@ export class MapPage {
         }
         //if this is the first time opening up maps then run this function
         this.runNavigation();
+    }
+    edit(){
+        return this.userInfo.mapEdit;
+    }
+    editTrue(){
+        this.userInfo.mapEdit = true;
+        this.navCtrl.setRoot(MapPage);
     }
     //called when user likes a post
     like(value){

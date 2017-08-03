@@ -9,5 +9,13 @@
             font-size: 20pt; 
             color: white;
         }
+        .red{
+            color: red;
+        }
+        .red-glow{
+            -webkit-box-shadow: 0px 0px 5px 1px rgba(255,0,0,1);
+            -moz-box-shadow: 0px 0px 5px 1px rgba(255,0,0,1);
+            box-shadow: 0px 0px 5px 1px rgba(255,0,0,1);
+        }
     }
 }

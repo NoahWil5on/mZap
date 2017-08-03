@@ -11,8 +11,8 @@
 
 
 <ion-content padding style="background-color: #fcf80c">
-    <ion-item>
-        <ion-label floating>{{translate.text.add.describe}}</ion-label>
+    <ion-item [class.red-glow]="desc.length < 1" style="margin-bottom: 15px; padding-bottom: 10px; padding-right: 5px">
+        <ion-label floating [class.red]="desc.length < 1">{{translate.text.add.describe}}</ion-label>
         <ion-input type="text" clearInput [(ngModel)]="desc"></ion-input>
     </ion-item>
     <ion-item>
@@ -35,6 +35,6 @@
         <ion-label>{{translate.text.add.username}}</ion-label>
         <ion-checkbox [(ngModel)]="show"></ion-checkbox>
     </ion-item>
-    <button ion-button block (click)="submit()" class="submit-button">{{translate.text.add.submit}}</button>
+    <button ion-button block (click)="submit()" class="submit-button" *ngIf="desc.length > 0">{{translate.text.add.submit}}</button>
     <p class="error">{{error}}</p>
 </ion-content>

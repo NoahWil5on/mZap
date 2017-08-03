@@ -16,6 +16,7 @@
             }
         }
         .up{
+            pointer-events: none;
             opacity: 0;
             height: 0;
             transition: height .25s ease, opacity .2s linear;

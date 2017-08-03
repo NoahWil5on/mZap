@@ -13,6 +13,7 @@ import { RegisterPage } from '../pages/register/register'
 import { ProfilePage } from '../pages/profile/profile';
 import { SettingsPage } from '../pages/settings/settings';
 import { ReportsPage } from '../pages/reports/reports';
+import { HomePage } from '../pages/home/home';
 
 //provider imports
 import { UserInfoProvider } from '../providers/user-info/user-info';
@@ -157,6 +158,10 @@ export class MyApp {
     reports(){
         this.nav.setRoot(ReportsPage);
         this.userInfo.pageState = 'reports';
+        this.menuCtrl.close();
+    }
+    home(){
+        this.nav.setRoot(HomePage);
         this.menuCtrl.close();
     }
     //open side nav

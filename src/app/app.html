@@ -22,6 +22,20 @@
                     </button>
                 </div>
         </header>
+        <button class="menu-button" (click)="home()">
+            <ion-item [class.nav-item]="checkPage('home')">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-auto no-padding>
+                            <img src="assets/home.png" style="height: 34px; padding: 0" alt="map" />
+                        </ion-col>
+                        <ion-col>
+                            <p class="option">Home</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </button>
         <button class="menu-button" (click)="map()">
             <ion-item [class.nav-item]="checkPage('map')">
                 <ion-grid>

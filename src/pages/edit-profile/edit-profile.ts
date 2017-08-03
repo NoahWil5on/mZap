@@ -62,8 +62,8 @@ export class EditProfilePage {
             this.error = this.translate.text.editProfile.error;
             return;
         }
+        loader.present();
         if(this.dataSet){
-            loader.present();
             firebase.database().ref('/users/').child(this.afAuth.auth.currentUser.uid).once('value', snapshot => {
                 if(snapshot.hasChild('url')){
                     firebase.storage().ref('/images/').child(snapshot.val().refName).delete().then(_ => {
@@ -79,11 +79,22 @@ export class EditProfilePage {
                             alert("Error: " +e.message);
                         });
                     });
+                }else{
+                    var promiseObject = this.images.uploadToFirebase();
+                    promiseObject.promise.then(res => {
+                        firebase.database().ref('/users/').child(this.afAuth.auth.currentUser.uid).update({
+                            url: res,
+                            refName: promiseObject.refName,
+                        }).then(() => {
+                            this.updateUser(loader);
+                        });
+                    }).catch(e => {
+                        alert("Error: " +e.message);
+                    });
                 }
             })
         }
         else{
-            loader.present();
             this.updateUser(loader);
         }
     }
@@ -121,6 +132,7 @@ export class EditProfilePage {
         //find all posts posted by this user
         firebase.database().ref('/positions/').orderByChild('id').equalTo(this.afAuth.auth.currentUser.uid).once('value').
         then(snapshot => {
+            console.log(snapshot.val());
             //delete each post
             snapshot.forEach(function(item){
                 //check if image exsists on this post
@@ -168,7 +180,7 @@ export class EditProfilePage {
             })
         }).catch(e => {
             loader.dismiss();
-        })     
+        })    
     }
     deleteReport(data){
         //delete each "resolve" image from db

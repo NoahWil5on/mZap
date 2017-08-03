@@ -5,7 +5,9 @@ import { Storage } from '@ionic/storage';
 
 //page imports
 import { RegisterPage } from '../register/register';
-import { MapPage } from '../map/map'
+//import { MapPage } from '../map/map';
+import { ForgotPage } from '../forgot/forgot';
+import { HomePage } from '../home/home';
 
 //provider imports
 import { UserInfoProvider} from '../../providers/user-info/user-info';
@@ -68,7 +70,7 @@ export class LoginPage {
                       lastActive: date 
                   }).then(_ => {
                       self.userInfo.pageState = 'map';
-                      self.navCtrl.setRoot(MapPage);
+                      self.navCtrl.setRoot(HomePage);
                   }).catch(e => {
                       alert(e.message);
                   });
@@ -101,6 +103,11 @@ export class LoginPage {
     register(){
         this.navCtrl.push(RegisterPage);
     }
+    //send user to forgot password page
+    forgot(){
+        this.navCtrl.push(ForgotPage);
+    }
+    
     //display info about signing in anonymously
     info(){
         var alert = this.alertCtrl.create({
@@ -112,8 +119,8 @@ export class LoginPage {
     }
     goHome(){
         try{
-        this.userInfo.pageState = 'map';
-        this.navCtrl.setRoot(MapPage);
+            this.userInfo.pageState = 'map';
+            this.navCtrl.setRoot(HomePage);
         }
         catch(e){
             alert(e.message);

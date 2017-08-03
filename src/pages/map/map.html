@@ -9,7 +9,7 @@
         <div class="controls-back"></div>
         <ion-grid>
             <ion-row>
-                <ion-col text-center>
+                <ion-col text-center *ngIf="isLoggedIn()">
                     <button ion-button (click)="like(1)" [class.greenButton]="likeValue == 1">
                         <ion-icon name="thumbs-up"></ion-icon>
                     </button>
@@ -18,11 +18,11 @@
                     </button>
                 </ion-col>
                 <ion-col text-center>
-                    <button ion-button color="secondary" (click)="doInfoWindow(myActiveData)">
+                    <button ion-button color="secondary" block (click)="doInfoWindow(myActiveData)">
                         {{translate.text.map.go}}
                     </button>
                 </ion-col>
-                <ion-col text-center>
+                <ion-col text-center *ngIf="isLoggedIn()">
                     <button ion-button (click)="doChat()">
                         <ion-icon name="chatboxes"></ion-icon>
                     </button>
@@ -57,12 +57,12 @@
             </div>
         </button>
     </div>
-    <div id="center-div">
+    <div id="center-div" *ngIf="isLoggedIn() && edit()">
         <div id="center-point">
             <img src="assets/location_marker.png" alt="Drop Position" />
         </div>
     </div>
-    <div id="controls" (pan)="addFalse()" *ngIf="isLoggedIn()">
+    <div id="controls" (pan)="addFalse()" *ngIf="isLoggedIn() && edit()">
         <div class="controls-back"></div>
         <!--
         <div class="button-center" class="padding-top">
@@ -82,6 +82,14 @@
             </button>
             <button class="add-type" (click)="addPage('building')">
                 <img src="assets/images/buttons/button_building.png" alt="Building"/>
+            </button>
+        </div>
+    </div>
+    <div id="controls" (pan)="addFalse()" *ngIf="isLoggedIn() && !edit()">
+        <div class="controls-back"></div>
+        <div class="button-center add">
+            <button (click)="editTrue()" ion-button style="width: 100px">
+                Report!
             </button>
         </div>
     </div>

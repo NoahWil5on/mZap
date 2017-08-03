@@ -7,6 +7,7 @@ export class UserInfoProvider {
     //singleton for current user data throughout app
     user: any;
     pageState: string = 'map';
+    mapEdit: boolean = true;
     lat: any = null;
     lng: any = null;
     zoom: any = null;

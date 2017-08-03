@@ -15,7 +15,7 @@ export class LikeProvider {
     like(post, value, callback){
         var valToAdd = value;
         var ref = firebase.database().ref('/positions/').child(post);
-        
+        if(!this.afAuth.auth.currentUser) return;
         //check if the user has already liked this post and what value they posted on it
         var user = firebase.database().ref('/userLikes/').child(this.afAuth.auth.currentUser.uid).child('likedPosts').child(post);
         user.once('value',function(userSnapshot){
@@ -59,6 +59,7 @@ export class LikeProvider {
     //used for styling
     //takes post ID and sends a callback of the user's like preference for this post
     likeable(post, callback){
+        if(!this.afAuth.auth.currentUser) return;
         var user = firebase.database().ref('/userLikes/').child(this.afAuth.auth.currentUser.uid).child('likedPosts').child(post);
         user.once('value',function(userSnapshot){
             if(userSnapshot.val()){
