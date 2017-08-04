@@ -22,11 +22,24 @@
         margin-right: auto;
         text-align: center;
     }
+    .ionic-title{
+        padding: 0;
+        .title{
+            font-size: 16pt;
+        }
+        ion-col{
+            padding: 0;
+            text-align: center;
+        }
+    }
     ion-header{
         div{
             background-color: #3fbc05;
             color: white;
         }
+    }
+    .no-height{
+        height: 0 !important;
     }
     header{
         width: 100%;

@@ -1,5 +1,5 @@
 //vanilla ionic import
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, LoadingController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
@@ -20,7 +20,9 @@ import * as firebase from 'firebase';
     templateUrl: 'edit-profile.html',
 })
 export class EditProfilePage {
-
+    @ViewChild('preview') preview;
+    imageData: string = "";
+    
     user: any = {};
     name: any = "";
     error: string = "";
@@ -28,6 +30,7 @@ export class EditProfilePage {
     constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
                 public afAuth: AngularFireAuth, public translate: TranslatorProvider, public images: ImagesProvider,
                 public loadingCtrl: LoadingController, public alertCtrl: AlertController, private storage: Storage) {
+        this.images.doClear();
     }
 
     ionViewDidLoad() {
@@ -43,14 +46,18 @@ export class EditProfilePage {
     cameraRequest(){
         var promise = this.images.doGetCameraImage(100,100);
         promise.then(res => {
-           this.dataSet = true; 
+            this.imageData = "data:image/jpg;base64,"+res;
+            this.preview.nativeElement.setAttribute('src', this.imageData);
+            this.dataSet = true; 
         }).catch(e => {
         });
     }
     albumRequest(){
         var promise = this.images.doGetAlbumImage(100,100);
         promise.then(res => {
-           this.dataSet = true; 
+            this.imageData = "data:image/jpg;base64,"+res;
+            this.preview.nativeElement.setAttribute('src', this.imageData);
+            this.dataSet = true;
         }).catch(e => {
         });
     }

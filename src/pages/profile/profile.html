@@ -1,16 +1,26 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>{{translate.text.profile.profile}}</ion-title>
-        <ion-buttons start *ngIf="!navCtrl.canGoBack()">
-            <button ion-button clear item-start (click)="openMenu()" class='nav-burg'>
-                <img class="nav-burg" src="assets/hamburger.png" alt="nav"/>
-            </button>
-        </ion-buttons>
-        <ion-buttons end *ngIf="checkProfile()">
-            <button ion-button clear item-end class='nav-edit' (click)="openEdit()">
-                <img class="nav-edit" src="assets/images/buttons/edit.png" alt="nav"/>
-            </button>
-        </ion-buttons>
+        <ion-grid class="ionic-title">
+            <ion-row>
+                <ion-col text-left>
+                    <ion-buttons start *ngIf="!navCtrl.canGoBack()">
+                        <button ion-button clear item-start (click)="openMenu()" class='nav-burg'>
+                            <img class="nav-burg" src="assets/hamburger.png" alt="nav"/>
+                        </button>
+                    </ion-buttons>
+                </ion-col>
+                <ion-col col-auto class="title">
+                    {{translate.text.profile.profile}}
+                </ion-col>
+                <ion-col text-right>
+                    <ion-buttons end *ngIf="checkProfile()">
+                        <button ion-button clear item-end class='nav-edit' (click)="openEdit()">
+                            <img class="nav-edit" src="assets/images/buttons/edit.png" alt="nav"/>
+                        </button>
+                    </ion-buttons>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </ion-navbar>
 </ion-header>
 

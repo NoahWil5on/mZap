@@ -1,16 +1,26 @@
 <ion-header>
     <ion-navbar>
-        <ion-title text-center>{{translate.text.reports.reports}}</ion-title>
-        <ion-buttons start>
-            <button ion-button clear item-start (click)="openMenu()" class='nav-burg'>
-                <img class="nav-burg" src="assets/hamburger.png" alt="nav"/>
-            </button>
-        </ion-buttons>
-        <ion-buttons end>
-            <button ion-button clear item-end class='nav-filter' (click)="openFilter()">
-                <img class="nav-filter" src="assets/images/buttons/filter.png" alt="nav"/>
-            </button>
-        </ion-buttons>
+        <ion-grid class="ionic-title">
+            <ion-row>
+                <ion-col text-left>
+                    <ion-buttons start>
+                        <button ion-button clear item-start (click)="openMenu()" class='nav-burg'>
+                            <img class="nav-burg" src="assets/hamburger.png" alt="nav"/>
+                        </button>
+                    </ion-buttons>
+                </ion-col>
+                <ion-col col-auto class="title">
+                    {{translate.text.reports.reports}}
+                </ion-col>
+                <ion-col text-right>
+                    <ion-buttons end>
+                        <button ion-button clear item-end class='nav-filter' (click)="openFilter()">
+                            <img class="nav-filter" src="assets/images/buttons/filter.png" alt="nav"/>
+                        </button>
+                    </ion-buttons>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </ion-navbar>
 </ion-header>
 

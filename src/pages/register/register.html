@@ -1,8 +1,18 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>{{translate.text.register.create}}</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-grid class="ionic-title">
+            <ion-row>
+                <ion-col text-left>
+                </ion-col>
+                <ion-col col-auto class="title">
+                    {{translate.text.register.create}}
+                </ion-col>
+                <ion-col text-right>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-navbar>
 
 </ion-header>
 
@@ -27,6 +37,11 @@
     <ion-item>
         <p style="color: #3fbc05">{{translate.text.register.pic}}</p>
         <ion-grid no-padding>
+            <ion-row>
+                <ion-col text-center no-padding [class.no-height]="imageData.length < 1">
+                    <img width="100px" #preview />
+                </ion-col>
+            </ion-row>
             <ion-row>
                 <ion-col col-6 no-padding>
                     <button ion-button block clear style="color: black;" (click)="cameraRequest()">

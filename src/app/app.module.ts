@@ -20,6 +20,7 @@ import { ZonesProvider } from '../providers/zones/zones';
 import { UserInfoProvider } from '../providers/user-info/user-info';
 import { TranslatorProvider } from '../providers/translator/translator';
 import { LikeProvider } from '../providers/like/like';
+import { RatingProvider } from '../providers/rating/rating';
 
 /*Import all pages into project*/
 import { MyApp } from './app.component';
@@ -127,6 +128,7 @@ export const firebaseConfig = {
     UserInfoProvider,
     TranslatorProvider,
     LikeProvider,
+    RatingProvider,
   ]
 })
 export class AppModule {}

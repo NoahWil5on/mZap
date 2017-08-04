@@ -1,15 +1,25 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{type}}</ion-title>
-    <ion-buttons start>
-        <button ion-button clear (click)="dismiss()" style="color: white">X</button>
-    </ion-buttons>
-    <ion-buttons end *ngIf="checkLogin()">
-        <button ion-button clear item-end class='nav-edit' (click)="openEdit()">
-            <img class="nav-edit" src="assets/images/buttons/edit.png" alt="nav"/>
-        </button>
-    </ion-buttons>
+    <ion-grid class="ionic-title">
+        <ion-row>
+            <ion-col text-left>
+                <ion-buttons start>
+                    <button ion-button clear (click)="dismiss()" style="color: white">X</button>
+                </ion-buttons>
+            </ion-col>
+            <ion-col col-auto class="title">
+                {{type}}
+            </ion-col>
+            <ion-col text-right>
+                <ion-buttons end *ngIf="checkLogin()">
+                    <button ion-button clear item-end class='nav-edit' (click)="openEdit()">
+                        <img class="nav-edit" src="assets/images/buttons/edit.png" alt="nav"/>
+                    </button>
+                </ion-buttons>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
   </ion-navbar>
     <ion-toolbar *ngIf="checkLoggedOn()">
         <ion-segment [(ngModel)]="section" color="secondary">
@@ -83,6 +93,11 @@
             <ion-item>
                 {{translate.text.infoWindow.photo}}
                 <ion-grid no-padding>
+                    <ion-row>
+                        <ion-col text-center no-padding [class.no-height]="imageData.length < 1">
+                            <img width="100px" #preview />
+                        </ion-col>
+                    </ion-row>
                     <ion-row>
                         <ion-col col-6 no-padding>
                             <button ion-button block clear style="color: black;" (click)="cameraRequest()">

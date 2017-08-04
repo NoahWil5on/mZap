@@ -48,7 +48,7 @@ export class ImagesProvider {
                 targetHeight: height
             }).then((imageData) => {
                 this.data = imageData;
-                resolve();
+                resolve(imageData);
             }, (_error) => {
                 reject(_error);
             });
@@ -68,7 +68,7 @@ export class ImagesProvider {
                 targetHeight: height
             }).then((imageData) => {
                 this.data = imageData;
-                resolve();
+                resolve(imageData);
             }, (_error) => {
                 reject(_error);
             });

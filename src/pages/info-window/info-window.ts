@@ -25,6 +25,10 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class InfoWindowPage {
     //resolve image slides
     @ViewChild(Slides) slide: Slides;
+    
+    @ViewChild('preview') preview;
+    imageData: any = "";
+    
     section: any = "info";
     
     //info on report
@@ -47,6 +51,7 @@ export class InfoWindowPage {
               public viewCtrl: ViewController, public afAuth: AngularFireAuth, public images: ImagesProvider,
               public loadingCtrl: LoadingController, public ngZone: NgZone, public translate: TranslatorProvider,
               public imageViewerCtrl: ImageViewerController, public modalCtrl: ModalController) {
+      this.images.doClear();
   }
     ionViewDidLoad() {
         this.data = this.navParams.get('data');
@@ -123,6 +128,7 @@ export class InfoWindowPage {
     }
     //helper function for deleteDatat()
     deleteReport(){
+        var self = this;
         //delete each "resolve" image from db
         firebase.database().ref('/resolves/').child(this.data.key).once('value').then(snapshot => {
             //loop through resolve images and delete them from storage
@@ -134,9 +140,15 @@ export class InfoWindowPage {
             firebase.database().ref('/resolves/').child(this.data.key).remove().then(() => {
                 firebase.database().ref('/messages/').child(this.data.key).remove();
             }).then(() => {
-                //delete root report
-                firebase.database().ref('/positions/').child(this.data.key).remove().then(() => {
-                    this.dismiss(true);
+                //update post #
+                var userRating = firebase.database().ref('/userRating/').child(self.afAuth.auth.currentUser.uid)
+                userRating.once('value', snap => {
+                    userRating.child('posts').set(snap.val().posts - 1);
+                }).then(_ =>{                
+                    //delete root report
+                    firebase.database().ref('/positions/').child(this.data.key).remove().then(() => {
+                        this.dismiss(true);
+                    });
                 });
             });
         })
@@ -165,6 +177,7 @@ export class InfoWindowPage {
     }
     //submit a resolved image
     submit(){
+        var self = this;
         let loader = this.loadingCtrl.create({
             content: this.translate.text.infoWindow.submitting
         })
@@ -193,6 +206,16 @@ export class InfoWindowPage {
                 
                 //link resolution info to actual report
                 firebase.database().ref('/positions/').child(this.data.key).child('resolves').push(key).then(_ => {
+                    //update # of resolves
+                    var userRating = firebase.database().ref('/userRating/').child(self.afAuth.auth.currentUser.uid)
+                    userRating.once('value', snap => {
+                        if(!snap.hasChild('resolves')){
+                            userRating.child('resolves').set(1);
+                        }else{
+                            userRating.child('resolves').set(snap.val().resolves + 1);
+                        }
+                    });
+                    
                     loader.dismiss();
                     successAlert.present();
                 }).catch(e => {
@@ -211,7 +234,9 @@ export class InfoWindowPage {
     cameraRequest(){
         var promise = this.images.doGetCameraImage(600,600);
         promise.then(res => {
-           this.dataSet = true; 
+            this.imageData = "data:image/jpg;base64,"+res;
+            this.preview.nativeElement.setAttribute('src', this.imageData);
+            this.dataSet = true;
         }).catch(e => {
         });
     }
@@ -219,7 +244,9 @@ export class InfoWindowPage {
     albumRequest(){
         var promise = this.images.doGetAlbumImage(600,600);
         promise.then(res => {
-           this.dataSet = true; 
+            this.imageData = "data:image/jpg;base64,"+res;
+            this.preview.nativeElement.setAttribute('src', this.imageData);
+            this.dataSet = true;
         }).catch(e => {
         });
     }
@@ -232,6 +259,7 @@ export class InfoWindowPage {
     }
     
     markComplete(){
+        var self = this;
         let loader = this.loadingCtrl.create({
             content: this.translate.text.infoWindow.marking
         });
@@ -250,6 +278,16 @@ export class InfoWindowPage {
         });
         //mark as complete on firebase
         firebase.database().ref('/positions/').child(this.data.key).child('status').set('Complete').then(_ => {
+            //update # of completed posts
+            var userRating = firebase.database().ref('/userRating/').child(self.afAuth.auth.currentUser.uid)
+            userRating.once('value', snap => {
+                if(!snap.hasChild('complete')){
+                    userRating.child('complete').set(1);
+                }else{
+                    userRating.child('complete').set(snap.val().complete + 1);
+                }
+            });
+            
             loader.dismiss();
             alert.present();
         }).catch(_ => {

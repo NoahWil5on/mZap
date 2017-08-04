@@ -1,5 +1,5 @@
 //vanilla ionic imports
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, ModalController, LoadingController, AlertController } from 'ionic-angular';
 
 //firebase imports
@@ -17,6 +17,8 @@ import { TranslatorProvider } from '../../providers/translator/translator';
   templateUrl: 'add.html'
 })
 export class AddPage {
+    @ViewChild('preview') preview;
+    
     //class properties
     data: any;
     type: string = '';
@@ -27,6 +29,7 @@ export class AddPage {
     show: boolean = false;
     error: string = "";
     pos: any;
+    imageData: string = "";
     constructor(public navCtrl: NavController, public navParams: NavParams, 
                  
                  public viewCtrl: ViewController, public modalCtrl: ModalController, public loadingCtrl: LoadingController, public alertCtrl: AlertController, 
@@ -63,7 +66,9 @@ export class AddPage {
     cameraRequest(){
         var promise = this.images.doGetCameraImage(600,600);
         promise.then(res => {
-           this.dataSet = true; 
+            this.imageData = "data:image/jpg;base64,"+res;
+            this.preview.nativeElement.setAttribute('src', this.imageData);
+            this.dataSet = true; 
         }).catch(e => {
         });
     }
@@ -71,7 +76,9 @@ export class AddPage {
     albumRequest(){
         var promise = this.images.doGetAlbumImage(600,600);
         promise.then(res => {
-           this.dataSet = true; 
+            this.imageData = "data:image/jpg;base64,"+res;
+            this.preview.nativeElement.setAttribute('src', this.imageData);
+            this.dataSet = true; 
         }).catch(e => {
         });
     }

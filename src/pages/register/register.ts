@@ -1,5 +1,5 @@
 //vanilla ionic imports
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
@@ -21,6 +21,8 @@ import { TranslatorProvider } from '../../providers/translator/translator';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+    @ViewChild('preview') preview;
+    imageData: string = "";
     
     //user input data
     email: string = "";
@@ -78,7 +80,6 @@ export class RegisterPage {
                                 /*pushes user details to database*/
                                 this.afDB.object('users/'+this.afAuth.auth.currentUser.uid).update({
                                     rating: 0, 
-                                    rates: 0, 
                                     posts: 0, 
                                     visits: 1, 
                                     lastActive: date, 
@@ -102,7 +103,6 @@ export class RegisterPage {
                             /*If no image just add some basic info*/
                             this.afDB.object('users/'+this.afAuth.auth.currentUser.uid).update({
                                 rating: 0, 
-                                rates: 0, 
                                 posts: 0, 
                                 visits: 1, 
                                 lastActive: date, 
@@ -117,6 +117,14 @@ export class RegisterPage {
                                 console.log(e.message);
                             })
                         }
+                    }).then(_ => {
+                        firebase.database().ref('/userRating/').child(this.afAuth.auth.currentUser.uid).set({
+                            likes: 0,
+                            posts: 0,
+                            postLikes: 0,
+                            resolves: 0,
+                            complete: 0
+                        });
                     }).catch(e => {
                         this.error = e.message;
                     });
@@ -154,7 +162,9 @@ export class RegisterPage {
     cameraRequest(){
         var promise = this.images.doGetCameraImage(100,100);
         promise.then(res => {
-           this.image = true; 
+            this.imageData = "data:image/jpg;base64,"+res;
+            this.preview.nativeElement.setAttribute('src', this.imageData);
+            this.image = true;
         }).catch(e => {
         });
     }
@@ -162,7 +172,9 @@ export class RegisterPage {
     albumRequest(){
         var promise = this.images.doGetAlbumImage(100,100);
         promise.then(res => {
-           this.image = true; 
+            this.imageData = "data:image/jpg;base64,"+res;
+            this.preview.nativeElement.setAttribute('src', this.imageData);
+            this.image = true;
         }).catch(e => {
         });
     }

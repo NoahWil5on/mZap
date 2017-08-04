@@ -13,6 +13,7 @@ export class LikeProvider {
     }
     //takes post id, value of like (-1,1), and sends callback to tell map the new value
     like(post, value, callback){
+        var self = this;
         var valToAdd = value;
         var ref = firebase.database().ref('/positions/').child(post);
         if(!this.afAuth.auth.currentUser) return;
@@ -29,9 +30,11 @@ export class LikeProvider {
                     if(!snapshot.hasChild('likes')){
                         ref.child('likes').set(valToAdd).then(_ => {
                             ref.child('likes').once('value', snap => {
+                                self.updateOtherUserLikes(snapshot.val().id,value);
                                 callback(snap.val());
                             });
-                        });                        
+                        }); 
+                        self.updateLikes();
                     }
                     else{
                         var likes = Number.parseInt(snapshot.val().likes);
@@ -43,7 +46,11 @@ export class LikeProvider {
                         if(userSnapshot.val() != undefined){
                             valToAdd *= 2;
                         }
+                        else{
+                            self.updateLikes();
+                        }
                         ref.child('likes').set(likes + valToAdd).then(_ => {
+                            self.updateOtherUserLikes(snapshot.val().id,valToAdd);
                             ref.child('likes').once('value', snap => {
                                 callback(snap.val());
                             });
@@ -52,6 +59,27 @@ export class LikeProvider {
                     //update user's like preference on this post
                     user.set(value);
                 });
+            }
+        });
+    }
+    updateLikes(){
+        var self = this;
+        var userRating = firebase.database().ref('/userRating/').child(self.afAuth.auth.currentUser.uid)
+        userRating.once('value', snap => {
+            if(!snap.hasChild('likes')){
+                userRating.child('likes').set(1);
+            }else{
+                userRating.child('likes').set(snap.val().likes + 1);
+            }
+        });
+    }
+    updateOtherUserLikes(uid,val){
+        var userRating = firebase.database().ref('/userRating/').child(uid)
+        userRating.once('value', snap => {
+            if(!snap.hasChild('postLikes')){
+                userRating.child('postLikes').set(val);
+            }else{
+                userRating.child('postLikes').set(snap.val().postLikes + val);
             }
         });
     }

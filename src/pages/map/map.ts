@@ -19,6 +19,7 @@ import { LikeProvider } from '../../providers/like/like';
 //firebase imports
 import { AngularFireDatabase} from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase';
 
 //if not declared ionic will throw an error
 declare var google;
@@ -282,6 +283,18 @@ export class MapPage {
                                 newMarker.key = key;
                                 this.makeMarker(newMarker);
                                 let confirm = this.modal.create(ConfirmationPage, newMarker);
+                                
+                                //update # of posts
+                                var self = this;
+                                var userRating = firebase.database().ref('/userRating/').child(self.afAuth.auth.currentUser.uid)
+                                userRating.once('value', snap => {
+                                    if(!snap.hasChild('posts')){
+                                        userRating.child('posts').set(1);
+                                    }else{
+                                        userRating.child('posts').set(snap.val().posts + 1);
+                                    }
+                                });
+                                
                                 confirm.present();
                                 confirm.onDidDismiss(_ => {
                                     this.navCtrl.setRoot(MapPage);

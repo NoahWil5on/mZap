@@ -1,11 +1,21 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>{{translate.text.discussion.discussion}}</ion-title>
-      <ion-buttons end>
-        <button ion-button clear style="color: white;" (click)="dismiss()">X</button>
-      </ion-buttons>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-grid class="ionic-title">
+            <ion-row>
+                <ion-col text-left>
+                </ion-col>
+                <ion-col col-auto class="title">
+                    {{translate.text.discussion.discussion}}
+                </ion-col>
+                <ion-col text-right>
+                    <ion-buttons end>
+                        <button ion-button clear style="color: white;" (click)="dismiss()">X</button>
+                    </ion-buttons>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-navbar>
 
 </ion-header>
 

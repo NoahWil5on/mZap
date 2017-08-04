@@ -5,7 +5,7 @@
             margin: 0 !important;
         }
         .shader{
-            position: fixed;
+            position: absolute;
             width: 100%;
             height: 100%;
             opacity: .5;
@@ -16,45 +16,50 @@
             padding: 0 !important;
             background-image: url(../assets/images/beach.png);
             background-size: cover;
+            height: 100%;
+        }
+        ion-grid{
+            height:  100%;
+            z-index: 100;
             display: flex;
             flex-direction: column;
-            height: 100%;
             .flex{
                 flex: 1;
-                display: flex;
-                justify-content: center;
-                flex-direction: column;
-                text-align: center;
-                ion-card{
-                    z-index: 10;
-                   /* border: solid white 3px;*/
-                    background-color: rgba(0,0,0,.7);
-                    color: white;
-                    border-radius: 5px;
-                    height: 80%;
-                    display: flex;
-                    justify-content: center;
-                    flex-direction: column;
+                ion-col{
+                    height: 175px;
+                    align-items: center;
                     text-align: center;
-                    h1{
-                        font-size: 2.5em;
-                        color: white;
+                    ion-card{
+                        margin-left: auto;
+                        margin-right: auto;
+                        background-color: rgba(0,0,0,.7);
+                        display: table;
+                        height: 80% !important;
+                        max-width: 800px;
+                        div{
+                            height: 100%;
+                            vertical-align: middle;
+                            text-align: center;
+                            display: table-cell;
+                            h1{
+                                color: white;
+                                font-size: 24pt;
+                            }
+                        }
+                    }
+                    .title-main{
+                        display: table;
+                        height: 100%;
+                        width: 100%;
+                        h1{
+                            display: table-cell;
+                            vertical-align: middle;
+                            text-align: center;
+                            color: black;
+                            font-size: 24pt;
+                        }
                     }
                 }
-            }
-            .title-flex{ 
-                display: flex;
-                justify-content: center;
-                flex-direction: column;
-                text-align: center;
-                flex: 1;
-            }
-            .main-flex{
-                display: flex;
-                justify-content: center;
-                flex-direction: column;
-                text-align: center;
-                flex: 2;
             }
         }
     }

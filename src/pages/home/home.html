@@ -1,29 +1,64 @@
 <ion-content padding>
     <div class="shader"></div>
-    <div class="title-flex">
-        <h1 style="z-index: 100">MZAP</h1>
+    <!--
+    <div class="main-container">
+        <div style="margin-top: 50px">
+            <h1 style="z-index: 1" class="title-main">MZAP</h1>
+        </div>
+        <!--<div class="main-flex">
+
+        </div>
+        <ion-card (click)="map(true)" *ngIf="isLoggedIn()" style="height: 150px">
+            <div>
+                <h1>{{translate.text.home.report}}</h1>
+            </div>
+        </ion-card>
+        <ion-card (click)="map(false)" style="height: 150px">
+            <div>
+                <h1>{{translate.text.home.view}}</h1>
+            </div>
+        </ion-card>
+        <ion-card (click)="reports()" style="height: 150px">
+            <div>
+                <h1>{{translate.text.home.reports}}</h1>
+            </div>
+        </ion-card>
     </div>
-    <div class="main-flex">
-        <div class="flex">
-            <ion-card (click)="map(true)" *ngIf="isLoggedIn()">
-                <div>
-                    <h1>{{translate.text.home.report}}</h1>
+-->
+    <ion-grid>
+        <ion-row class="flex">
+            <ion-col>
+                <div class="title-main">
+                    <h1>MZAP</h1>
                 </div>
-            </ion-card>
-        </div>
-        <div class="flex">
-            <ion-card (click)="map(false)">
-                <div>
-                    <h1>{{translate.text.home.view}}</h1>
-                </div>
-            </ion-card>
-        </div>
-        <div class="flex">
-            <ion-card (click)="reports()">
-                <div>
-                    <h1>{{translate.text.home.reports}}</h1>
-                </div>
-            </ion-card>
-        </div>
-    </div>
+            </ion-col>
+        </ion-row>
+        <ion-row class="flex">
+            <ion-col>
+                <ion-card (click)="map(true)" *ngIf="isLoggedIn()">
+                    <div>
+                        <h1>{{translate.text.home.report}}</h1>
+                    </div>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row class="flex">
+            <ion-col>
+                <ion-card (click)="map(false)">
+                    <div>
+                        <h1>{{translate.text.home.view}}</h1>
+                    </div>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+        <ion-row class="flex">
+            <ion-col>
+                <ion-card (click)="reports()">
+                    <div>
+                        <h1>{{translate.text.home.reports}}</h1>
+                    </div>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
