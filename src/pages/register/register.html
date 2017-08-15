@@ -20,19 +20,19 @@
 <ion-content padding style="background-color: #fcf80c">
     <ion-item>
         <ion-label floating [class.redText]="checkContent(name)">{{translate.text.register.name}}</ion-label>
-        <ion-input type="text" clearInput [(ngModel)]="name"></ion-input>
+        <ion-input type="text" clearInput [(ngModel)]="name" (click)="inputClick('Name')"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label floating [class.redText]="checkContent(email)">{{translate.text.register.email}}</ion-label>
-        <ion-input type="email" clearInput [(ngModel)]="email"></ion-input>
+        <ion-input type="email" clearInput [(ngModel)]="email" (click)="inputClick('Email')"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label floating [class.redText]="checkContent(pass1)">{{translate.text.register.pass1}}</ion-label>
-        <ion-input type="password" clearInput [(ngModel)]="pass1"></ion-input>
+        <ion-input type="password" clearInput [(ngModel)]="pass1" (click)="inputClick('Password1')"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label floating [class.redText]="checkContent(pass2)">{{translate.text.register.pass2}}</ion-label>
-        <ion-input type="password" clearInput [(ngModel)]="pass2"></ion-input>
+        <ion-input type="password" clearInput [(ngModel)]="pass2" (click)="inputClick('Password2')"></ion-input>
     </ion-item>
     <ion-item>
         <p style="color: #3fbc05">{{translate.text.register.pic}}</p>

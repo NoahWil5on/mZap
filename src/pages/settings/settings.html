@@ -27,7 +27,7 @@
             <ion-col>
                 <ion-item>
                     <ion-label>{{translate.text.settings.lang}}</ion-label>
-                    <ion-select [(ngModel)]="language">
+                    <ion-select [(ngModel)]="language" (click)="languageClick()">
                         <ion-option value="en">English</ion-option>
                         <ion-option value="es">Español</ion-option>
                     </ion-select>

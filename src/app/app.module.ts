@@ -8,6 +8,9 @@ import { Camera } from '@ionic-native/camera';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { IonicStorageModule } from '@ionic/storage';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
+import { SMS } from '@ionic-native/sms';
+import { MediaCapture } from 'ionic-native';
+import { File } from '@ionic-native/file';
 
 //Angular fire imports
 import { AngularFireModule } from 'angularfire2';
@@ -58,6 +61,7 @@ import { EditProfilePageModule } from '../pages/edit-profile/edit-profile.module
 import { ForgotPageModule } from '../pages/forgot/forgot.module';
 import { HomePageModule } from '../pages/home/home.module';
 import { EditPostPageModule } from '../pages/edit-post/edit-post.module';
+import { ClickProvider } from '../providers/click/click';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
@@ -95,7 +99,8 @@ export const firebaseConfig = {
     EditProfilePageModule,
     ForgotPageModule,
     HomePageModule,
-    EditPostPageModule
+    EditPostPageModule,
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -118,6 +123,7 @@ export const firebaseConfig = {
       EditPostPage
   ],
   providers: [
+    File,
     StatusBar,
     SplashScreen,
     Camera,
@@ -129,6 +135,9 @@ export const firebaseConfig = {
     TranslatorProvider,
     LikeProvider,
     RatingProvider,
+    SMS,
+    ClickProvider,
+    MediaCapture
   ]
 })
 export class AppModule {}

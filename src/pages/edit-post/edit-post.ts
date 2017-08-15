@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams, ViewController, Slides } from 'ion
 //provider imports
 import { ImagesProvider } from '../../providers/images/images';
 import { TranslatorProvider } from '../../providers/translator/translator';
+import { ClickProvider } from '../../providers/click/click';
 
 //firebase imports
 import * as firebase from 'firebase';
@@ -25,7 +26,8 @@ export class EditPostPage {
     dataSet: boolean = false;
     error: string = "";
     constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
-                public images: ImagesProvider, public translate: TranslatorProvider, public ngZone: NgZone) {
+                public images: ImagesProvider, public translate: TranslatorProvider, public ngZone: NgZone,
+                public click: ClickProvider) {
         this.images.doClear();
     }
 
@@ -57,6 +59,7 @@ export class EditPostPage {
         this.viewCtrl.dismiss(bool);
     }
     cameraRequest(){
+        this.click.click('editPostCamera');
         var promise = this.images.doGetCameraImage(600,600);
         promise.then(res => {
             this.imageData = "data:image/jpg;base64,"+res;
@@ -66,6 +69,7 @@ export class EditPostPage {
         });
     }
     albumRequest(){
+        this.click.click('editPostAlbum');
         var promise = this.images.doGetAlbumImage(600,600);
         promise.then(res => {
             this.imageData = "data:image/jpg;base64,"+res;
@@ -74,7 +78,17 @@ export class EditPostPage {
         }).catch(e => {
         });
     }
+    statusClick(){
+        this.click.click('editPostStatus');
+    }
+    typeClick(){
+        this.click.click('editPostType');
+    }
+    descriptionClick(){
+        this.click.click('editPostDescription');
+    }
     submit(){
+        this.click.click('editPostSubmit');
         if(this.data.description.length < 1){
             this.error = this.translate.text.editPost.error;
             return;
@@ -114,7 +128,6 @@ export class EditPostPage {
         }
     }
     actuallyDeleteResolves(){
-        console.log(this.deleted);
         var self = this;
         if(this.deleted.length < 1){
             this.dismiss(true);
@@ -123,7 +136,7 @@ export class EditPostPage {
         this.deleted.forEach(function(item){
             firebase.database().ref('/positions/').child(self.data.key).child('resolves').child(item.key).remove()
                 .then(_ => {
-                firebase.database().ref('/resolves/').child(self.data.id).child(item.key).remove().then(_ => {
+                firebase.database().ref('/resolves/').child(self.data.key).child(item.key).remove().then(_ => {
                     firebase.storage().ref('/images/').child(item.refName).delete();
                 })
             })
@@ -131,9 +144,10 @@ export class EditPostPage {
         this.dismiss(true);
     }
     deleteResolve(item){
+        this.click.click('editPostDelete');
         this.ngZone.run(() => {
             this.resolves[this.resolves.indexOf(item)].delete = true;
-        })
+        });
         this.deleted.push(item);
     }
 }

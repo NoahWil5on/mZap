@@ -7,8 +7,12 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 //image popup viewing import
 import { ImageViewerController } from 'ionic-img-viewer'
 
+//sms messaging import
+import { SMS } from '@ionic-native/sms';
+
 //provider imports
 import { TranslatorProvider } from '../../providers/translator/translator';
+import { ClickProvider } from '../../providers/click/click';
 
 @IonicPage()
 @Component({
@@ -24,7 +28,9 @@ export class ConfirmationPage {
     name: any;
     pos: any;
     show: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public socialSharing: SocialSharing, public translate: TranslatorProvider, public imageViewerCtrl: ImageViewerController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, 
+               public socialSharing: SocialSharing, public translate: TranslatorProvider, 
+               public imageViewerCtrl: ImageViewerController, public sms: SMS, public click: ClickProvider) {
   }
   ionViewDidLoad() {
       
@@ -59,16 +65,28 @@ export class ConfirmationPage {
         this.viewCtrl.dismiss();
     }
     shareTwitter(){
+        this.click.click('confirmationTwitter');
         this.socialSharing.shareViaTwitter(this.description, this.picture, null);
     }
     shareFacebook(){
+        this.click.click('confirmationFacebook');
         this.socialSharing.shareViaFacebook(this.description, this.picture, null)
     }
     shareWhatsapp(){
+        this.click.click('confirmationWhatsapp');
         this.socialSharing.shareViaWhatsApp(this.description, this.picture, null)
+    }
+    shareSMS(){
+        this.click.click('confirmationSMS');
+        this.sms.send('15859690983', "SMS is working!").then(() => {
+            alert("it worked");
+        }).catch(error => {
+            alert(error);
+        });
     }
     //pop up of image when image is clicked on
     presentImage(image){
+        this.click.click('confirmationPresentImage');
         let imageViewer = this.imageViewerCtrl.create(image);
         imageViewer.present();
     }

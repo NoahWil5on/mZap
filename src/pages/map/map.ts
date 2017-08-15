@@ -15,6 +15,7 @@ import { ZonesProvider } from '../../providers/zones/zones';
 import { UserInfoProvider } from '../../providers/user-info/user-info';
 import { TranslatorProvider } from '../../providers/translator/translator';
 import { LikeProvider } from '../../providers/like/like';
+import { ClickProvider } from '../../providers/click/click';
 
 //firebase imports
 import { AngularFireDatabase} from 'angularfire2/database';
@@ -33,6 +34,7 @@ export class MapPage {
     //public fields
     @ViewChild('map') mapElement;
     map: any;
+    heatMap: any;
     add: boolean = false;
     infoWindow: any = null;
     setOnce: boolean = true;
@@ -40,9 +42,11 @@ export class MapPage {
     points: any = [];
     zonies: any = [];
     markers: any = [];
+    heatMapData: any = [];
     myMarker: any = undefined;
     myCircle: any = undefined;
     dropDown: boolean = true;
+    hybrid: boolean = false;
     likeValue: any = 0;
     
     myActiveData: any = {};
@@ -53,7 +57,8 @@ export class MapPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController,
              public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth,
               public alertCtrl: AlertController, public zones: ZonesProvider, public menuCtrl: MenuController,
-                public userInfo: UserInfoProvider, public translate: TranslatorProvider, public likeProvider: LikeProvider) {
+                public userInfo: UserInfoProvider, public translate: TranslatorProvider, 
+                 public likeProvider: LikeProvider, public click: ClickProvider) {
     }
     //as soon as page is loaded run
     ionViewDidLoad() {
@@ -82,15 +87,28 @@ export class MapPage {
         //if this is the first time opening up maps then run this function
         this.runNavigation();
     }
+    toggleMap(){
+        this.click.click('mapToggleMap');
+        this.hybrid = !this.hybrid;
+        if(this.hybrid){
+            this.map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+            this.map.setTilt(0);
+        }
+        else{
+            this.map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+        }
+    }
     edit(){
         return this.userInfo.mapEdit;
     }
     editTrue(){
+        this.click.click('mapEditTrue');
         this.userInfo.mapEdit = true;
         this.navCtrl.setRoot(MapPage);
     }
     //called when user likes a post
     like(value){
+        this.click.click('mapLike');
         var self = this;
         this.likeProvider.like(this.myActiveData.key, value, function(likes){
             //updates post locally with callback function
@@ -109,6 +127,7 @@ export class MapPage {
         });
     }
     setCenter(){
+        this.click.click('mapSetCenter');
         var self = this;
         //check if the user is allowing you to see their position
         navigator.geolocation.getCurrentPosition((position) => {
@@ -179,9 +198,11 @@ export class MapPage {
     }
     //any time the "menu" button is clicked
     openMenu(){
+        this.click.click('mapMenu');
         this.menuCtrl.open();
     }
     openFilter(){
+        this.click.click('mapFilter');
         var filterPage = this.modal.create(FilterPage, {target: 'map'});
         filterPage.onDidDismiss(data => {
             if(data){
@@ -209,6 +230,7 @@ export class MapPage {
         this.dropDown = true;
     }
     addPage(data){
+        this.click.click('mapAdd'+data);
         let title = "";
         let description = "";
         
@@ -384,11 +406,13 @@ export class MapPage {
     }
     //open up a chat modal
     doChat(){
+        this.click.click('mapChat');
         let chatModal = this.modal.create(DiscussionPage, {id: this.myActiveData.key});
         chatModal.present();
     }
     //pull up info window
     doInfoWindow(){
+        this.click.click('mapInfoWindow');
         let infoModal = this.modal.create(InfoWindowPage, {data: this.myActiveData});
         //if on did dismiss says to delete data, refresh page and remove marker
         infoModal.onDidDismiss(callBack => {
@@ -447,20 +471,33 @@ export class MapPage {
                         if(!self.checkPoint(item.val())) return;
                         self.makeMarker(item.val());
                         self.points.push(item.val());
+                        self.heatMapData.push({location: new google.maps.LatLng(item.val().lat,item.val().lng), weight: 100});
                     });
+                    self.heatMap = new google.maps.visualization.HeatmapLayer({
+                        data: self.heatMapData,
+                        map: self.map,
+                        radius: 15,
+                        maxIntensity: 200
+                    });
+                    
                     self.setOnce = false;
-                    let redZone = self.zones.runEval(self.points, 500, 3);
+                    
+                    let redRadius = 300;
+                    let orangeRadius = 600;
+                    let yellowRadius = 900;
+                    
+                    let redZone = self.zones.runEval(self.points, redRadius, 3);
 
                     //add all different types of zones based on (points, distance_threshold,
                     //and point amount threshold)
                     redZone.promise.then(_ => {
-                        let orangeZone = self.zones.runEval(self.points, 1000, 5);
+                        let orangeZone = self.zones.runEval(self.points, orangeRadius, 5);
                         orangeZone.promise.then(_ => {
-                            let yellowZone = self.zones.runEval(self.points, 1500, 8);
+                            let yellowZone = self.zones.runEval(self.points, yellowRadius, 8);
                             yellowZone.promise.then(_ => {
-                                self.applyZones(yellowZone.zones, 1500, '#ffff00');
-                                self.applyZones(orangeZone.zones, 1000, '#ff8800');
-                                self.applyZones(redZone.zones, 500, '#ff0000');
+                                self.applyZones(yellowZone.zones, yellowRadius, '#ffff00');
+                                self.applyZones(orangeZone.zones, orangeRadius, '#ff8800');
+                                self.applyZones(redZone.zones, redRadius, '#ff0000');
                             });
                         });
                     });
@@ -510,7 +547,7 @@ export class MapPage {
     }
     //any "cluster" zone that is found on the map is drawn here
     applyZones(zones, radius, color){
-        for(var i = 0; i < zones.length; i++){
+       /* for(var i = 0; i < zones.length; i++){
             this.zonies.push(new google.maps.Circle({
                 strokeOpacity: 0,
                 fillColor: color,
@@ -520,7 +557,7 @@ export class MapPage {
                 //radius: ((zones[i].dist/2) + 200)
                 radius: radius
               }));
-        }
+        }*/
     }
     //animates the user's position
     animate(latLng){

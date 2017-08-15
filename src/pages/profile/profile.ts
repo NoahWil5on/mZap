@@ -9,6 +9,7 @@ import { EditProfilePage } from '../edit-profile/edit-profile';
 //provider imports
 import { TranslatorProvider } from '../../providers/translator/translator';
 import { UserInfoProvider } from '../../providers/user-info/user-info'
+import { ClickProvider } from '../../providers/click/click';
 
 //image pop up import
 import { ImageViewerController } from 'ionic-img-viewer';
@@ -30,7 +31,7 @@ export class ProfilePage {
     constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, 
                  public afAuth:    AngularFireAuth, public translate: TranslatorProvider, 
                  public imageViewerCtrl: ImageViewerController, public userInfo: UserInfoProvider,
-                public modalCtrl: ModalController) {
+                public modalCtrl: ModalController, public click: ClickProvider) {
         
     }
 
@@ -94,15 +95,18 @@ export class ProfilePage {
     
     //show pop up image
     presentImage(image){
+        this.click.click('profilePresentImage');
         let imageViewer = this.imageViewerCtrl.create(image);
         imageViewer.present();
     }
     //open menu
     openMenu(){
+        this.click.click('profileMenu');
         this.menuCtrl.open();
     }
     //Bring up Edit Modal
     openEdit(){
+        this.click.click('profileMenu');
         var editModal = this.modalCtrl.create(EditProfilePage, null);
         editModal.onDidDismiss(res => {
             if(res){
@@ -113,6 +117,7 @@ export class ProfilePage {
     }
     //bring user to location on map
     showOnMap(lat, lng){    
+        this.click.click('profileShowOnMap');
         //remove filters and update menu pageState
         this.userInfo.filter = undefined;
         this.userInfo.pageState = 'map';

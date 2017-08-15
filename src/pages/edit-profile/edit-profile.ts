@@ -9,6 +9,7 @@ import { LoginPage } from '../login/login';
 //provider imports
 import { ImagesProvider } from '../../providers/images/images';
 import { TranslatorProvider } from '../../providers/translator/translator';
+import { ClickProvider } from '../../providers/click/click';
 
 //firebase imports
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -29,7 +30,8 @@ export class EditProfilePage {
     dataSet: boolean = false;
     constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
                 public afAuth: AngularFireAuth, public translate: TranslatorProvider, public images: ImagesProvider,
-                public loadingCtrl: LoadingController, public alertCtrl: AlertController, private storage: Storage) {
+                public loadingCtrl: LoadingController, public alertCtrl: AlertController, private storage: Storage,
+                public click: ClickProvider) {
         this.images.doClear();
     }
 
@@ -40,10 +42,14 @@ export class EditProfilePage {
             this.name = this.user.name;
         })
     }
+    nameClick(){
+        this.click.click('editProfileName');
+    }
     dismiss(bool){
         this.viewCtrl.dismiss(bool);
     }
     cameraRequest(){
+        this.click.click('editProfileCamera');
         var promise = this.images.doGetCameraImage(100,100);
         promise.then(res => {
             this.imageData = "data:image/jpg;base64,"+res;
@@ -53,6 +59,7 @@ export class EditProfilePage {
         });
     }
     albumRequest(){
+        this.click.click('editProfileAlbum');
         var promise = this.images.doGetAlbumImage(100,100);
         promise.then(res => {
             this.imageData = "data:image/jpg;base64,"+res;
@@ -62,6 +69,7 @@ export class EditProfilePage {
         });
     }
     submit(){
+        this.click.click('editProfileSubmit');
         let loader = this.loadingCtrl.create({
             content: this.translate.text.editProfile.loading
         })

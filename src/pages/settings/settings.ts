@@ -11,6 +11,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 //provider imports
 import { TranslatorProvider } from '../../providers/translator/translator';
+import { ClickProvider } from '../../providers/click/click';
 
 @IonicPage()
 @Component({
@@ -20,24 +21,30 @@ import { TranslatorProvider } from '../../providers/translator/translator';
 export class SettingsPage {
 
     language: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
-              public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider) {
-  }
+    constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
+              public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider,
+              public click: ClickProvider) {
+    }
 
-  ionViewDidLoad() {
-  }
+    ionViewDidLoad() {
+    }
     //sign user out if signed in
-  logout(){
-    this.afAuth.auth.signOut().then(out => {
-        this.storage.remove('mzap_password').then(_ => {
-            this.storage.remove('mzap_email').then(_ => {
-                this.navCtrl.setRoot(LoginPage);
+    logout(){
+        this.click.click('settingsLogout');
+        this.afAuth.auth.signOut().then(out => {
+            this.storage.remove('mzap_password').then(_ => {
+                this.storage.remove('mzap_email').then(_ => {
+                    this.navCtrl.setRoot(LoginPage);
+                })
             })
-        })
-    });   
-  }
+        });   
+    }
+    languageClick(){
+        this.click.click('settingsSelectLanguage');
+    }
     //if not logged in, send user back to homepage
     goLogin(){
+        this.click.click('settingsLogout');
         this.navCtrl.setRoot(LoginPage)
     }
     //check if user is logged in
@@ -47,10 +54,12 @@ export class SettingsPage {
         return false;
     }
     openMenu(){
+        this.click.click('settingsMenu');
         this.menuCtrl.open();
     }
     //set language
     setLang(){
+        this.click.click('settingsUpdateLanguage');
         //check which language is selected
         switch(this.language){
             case 'en':

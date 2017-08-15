@@ -13,7 +13,7 @@
                     {{translate.text.profile.profile}}
                 </ion-col>
                 <ion-col text-right>
-                    <ion-buttons end *ngIf="checkProfile()">
+                    <ion-buttons end>
                         <button ion-button clear item-end class='nav-edit' (click)="openEdit()">
                             <img class="nav-edit" src="assets/images/buttons/edit.png" alt="nav"/>
                         </button>
@@ -52,7 +52,7 @@
             </ion-col>
         </ion-row>
     </ion-grid>
-    <div *ngIf="checkProfile()" padding-top>
+    <div *ngIf="checkProfile() && reports.length > 0" padding-top>
         <h2 text-left>{{translate.text.profile.reports}}</h2>
         <ion-card *ngFor="let report of reports">
             <ion-card-header text-wrap>

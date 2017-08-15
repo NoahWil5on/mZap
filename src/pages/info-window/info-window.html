@@ -88,7 +88,7 @@
         <div *ngSwitchCase="'resolve'">
             <ion-item>
                 <ion-label floating>{{translate.text.infoWindow.note}}</ion-label>
-                <ion-input type='text' [(ngModel)]="info"></ion-input>
+                <ion-input type='text' [(ngModel)]="info" (click)="infoClick()"></ion-input>
             </ion-item>
             <ion-item>
                 {{translate.text.infoWindow.photo}}

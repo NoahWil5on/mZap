@@ -13,6 +13,7 @@ import { FilterPage } from '../filter/filter';
 //provider imports
 import { TranslatorProvider } from '../../providers/translator/translator';
 import { UserInfoProvider } from '../../providers/user-info/user-info';
+import { ClickProvider } from '../../providers/click/click';
 
 //firebase imports
 import * as firebase from 'firebase';
@@ -28,7 +29,7 @@ export class ReportsPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, 
                  public translate: TranslatorProvider, public loadCtrl: LoadingController,
                 public userInfo: UserInfoProvider, public imageViewerCtrl: ImageViewerController,
-                public modal: ModalController) {
+                public modal: ModalController, public click: ClickProvider) {
     }
 
     ionViewDidLoad() {
@@ -69,6 +70,7 @@ export class ReportsPage {
     }
     //Open filter modal
     openFilter(){
+        this.click.click('reportsFilter');
         var filterPage = this.modal.create(FilterPage, {target: 'reports'});
         filterPage.onDidDismiss(data => {
             if(data){
@@ -89,6 +91,7 @@ export class ReportsPage {
                     type: item.val().type,
                     status: item.val().status,
                     description: item.val().description,
+                    show: item.val().show,
                     name: item.val().name,
                     id: item.val().id,
                     url: item.val().url,
@@ -125,6 +128,7 @@ export class ReportsPage {
     }
     //go to location of point on map
     showOnMap(lat, lng){
+        this.click.click('reportsShowOnMap');
         //remove filters and update menu pageState
         this.userInfo.filter = undefined;
         this.userInfo.pageState = 'map';
@@ -140,17 +144,20 @@ export class ReportsPage {
     
     //Check out user's profile
     doProfile(id){
+        this.click.click('reportsShowProfile');
         this.userInfo.profileView = id;
         this.navCtrl.push(ProfilePage);
     }
     
     //pop up of image when image is clicked on
     presentImage(image){
+        this.click.click('reportsPresent');
         let imageViewer = this.imageViewerCtrl.create(image);
         imageViewer.present();
     }
     //open nav menu
     openMenu(){
+        this.click.click('reportsMenu');
         this.menuCtrl.open();
     }
 

@@ -12,6 +12,7 @@ import { HomePage } from '../home/home';
 //provider imports
 import { UserInfoProvider} from '../../providers/user-info/user-info';
 import { TranslatorProvider } from '../../providers/translator/translator';
+import { ClickProvider } from '../../providers/click/click';
 
 //fire base imports
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -31,7 +32,7 @@ export class LoginPage {
     error: string = "";
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
               public alertCtrl: AlertController, public afDB: AngularFireDatabase, public userInfo: UserInfoProvider, public loadingCtrl: LoadingController, public menuCtrl: MenuController, private storage: Storage,
-              public translate: TranslatorProvider) {
+              public translate: TranslatorProvider, public click: ClickProvider) {
   }
 
     //on enter, check if the user has a saved sign in
@@ -78,11 +79,18 @@ export class LoginPage {
           });
       }
     }
+    emailClick(){
+        this.click.click('loginEmail');
+    }
+    passwordClick(){
+        this.click.click('loginPassword');
+    }
     ionViewWillLeave(){
         this.menuCtrl.enable(true);
     }
     //login user
     async login(){
+        this.click.click('loginLogin');
         let loader = this.loadingCtrl.create({
             content: this.translate.text.login.verify
         });
@@ -101,10 +109,12 @@ export class LoginPage {
     }
     //send user to register page
     register(){
+        this.click.click('loginRegister');
         this.navCtrl.push(RegisterPage);
     }
     //send user to forgot password page
     forgot(){
+        this.click.click('loginForgot');
         this.navCtrl.push(ForgotPage);
     }
     
@@ -118,6 +128,7 @@ export class LoginPage {
         alert.present();
     }
     goHome(){
+        this.click.click('loginAnonymous');
         try{
             this.userInfo.pageState = 'map';
             this.navCtrl.setRoot(HomePage);

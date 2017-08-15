@@ -13,7 +13,7 @@
                                 <img src="assets/mail.png" alt="lock" class="full-height"/>
                             </ion-col>
                             <ion-col>
-                                <ion-input type="email" [(ngModel)]="email" clearInput class="login-input"></ion-input>
+                                <ion-input type="email" [(ngModel)]="email" clearInput class="login-input" (click)="emailClick()"></ion-input>
                             </ion-col>
                         </ion-row>
                         <ion-row class="half-height">
@@ -21,7 +21,7 @@
                                 <img src="assets/lock.png" alt="lock" class="full-height"/>
                             </ion-col>
                             <ion-col>
-                                <ion-input type="password" [(ngModel)]="password" clearInput class="login-input"></ion-input>
+                                <ion-input type="password" [(ngModel)]="password" clearInput class="login-input" (click)="passwordClick()"></ion-input>
                             </ion-col>
                         </ion-row>
                     </ion-col>

@@ -12,6 +12,7 @@ import { EditPostPage } from '../edit-post/edit-post';
 //provider imports
 import { ImagesProvider } from '../../providers/images/images';
 import { TranslatorProvider } from '../../providers/translator/translator'
+import { ClickProvider } from '../../providers/click/click';
 
 //firebase imports
 import * as firebase from 'firebase';
@@ -50,7 +51,8 @@ export class InfoWindowPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
               public viewCtrl: ViewController, public afAuth: AngularFireAuth, public images: ImagesProvider,
               public loadingCtrl: LoadingController, public ngZone: NgZone, public translate: TranslatorProvider,
-              public imageViewerCtrl: ImageViewerController, public modalCtrl: ModalController) {
+              public imageViewerCtrl: ImageViewerController, public modalCtrl: ModalController,
+              public click: ClickProvider) {
       this.images.doClear();
   }
     ionViewDidLoad() {
@@ -82,6 +84,7 @@ export class InfoWindowPage {
         this.checkStatus();
     }
     openEdit(){
+        this.click.click('infoWindowEditPost');
         let editModal = this.modalCtrl.create(EditPostPage, {data: this.data});
         editModal.onDidDismiss(data => {
             if(data){
@@ -92,6 +95,7 @@ export class InfoWindowPage {
     }
     //show pop up of image when image is clicked on
     presentImage(myImage){
+        this.click.click('infoWindowPresentImage');
         let imageViewer = this.imageViewerCtrl.create(myImage);
         imageViewer.present();
     }
@@ -128,6 +132,7 @@ export class InfoWindowPage {
     }
     //helper function for deleteDatat()
     deleteReport(){
+        this.click.click('infoWindowDelete');
         var self = this;
         //delete each "resolve" image from db
         firebase.database().ref('/resolves/').child(this.data.key).once('value').then(snapshot => {
@@ -177,6 +182,7 @@ export class InfoWindowPage {
     }
     //submit a resolved image
     submit(){
+        this.click.click('infoWindowSubmitResolution');
         var self = this;
         let loader = this.loadingCtrl.create({
             content: this.translate.text.infoWindow.submitting
@@ -232,6 +238,7 @@ export class InfoWindowPage {
     }
     //request photo from user's camera
     cameraRequest(){
+        this.click.click('infoWindowCamera');
         var promise = this.images.doGetCameraImage(600,600);
         promise.then(res => {
             this.imageData = "data:image/jpg;base64,"+res;
@@ -242,6 +249,7 @@ export class InfoWindowPage {
     }
     //request photo from user's album
     albumRequest(){
+        this.click.click('infoWindowAlbum');
         var promise = this.images.doGetAlbumImage(600,600);
         promise.then(res => {
             this.imageData = "data:image/jpg;base64,"+res;
@@ -252,13 +260,19 @@ export class InfoWindowPage {
     }
     //sliding for resolved images
     slideLeft(){
+        this.click.click('infoWindowLeft');
         this.slide.slidePrev(300,null);
     }
     slideRight(){
+        this.click.click('infoWindowRight');
         this.slide.slideNext(300,null);
+    }
+    infoClick(){
+        this.click.click('infoWindowResolveInfo');
     }
     
     markComplete(){
+        this.click.click('infoWindowMarkComplete');
         var self = this;
         let loader = this.loadingCtrl.create({
             content: this.translate.text.infoWindow.marking

@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, AlertController, LoadingController
 
 //import providers
 import { TranslatorProvider } from '../../providers/translator/translator';
+import { ClickProvider } from '../../providers/click/click';
 
 //firebase import
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -19,13 +20,17 @@ export class ForgotPage {
     error: string = "";
     constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
                 public alertCtrl: AlertController, public loadingCtrl: LoadingController, 
-                 public translate: TranslatorProvider) {
+                 public translate: TranslatorProvider, public click: ClickProvider) {
     }
 
     ionViewDidLoad() {
         
     }
+    emailClick(){
+        this.click.click('forgotEmail');
+    }
     sendEmail(){
+        this.click.click('forgotSend');
         var loader = this.loadingCtrl.create({
             content: this.translate.text.forgot.loading
         });

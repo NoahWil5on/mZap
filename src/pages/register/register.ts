@@ -14,6 +14,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { ImagesProvider } from '../../providers/images/images';
 import { UserInfoProvider } from '../../providers/user-info/user-info';
 import { TranslatorProvider } from '../../providers/translator/translator';
+import { ClickProvider } from '../../providers/click/click';
 
 @IonicPage()
 @Component({
@@ -38,7 +39,8 @@ export class RegisterPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
               public afDB: AngularFireDatabase, public images: ImagesProvider, public userInfo: UserInfoProvider,
-              private storage: Storage, public translate: TranslatorProvider, public menuCtrl: MenuController) {
+              private storage: Storage, public translate: TranslatorProvider, public menuCtrl: MenuController,
+              public click: ClickProvider) {
       this.images.doClear();
   }
 
@@ -47,8 +49,12 @@ export class RegisterPage {
     ionViewWillLeave(){
         this.menuCtrl.enable(true);
     }
+    inputClick(input){
+        this.click.click('register'+input);
+    }
     /*Tries to create account*/
     async createAccount(){
+        this.click.click('registerCreateAccount');
         this.startTrue = false;
         
         /*Checks to make sure fields are filled in (no profile image required)*/
@@ -160,6 +166,7 @@ export class RegisterPage {
     }
     /*Fetch image from camera*/
     cameraRequest(){
+        this.click.click('registerCamera');
         var promise = this.images.doGetCameraImage(100,100);
         promise.then(res => {
             this.imageData = "data:image/jpg;base64,"+res;
@@ -170,6 +177,7 @@ export class RegisterPage {
     }
     /*Fetch image from album*/
     albumRequest(){
+        this.click.click('registerAlbum');
         var promise = this.images.doGetAlbumImage(100,100);
         promise.then(res => {
             this.imageData = "data:image/jpg;base64,"+res;

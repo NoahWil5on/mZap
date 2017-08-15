@@ -21,7 +21,7 @@
 <ion-content padding>
     <ion-item>
         <ion-label>{{translate.text.filter.type}}</ion-label>
-        <ion-select [(ngModel)]="type" multiple="true" okText="OK" [cancelText]="translate.text.filter.cancel">
+        <ion-select [(ngModel)]="type" multiple="true" okText="OK" [cancelText]="translate.text.filter.cancel" (click)="typeClick()">
             <ion-option value="building">{{translate.text.other.building}}</ion-option>
             <ion-option value="bugs">{{translate.text.other.bug}}</ion-option>
             <ion-option value="pest">{{translate.text.other.pest}}</ion-option>
@@ -30,14 +30,14 @@
     </ion-item>
     <ion-item>
         <ion-label>{{translate.text.filter.status}}</ion-label>
-        <ion-select [(ngModel)]="status" multiple="true" okText="OK" [cancelText]="translate.text.filter.cancel">
+        <ion-select [(ngModel)]="status" multiple="true" okText="OK" [cancelText]="translate.text.filter.cancel" (click)="statusClick()">
             <ion-option value="To Do">{{translate.text.other.todo}}</ion-option>
             <ion-option value="Complete">{{translate.text.other.complete}}</ion-option>
         </ion-select>
     </ion-item>
     <ion-item>
         <ion-label floating>Rating Range</ion-label>
-        <ion-range dualKnobs="true" [(ngModel)]="range" min="-5" max="50" pin="true">
+        <ion-range dualKnobs="true" [(ngModel)]="range" min="-5" max="50" pin="true" (click)="ratingClick()">
             <ion-label range-left>-5</ion-label>
             <ion-label range-right>50+</ion-label>
         </ion-range>

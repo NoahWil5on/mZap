@@ -10,7 +10,7 @@ export class TranslatorProvider {
     //English verstion of Text
     en: any = {
         add: {
-            describe: "Describe what you're reporting",
+            describe: "Description",
             openCam: "Open Camera",
             openAlb: "Open Album",
             username: "Show Username?",
@@ -126,6 +126,7 @@ export class TranslatorProvider {
         },
         menu: {
             user: "Unknown User",
+            home: "Home",
             map: "Map",
             reports: "Reports",
             rankings: "Rankings",
@@ -190,7 +191,7 @@ export class TranslatorProvider {
     //Spanish Version of text
     es: any = {
         add: {
-            describe: "Describa lo que está reportando",
+            describe: "Descripción",
             openCam: "Abrir Cámara",
             openAlb: "Abrir Album",
             username: "¿Mostrar su nombre de usuario?",
@@ -226,7 +227,7 @@ export class TranslatorProvider {
             openAlb: "Abrir Album",
             resolution: "¡Resolver!",
             deleteAlertTitle: "¿Está Seguro?",
-            deleteAlertSubTitle: "Deleting a post is permanent and cannot be undone",
+            deleteAlertSubTitle: "Eliminar una publicación es permanente y no se puede deshacer",
             cancel: "Cancelar",
             submitting: "Enviando Contenido...",
             submitted: "¡Envio Exitoso!",
@@ -305,6 +306,7 @@ export class TranslatorProvider {
             fetch: "buscando usuarios mejor calificados..."
         },
         menu: {
+            home: "Casa",
             user: "Usuario Desconocido",
             map: "Mapas",
             reports: "Reportes",

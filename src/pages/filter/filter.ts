@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 //providers import
 import { TranslatorProvider } from '../../providers/translator/translator';
 import { UserInfoProvider } from '../../providers/user-info/user-info';
+import { ClickProvider } from '../../providers/click/click';
 
 @IonicPage()
 @Component({
@@ -18,13 +19,23 @@ export class FilterPage {
     error: string = "";
     target: string = "";
     constructor(public navCtrl: NavController, public navParams: NavParams, public translate: TranslatorProvider,
-                public viewCtrl: ViewController, public userInfo: UserInfoProvider) {
+                public viewCtrl: ViewController, public userInfo: UserInfoProvider,
+                public click: ClickProvider) {
         this.target = navParams.get('target');
     }
 
     ionViewDidLoad() {
         this.range.lower = -5;
         this.range.upper = 50;
+    }
+    statusClick(){
+        this.click.click('filterStatus');
+    }
+    ratingClick(){
+        this.click.click('filterRating');
+    }
+    typeClick(){
+        this.click.click('filterType');
     }
     //dismiss this modal
     dismiss(){
@@ -33,6 +44,7 @@ export class FilterPage {
     //when filter is clicked, all data from page is thrown into user-info provider
     //to be accessed by map.ts
     filter(){
+        this.click.click('filterFilter');
         if(this.status.length < 1 || this.type.length < 1){
             this.error = this.translate.text.filter.error;
             return;

@@ -8,13 +8,12 @@ import * as firebase from 'firebase';
 //providers import
 import { TranslatorProvider } from '../../providers/translator/translator';
 import { RatingProvider } from '../../providers/rating/rating';
+import { UserInfoProvider } from '../../providers/user-info/user-info';
+import { ClickProvider } from '../../providers/click/click';
 
-/**
- * Generated class for the TopRatedPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+//page imports
+import { ProfilePage } from '../profile/profile';
+
 @IonicPage()
 @Component({
   selector: 'page-top-rated',
@@ -25,10 +24,11 @@ export class TopRatedPage {
     users: any = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, 
                public loadingCtrl: LoadingController, public translate: TranslatorProvider, 
-               public rating: RatingProvider) {
+               public rating: RatingProvider, public userInfo: UserInfoProvider, public click: ClickProvider) {
   }
     //open nav menu
     openMenu(){
+        this.click.click('topRatedMenu');
         this.menuCtrl.open();
     }
     ionViewDidLoad() {
@@ -49,12 +49,19 @@ export class TopRatedPage {
                 }
                 //add user & user info to front of array
                 self.users.unshift({
+                    id: user.key,
                     name: user.val().name,
                     rating: user.val().rating,
                     img: imageURL
                 });
             })
         })
+    }
+    //Check out user's profile
+    doProfile(id){
+        this.click.click('topRatedViewProfile');
+        this.userInfo.profileView = id;
+        this.navCtrl.push(ProfilePage);
     }
 
 }

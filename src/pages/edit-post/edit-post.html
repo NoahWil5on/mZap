@@ -38,13 +38,13 @@
     <ion-card padding-bottom>
         <ion-item>
             <ion-label floating class="green-text" [class.red-text]="!data.description">{{translate.text.editPost.description}}</ion-label>
-            <ion-input type="text" style="border-bottom: solid black 1px" [(ngModel)]="data.description"></ion-input>
+            <ion-input type="text" style="border-bottom: solid black 1px" [(ngModel)]="data.description" (click)="descriptionClick()"></ion-input>
         </ion-item>
     </ion-card>
     <ion-card>
         <ion-item>
             <ion-label>{{translate.text.editPost.type}}</ion-label>
-            <ion-select [(ngModel)]="data.type">
+            <ion-select [(ngModel)]="data.type" (click)="typeClick()">
                 <ion-option value="bugs">{{translate.text.other.bug}}</ion-option>
                 <ion-option value="pest">{{translate.text.other.pest}}</ion-option>
                 <ion-option value="trash">{{translate.text.other.trash}}</ion-option>
@@ -55,7 +55,7 @@
     <ion-card>
         <ion-item>
             <ion-label>{{translate.text.editPost.status}}</ion-label>
-            <ion-select [(ngModel)]="data.status">
+            <ion-select [(ngModel)]="data.status" (click)="statusClick()">
                 <ion-option value="To Do">{{translate.text.other.todo}}</ion-option>
                 <ion-option value="Complete">{{translate.text.other.complete}}</ion-option>
             </ion-select>

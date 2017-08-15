@@ -23,7 +23,7 @@
 <ion-content padding style="background-color: #fcf80c">
     <ion-item [class.red-glow]="desc.length < 1" style="margin-bottom: 15px; padding-bottom: 10px; padding-right: 5px">
         <ion-label floating [class.red]="desc.length < 1">{{translate.text.add.describe}}</ion-label>
-        <ion-input type="text" clearInput [(ngModel)]="desc"></ion-input>
+        <ion-input type="text" clearInput [(ngModel)]="desc" (click)="descriptionClick()"></ion-input>
     </ion-item>
     <ion-item>
         <ion-grid no-padding>
@@ -42,6 +42,13 @@
                     <button ion-button block clear style="color: black;" (click)="albumRequest()">
                         <img src="assets/new/album.png" style="width: 40px; padding-right: 10px;" alt="Album" />
                         {{translate.text.add.openAlb}}</button>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-6 no-padding>
+                    <button ion-button block clear style="color: black;" (click)="videoRequest()">
+                        <img src="assets/new/camera.png" style="width: 40px; padding-right: 10px;" alt="Camera" />
+                        Record Video</button>
                 </ion-col>
             </ion-row>
         </ion-grid>

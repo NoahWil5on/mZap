@@ -28,7 +28,7 @@
 
 <ion-content padding-vertical id="login-content">
     <ion-list>
-        <ion-item *ngFor="let user of users">
+        <ion-item *ngFor="let user of users" (click)="doProfile(user.id)">
             <ion-thumbnail item-start>
                 <img [src]="user.img">
             </ion-thumbnail>

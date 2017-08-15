@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, ViewController, Content } from 'io
 
 //provider imports
 import { TranslatorProvider } from '../../providers/translator/translator'
+import { ClickProvider } from '../../providers/click/click';
 
 //firebase imports
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -28,7 +29,8 @@ export class DiscussionPage {
     myId: any = this.afAuth.auth.currentUser.uid;
     
     constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
-                public afAuth: AngularFireAuth, public translate: TranslatorProvider, public ngZone: NgZone) {
+                public afAuth: AngularFireAuth, public translate: TranslatorProvider, public ngZone: NgZone, 
+                public click: ClickProvider) {
     }
 
     ionViewDidLoad() {
@@ -68,6 +70,7 @@ export class DiscussionPage {
     }
     //submit a message
     submit(){
+        this.click.click('discussionSubmit');
         if(this.myText.trim().length < 1) return;
         let data = {
             name: this.afAuth.auth.currentUser.displayName,
@@ -89,5 +92,8 @@ export class DiscussionPage {
             el.style.cssText = 'height:auto; padding:0;';
             el.style.cssText = 'height:' + (el.scrollHeight+ 4) + 'px';
         });
+    }
+    textClick(){
+        this.click.click('discussionMessage');
     }
 }

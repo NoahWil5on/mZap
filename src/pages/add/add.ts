@@ -10,6 +10,7 @@ import * as firebase from 'firebase';
 //provider imports
 import { ImagesProvider } from '../../providers/images/images';
 import { TranslatorProvider } from '../../providers/translator/translator';
+import { ClickProvider } from '../../providers/click/click';
 
 @IonicPage()
 @Component({
@@ -35,7 +36,7 @@ export class AddPage {
                  public viewCtrl: ViewController, public modalCtrl: ModalController, public loadingCtrl: LoadingController, public alertCtrl: AlertController, 
          
                  public afAuth: AngularFireAuth, public afDB: AngularFireDatabase, 
-                 public images: ImagesProvider, public translate: TranslatorProvider) {
+                 public images: ImagesProvider, public translate: TranslatorProvider, public click: ClickProvider) {
         //clear any images from the images provider
         this.images.doClear();
     }
@@ -64,6 +65,7 @@ export class AddPage {
     }
     //get image from camera and set dataSet to true
     cameraRequest(){
+        this.click.click('addCamera');
         var promise = this.images.doGetCameraImage(600,600);
         promise.then(res => {
             this.imageData = "data:image/jpg;base64,"+res;
@@ -74,6 +76,7 @@ export class AddPage {
     }
     //get image from user album and set dataSet to true
     albumRequest(){
+        this.click.click('addAlbum');
         var promise = this.images.doGetAlbumImage(600,600);
         promise.then(res => {
             this.imageData = "data:image/jpg;base64,"+res;
@@ -82,12 +85,21 @@ export class AddPage {
         }).catch(e => {
         });
     }
+    videoRequest(){
+        this.click.click('addVideo');
+        this.images.doGetVideo();
+
+    }
     //dismiss this modal
     dismiss(){
         this.viewCtrl.dismiss();
     }
+    descriptionClick(){
+        this.click.click('addDescription');
+    }
     //try to submit report
     submit(){
+        this.click.click('addSubmit');
         let loader = this.loadingCtrl.create({
             content: this.translate.text.add.submitting
         })
