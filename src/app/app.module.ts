@@ -24,6 +24,7 @@ import { UserInfoProvider } from '../providers/user-info/user-info';
 import { TranslatorProvider } from '../providers/translator/translator';
 import { LikeProvider } from '../providers/like/like';
 import { RatingProvider } from '../providers/rating/rating';
+import { ClickProvider } from '../providers/click/click';
 
 /*Import all pages into project*/
 import { MyApp } from './app.component';
@@ -61,7 +62,6 @@ import { EditProfilePageModule } from '../pages/edit-profile/edit-profile.module
 import { ForgotPageModule } from '../pages/forgot/forgot.module';
 import { HomePageModule } from '../pages/home/home.module';
 import { EditPostPageModule } from '../pages/edit-post/edit-post.module';
-import { ClickProvider } from '../providers/click/click';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
@@ -74,7 +74,7 @@ export const firebaseConfig = {
 
 @NgModule({
   declarations: [
-      MyApp,
+      MyApp
   ],
   imports: [
     BrowserModule,
@@ -99,8 +99,7 @@ export const firebaseConfig = {
     EditProfilePageModule,
     ForgotPageModule,
     HomePageModule,
-    EditPostPageModule,
-    
+    EditPostPageModule,    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -120,7 +119,7 @@ export const firebaseConfig = {
       EditProfilePage,
       ForgotPage,
       HomePage,
-      EditPostPage
+      EditPostPage,
   ],
   providers: [
     File,
