@@ -252,6 +252,10 @@ export class MapPage {
                 title = this.translate.text.map.trashTitle;
                 description = this.translate.text.map.trashDescription;
                 break;
+            case 'cnd':
+                title = this.translate.text.map.cndTitle;
+                description = this.translate.text.map.cndDescription;
+                break;
             default:
                 break;
         }
@@ -282,7 +286,8 @@ export class MapPage {
                                         url: data.url,
                                         refName: data.refName,
                                         status: "To Do",
-                                        key: ""
+                                        key: "",
+                                        date: "",
                                     }
                                 }
                                 //if there is an image available set the image location
@@ -296,9 +301,13 @@ export class MapPage {
                                         name: this.afAuth.auth.currentUser.displayName,
                                         id: this.afAuth.auth.currentUser.uid,
                                         status: "To Do",
-                                        key: ""
+                                        key: "",
+                                        date: "",
                                     }
                                 }
+                                var today = new Date();
+                                var date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                                newMarker.date = date;
                                 /*Push point to firebase and give it a reference*/
                                 var key = this.fireDB.list('positions').push(newMarker).key;
                                 this.fireDB.object('positions/'+key +'/key').set(key);
@@ -363,6 +372,9 @@ export class MapPage {
             case 'pest':
                 selection = 'assets/images/symbols/pest_black.png';
                 break;
+            case 'cnd':
+                selection = 'assets/images/symbols/cnd.png';
+                break;
             default:
                 selection = 'assets/images/symbols/mosquito_black.png';
                 break;
@@ -397,6 +409,9 @@ export class MapPage {
                     break;
                 case 'pest':
                     self.type = self.translate.text.other.pest;
+                    break;
+                case 'cnd':
+                    self.type = self.translate.text.other.cnd;
                     break;
             }
             self.myActiveMarker = marker;
@@ -476,31 +491,31 @@ export class MapPage {
                     self.heatMap = new google.maps.visualization.HeatmapLayer({
                         data: self.heatMapData,
                         map: self.map,
-                        radius: 15,
-                        maxIntensity: 200
+                        radius: 25,
+                        maxIntensity: 250
                     });
                     
                     self.setOnce = false;
                     
-                    let redRadius = 300;
-                    let orangeRadius = 600;
-                    let yellowRadius = 900;
-                    
-                    let redZone = self.zones.runEval(self.points, redRadius, 3);
-
-                    //add all different types of zones based on (points, distance_threshold,
-                    //and point amount threshold)
-                    redZone.promise.then(_ => {
-                        let orangeZone = self.zones.runEval(self.points, orangeRadius, 5);
-                        orangeZone.promise.then(_ => {
-                            let yellowZone = self.zones.runEval(self.points, yellowRadius, 8);
-                            yellowZone.promise.then(_ => {
-                                self.applyZones(yellowZone.zones, yellowRadius, '#ffff00');
-                                self.applyZones(orangeZone.zones, orangeRadius, '#ff8800');
-                                self.applyZones(redZone.zones, redRadius, '#ff0000');
-                            });
-                        });
-                    });
+//                    let redRadius = 300;
+//                    let orangeRadius = 600;
+//                    let yellowRadius = 900;
+//                    
+//                    let redZone = self.zones.runEval(self.points, redRadius, 3);
+//
+//                    //add all different types of zones based on (points, distance_threshold,
+//                    //and point amount threshold)
+//                    redZone.promise.then(_ => {
+//                        let orangeZone = self.zones.runEval(self.points, orangeRadius, 5);
+//                        orangeZone.promise.then(_ => {
+//                            let yellowZone = self.zones.runEval(self.points, yellowRadius, 8);
+//                            yellowZone.promise.then(_ => {
+//                                self.applyZones(yellowZone.zones, yellowRadius, '#ffff00');
+//                                self.applyZones(orangeZone.zones, orangeRadius, '#ff8800');
+//                                self.applyZones(redZone.zones, redRadius, '#ff0000');
+//                            });
+//                        });
+//                    });
                 }
             });
         });

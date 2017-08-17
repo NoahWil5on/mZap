@@ -65,6 +65,9 @@ export class ProfilePage {
                     case 'pest':
                         obj.type = self.translate.text.other.pest;
                         break;
+                    case 'cnd':
+                        obj.type = self.translate.text.other.cnd;
+                        break;
                 }
                 //translate status
                 switch(item.val().status){

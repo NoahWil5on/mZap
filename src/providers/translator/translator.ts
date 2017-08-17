@@ -78,6 +78,8 @@ export class TranslatorProvider {
             pestsDescription: "Make a report on pests you found at this location",
             trashTitle: "Garbage",
             trashDescription: "Report an instance of garbage at this location",
+            cndTitle: "Cats/Dogs",
+            cndDescription: "Report a citing of stray animals",
             ok: "OK",
             cancel: "Cancel"
         },
@@ -180,6 +182,7 @@ export class TranslatorProvider {
             send: "Email Me"
         },
         other: {
+            cnd: "Cats/Dogs",
             complete: "Complete",
             todo: "To Do",
             building: "Abandoned Building",
@@ -259,6 +262,8 @@ export class TranslatorProvider {
             pestsDescription: "Hacer un reporte de plagas encontradas en esta ubicación",
             trashTitle: "Desperdicio/Basura",
             trashDescription: "Reporte una isntancia de basura en esta ubicacióm",
+            cndTitle: "Gatos/Perros",
+            cndDescription: "Reporte una cita de animales callejeros",
             ok: "OK",
             cancel: "Cancelar"
         },
@@ -361,6 +366,7 @@ export class TranslatorProvider {
             send: "Envíeme un Correo Electrónico"
         },
         other: {
+            cnd: "Gatos/Perros",
             complete: "Completar",
             todo: "Que Hacer",
             building: "Edificación Abandonada",

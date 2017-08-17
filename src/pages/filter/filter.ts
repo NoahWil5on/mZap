@@ -15,7 +15,7 @@ import { ClickProvider } from '../../providers/click/click';
 export class FilterPage {
     range: any = {};
     status: any = ["To Do", "Complete"];
-    type: any = ["building", "bugs", "pest", "trash"];
+    type: any = ["building", "bugs", "pest", "trash", "cnd"];
     error: string = "";
     target: string = "";
     constructor(public navCtrl: NavController, public navParams: NavParams, public translate: TranslatorProvider,

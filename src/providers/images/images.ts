@@ -7,15 +7,14 @@ import { File } from '@ionic-native/file';
 //firebase imports
 import * as firebase from 'firebase';
 
-declare var window:any;
+declare var window;
 
 @Injectable()
 export class ImagesProvider {
-
     data: any;
-  constructor(public camera: Camera, public mediaCapture: MediaCapture, public file: File) {
+    constructor(public camera: Camera, public mediaCapture: MediaCapture, public file: File) {
 
-  }
+    }
     //takes image and uploads it to firebase
     uploadToFirebase(){
         //gives the file an original name based on date and time
@@ -24,12 +23,12 @@ export class ImagesProvider {
         //return promise with image url and key when image is successfully uploaded
         return {
             promise: new Promise((resolve,reject) => {
-                    firebase.storage().ref('/images/').child(fileName).putString(this.data, 'base64', {contentType: 'image/png'}).then((data) => {
-                        resolve(data.downloadURL);
-                    }).catch((e) => {
-                        reject(e);
-                    })            
-                }),
+                firebase.storage().ref('/images/').child(fileName).putString(this.data, 'base64', {contentType: 'image/png'}).then((data) => {
+                    resolve(data.downloadURL);
+                }).catch((e) => {
+                    reject(e);
+                })            
+            }),
             refName: fileName
         };
     }
@@ -78,44 +77,78 @@ export class ImagesProvider {
         });
     }
     doGetVideo(){
-        this.camera.getPicture({
-            sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-            mediaType: this.camera.MediaType.VIDEO,
-            destinationType: this.camera.DestinationType.FILE_URI
-        }).then((data) => {
-            var uri = data+"";
-            uri = uri.replace('/private','');
-            alert(uri);
-            window.resolveLocalFileSystemURL(uri, (fileEntry) => {
-                alert("resolve");
-                fileEntry.file(file => {
-                    alert("fileEntry");
-                    const fileReader = new FileReader();
+       // var self = this;
+        var onSuccess = function(videoData){
+            
+            alert(JSON.stringify(videoData));
+            
+            var name = "filename.mp4";
+            
+            var path = videoData[0].fullPath + "";
+            path = "file://" + path.replace("/private", "");             
+            //alert(path);
+            //alert(self.file.dataDirectory);
+            
+            ////
+            window.resolveLocalFileSystemURL(path, (fileEntry) => {
+                alert("something Else");
+                fileEntry.file( (file) => {
+                    alert("fileEntry.file");
+                    let fileReader = new FileReader();
+
                     fileReader.onloadend = (result: any) => {
-                        alert("onloadend");
+                        alert("inside onloadend")
                         let arrayBuffer = result.target.result;
-                        let blob = new Blob([new Uint8Array(arrayBuffer)], {type: 'video/quicktime'});
-                        const name = '' + Date.now();
-                        this.upload(blob, name);
+                        let blob = new Blob([new Uint8Array(arrayBuffer)], {type: 'video/mp4'});
+                        firebase.storage().ref('/videos/').child(name).put(blob).catch(e => {
+                            alert("Error uploading")
+                        });
                     };
-                    
+
+                    fileReader.onerror = (error: any) => {
+                        alert("There has been an error")
+                    };
                     fileReader.readAsArrayBuffer(file);
-                    
-                    fileReader.onerror = (error) => {
-                        alert("Error" + JSON.stringify(error));
-                    }
-                }, e => {
-                    alert("You thought you didn't have any errors lol" + + JSON.stringify(e))
                 });
             }, error => {
-                alert("ERRRORR" + JSON.stringify(error));
+                alert("hey we're running an error");
             });
-        });
-    }
-    upload(blob,name){
-        alert("Upload");
-        firebase.storage().ref('/videos/').child(name).put(blob).catch(e => {
-            alert("error: " + e);
-        });
+
+
+            ////
+//            self.file.readAsArrayBuffer(this.file.dataDirectory, videoData[0].name).then(data => {
+//                alert("something");
+//                // success
+//                console.log(data);
+//
+//                var blob = new Blob([data], {type: "video/mp4"});
+//
+//                console.log(blob);
+//
+//                var uploadTask = firebase.storage().ref('/videos/').child(name).put(blob);
+//
+//                uploadTask.on('state_changed', function(snapshot){
+//                    // Observe state change events such as progress, pause, and resume
+//                    // See below for more detail
+//
+//                    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//                    console.log('Upload is ' + progress + '% done'); 
+//
+//                }, function(error) {
+//                    // Handle unsuccessful uploads
+//                    alert("Error uploading: " + error)
+//                }, function() {
+//                    // Handle successful uploads on complete
+//                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+//                    var downloadURL = uploadTask.snapshot.downloadURL;
+//                    alert("Success! " + downloadURL);
+//                });
+//
+//            }).catch( error => {
+//                // error
+//                alert("Failed to read video file from directory, error.code");
+//            });
+        }
+        MediaCapture.captureVideo().then(onSuccess);
     }
 }

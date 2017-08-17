@@ -61,6 +61,9 @@ export class AddPage {
             case 'pest':
                 this.type = this.translate.text.other.pest;
                 break;
+            case 'pest':
+                this.type = this.translate.text.other.cnd;
+                break;
         }
     }
     //get image from camera and set dataSet to true

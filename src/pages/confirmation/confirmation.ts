@@ -58,6 +58,9 @@ export class ConfirmationPage {
             case 'pest':
                 this.type = this.translate.text.other.pest;
                 break;
+            case 'cnd':
+                this.type = this.translate.text.other.cnd;
+                break;
         }
   }
     //dismiss this modal
