@@ -1,4 +1,4 @@
-//vanill ionic imports
+//vanilla ionic imports
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, Slides } from 'ionic-angular';
 
@@ -6,6 +6,7 @@ import { IonicPage, NavController, NavParams, ViewController, Slides } from 'ion
 import { ImagesProvider } from '../../providers/images/images';
 import { TranslatorProvider } from '../../providers/translator/translator';
 import { ClickProvider } from '../../providers/click/click';
+import { UserInfoProvider } from '../../providers/user-info/user-info';
 
 //firebase imports
 import * as firebase from 'firebase';
@@ -27,13 +28,11 @@ export class EditPostPage {
     error: string = "";
     constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
                 public images: ImagesProvider, public translate: TranslatorProvider, public ngZone: NgZone,
-                public click: ClickProvider) {
+                public click: ClickProvider, public userInfo: UserInfoProvider) {
         this.images.doClear();
-    }
 
-    ionViewDidLoad() {
         var self = this;
-        this.data = this.navParams.get('data');
+        this.data = this.userInfo.activeData
         var ref = firebase.database().ref('/resolves/');
         ref.once('value', snapshot => {
             if(!snapshot.hasChild(this.data.key)) return;
@@ -53,7 +52,6 @@ export class EditPostPage {
                 }); 
             });
         });
-        
     }
     dismiss(bool){
         this.viewCtrl.dismiss(bool);

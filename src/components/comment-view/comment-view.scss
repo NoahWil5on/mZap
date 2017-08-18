@@ -1,0 +1,87 @@
+.ios, .md{
+    comment-view {
+        .scroll-content{
+            padding: 0 !important;
+        }
+        .messages{
+            padding-bottom: 60px;
+            display: block;
+            position: relative;
+            overflow: auto;
+            div{ 
+                overflow: auto;
+                clear: both;
+                .message{
+                    p{
+                        display: block;
+                        position: relative;
+                        padding: 10px 10px;
+                        margin: 8px 5px;
+                        margin-bottom: 0;
+                        width: auto;
+                        max-width: 70%;
+                        border-radius: 10px;
+                    }
+                    .other{
+                        color: black;
+                        background-color: #ddd;
+                        float: left;
+                    }
+                    .own{
+                        color: white;
+                        background-color: #22abf9;
+                        float: right;
+                    }
+                }
+                .name{
+                    font-size: 10pt;
+                    color: #888;
+                    margin: 0;
+                    padding: 0 5px;
+                    float: left;
+                }
+
+            }
+        }
+        .chat{
+            z-index: 100;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            position: fixed;
+            display: block;
+            bottom: 0;
+            left: 0;
+            ion-grid{
+                padding: 0;
+                margin: 0;
+                
+                ion-row{
+                    position: relative;
+                    background-color: white;
+                    padding: 5px 0px;
+                    ion-col{
+                        padding: 0 10px;
+                        button{
+                            height: 1em;
+                        }
+                        div{
+                            border: 1px solid #999;
+                            border-radius: 10px;
+                            padding-left: 5px;
+                            padding-right: 5px;
+                            background-color: white;
+                        }
+                        textarea{
+                            background: none;
+                            border: none;
+                            width: 100%;
+                            resize: none;
+                            overflow: hidden;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

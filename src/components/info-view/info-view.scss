@@ -1,0 +1,28 @@
+.ios, .md{
+    info-view {
+        .likes{
+            display: flex;
+            flex-direction: column;
+            ion-row{
+                flex: 1;
+            }
+        }
+        .row{
+            display: flex;
+            flex-direction: row;
+            ion-row{
+                flex: 1;
+            }
+        }
+        ion-grid{
+            display: inline-block;
+            h3{
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+        .greenButton{
+            color: limegreen;
+        }
+    }
+}

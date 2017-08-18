@@ -1,0 +1,31 @@
+<div id="shader" (click)="closeOut()">
+
+</div>
+<div id="main">
+  <div class="dismiss" (click)="closeOut()">
+    <p>X</p>
+  </div>
+  <div class="type" *ngIf="checkState('info')">
+    <ion-icon name="heart"></ion-icon>
+  </div>
+  <div style="height: 100%; width: 100%; overflow: scroll">
+    <info-view *ngIf="checkState('info')"></info-view>
+    <comment-view *ngIf="checkState('comment')"></comment-view>
+    <edit-view *ngIf="checkState('edit')"></edit-view>
+  </div>
+  <div id="nav-grid">
+      <ion-grid no-padding>
+        <ion-row>
+          <ion-col text-center [class.active]="checkState('info')">
+            <button clear ion-button (click)="updateState('info')">Info</button>
+          </ion-col>
+          <ion-col text-center [class.active]="checkState('comment')">
+            <button clear ion-button (click)="updateState('comment')">Notes</button>
+          </ion-col>
+          <ion-col text-center [class.active]="checkState('edit')">
+            <button clear ion-button (click)="updateState('edit')">Edit</button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+</div>

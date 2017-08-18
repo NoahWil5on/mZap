@@ -8,8 +8,11 @@ import { IonicPage, NavController, NavParams} from 'ionic-angular';
   templateUrl: 'map.html',
 })
 export class MapPage {
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
-    }
+
+  infoShow: boolean = false;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  }
 
 }
 

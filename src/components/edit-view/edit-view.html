@@ -1,0 +1,92 @@
+<div>
+  <div>
+      <ion-slides *ngIf="resolves.length > 0">
+          <ion-slide text-center *ngFor="let item of resolves">
+              <div text-center>
+                  <div style="display: inline-block; position: relative;">
+                      <div *ngIf="item.delete" class="shader"></div>
+                      <div>
+                          <button ion-button clear class="slide-x" (click)="deleteResolve(item)">X</button>
+                      </div>
+                      <img [src]='item.url' sytle="margin-left: auto; margin-right: auto; display: block"/>
+                  </div>
+              </div>
+              <p *ngIf="item.info.length > 0">{{item.info}}</p>
+          </ion-slide>
+      </ion-slides>
+  </div>
+  <ion-card padding-bottom>
+      <ion-item>
+          <ion-label floating class="green-text" [class.red-text]="!data.description">{{translate.text.editPost.description}}</ion-label>
+          <ion-input type="text" style="border-bottom: solid black 1px" [(ngModel)]="data.description" (click)="descriptionClick()"></ion-input>
+      </ion-item>
+  </ion-card>
+  <ion-card>
+      <ion-item>
+          <ion-label>{{translate.text.editPost.type}}</ion-label>
+          <ion-select [(ngModel)]="data.type" (click)="typeClick()">
+              <ion-option value="bugs">{{translate.text.other.bug}}</ion-option>
+              <ion-option value="pest">{{translate.text.other.pest}}</ion-option>
+              <ion-option value="trash">{{translate.text.other.trash}}</ion-option>
+              <ion-option value="building">{{translate.text.other.building}}</ion-option>
+              <ion-option value="cnd">{{translate.text.other.cnd}}</ion-option>
+          </ion-select>
+      </ion-item>
+  </ion-card>
+  <ion-card>
+      <ion-item>
+          <ion-label>{{translate.text.editPost.status}}</ion-label>
+          <ion-select [(ngModel)]="data.status" (click)="statusClick()">
+              <ion-option value="To Do">{{translate.text.other.todo}}</ion-option>
+              <ion-option value="Complete">{{translate.text.other.complete}}</ion-option>
+          </ion-select>
+      </ion-item>
+  </ion-card>
+  <ion-card>
+      <ion-item>
+          <ion-label>{{translate.text.editPost.show}}</ion-label>
+          <ion-checkbox [(ngModel)]="data.show"></ion-checkbox>
+      </ion-item>
+  </ion-card>
+
+      <ion-item>
+          <p class="green-text">{{translate.text.editPost.change}}</p>
+          <ion-grid no-padding>
+              <ion-row>
+                  <ion-col text-center no-padding [class.no-height]="imageData.length < 1">
+                      <img width="100px" #preview />
+                  </ion-col>
+              </ion-row>
+              <ion-row>
+                  <ion-col col-6 no-padding>
+                      <button ion-button block clear style="color: black;" (click)="cameraRequest()">
+                          <img src="assets/new/camera.png" style="width: 40px; padding-right: 10px;" alt="Camera" />
+                      </button>
+                  </ion-col>
+                  <ion-col col-6 no-padding>
+                      <button ion-button block clear style="color: black;" (click)="albumRequest()">
+                          <img src="assets/new/album.png" style="width: 40px; padding-right: 10px;" alt="Album" />
+                      </button>
+                  </ion-col>
+              </ion-row>
+          </ion-grid>
+      </ion-item>
+
+  <div text-center padding-top>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+            <button ion-button color="secondary" (click)="submit()">
+                {{translate.text.editPost.submit}}
+            </button>  
+        </ion-col>
+        <ion-col>
+            <button ion-button color="danger" (click)="delete()">
+                {{translate.text.infoWindow.delete}}
+            </button>  
+        </ion-col>
+      </ion-row>
+    </ion-grid> 
+  </div>
+  <p class="error">{{error}}</p>
+</div>

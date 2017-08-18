@@ -15,6 +15,8 @@ export class UserInfoProvider {
     filter: any;
     filterReports: any;
     profileView: any;
+
+    activeData: any;
     constructor() {
     }
 }

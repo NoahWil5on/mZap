@@ -1,0 +1,101 @@
+.ios, .md{
+    info {
+        width: auto;
+        .dismiss{
+            display: table;
+            position: absolute;
+            z-index: 12;
+            background-color: red;
+            color: white;
+            right: 0;
+            top: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 100%;
+            text-align: center;
+            padding: 4px;
+            transform: translate(50%,-50%);
+            p{
+                position: relative;
+                display: table-cell;
+                text-align: center;
+                vertical-align: middle;
+            }
+        }
+        #shader{
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            z-index: 5;
+            background-color: black;
+            opacity: .7;
+            transform: translate(-50%, -50%);
+        }
+        #main{
+            z-index: 10;
+            display: inline-block;
+            padding: 0;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            background-color: white;
+            padding: 20px;
+            width: 300px;
+            height: 300px;
+            @media screen and (min-device-width: 360px) {
+                width: 300px;
+                height: 400px;
+            }
+            @media screen and (min-device-width: 500px) {
+                width: 400px;
+                height: 600px;
+            }
+            @media screen and (min-device-width: 800px) {
+                width: 500px;
+                height: 700px;
+            }
+            -webkit-box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
+            -moz-box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
+            box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
+        }
+        .type{
+            z-index: 100;
+            transform: translate(-30%,-30%);
+            padding: 0;
+            margin: 0;
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            border-radius: 100%;
+            background-color: green;
+            color: white;
+            ion-icon{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }
+        }
+        #nav-grid{
+            width: 100%;
+            left: 0;
+            bottom: 0;
+            position: absolute;
+            transform: translateY(99%);
+            ion-grid{
+                ion-col{
+                    padding: 5px;
+                    margin-left: 5px;
+                    margin-right: 5px;
+                    background-color: #ddd;
+                    color: black;
+                    button{
+                        height: 1em;
+                    }
+                }
+            }
+        }
+        .active{
+            background-color: white !important;
+        }
+    }
+}

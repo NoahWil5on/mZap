@@ -64,17 +64,17 @@ import { HomePageModule } from '../pages/home/home.module';
 import { EditPostPageModule } from '../pages/edit-post/edit-post.module';
 
 export const firebaseConfig = {
-    apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
-    authDomain: "testdb-4ee5f.firebaseapp.com",
-    databaseURL: "https://testdb-4ee5f.firebaseio.com",
-    projectId: "testdb-4ee5f",
-    storageBucket: "testdb-4ee5f.appspot.com",
-    messagingSenderId: "605360272413"
+    apiKey: "AIzaSyBvu8_QvyLkAhpSoOkBxCYyviYtzBWhC4s",
+    authDomain: "testdb-2-c4b9d.firebaseapp.com",
+    databaseURL: "https://testdb-2-c4b9d.firebaseio.com",
+    projectId: "testdb-2-c4b9d",
+    storageBucket: "testdb-2-c4b9d.appspot.com",
+    messagingSenderId: "139524871052"
   };
 
 @NgModule({
   declarations: [
-      MyApp
+      MyApp,
   ],
   imports: [
     BrowserModule,

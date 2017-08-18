@@ -59,32 +59,36 @@ export class MapViewComponent {
             public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth,
              public alertCtrl: AlertController, public zones: ZonesProvider, public menuCtrl: MenuController,
                public userInfo: UserInfoProvider, public translate: TranslatorProvider, 
-                public likeProvider: LikeProvider, public click: ClickProvider) {
-                  //checks if this is NOT the first time you're opening up the map
-      if(this.userInfo.zoom != null){
+                public likeProvider: LikeProvider, public click: ClickProvider, public mapPage: MapPage) {
+                    
+   }
+    ngAfterViewInit() {
+
+    //checks if this is NOT the first time you're opening up the map
+    if(this.userInfo.zoom != null){
         //initializes map
         let latLng = new google.maps.LatLng(this.userInfo.lat,this.userInfo.lng);
         let options = {
-          center: latLng,
-          zoom: this.userInfo.zoom,
-          disableDefaultUI: true,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
+            center: latLng,
+            zoom: this.userInfo.zoom,
+            disableDefaultUI: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         this.initMap(options,false);
 
         //if the user allows you to see their position add a blinking dot to their location
         if(this.userInfo.allowPosition){
-          var self = this;
-          navigator.geolocation.getCurrentPosition((position) => {
-            let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            self.setPin(latLng);
-          },null,{enableHighAccuracy: true, maximumAge:3000, timeout: 5000});
+            var self = this;
+            navigator.geolocation.getCurrentPosition((position) => {
+                let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                self.setPin(latLng);
+            },null,{enableHighAccuracy: true, maximumAge:3000, timeout: 5000});
         }
         return;
-      }
-      //if this is the first time opening up maps then run this function
-      this.runNavigation();
-   }
+    }
+    //if this is the first time opening up maps then run this function
+    this.runNavigation();
+    }
    toggleMap(){
        this.click.click('mapToggleMap');
        this.hybrid = !this.hybrid;
@@ -391,8 +395,10 @@ export class MapViewComponent {
        });*/
        google.maps.event.addListener(marker, 'click', function(e){
            self.myActiveData = data;
-           if(!self.myActiveData.likes){
-               self.myActiveData.likes = 0;
+           self.mapPage.infoShow = !self.mapPage.infoShow;
+           self.userInfo.activeData = data;
+           if(!self.userInfo.activeData.likes){
+            self.userInfo.activeData.likes = 0;
            }
            //translate data type
            switch(data.type){
