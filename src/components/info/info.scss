@@ -58,21 +58,22 @@
             box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
         }
         .type{
+            display: table;
             z-index: 100;
-            transform: translate(-30%,-30%);
+            transform: translate(0%,-30%);
             padding: 0;
             margin: 0;
-            width: 40px;
-            height: 40px;
+            padding: 0 10px;
             position: absolute;
-            border-radius: 100%;
-            background-color: green;
+            border-radius: 20px;
+            background-color: #1FCE00;
             color: white;
-            ion-icon{
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%,-50%);
+            text-align: center;
+            vertical-align: middle;
+            p{
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
             }
         }
         #nav-grid{
@@ -96,6 +97,9 @@
         }
         .active{
             background-color: white !important;
+        }
+        .todo{
+            background-color: #B8A345 !important;
         }
     }
 }

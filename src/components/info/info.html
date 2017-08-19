@@ -5,13 +5,16 @@
   <div class="dismiss" (click)="closeOut()">
     <p>X</p>
   </div>
-  <div class="type" *ngIf="checkState('info')">
-    <ion-icon name="heart"></ion-icon>
+  <div class="type" *ngIf="checkState('info')" [class.todo]="userInfo.activeData.status == 'To Do'">
+    <img [src]="selection" alt="type" /> <p>{{status}}</p>
   </div>
   <div style="height: 100%; width: 100%; overflow: scroll">
     <info-view *ngIf="checkState('info')"></info-view>
     <comment-view *ngIf="checkState('comment')"></comment-view>
-    <edit-view *ngIf="checkState('edit')"></edit-view>
+    <div *ngIf="checkState('edit')">
+      <edit-view *ngIf="edit"></edit-view>
+      <resolve *ngIf="!edit"></resolve>
+    </div>
   </div>
   <div id="nav-grid">
       <ion-grid no-padding>

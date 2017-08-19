@@ -1,8 +1,21 @@
 <div class="messages">
     <div *ngFor="let message of messages">
-        <div class="message">
-            <p [class.own]="checkUid(message.id)" [class.other]="!checkUid(message.id)">{{message.message}}</p>
-        </div>
+        <ion-grid class="message">
+            <ion-row class="header-row">
+                <ion-col no-padding col-3>
+                    <img src="http://www.placehold.it/40" width="40" />
+                </ion-col>
+                <ion-col no-padding class="header-info">
+                    <p><b>{{message.name}}</b></p>
+                    <p style="color: #444">13:05:18</p>
+                </ion-col>
+            </ion-row>
+            <ion-row class="message-row">
+                <ion-col no-padding>
+                    <p>{{message.message}}</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
         <div>
             <p class="name" *ngIf="!checkUid(message.id)">{{message.name}}</p>
         </div>

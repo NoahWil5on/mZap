@@ -28,12 +28,7 @@ export class CommentViewComponent {
  messages: any = [];
  myId: any = this.afAuth.auth.currentUser.uid;
  
- constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
-             public afAuth: AngularFireAuth, public translate: TranslatorProvider, public ngZone: NgZone, 
-             public click: ClickProvider, public userInfo: UserInfoProvider) {  
-     
- }
-ngAfterViewInit(){
+ constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public afAuth: AngularFireAuth,                   public translate: TranslatorProvider, public ngZone: NgZone, public click: ClickProvider, public userInfo: UserInfoProvider) {  
     this.messages = [];
     //the id of where the messages are stored in the db
     this.id = this.userInfo.activeData.key;
@@ -49,6 +44,10 @@ ngAfterViewInit(){
             self.messages.push(snapshots.val()[snap]);
         }
     });
+     
+ }
+ngAfterViewInit(){
+    
 }
  //scrolls to bottom of screen
  ionViewWillEnter(){
@@ -89,5 +88,15 @@ ngAfterViewInit(){
  }
  textClick(){
      this.click.click('discussionMessage');
+ }
+ getPhotoUrl(id){
+     var url = "http://www.placehold.it/40";
+    firebase.database().ref('/users/').child(id).once('value', snapshot => {
+        if(snapshot.hasChild('url')){
+            url = snapshot.val().url+"";
+        }
+    }).then(_ => {
+        return url;
+    });
  }
 }

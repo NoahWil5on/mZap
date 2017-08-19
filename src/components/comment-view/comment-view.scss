@@ -12,35 +12,38 @@
                 overflow: auto;
                 clear: both;
                 .message{
+                    margin-left: auto;
+                    margin-right: auto;
+                    text-align: center;
+                    width: 90%;
+                    background-color: #eee;
+                    margin-bottom: 10px;
+                    padding: 0;
+                    -webkit-box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.37);
+                    -moz-box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.37);
+                    box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.37);
+                    ion-row{
+                        text-align: left;
+                        padding: 3px;
+                    }
+                    .header-row{
+                        background-color: white;
+                        .header-info{
+                            display: flex;
+                            flex-direction: column;
+                            p{
+                                flex: 1;
+                            }
+                        }
+                    }
+                    .message-row{
+                        padding-top: 6px;
+                        padding-bottom: 6px;
+                    }
                     p{
-                        display: block;
-                        position: relative;
-                        padding: 10px 10px;
-                        margin: 8px 5px;
-                        margin-bottom: 0;
-                        width: auto;
-                        max-width: 70%;
-                        border-radius: 10px;
-                    }
-                    .other{
-                        color: black;
-                        background-color: #ddd;
-                        float: left;
-                    }
-                    .own{
-                        color: white;
-                        background-color: #22abf9;
-                        float: right;
+                        margin: 0;
                     }
                 }
-                .name{
-                    font-size: 10pt;
-                    color: #888;
-                    margin: 0;
-                    padding: 0 5px;
-                    float: left;
-                }
-
             }
         }
         .chat{
@@ -52,6 +55,7 @@
             display: block;
             bottom: 0;
             left: 0;
+            border-top: #ddd solid 1px;
             ion-grid{
                 padding: 0;
                 margin: 0;

@@ -20,7 +20,7 @@
     </ion-col>
   </ion-row>
 </ion-grid>
-<p>{{myData.description}}</p>
+<p [class.noPic]="!myData.url">{{myData.description}}</p>
 <ion-grid *ngIf="!myData.url">
   <ion-row>
     <ion-col>

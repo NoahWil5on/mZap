@@ -1,0 +1,42 @@
+<ion-slides>
+  <ion-slide *ngFor="let resolve of resolves">
+      <img src='{{resolve.url}}' alt="Resolve Image" #thisImage (click)="presentImage(thisImage)" />
+      <p>{{resolve.info}}</p>
+  </ion-slide>
+</ion-slides>
+<ion-item>
+  <ion-label floating>{{translate.text.infoWindow.note}}</ion-label>
+  <ion-input type='text' [(ngModel)]="info" (click)="infoClick()"></ion-input>
+</ion-item>
+<ion-item>
+  {{translate.text.infoWindow.photo}}
+  <ion-grid no-padding>
+      <ion-row>
+          <ion-col text-center no-padding [class.no-height]="imageData.length < 1">
+              <img width="100px" #preview />
+          </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col col-6 no-padding>
+              <button ion-button block clear style="color: black;" (click)="cameraRequest()">
+                  <img src="assets/new/camera.png" style="width: 40px; padding-right: 10px;" alt="Camera" />
+                  </button>
+          </ion-col>
+          <ion-col col-6 no-padding>
+              <button ion-button block clear style="color: black;" (click)="albumRequest()">
+                  <img src="assets/new/album.png" style="width: 40px; padding-right: 10px;" alt="Album" />
+                  </button>
+          </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-item>
+<ion-grid>
+  <ion-row>
+    <ion-col>
+        <button ion-button block color="secondary" (click)="submit()">{{translate.text.infoWindow.resolution}}</button>
+    </ion-col>
+    <ion-col *ngIf="checkLogin()">
+        <button ion-button block (click)="updateWindow()">Edit Post</button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
