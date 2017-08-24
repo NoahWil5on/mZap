@@ -23,7 +23,7 @@
 <ion-content padding style="background-color: #fcf80c">
     <ion-item [class.red-glow]="desc.length < 1" style="margin-bottom: 15px; padding-bottom: 10px; padding-right: 5px">
         <ion-label floating [class.red]="desc.length < 1">{{translate.text.add.describe}}</ion-label>
-        <ion-input type="text" clearInput [(ngModel)]="desc" (click)="descriptionClick()"></ion-input>
+        <ion-input type="text" clearInput [(ngModel)]="desc" (click)="descriptionClick()" autocorrect="on"></ion-input>
     </ion-item>
     <ion-item>
         <ion-grid no-padding>

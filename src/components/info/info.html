@@ -20,13 +20,13 @@
       <ion-grid no-padding>
         <ion-row>
           <ion-col text-center [class.active]="checkState('info')">
-            <button clear ion-button (click)="updateState('info')">Info</button>
+            <button clear ion-button (click)="updateState('info')" text-wrap>{{translate.text.infoWindow.info}}</button>
           </ion-col>
           <ion-col text-center [class.active]="checkState('comment')">
-            <button clear ion-button (click)="updateState('comment')">Notes</button>
+            <button clear ion-button (click)="updateState('comment')" text-wrap>{{translate.text.infoWindow.notes}}</button>
           </ion-col>
           <ion-col text-center [class.active]="checkState('edit')">
-            <button clear ion-button (click)="updateState('edit')">Edit</button>
+            <button clear ion-button (click)="updateState('edit')" text-wrap>{{translate.text.infoWindow.edit}}</button>
           </ion-col>
         </ion-row>
       </ion-grid>

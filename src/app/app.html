@@ -1,33 +1,37 @@
 <ion-menu side="left" type="push" [content]="mycontent" (ionOpen)="openMenu()" >
     <ion-content>
         <header text-center>
-                <div class="div-holder" *ngIf="checkLogin()">
-                    <button ion-button style="height: 100%" clear (click)="profile()">
-                        <div *ngIf="imgSrc">
-                            <img [src]="imgSrc" alt="" />
-                            <h2 style="color: black">{{name}}</h2>
-                        </div>
-                        <div *ngIf="!imgSrc">
-                            <img src="assets/profile.png" alt="" />
-                            <h2 style="color: black">{{name}}</h2>
-                        </div>
-                    </button>
-                </div>
-                <div class="div-holder" *ngIf="!checkLogin()">
-                    <button ion-button style="height: 100%" clear (click)="register()">
-                        <div>
-                            <img src="assets/profile.png" alt="Profile Image" />
-                            <h2 style="color: black">{{translate.text.menu.user}}</h2>
-                        </div>
-                    </button>
-                </div>
+            <div class="menu-shader">
+                
+            </div>
+            <div class="div-holder" *ngIf="checkLogin()">
+                <button ion-button style="height: 100%" clear (click)="profile()">
+                    <div *ngIf="imgSrc">
+                        <img [src]="imgSrc" alt="" />
+                        <h2 style="color: black">{{name}}</h2>
+                    </div>
+                    <div *ngIf="!imgSrc">
+                        <img src="assets/profile.png" alt="" />
+                        <h2 style="color: black">{{name}}</h2>
+                    </div>
+                </button>
+            </div>
+            <div class="div-holder" *ngIf="!checkLogin()">
+                <button ion-button style="height: 100%" clear (click)="register()">
+                    <div>
+                        <img src="assets/profile.png" alt="Profile Image" />
+                        <h2 style="color: black">{{translate.text.menu.user}}</h2>
+                    </div>
+                </button>
+            </div>
         </header>
+        <!--
         <button class="menu-button" (click)="home()">
             <ion-item [class.nav-item]="checkPage('home')">
                 <ion-grid>
                     <ion-row>
                         <ion-col col-auto no-padding>
-                            <img src="assets/home.png" style="height: 34px; padding: 0" alt="map" />
+                            <img src="assets/home.png" style="height: 34px; padding: 0" alt="home" />
                         </ion-col>
                         <ion-col>
                             <p class="option">{{translate.text.menu.home}}</p>
@@ -35,7 +39,7 @@
                     </ion-row>
                 </ion-grid>
             </ion-item>
-        </button>
+        </button>-->
         <button class="menu-button" (click)="map()">
             <ion-item [class.nav-item]="checkPage('map')">
                 <ion-grid>
@@ -83,10 +87,24 @@
                 <ion-grid>
                     <ion-row>
                         <ion-col col-auto no-padding>
-                            <img src="assets/cog.png" style="height: 34px; padding: 0" alt="trophy" />
+                            <img src="assets/cog.png" style="height: 34px; padding: 0" alt="cog" />
                         </ion-col>
                         <ion-col>
                             <p class="option">{{translate.text.menu.settings}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </button>
+        <button class="menu-button" (click)="logout()">
+            <ion-item>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-auto no-padding>
+                            <img src="assets/Logout.png" style="height: 34px; padding: 0" alt="logout" />
+                        </ion-col>
+                        <ion-col>
+                            <p class="option">{{translate.text.menu.logout}}</p>
                         </ion-col>
                     </ion-row>
                 </ion-grid>

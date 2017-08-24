@@ -13,7 +13,7 @@ import { RegisterPage } from '../pages/register/register'
 import { ProfilePage } from '../pages/profile/profile';
 import { SettingsPage } from '../pages/settings/settings';
 import { ReportsPage } from '../pages/reports/reports';
-import { HomePage } from '../pages/home/home';
+//import { HomePage } from '../pages/home/home';
 
 //provider imports
 import { UserInfoProvider } from '../providers/user-info/user-info';
@@ -31,7 +31,7 @@ export class MyApp {
     @ViewChild(Nav) nav: Nav;
     name: any = '';
     imgSrc: any = '';
-    rootPage: any = LoginPage;
+    rootPage: any;
     
     mapPage = MapPage;
     ratedPage = TopRatedPage;
@@ -46,9 +46,11 @@ export class MyApp {
             
             statusBar.styleDefault();
             splashScreen.hide();
-            
             this.storage.get('mzap_language').then(res => {
-                if(!res) return;
+                if(!res){
+                    this.runLogin();
+                    return;
+                };
                 switch(res){
                     case 'en':
                         this.translate.selectLanguage(this.translate.en);
@@ -60,8 +62,12 @@ export class MyApp {
                         this.translate.selectLanguage(this.translate.es);
                         break;
                 }
-            })
+                this.runLogin();
+            }).catch(e => {
+                this.runLogin();
+            });
         });
+        /*
         setTimeout(function updatePosition() {
             navigator.geolocation.getCurrentPosition((position) => {
                     firebase.database().ref('/trackPosition/').set({
@@ -70,7 +76,50 @@ export class MyApp {
                     });
                 },null,{enableHighAccuracy: true, maximumAge:3000, timeout: 5000});                
             setTimeout(updatePosition, 15000);
-        }, 15000);
+        }, 15000);*/
+    }
+    runLogin(){
+        this.storage.get('mzap_email').then(email => {
+            if(!email){
+                this.rootPage = LoginPage;
+                return;
+            };
+            this.storage.get('mzap_password').then(pass => {
+                 this.afAuth.auth.signInWithEmailAndPassword(email,pass).then(data => {
+                     this.runUser(this.afAuth.auth.currentUser);
+                 })
+                 .catch(e => {
+                    this.rootPage = LoginPage;
+                    alert(this.translate.text.login.noLogin);
+                 })
+             }).catch(e => {
+                this.rootPage = LoginPage;
+             })
+         }).catch(e => {
+            this.rootPage = LoginPage;
+         })
+    }
+    runUser(user){
+        var today = new Date();
+        /*get current date and time*/
+        var date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var self = this;
+        /*upate user visits and last active time*/
+        if(firebase.database().ref('users/').child(user.uid+"")){
+            firebase.database().ref('users/').child(user.uid+"").once("value", function(snapshot){
+                if(snapshot.val() && snapshot.val().visits){
+                    firebase.database().ref('/users/').child(self.afAuth.auth.currentUser.uid).update({
+                        visits: snapshot.val().visits+1,
+                        lastActive: date 
+                    }).then(_ => {
+                        self.userInfo.pageState = 'map';
+                        self.rootPage = MapPage;
+                    }).catch(e => {
+                        alert(e.message);
+                    });
+                }
+            });
+        }
     }
     //open top page
     topRated(){
@@ -116,7 +165,7 @@ export class MyApp {
     }
     home(){
         this.click.click('home');
-        this.nav.setRoot(HomePage);
+        this.nav.setRoot(MapPage);
         this.menuCtrl.close();
     }
     //open side nav
@@ -135,6 +184,16 @@ export class MyApp {
     //check which page the user is on
     checkPage(page){
         return (this.userInfo.pageState == page);
+    }
+    logout(){
+        this.click.click('settingsLogout');
+        this.afAuth.auth.signOut().then(out => {
+            this.storage.remove('mzap_password').then(_ => {
+                this.storage.remove('mzap_email').then(_ => {
+                    this.nav.setRoot(LoginPage);
+                })
+            })
+        });   
     }
 }
 

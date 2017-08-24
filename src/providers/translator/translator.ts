@@ -32,7 +32,6 @@ export class TranslatorProvider {
             map: "Back to Map"            
         },
         infoWindow: {
-            info: "Information",
             resolve: "Resolve",
             wait: "Waiting to be marked complete",
             author: "Posted by: ",
@@ -53,8 +52,11 @@ export class TranslatorProvider {
             ok: "OK",
             error: "Fill out all fields",
             marking: "Marking as complete...",
-            marked: "Marked as Complete!"
-            
+            marked: "Marked as Complete!",
+            editPost: "Edit Post",
+            notes: "Notes",
+            edit: "Edit",
+            info: "Info",
         },
         login: {
             login: "Login",
@@ -132,7 +134,8 @@ export class TranslatorProvider {
             map: "Map",
             reports: "Reports",
             rankings: "Rankings",
-            settings: "Settings"
+            settings: "Settings",
+            logout: "Logout",
         },
         discussion: {
             discussion: "Discussion"
@@ -201,7 +204,7 @@ export class TranslatorProvider {
             submit: "Enviar",
             submitting: "Enviando contenido...",
             imageAlertTitle: "¿Está seguro de querer enviar sin foto?",
-            imageAlertSubTitle: "Inlcuir una foto ayudará a otros usuarios a entender mejor su reporte",
+            imageAlertSubTitle: "Incluir una foto ayudará a otros usuarios a entender mejor su reporte",
             cancel: "Cancelar",
             error: "Leene todos los espacios"
         },
@@ -216,7 +219,6 @@ export class TranslatorProvider {
             map: "Volver al Mapa"            
         },
         infoWindow: {
-            info: "Información",
             resolve: "Resolver",
             wait: "Esperando marca de completado",
             author: "Reportado por: ",
@@ -237,8 +239,11 @@ export class TranslatorProvider {
             ok: "OK",
             error: "Leene todos los espacios",
             marking: "Marcando como completado...",
-            marked: "¡Marcado como completado!"
-            
+            marked: "¡Marcado como completado!",
+            editPost: "Editar publicación",
+            notes: "Notas",
+            edit: "Editar",
+            info: "Detalles",
         },
         login: {
             login: "Ingresar",
@@ -316,7 +321,8 @@ export class TranslatorProvider {
             map: "Mapas",
             reports: "Reportes",
             rankings: "Clasificación",
-            settings: "Ajustes"
+            settings: "Ajustes",
+            logout: "Salir",
         },
         discussion: {
             discussion: "Discusión"

@@ -21,9 +21,12 @@ import { ClickProvider } from '../../providers/click/click';
 export class SettingsPage {
 
     language: any;
-    constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
-              public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider,
-              public click: ClickProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider, public click: ClickProvider) {
+        this.storage.get('mzap_language').then(language => {
+            this.language = language;
+        }).catch(e => {
+            this.language = "es";
+        });
     }
 
     ionViewDidLoad() {

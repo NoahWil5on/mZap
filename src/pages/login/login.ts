@@ -7,7 +7,8 @@ import { Storage } from '@ionic/storage';
 import { RegisterPage } from '../register/register';
 //import { MapPage } from '../map/map';
 import { ForgotPage } from '../forgot/forgot';
-import { HomePage } from '../home/home';
+//import { HomePage } from '../home/home';
+import { MapPage } from '../map/map';
 
 //provider imports
 import { UserInfoProvider} from '../../providers/user-info/user-info';
@@ -30,9 +31,13 @@ export class LoginPage {
     email: string = "";
     password: string = "";
     error: string = "";
-  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth,
-              public alertCtrl: AlertController, public afDB: AngularFireDatabase, public userInfo: UserInfoProvider, public loadingCtrl: LoadingController, public menuCtrl: MenuController, private storage: Storage,
-              public translate: TranslatorProvider, public click: ClickProvider) {
+    language: any = "";
+  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public alertCtrl: AlertController, public afDB: AngularFireDatabase, public userInfo: UserInfoProvider, public loadingCtrl: LoadingController, public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider, public click: ClickProvider) {
+    this.storage.get('mzap_language').then(language => {
+        this.language = language;
+    }).catch(e => {
+        this.language = "es";
+    });
   }
 
     //on enter, check if the user has a saved sign in
@@ -71,7 +76,7 @@ export class LoginPage {
                       lastActive: date 
                   }).then(_ => {
                       self.userInfo.pageState = 'map';
-                      self.navCtrl.setRoot(HomePage);
+                      self.navCtrl.setRoot(MapPage);
                   }).catch(e => {
                       alert(e.message);
                   });
@@ -131,11 +136,30 @@ export class LoginPage {
         this.click.click('loginAnonymous');
         try{
             this.userInfo.pageState = 'map';
-            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.setRoot(MapPage);
         }
         catch(e){
             alert(e.message);
         }
     }
-
+    //set language
+    setLang(){
+        this.click.click('settingsUpdateLanguage');
+        //check which language is selected
+        switch(this.language){
+            case 'en':
+                this.storage.set('mzap_language', 'en');
+                this.translate.selectLanguage(this.translate.en);
+                break;
+            case 'es':
+                this.storage.set('mzap_language', 'es');
+                this.translate.selectLanguage(this.translate.es);
+                break;
+            default:
+                break;
+        }
+    }
+    languageClick(){
+        this.click.click('settingsSelectLanguage');
+    }
 }

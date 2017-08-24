@@ -3,11 +3,11 @@
         <ion-grid class="message">
             <ion-row class="header-row">
                 <ion-col no-padding col-3>
-                    <img src="http://www.placehold.it/40" width="40" />
+                    <img [src]="message.url" width="40" />
                 </ion-col>
                 <ion-col no-padding class="header-info">
                     <p><b>{{message.name}}</b></p>
-                    <p style="color: #444">13:05:18</p>
+                    <p style="color: #444">{{message.date}}</p>
                 </ion-col>
             </ion-row>
             <ion-row class="message-row">
@@ -26,7 +26,7 @@
         <ion-row>
             <ion-col>
                 <div>
-                    <textarea #msg rows="1" (keyup)="resize()" [(ngModel)]="myText" placeholder="Aa" (click)="textClick()"></textarea>
+                    <textarea #msg rows="1" (keyup)="resize()" [(ngModel)]="myText" placeholder="Aa" (click)="textClick()" autocorrect="on"></textarea>
                 </div>
             </ion-col>
             <ion-col text-center col-auto>

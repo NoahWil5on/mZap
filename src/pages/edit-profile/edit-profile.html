@@ -22,7 +22,7 @@
     <ion-card padding-bottom>
         <ion-item>
             <ion-label floating class="green-text" [class.red-text]="name.length < 1">{{translate.text.editProfile.name}}</ion-label>
-            <ion-input type="text" [(ngModel)]="name" style="border-bottom: solid black 1px" (click)="nameClick()"></ion-input>
+            <ion-input type="text" [(ngModel)]="name" style="border-bottom: solid black 1px" (click)="nameClick()" autocorrect="on"></ion-input>
         </ion-item>
     </ion-card>
 

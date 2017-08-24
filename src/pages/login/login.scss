@@ -59,7 +59,9 @@
         color: white;
     }
     .padding-row{
-        padding-top: 40px;
+        button{
+            font-size: 10pt;
+        }
     }
     .link{
         color: black; 
@@ -88,5 +90,23 @@
         text-align: center; 
         margin-left: auto; 
         margin-right: auto
+    }
+    .language{
+        margin: 0px auto;
+        text-align: center;
+        border-radius: 10px;
+        background-color: #444;
+        color: white;
+        ion-select{
+            max-width: 100%;
+            position: relative;
+            margin: 0;
+            width: 100%;
+            background: none;
+            color: white;
+            ion-option{
+                width: 100%;
+            }
+        }
     }
 }

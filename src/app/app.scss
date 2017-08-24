@@ -42,13 +42,19 @@
         height: 0 !important;
     }
     header{
+        position: relative;
+        background-image: url(../assets/images/beach.jpg);
+        background-size: cover;
+        .menu-shader{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 0;
+            opacity: .8;
+            background: rgb(152, 198, 255); /* Old browsers */
+        }
         width: 100%;
         height: 20%;
-        background: rgb(212,252,90); /* Old browsers */
-        background: -moz-linear-gradient(top, rgba(212,252,90,1) 2%, rgba(252,248,12,1) 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(top, rgba(212,252,90,1) 2%,rgba(252,248,12,1) 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to bottom, rgba(212,252,90,1) 2%,rgba(252,248,12,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4fc5a', endColorstr='#fcf80c',GradientType=0 ); /* IE6-9 */
         .div-holder{
             margin-left: auto;
             margin-right: auto;

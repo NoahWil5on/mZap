@@ -25,7 +25,7 @@
 <ion-content padding>
     <ion-item text-center>
         <ion-label floating text-left>{{translate.text.forgot.enter}}</ion-label>
-        <ion-input [(ngModel)]="email" type="email" (click)="emailClick()"></ion-input>
+        <ion-input [(ngModel)]="email" type="email" (click)="emailClick()" autocorrect="on"></ion-input>
     </ion-item>
     <div text-center padding>
         <button (click)="sendEmail()" ion-button>{{translate.text.forgot.send}}</button>

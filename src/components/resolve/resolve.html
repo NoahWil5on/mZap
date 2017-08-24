@@ -6,7 +6,7 @@
 </ion-slides>
 <ion-item>
   <ion-label floating>{{translate.text.infoWindow.note}}</ion-label>
-  <ion-input type='text' [(ngModel)]="info" (click)="infoClick()"></ion-input>
+  <ion-input type='text' [(ngModel)]="info" (click)="infoClick()" autocorrect="on"></ion-input>
 </ion-item>
 <ion-item>
   {{translate.text.infoWindow.photo}}
@@ -30,13 +30,14 @@
       </ion-row>
   </ion-grid>
 </ion-item>
+<p text-center class="error">{{error}}</p>
 <ion-grid>
   <ion-row>
     <ion-col>
         <button ion-button block color="secondary" (click)="submit()">{{translate.text.infoWindow.resolution}}</button>
     </ion-col>
     <ion-col *ngIf="checkLogin()">
-        <button ion-button block (click)="updateWindow()">Edit Post</button>
+        <button ion-button block (click)="updateWindow()">{{translate.text.infoWindow.editPost}}</button>
     </ion-col>
   </ion-row>
 </ion-grid>
