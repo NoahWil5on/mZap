@@ -1,6 +1,6 @@
 {
   "name": "mZAP",
-  "app_id": "cc87460e",
+  "app_id": "805d5d81",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

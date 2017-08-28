@@ -56,8 +56,9 @@
         "firebase-tools": "^3.9.2",
         "geolib": "^2.0.22",
         "geolocation-marker": "^2.0.4",
-        "ionic-angular": "3.5.0",
+        "ionic-angular": "^3.6.0",
         "ionic-img-viewer": "^2.4.0",
+        "ionic-plugin-deploy": "^0.6.7",
         "ionic-plugin-keyboard": "^2.2.1",
         "ionicons": "3.0.0",
         "promise-polyfill": "6.0.2",
@@ -66,9 +67,7 @@
         "zone.js": "0.8.12"
     },
     "devDependencies": {
-        "@ionic/app-scripts": "2.0.1",
-        "@ionic/cli-plugin-cordova": "1.6.2",
-        "@ionic/cli-plugin-ionic-angular": "1.4.1",
+        "@ionic/app-scripts": "^2.1.4",
         "ionic": "3.9.2",
         "typescript": "2.3.4"
     },
@@ -89,7 +88,8 @@
             "cordova-plugin-background-mode": {},
             "cordova-sms-plugin": {},
             "cordova-plugin-media-capture": {},
-            "cordova-plugin-file": {}
+            "cordova-plugin-file": {},
+            "ionic-plugin-deploy": {}
         },
         "platforms": [
             "android"
