@@ -29,7 +29,8 @@ export class TranslatorProvider {
             viewable: "Your name is viewable to other users on this post",
             notViewable: "Your name is not viewable to other users on this post",
             pic: "Picture:",
-            map: "Back to Map"            
+            map: "Back to Map",
+            share: "Thank you! Share your Report!"            
         },
         infoWindow: {
             resolve: "Resolve",
@@ -216,7 +217,8 @@ export class TranslatorProvider {
             viewable: "Su nombre será visto por otros usuarios en este reporte",
             notViewable: "Su nombre no será visto por otros usuarios en este reporte",
             pic: "Imagen:",
-            map: "Volver al Mapa"            
+            map: "Volver al Mapa",
+            share: "¡Gracias! ¡Comparte tu Reporte!"       
         },
         infoWindow: {
             resolve: "Resolver",
@@ -374,7 +376,7 @@ export class TranslatorProvider {
         other: {
             cnd: "Gatos/Perros",
             complete: "Completar",
-            todo: "Que Hacer",
+            todo: "Incompleto",
             building: "Edificación Abandonada",
             pest: "Plagas",
             trash: "Desperdicio/Basura",

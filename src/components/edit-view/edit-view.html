@@ -60,12 +60,12 @@
               <ion-row>
                   <ion-col col-6 no-padding>
                       <button ion-button block clear style="color: black;" (click)="cameraRequest()">
-                          <img src="assets/new/camera.png" style="width: 40px; padding-right: 10px;" alt="Camera" />
+                          <img src="assets/new/camera.png" style="width: 55px; padding-right: 10px;" alt="Camera" />
                       </button>
                   </ion-col>
                   <ion-col col-6 no-padding>
                       <button ion-button block clear style="color: black;" (click)="albumRequest()">
-                          <img src="assets/new/album.png" style="width: 40px; padding-right: 10px;" alt="Album" />
+                          <img src="assets/new/album.png" style="width: 55px; padding-right: 10px;" alt="Album" />
                       </button>
                   </ion-col>
               </ion-row>
@@ -76,12 +76,12 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-            <button ion-button color="secondary" (click)="submit()">
+            <button ion-button color="secondary" (click)="submit()" style="padding: 0 10px">
                 {{translate.text.editPost.submit}}
             </button>  
         </ion-col>
         <ion-col>
-            <button ion-button color="danger" (click)="delete()">
+            <button ion-button color="danger" (click)="delete()" style="padding: 0 10px">
                 {{translate.text.infoWindow.delete}}
             </button>  
         </ion-col>

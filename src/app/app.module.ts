@@ -44,6 +44,7 @@ import { EditProfilePage } from '../pages/edit-profile/edit-profile';
 import { ForgotPage } from '../pages/forgot/forgot';
 import { HomePage } from '../pages/home/home';
 import { EditPostPage } from '../pages/edit-post/edit-post';
+import { AboutPage } from '../pages/about/about';
 
 /*Import all modules (Ionic SHOULD do this for you but it doesn't which causes an error)*/
 import { LoginPageModule } from '../pages/login/login.module';
@@ -62,14 +63,15 @@ import { EditProfilePageModule } from '../pages/edit-profile/edit-profile.module
 import { ForgotPageModule } from '../pages/forgot/forgot.module';
 import { HomePageModule } from '../pages/home/home.module';
 import { EditPostPageModule } from '../pages/edit-post/edit-post.module';
+import { AboutPageModule } from '../pages/about/about.module';
 
 export const firebaseConfig = {
-    apiKey: "AIzaSyBvu8_QvyLkAhpSoOkBxCYyviYtzBWhC4s",
-    authDomain: "testdb-2-c4b9d.firebaseapp.com",
-    databaseURL: "https://testdb-2-c4b9d.firebaseio.com",
-    projectId: "testdb-2-c4b9d",
-    storageBucket: "testdb-2-c4b9d.appspot.com",
-    messagingSenderId: "139524871052"
+    apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
+    authDomain: "testdb-4ee5f.firebaseapp.com",
+    databaseURL: "https://testdb-4ee5f.firebaseio.com",
+    projectId: "testdb-4ee5f",
+    storageBucket: "testdb-4ee5f.appspot.com",
+    messagingSenderId: "605360272413"
   };
 
 @NgModule({
@@ -99,7 +101,8 @@ export const firebaseConfig = {
     EditProfilePageModule,
     ForgotPageModule,
     HomePageModule,
-    EditPostPageModule,    
+    EditPostPageModule, 
+    AboutPageModule  
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -120,6 +123,7 @@ export const firebaseConfig = {
       ForgotPage,
       HomePage,
       EditPostPage,
+      AboutPage
   ],
   providers: [
     File,

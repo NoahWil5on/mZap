@@ -6,6 +6,9 @@ import { UserInfoProvider } from '../../providers/user-info/user-info';
 import { LikeProvider } from '../../providers/like/like';
 import { ClickProvider } from '../../providers/click/click';
 
+//image popup viewing import
+import { ImageViewerController } from 'ionic-img-viewer';
+
 @Component({
   selector: 'info-view',
   templateUrl: 'info-view.html'
@@ -15,7 +18,7 @@ export class InfoViewComponent {
   myData: any;
   likeValue: any;
 
-  constructor(public userInfo: UserInfoProvider, public likeProvider: LikeProvider, public ngZone: NgZone, public click: ClickProvider) {
+  constructor(public userInfo: UserInfoProvider, public likeProvider: LikeProvider, public ngZone: NgZone, public click: ClickProvider, public imageViewerCtrl: ImageViewerController) {
     this.myData = this.userInfo.activeData;
     this.likeable();
   }
@@ -38,4 +41,11 @@ export class InfoViewComponent {
     });
     this.likeValue = value;
   }
+  //show pop up of image when image is clicked on
+  presentImage(myImage){
+      this.click.click('infoWindowPresentImage');
+      let imageViewer = this.imageViewerCtrl.create(myImage);
+      imageViewer.present();
+  }
+
 }

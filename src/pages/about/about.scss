@@ -1,0 +1,21 @@
+.ios, .md{
+    page-about {
+        .cell{
+            padding: 5px;
+            padding-right: 10px;
+            padding-left: 0;
+            display: table-cell;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .dropDown{
+            background-color: #fff;
+            transition: height 1s;
+        }
+        .dropDown:Active{
+            background-color: #eee;
+        }
+    }
+}

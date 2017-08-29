@@ -22,10 +22,13 @@
 <ion-content padding>
     <!--
     <button ion-button (click)="logout()" *ngIf="isLoggedIn()">{{translate.text.settings.logout}}</button>
-    -->
     <button ion-button (click)="goLogin()" *ngIf="!isLoggedIn()">{{translate.text.settings.return}}</button>
+    -->
     <ion-select [(ngModel)]="language" (ionChange)="setLang()">
         <ion-option value="en">English</ion-option>
         <ion-option value="es">Español</ion-option>
     </ion-select>
+    <!--
+    <button ion-button (click)="about()">About</button>
+    -->
 </ion-content>

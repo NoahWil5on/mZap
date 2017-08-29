@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-grid class="ionic-title">
+      <ion-row>
+        <ion-col text-left>
+        </ion-col>
+        <ion-col col-auto class="title">
+          About
+        </ion-col>
+        <ion-col text-right>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item (click)="toggleMzap()" class="dropDown">
+    <h1>What is mZAP?</h1>
+    <div *ngIf="mzap">
+      <ion-item>
+        <div style="display: table">
+          <img class="cell" src="http://placehold.it/40" />
+          <h1 class="cell">mZAP</h1>
+        </div>
+        <p text-wrap>It's the app that does the thing in what is it in in about this app that you can't just regularly do which is cool</p>
+      </ion-item>
+    </div>
+  </ion-item>
+  <ion-item (click)="toggleReports()" class="dropDown">
+    <h1>What does each report do?</h1>
+    <div *ngIf="reports">
+      <ion-item *ngFor="let report of reportType">
+        <div style="display: table">
+          <img class="cell" [src]="report.img" />
+          <h1 class="cell" >{{report.title}}</h1>
+        </div>
+        <p text-wrap>{{report.desc}}</p>
+      </ion-item>
+    </div>
+  </ion-item>
+</ion-content>

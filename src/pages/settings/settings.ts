@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 
 //page imports
 import { LoginPage } from '../login/login';
+import { AboutPage } from '../about/about';
 
 //firebase imports
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -76,5 +77,8 @@ export class SettingsPage {
             default:
                 break;
         }
+    }
+    about(){
+        this.navCtrl.push(AboutPage);
     }
 }

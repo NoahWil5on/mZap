@@ -44,8 +44,11 @@ export class MapViewComponent {
    zonies: any = [];
    markers: any = [];
    heatMapData: any = [];
+
    myMarker: any = undefined;
    myCircle: any = undefined;
+    myOptions: any = undefined;
+
    dropDown: boolean = true;
    hybrid: boolean = false;
    likeValue: any = 0;
@@ -136,13 +139,13 @@ export class MapViewComponent {
            let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
            self.map.setCenter(latLng);
            self.map.setZoom(17);
-           
-           //self.setPin(latLng);
-       });
+           self.myOptions.center = latLng;
+           self.myMarker.setPosition(latLng);
+       }, null, {enableHighAccuracy: true, maximumAge:3000, timeout: 5000});
    }
    //sets personal marker and circle
    setPin(latLng){
-       if(this.myCircle){
+       if(this.myCircle != null){
            this.myCircle.setMap(null);
            this.myMarker.setMap(null);
            this.myCircle = null;
@@ -196,7 +199,7 @@ export class MapViewComponent {
                mapTypeId: google.maps.MapTypeId.ROADMAP
            };
            self.initMap(options,false);
-       });
+       },{enableHighAccuracy: true, maximumAge:3000, timeout: 5000});
    }
    //any time the "menu" button is clicked
    openMenu(){
@@ -363,22 +366,22 @@ export class MapViewComponent {
        //tells google what image to use as the marker
        switch(data.type){
            case 'bugs':
-               selection = 'assets/images/symbols/mosquito_black.png';
+               selection = 'assets/images/icons/bug.png';
                break;
            case 'trash':
-               selection = 'assets/images/symbols/trash_black.png';
+               selection = 'assets/images/icons/trash.png';
                break;
            case 'building':
-               selection = 'assets/images/symbols/building_black.png';
+               selection = 'assets/images/icons/building.png';
                break;
            case 'pest':
-               selection = 'assets/images/symbols/pest_black.png';
+               selection = 'assets/images/icons/pest.png';
                break;
            case 'cnd':
-               selection = 'assets/images/symbols/cnd.png';
+               selection = 'assets/images/icons/cnd.png';
                break;
            default:
-               selection = 'assets/images/symbols/mosquito_black.png';
+               selection = 'assets/images/icons/bug.png';
                break;
        };
        //creates the marker with the specified icon
@@ -590,7 +593,7 @@ export class MapViewComponent {
    //animates the user's position
    animate(latLng){
        var self = this;
-       var options = {
+       this.myOptions = {
            strokeColor: '#444',
            strokeOpacity: 0.8,
            strokeWeight: 2,
@@ -602,20 +605,19 @@ export class MapViewComponent {
        }
        var skip
        setInterval(function(){
-           if(options.radius > 150){
-               options.radius = 0;
+           if(self.myOptions.radius > 150){
+            self.myOptions.radius = 0;
                skip = true;
            }
            if(!skip){
-               options.strokeOpacity = (150-options.radius)/150;
-               options.fillOpacity = (150-options.radius)/150;
+            self.myOptions.strokeOpacity = (150-self.myOptions.radius)/150;
+            self.myOptions.fillOpacity = (150-self.myOptions.radius)/150;
            }
            //fun little formula to make the circle's delta radius decrease at an inverse
            //exponential rate overtime
-           options.radius += Math.pow((320-options.radius)/150, 2)/3;
-           self.myCircle.setOptions(options);     
+           self.myOptions.radius += Math.pow((320-self.myOptions.radius)/150, 2)/3;
+           self.myCircle.setOptions(self.myOptions);     
            skip = false;
-         //  }
        },30)
    }
 }

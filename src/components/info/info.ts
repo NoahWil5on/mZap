@@ -24,23 +24,23 @@ export class InfoComponent {
 
     switch(data.type){
       case 'bugs':
-          this.selection = 'assets/images/symbols/mosquito_black.png';
-          break;
+        this.selection = 'assets/images/icons/bug.png';
+        break;
       case 'trash':
-        this.selection = 'assets/images/symbols/trash_black.png';
-          break;
+        this.selection = 'assets/images/icons/trash.png';
+        break;
       case 'building':
-        this.selection = 'assets/images/symbols/building_black.png';
-          break;
+        this.selection = 'assets/images/icons/building.png';
+        break;
       case 'pest':
-        this.selection = 'assets/images/symbols/pest_black.png';
-          break;
+        this.selection = 'assets/images/icons/pest.png';
+        break;
       case 'cnd':
-        this.selection = 'assets/images/symbols/cnd.png';
-          break;
+        this.selection = 'assets/images/icons/cnd.png';
+        break;
       default:
-        this.selection = 'assets/images/symbols/mosquito_black.png';
-          break;
+        this.selection = 'assets/images/icons/bug.png';
+        break;
     };
 
     //translate status
