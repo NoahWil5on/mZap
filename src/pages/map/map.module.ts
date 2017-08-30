@@ -7,6 +7,9 @@ import { InfoViewComponent } from '../../components/info-view/info-view';
 import { CommentViewComponent } from '../../components/comment-view/comment-view';
 import { EditViewComponent } from '../../components/edit-view/edit-view';
 import { ResolveComponent } from '../../components/resolve/resolve';
+import { AddComponent } from '../../components/add/add';
+import { TypeComponent } from '../../components/type/type';
+import { PictureComponent } from '../../components/picture/picture';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { ResolveComponent } from '../../components/resolve/resolve';
     InfoViewComponent,
     CommentViewComponent,
     EditViewComponent,
-    ResolveComponent
+    ResolveComponent,
+    AddComponent,
+    TypeComponent,
+    PictureComponent
   ],
   imports: [
     IonicPageModule.forChild(MapPage)

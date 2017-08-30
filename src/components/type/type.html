@@ -1,0 +1,12 @@
+<!-- Generated template for the TypeComponent component -->
+<div>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4 *ngFor="let type of types" text-center class="type-button">
+        <button ion-button clear (click)="selectTrue(type.type)" [class.glow]="type.selected">
+          <img [src]='type.url'/>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

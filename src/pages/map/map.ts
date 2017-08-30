@@ -10,6 +10,7 @@ import { IonicPage, NavController, NavParams} from 'ionic-angular';
 export class MapPage {
 
   infoShow: boolean = false;
+  addShow: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

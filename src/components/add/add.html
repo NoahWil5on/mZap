@@ -1,0 +1,36 @@
+<div id="shader" (click)="closeOut()">
+    
+</div>
+<div id="main" [class.extraPadding]="runCheck()" [class.noPadding]="!runCheck()">
+  <div class="nav-buttons" [class.show]="runCheck()" [class.hidden]="!runCheck()">
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center col-6>
+            <button ion-button clear (click)="dataSet = false">
+              <img src="assets/images/buttons/ex.png"/>
+            </button>
+        </ion-col>
+        <ion-col text-center col-6>
+            <button ion-button clear (click)="slideRight()">
+              <img src='assets/images/buttons/check.png'/>
+            </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <!-- <div class="dismiss" (click)="closeOut()">
+    <p>X</p>
+  </div> -->
+  <!-- <div style="height: 100%; width: 100%; overflow: scroll"> -->
+    <ion-slides>
+      <ion-slide>
+        <type></type>
+      </ion-slide>
+      <ion-slide class="pic-slide">
+        <img #preview src="http://www.placehold.it/600" *ngIf="dataSet"/>
+        <picture *ngIf="!dataSet"></picture>
+      </ion-slide>
+    </ion-slides>  
+  <!-- </div> -->
+</div>
+    

@@ -222,9 +222,7 @@ export class MapViewComponent {
    }
    /*Toggle add and update DOM*/
    doAdd(){
-       this.add = !this.add;
-       this.ngZone.run(() =>{
-       });
+       this.mapPage.addShow = true;
    }
    addFalse(){
        this.add = false;

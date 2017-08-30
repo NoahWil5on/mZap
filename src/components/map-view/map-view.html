@@ -71,7 +71,7 @@
       </div>
   </div>
   <div id="controls" (pan)="addFalse()" *ngIf="isLoggedIn() && edit()">
-      <div class="controls-back"></div>
+      <!--<div class="controls-back"></div>-->
       <!--
       <div class="button-center" class="padding-top">
           <button id="add-button" (click)="doAdd()"></button>
@@ -79,9 +79,10 @@
   -->
       <!-- <div class="button-center" [class.button-add]="add" [class.button-none]="!add"> -->
       <div class="button-center add">
-          <button class="add-type" (click)="addPage('trash')">
-              <img src="assets/images/buttons/trash.png" alt="Trash" width="60"/>
+          <button class="add-type" (click)="doAdd()">
+              <img src="assets/images/buttons/plus.png" alt="Trash" width="60"/>
           </button>
+          <!--
           <button class="add-type" (click)="addPage('bugs')">
               <img src="assets/images/buttons/bug.png" alt="Bugs" width="60"/>
           </button>
@@ -94,14 +95,7 @@
           <button class="add-type" (click)="addPage('cnd')">
               <img src="assets/images/buttons/cnd.png" alt="Stray" width="60"/>
           </button>
-      </div>
-  </div>
-  <div id="controls" (pan)="addFalse()" *ngIf="isLoggedIn() && !edit()">
-      <div class="controls-back"></div>
-      <div class="button-center add">
-          <button (click)="editTrue()" ion-button style="width: 100px">
-              Report!
-          </button>
+        -->
       </div>
   </div>
   <div #map id="map"></div>
