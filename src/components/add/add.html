@@ -1,16 +1,16 @@
 <div id="shader" (click)="closeOut()">
     
 </div>
-<div id="main" [class.extraPadding]="runCheck()" [class.noPadding]="!runCheck()">
-  <div class="nav-buttons" [class.show]="runCheck()" [class.hidden]="!runCheck()">
+<div id="main" [class.extraPadding]="runCheck(1)" [class.noPadding]="!runCheck(1)">
+  <div class="nav-buttons" [class.show]="runCheck(1)" [class.hidden]="!runCheck(1)">
     <ion-grid>
       <ion-row>
-        <ion-col text-center col-6>
+        <ion-col text-center>
             <button ion-button clear (click)="dataSet = false">
               <img src="assets/images/buttons/ex.png"/>
             </button>
         </ion-col>
-        <ion-col text-center col-6>
+        <ion-col text-center>
             <button ion-button clear (click)="slideRight()">
               <img src='assets/images/buttons/check.png'/>
             </button>
@@ -18,6 +18,28 @@
       </ion-row>
     </ion-grid>
   </div>
+  <div class="nav-buttons" [class.show]="runCheck(2)" [class.hidden]="!runCheck(2)">
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center>
+            <button ion-button clear (click)="slideRight()">
+              <img src='assets/images/buttons/check.png'/>
+            </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div class="nav-buttons" [class.show]="runCheck(3) && submit()" [class.hidden]="!runCheck(3) || !submit()">
+      <ion-grid>
+        <ion-row>
+          <ion-col text-center>
+              <button ion-button clear (click)="slideRight()">
+                <img src='assets/images/buttons/check.png'/>
+              </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
   <!-- <div class="dismiss" (click)="closeOut()">
     <p>X</p>
   </div> -->
@@ -27,8 +49,14 @@
         <type></type>
       </ion-slide>
       <ion-slide class="pic-slide">
-        <img #preview src="http://www.placehold.it/600" *ngIf="dataSet"/>
+        <img #preview *ngIf="dataSet"/>
         <picture *ngIf="!dataSet"></picture>
+      </ion-slide>
+      <ion-slide>
+        <description></description>
+      </ion-slide>
+      <ion-slide>
+        <confirm></confirm>
       </ion-slide>
     </ion-slides>  
   <!-- </div> -->

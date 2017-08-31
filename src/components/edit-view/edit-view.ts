@@ -91,10 +91,11 @@ export class EditViewComponent {
   }
   submit(){
       this.click.click('editPostSubmit');
+      /*
       if(this.data.description.length < 1){
           this.error = this.translate.text.editPost.error;
           return;
-      }
+      }*/
       var self = this;
       if(!this.dataSet){
           firebase.database().ref('/positions/').child(self.data.key).update(self.data).then(_ => {

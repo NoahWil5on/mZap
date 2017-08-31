@@ -22,7 +22,7 @@ export class TypeComponent {
     });
     this.types.push({
       url: 'assets/images/buttons/pest.png',
-      type: 'pests',
+      type: 'pest',
       selected: false,
     });
     this.types.push({

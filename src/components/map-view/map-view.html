@@ -67,7 +67,7 @@
   </div>
   <div id="center-div" *ngIf="isLoggedIn() && edit()">
       <div id="center-point">
-          <img src="assets/location_marker.png" alt="Drop Position" />
+          <img src="assets/location_marker.png" alt="Drop Position" [class.hidden]="!showButtons" [class.show]="showButtons"/>
       </div>
   </div>
   <div id="controls" (pan)="addFalse()" *ngIf="isLoggedIn() && edit()">
@@ -79,8 +79,8 @@
   -->
       <!-- <div class="button-center" [class.button-add]="add" [class.button-none]="!add"> -->
       <div class="button-center add">
-          <button class="add-type" (click)="doAdd()">
-              <img src="assets/images/buttons/plus.png" alt="Trash" width="60"/>
+          <button class="add-type" (click)="doAdd()" [class.hidden]="!showButtons" [class.show]="showButtons">
+              <img src="assets/images/buttons/plus.png" alt="Plus" width="60"/>
           </button>
           <!--
           <button class="add-type" (click)="addPage('bugs')">

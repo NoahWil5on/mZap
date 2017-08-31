@@ -1,0 +1,22 @@
+<div>
+  <ion-grid>
+    <ion-row text-center>
+      <ion-col class="image-col">
+        <div class="image-div" [class.smaller]="add.desc.length < 1">
+          <img #type class="type" [src]="getType()" [class.hidden]="add.type == undefined"/>
+          <img #preview [src]="getSource()" alt="*Add a photo!" class="error" [class.hidden]="!add.dataSet" />
+        </div>
+      </ion-col>
+      <ion-col class="desc" *ngIf="add.desc.length > 0" col-6>
+        <p>{{add.desc}}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <p class="show" *ngIf="add.show">Username is visible</p>
+        <p class="show" *ngIf="!add.show">Username is NOT visible</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <p *ngIf="!add.submit()" class="error">*You still have fields to fill out*</p>
+</div>

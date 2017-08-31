@@ -1,0 +1,41 @@
+.ios, .md{
+    confirm {
+        .image-col{
+            .image-div{
+                text-align: center;
+                margin: 0 10px;
+                display: inline-block;
+                position: relative;
+                .type{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 40px;
+                    height: 40px;
+                    transform: translate(-50%,-50%);
+                }
+            }
+        }
+        .desc{
+            p{
+                margin: 0;
+                text-align: left;
+            }
+        }
+        ion-row{
+            border-bottom: 1px solid #eee;
+            .show{
+                text-align: left;
+                display: inline; 
+                color: #59D000;
+            }
+        }
+        .hidden{
+            display: none;
+        }
+        .smaller{
+            max-width: 50%;
+            margin-top: 10px;
+        }
+    }
+}

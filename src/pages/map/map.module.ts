@@ -10,6 +10,8 @@ import { ResolveComponent } from '../../components/resolve/resolve';
 import { AddComponent } from '../../components/add/add';
 import { TypeComponent } from '../../components/type/type';
 import { PictureComponent } from '../../components/picture/picture';
+import { DescriptionComponent } from '../../components/description/description';
+import { ConfirmComponent } from '../../components/confirm/confirm';
 
 @NgModule({
   declarations: [
@@ -22,14 +24,14 @@ import { PictureComponent } from '../../components/picture/picture';
     ResolveComponent,
     AddComponent,
     TypeComponent,
-    PictureComponent
-  ],
+    PictureComponent,
+    DescriptionComponent,
+    ConfirmComponent],
   imports: [
     IonicPageModule.forChild(MapPage)
   ],
   exports: [
-    MapPage,
-    MapViewComponent,
+    MapPage
   ]
 })
 export class MapPageModule {}

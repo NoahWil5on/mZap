@@ -1,0 +1,10 @@
+<div>
+  <ion-item>
+    <ion-label floating style="color: green" [class.red-text]="add.desc.length < 1">Add Description</ion-label>
+    <ion-input [(ngModel)]="add.desc"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Show Username?</ion-label>
+    <ion-checkbox color="secondary" [(ngModel)]="add.show"></ion-checkbox>
+  </ion-item>
+</div>

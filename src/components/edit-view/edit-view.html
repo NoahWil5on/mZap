@@ -17,7 +17,7 @@
   </div>
   <ion-card padding-bottom>
       <ion-item>
-          <ion-label floating class="green-text" [class.red-text]="!data.description">{{translate.text.editPost.description}}</ion-label>
+          <ion-label floating class="green-text" >{{translate.text.editPost.description}}</ion-label>
           <ion-input type="text" style="border-bottom: solid black 1px" [(ngModel)]="data.description" (click)="descriptionClick()" autocorrect="on"></ion-input>
       </ion-item>
   </ion-card>

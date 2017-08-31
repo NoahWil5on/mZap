@@ -39,6 +39,7 @@ export class MapViewComponent {
    add: boolean = false;
    infoWindow: any = null;
    setOnce: boolean = true;
+   showButtons: boolean = true;
    geoMarker: any;
    points: any = [];
    zonies: any = [];
@@ -63,6 +64,7 @@ export class MapViewComponent {
              public alertCtrl: AlertController, public zones: ZonesProvider, public menuCtrl: MenuController,
                public userInfo: UserInfoProvider, public translate: TranslatorProvider, 
                 public likeProvider: LikeProvider, public click: ClickProvider, public mapPage: MapPage) {
+                    mapPage.mapView = this;
                     
    }
     ngAfterViewInit() {
@@ -232,6 +234,45 @@ export class MapViewComponent {
    dropFalse(){
        this.dropDown = true;
    }
+   submitReport(data){
+    var newMarker;
+    newMarker = {
+        lat: this.map.getCenter().lat(),
+        lng: this.map.getCenter().lng(),
+        description: data.desc,
+        type: data.type,
+        show: data.show,
+        name: this.afAuth.auth.currentUser.displayName,
+        id: this.afAuth.auth.currentUser.uid,
+        url: data.url,
+        refName: data.refName,
+        status: "To Do",
+        key: "",
+        date: "",
+    }
+    var today = new Date();
+    var date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    newMarker.date = date;
+
+    /*Push point to firebase and give it a reference*/
+    var key = this.fireDB.list('positions').push(newMarker).key;
+    this.fireDB.object('positions/'+key +'/key').set(key);
+    newMarker.key = key;
+    this.makeMarker(newMarker);
+    
+    //update # of posts
+    var userRating = firebase.database().ref('/userRating/').child(this.afAuth.auth.currentUser.uid)
+    userRating.once('value', snap => {
+        if(!snap.hasChild('posts')){
+            userRating.child('posts').set(1);
+        }else{
+            userRating.child('posts').set(snap.val().posts + 1);
+        }
+    }).then(_ => {
+        this.navCtrl.setRoot(MapPage);
+        data.loader.dismiss();
+    });
+   }
    addPage(data){
        this.click.click('mapAdd'+data);
        let title = "";
@@ -378,6 +419,8 @@ export class MapViewComponent {
            case 'cnd':
                selection = 'assets/images/icons/cnd.png';
                break;
+           case 'water':
+               selection = 'assets/images/icons/droplet.png';  
            default:
                selection = 'assets/images/icons/bug.png';
                break;
@@ -427,9 +470,11 @@ export class MapViewComponent {
            var zoom = self.map.getZoom();
            if(zoom > 12){
                marker.setVisible(true);
+               self.showButtons = true;
            }
            else{
                marker.setVisible(false);
+               self.showButtons = false;
            }
        })
    }
@@ -511,25 +556,6 @@ export class MapViewComponent {
                    
                    self.setOnce = false;
                    
-//                    let redRadius = 300;
-//                    let orangeRadius = 600;
-//                    let yellowRadius = 900;
-//                    
-//                    let redZone = self.zones.runEval(self.points, redRadius, 3);
-//
-//                    //add all different types of zones based on (points, distance_threshold,
-//                    //and point amount threshold)
-//                    redZone.promise.then(_ => {
-//                        let orangeZone = self.zones.runEval(self.points, orangeRadius, 5);
-//                        orangeZone.promise.then(_ => {
-//                            let yellowZone = self.zones.runEval(self.points, yellowRadius, 8);
-//                            yellowZone.promise.then(_ => {
-//                                self.applyZones(yellowZone.zones, yellowRadius, '#ffff00');
-//                                self.applyZones(orangeZone.zones, orangeRadius, '#ff8800');
-//                                self.applyZones(redZone.zones, redRadius, '#ff0000');
-//                            });
-//                        });
-//                    });
                }
            });
        });
@@ -572,21 +598,22 @@ export class MapViewComponent {
                radius: 150
              });
            this.animate(latLng);
+           google.maps.event.addListener(this.map, 'zoom_changed', function(e){
+            var zoom = self.map.getZoom();
+            if(zoom > 12){
+                self.myMarker.setVisible(true);
+                self.myCircle.setVisible(true);
+            }
+            else{
+                self.myMarker.setVisible(false);
+                self.myCircle.setVisible(false);
+            }
+        })
        }
    }
    //any "cluster" zone that is found on the map is drawn here
    applyZones(zones, radius, color){
-      /* for(var i = 0; i < zones.length; i++){
-           this.zonies.push(new google.maps.Circle({
-               strokeOpacity: 0,
-               fillColor: color,
-               fillOpacity: 0.35,
-               map: this.map,
-               center: new google.maps.LatLng(zones[i].lat,zones[i].lng),
-               //radius: ((zones[i].dist/2) + 200)
-               radius: radius
-             }));
-       }*/
+
    }
    //animates the user's position
    animate(latLng){
