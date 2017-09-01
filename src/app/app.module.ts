@@ -11,6 +11,7 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { SMS } from '@ionic-native/sms';
 import { MediaCapture } from 'ionic-native';
 import { File } from '@ionic-native/file';
+import { DeviceOrientation } from '@ionic-native/device-orientation';
 
 //Angular fire imports
 import { AngularFireModule } from 'angularfire2';
@@ -140,7 +141,8 @@ export const firebaseConfig = {
     RatingProvider,
     SMS,
     ClickProvider,
-    MediaCapture
+    MediaCapture,
+    DeviceOrientation
   ]
 })
 export class AppModule {}
