@@ -1,46 +1,4 @@
-<!-- Generated template for the MapViewComponent component -->
 <div>
-    <!--
-  <div id="drop-down" [class.up]='dropDown' [class.down]='!dropDown' (pan)="dropFalse()">
-    <div class="controls-back"></div>
-    <ion-grid no-padding>
-        <ion-row class="button-row">
-            <ion-col text-center *ngIf="isLoggedIn()" class="border-right">
-                <ion-row>
-                    <ion-col no-padding>
-                        <button ion-button (click)="like(1)" full clear [class.greenButton]="likeValue == 1">
-                            <ion-icon name="thumbs-up"></ion-icon>
-                        </button>
-                    </ion-col>
-                    <ion-col no-padding>
-                        <button ion-button (click)="like(-1)" full clear [class.greenButton]="likeValue == -1">
-                            <ion-icon name="thumbs-down"></ion-icon>
-                        </button>
-                    </ion-col>
-                </ion-row>
-            </ion-col>
-            <ion-col text-center>
-                <button ion-button color="secondary" full clear (click)="doInfoWindow(myActiveData)">
-                    {{translate.text.map.go}}
-                </button>
-            </ion-col>
-            <ion-col text-center *ngIf="isLoggedIn()" class="border-left">
-                <button ion-button full clear (click)="doChat()">
-                    <ion-icon name="chatboxes"></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-
-    <div style="pointer-events:none; ">
-        <h2 text-center padding-top *ngIf="myActiveData.type" style="vertical-align: middle">
-            <img *ngIf="myActiveData.url" [src]="myActiveData.url" alt='User Image' width="50px" style="vertical-align: middle"/>
-            {{type}}
-        </h2>
-        <h3 text-center style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%)"><ion-icon name="star" style="color: gold"></ion-icon>{{myActiveData.likes}}</h3>
-    </div>
-  </div>
--->
   <div class="nav-div nav-div-left">
       <button (click)="openMenu()">
           <div class="nav-button orange">
@@ -71,31 +29,10 @@
       </div>
   </div>
   <div id="controls" (pan)="addFalse()" *ngIf="isLoggedIn() && edit()">
-      <!--<div class="controls-back"></div>-->
-      <!--
-      <div class="button-center" class="padding-top">
-          <button id="add-button" (click)="doAdd()"></button>
-      </div>
-  -->
-      <!-- <div class="button-center" [class.button-add]="add" [class.button-none]="!add"> -->
       <div class="button-center add">
           <button class="add-type" (click)="doAdd()" [class.hidden]="!showButtons" [class.show]="showButtons">
               <img src="assets/images/buttons/plus.png" alt="Plus" width="60"/>
           </button>
-          <!--
-          <button class="add-type" (click)="addPage('bugs')">
-              <img src="assets/images/buttons/bug.png" alt="Bugs" width="60"/>
-          </button>
-          <button class="add-type" (click)="addPage('pest')">
-              <img src="assets/images/buttons/pest.png" alt="Pest" width="60"/>
-          </button>
-          <button class="add-type" (click)="addPage('building')">
-              <img src="assets/images/buttons/building.png" alt="Building" width="60"/>
-          </button>
-          <button class="add-type" (click)="addPage('cnd')">
-              <img src="assets/images/buttons/cnd.png" alt="Stray" width="60"/>
-          </button>
-        -->
       </div>
   </div>
   <div #map id="map"></div>

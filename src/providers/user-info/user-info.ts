@@ -15,7 +15,7 @@ export class UserInfoProvider {
     filter: any;
     filterReports: any;
     profileView: any;
-
+    loggedIn: boolean = false;
     activeData: any;
     constructor() {
     }

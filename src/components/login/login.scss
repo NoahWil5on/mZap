@@ -1,0 +1,114 @@
+.ios, .md{
+    login {
+        width: auto;
+        #shader{
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            z-index: 5;
+            background-color: black;
+            opacity: .7;
+            transform: translate(-50%, -50%);
+        }
+        #main{
+            z-index: 10;
+            display: inline-block;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            background-color: white;
+            padding: 20px 20px;
+            width: 280px;
+            height: 300px;
+            @media screen and (min-device-width: 360px) {
+                width: 300px;
+                height: 300px;
+            }
+            @media screen and (min-device-width: 500px) {
+                width: 400px;
+                height: 320px;
+            }
+            @media screen and (min-device-width: 800px) {
+                width: 500px;
+                height: 350px;
+            }
+            -webkit-box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
+            -moz-box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
+            box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
+        }
+        #logo-div{
+            width: 100%;
+            padding: 5px 0;
+            height: 25% !important;
+            background-color: #3fbc05;                    
+            text-align: center;
+            margin: 0 auto;
+            img{
+                height: 100%;
+            }
+        }
+        input{
+            font-size: 1.3em;
+            padding-top: 5px;
+            background-color: none !important;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid #e6e6ef;
+        }
+        /* Change the white to any color ;) */
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 30px white inset;
+        }
+        #nav-buttons{
+            left: 0;
+            bottom: 0;
+            position: absolute;
+            margin: 0 auto;
+            width: 100%;
+            text-align: center;
+            padding-bottom: 40px;
+            button{
+                text-align: center;
+                margin: 0 auto;
+                height: 1.7em;
+                display: block;
+                color: #3fbc05;
+                font-size: 1.1em;
+                opacity: .9;
+            }
+        }
+        #check-button{
+            padding: 0;
+            z-index: 5;
+            height: auto;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%,55%);
+            ion-col{
+                padding: 0;
+                button{
+                    height: auto;
+                }
+                img{
+                    width: 80%;
+                }
+            }
+        }
+        .hidden{
+            transform: scale(0) !important;
+            transition: all .5s;
+        }
+        .section{
+            padding: 10px;
+            top: 0;
+            left: 0;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .show{
+            transform: scale(1);
+            transition: all .5s;
+        }
+    }
+}

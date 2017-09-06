@@ -1,0 +1,31 @@
+<div>
+  <ion-slides [class.absolute]="dataSet">
+    <ion-slide>
+      <form autocomplete="off">
+        <input type="email" class="text-field top" [(ngModel)]="name" name="myName" [placeholder]="translate.text.register.name"/>
+        <input type="email" class="text-field" [(ngModel)]="email" name="myEmail" [placeholder]="translate.text.register.email"/>
+        <input type="password" class="text-field" [(ngModel)]="pass1" name="myPass1" [placeholder]="translate.text.register.pass1"/>
+        <input type="password" class="text-field" [(ngModel)]="pass2" name="myPass2" [placeholder]="translate.text.register.pass2"/>
+      </form>
+    </ion-slide>
+    <ion-slide>
+        <ion-grid no-padding style="height: 100%" *ngIf="!dataSet">
+            <ion-row>
+                <ion-col col-6 text-center>
+                    <button ion-button clear (click)="cameraRequest()">
+                      <img src="assets/new/camera.png"/>
+                    </button>
+                </ion-col>
+                <ion-col col-6 text-center>
+                    <button ion-button clear (click)="albumRequest()">
+                      <img src="assets/new/album.png"/>
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <div *ngIf="dataSet" class="slide-image">
+          <img (click)="previewImage()" #thisImage (click)="presentImage(thisImage)"/>
+        </div> 
+    </ion-slide>
+  </ion-slides>
+</div>

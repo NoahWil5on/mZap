@@ -60,7 +60,7 @@ export class TypeComponent {
       }
     });
     this.add.type = selection;
-    this.add.slideRight();
+    this.add.slideRight(false);
   }
 
 }

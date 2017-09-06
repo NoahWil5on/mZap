@@ -12,10 +12,11 @@ import { SMS } from '@ionic-native/sms';
 import { MediaCapture } from 'ionic-native';
 import { File } from '@ionic-native/file';
 import { DeviceOrientation } from '@ionic-native/device-orientation';
+import { CallNumber } from '@ionic-native/call-number';
 
 //Angular fire imports
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuthModule} from 'angularfire2/auth';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 /*Custom Providers*/
@@ -67,17 +68,17 @@ import { EditPostPageModule } from '../pages/edit-post/edit-post.module';
 import { AboutPageModule } from '../pages/about/about.module';
 
 export const firebaseConfig = {
-    apiKey: "AIzaSyDoTjwujX9ipUR_hVEs9zlM68C-wAPw9ZA",
-    authDomain: "testdb-4ee5f.firebaseapp.com",
-    databaseURL: "https://testdb-4ee5f.firebaseio.com",
-    projectId: "testdb-4ee5f",
-    storageBucket: "testdb-4ee5f.appspot.com",
-    messagingSenderId: "605360272413"
-  };
+  apiKey: "AIzaSyAm-f7wqiP0Qa-FifoqrVa0rlCC1iZG3xk",
+  authDomain: "mzap-45cd2.firebaseapp.com",
+  databaseURL: "https://mzap-45cd2.firebaseio.com",
+  projectId: "mzap-45cd2",
+  storageBucket: "mzap-45cd2.appspot.com",
+  messagingSenderId: "550547782302"
+};
 
 @NgModule({
   declarations: [
-      MyApp,
+    MyApp,
   ],
   imports: [
     BrowserModule,
@@ -102,29 +103,29 @@ export const firebaseConfig = {
     EditProfilePageModule,
     ForgotPageModule,
     HomePageModule,
-    EditPostPageModule, 
-    AboutPageModule  
+    EditPostPageModule,
+    AboutPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-      MyApp,
-      LoginPage,
-      RegisterPage,
-      ProfilePage,
-      MapPage,
-      SettingsPage,
-      AddPage,
-      InfoWindowPage,
-      TopRatedPage,
-      ConfirmationPage,
-      ReportsPage,
-      DiscussionPage,
-      FilterPage,
-      EditProfilePage,
-      ForgotPage,
-      HomePage,
-      EditPostPage,
-      AboutPage
+    MyApp,
+    LoginPage,
+    RegisterPage,
+    ProfilePage,
+    MapPage,
+    SettingsPage,
+    AddPage,
+    InfoWindowPage,
+    TopRatedPage,
+    ConfirmationPage,
+    ReportsPage,
+    DiscussionPage,
+    FilterPage,
+    EditProfilePage,
+    ForgotPage,
+    HomePage,
+    EditPostPage,
+    AboutPage
   ],
   providers: [
     File,
@@ -132,7 +133,7 @@ export const firebaseConfig = {
     SplashScreen,
     Camera,
     SocialSharing,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     ImagesProvider,
     ZonesProvider,
     UserInfoProvider,
@@ -142,7 +143,8 @@ export const firebaseConfig = {
     SMS,
     ClickProvider,
     MediaCapture,
-    DeviceOrientation
+    DeviceOrientation,
+    CallNumber
   ]
 })
-export class AppModule {}
+export class AppModule { }

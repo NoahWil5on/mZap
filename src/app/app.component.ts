@@ -4,9 +4,9 @@ import { Platform, MenuController, Nav} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
+// import { CallNumber } from '@ionic-native/call-number';
 
 //page imports
-import { LoginPage } from '../pages/login/login';
 import { TopRatedPage } from '../pages/top-rated/top-rated';
 import { MapPage } from '../pages/map/map';
 import { RegisterPage } from '../pages/register/register'
@@ -38,10 +38,7 @@ export class MyApp {
     profilePage = ProfilePage;
     settingsPage = SettingsPage;
     
-    constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, 
-                 private afAuth: AngularFireAuth, private menuCtrl: MenuController, 
-                 private userInfo: UserInfoProvider, public translate: TranslatorProvider, 
-                 private storage: Storage, private click: ClickProvider) {
+constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, /*private caller: CallNumber*/) {
         platform.ready().then(() => {
             
             statusBar.styleDefault();
@@ -81,7 +78,7 @@ export class MyApp {
     runLogin(){
         this.storage.get('mzap_email').then(email => {
             if(!email){
-                this.rootPage = LoginPage;
+                this.rootPage = MapPage;
                 return;
             };
             this.storage.get('mzap_password').then(pass => {
@@ -89,16 +86,23 @@ export class MyApp {
                      this.runUser(this.afAuth.auth.currentUser);
                  })
                  .catch(e => {
-                    this.rootPage = LoginPage;
+                    this.rootPage = MapPage;
                     alert(this.translate.text.login.noLogin);
                  })
              }).catch(e => {
-                this.rootPage = LoginPage;
+                this.rootPage = MapPage;
              })
          }).catch(e => {
-            this.rootPage = LoginPage;
+            this.rootPage = MapPage;
          })
     }
+    // call(){
+    //     this.caller.callNumber('15857499752',true).catch(e => {
+    //         alert(e.message);
+    //         alert(e);
+    //         alert("That didn't work");
+    //     })
+    // }
     runUser(user){
         var today = new Date();
         /*get current date and time*/
@@ -113,6 +117,7 @@ export class MyApp {
                         lastActive: date 
                     }).then(_ => {
                         self.userInfo.pageState = 'map';
+                        self.userInfo.loggedIn = true;
                         self.rootPage = MapPage;
                     }).catch(e => {
                         alert(e.message);
@@ -190,7 +195,9 @@ export class MyApp {
         this.afAuth.auth.signOut().then(out => {
             this.storage.remove('mzap_password').then(_ => {
                 this.storage.remove('mzap_email').then(_ => {
-                    this.nav.setRoot(LoginPage);
+                    this.userInfo.loggedIn = false;
+                    this.nav.setRoot(MapPage);
+                    this.menuCtrl.close();
                 })
             })
         });   

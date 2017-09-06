@@ -1,19 +1,19 @@
 <div id="shader" (click)="closeOut()">
-    
+
 </div>
-<div id="main" [class.extraPadding]="runCheck(1)" [class.noPadding]="!runCheck(1)">
+<div id="main" #main [class.extraPadding]="runCheck(1)" [class.noPadding]="!runCheck(1)">
   <div class="nav-buttons" [class.show]="runCheck(1)" [class.hidden]="!runCheck(1)">
     <ion-grid>
       <ion-row>
         <ion-col text-center>
-            <button ion-button clear (click)="dataSet = false">
-              <img src="assets/images/buttons/ex.png"/>
-            </button>
+          <button ion-button clear (click)="dataSet = false">
+            <img src="assets/images/buttons/ex.png"/>
+          </button>
         </ion-col>
         <ion-col text-center>
-            <button ion-button clear (click)="slideRight()">
-              <img src='assets/images/buttons/check.png'/>
-            </button>
+          <button ion-button clear (click)="slideRight(false)">
+            <img src='assets/images/buttons/check.png'/>
+          </button>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -22,43 +22,75 @@
     <ion-grid>
       <ion-row>
         <ion-col text-center>
-            <button ion-button clear (click)="slideRight()">
-              <img src='assets/images/buttons/check.png'/>
-            </button>
+          <button ion-button clear (click)="slideRight(false)">
+            <img src='assets/images/buttons/check.png'/>
+          </button>
         </ion-col>
       </ion-row>
     </ion-grid>
   </div>
   <div class="nav-buttons" [class.show]="runCheck(3) && submit()" [class.hidden]="!runCheck(3) || !submit()">
-      <ion-grid>
-        <ion-row>
-          <ion-col text-center>
-              <button ion-button clear (click)="slideRight()">
-                <img src='assets/images/buttons/check.png'/>
-              </button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button clear (click)="slideRight(false)">
+            <img src='assets/images/buttons/check.png'/>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <div class="nav-buttons" [class.show]="runCheck(4)" [class.hidden]="!runCheck(4)">
+    <ion-grid>
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button clear (click)="slideRight(false)">
+            <img src='assets/images/buttons/check.png'/>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
   <!-- <div class="dismiss" (click)="closeOut()">
     <p>X</p>
   </div> -->
   <!-- <div style="height: 100%; width: 100%; overflow: scroll"> -->
-    <ion-slides>
-      <ion-slide>
-        <type></type>
-      </ion-slide>
-      <ion-slide class="pic-slide">
-        <img #preview *ngIf="dataSet"/>
-        <picture *ngIf="!dataSet"></picture>
-      </ion-slide>
-      <ion-slide>
-        <description></description>
-      </ion-slide>
-      <ion-slide>
-        <confirm></confirm>
-      </ion-slide>
-    </ion-slides>  
-  <!-- </div> -->
+  <ion-slides>
+    <ion-slide>
+      <type></type>
+    </ion-slide>
+    <ion-slide class="pic-slide">
+      <img #preview *ngIf="dataSet" />
+      <picture *ngIf="!dataSet"></picture>
+    </ion-slide>
+    <ion-slide>
+      <description></description>
+    </ion-slide>
+    <ion-slide>
+      <confirm></confirm>
+    </ion-slide>
+    <ion-slide *ngIf="share">
+      <h2 text-center padding style="background-color:#3fbc05; color: white;">Thank You!</h2>
+      <ion-grid>
+        <ion-row>
+          <ion-col text-center>
+            <button ion-button icon-only clear (click)='shareTwitter()'>
+              <ion-icon name="logo-twitter" style="color: #00aced; font-size: 24pt"></ion-icon>
+            </button>
+          </ion-col>
+          <ion-col text-center>
+            <button ion-button icon-only clear (click)='shareFacebook()'>
+              <ion-icon name="logo-facebook" style="color: #3b5998; font-size: 24pt"></ion-icon>
+            </button>
+          </ion-col>
+          <ion-col text-center>
+            <button ion-button icon-only clear (click)='shareWhatsapp()'>
+              <ion-icon name="logo-whatsapp" style="color: #34af23; font-size: 24pt"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+  </ion-slides>
+  <!-- <button ion-button (click)="share = !share">Viewable</button> -->
 </div>
-    

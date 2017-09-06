@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import {Slides, LoadingController} from 'ionic-angular';
+import { Slides, LoadingController } from 'ionic-angular';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 //page imports
 import { MapPage } from '../../pages/map/map';
@@ -17,37 +18,55 @@ import { AngularFireAuth } from 'angularfire2/auth';
   templateUrl: 'add.html'
 })
 export class AddComponent {
+  @ViewChild('main') main;
   @ViewChild(Slides) slide: Slides;
-  @ViewChild('preview') preview; 
+  @ViewChild('preview') preview;
 
-  dataSet:boolean = false;
+  dataSet: boolean = false;
   type: any = undefined;
   desc: string = "";
   show: boolean = true;
   url: any = "";
   refName: any = "";
+  error: string = "";
+  scroll: number = 1;
+  share: boolean = false;
 
-  constructor( public mapPage: MapPage, public translate: TranslatorProvider, public userInfo: UserInfoProvider, public afAuth: AngularFireAuth, public images: ImagesProvider, public loadingCtrl: LoadingController ) {
+  constructor(public mapPage: MapPage, public translate: TranslatorProvider, public userInfo: UserInfoProvider, public afAuth: AngularFireAuth, public images: ImagesProvider, public loadingCtrl: LoadingController, public socialSharing: SocialSharing) {
 
   }
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.main.nativeElement.style.transform = "translate(-50%,-50%)";
 
-  closeOut(){
+    }, 10);
+  }
+
+  closeOut() {
     this.mapPage.addShow = false;
   }
-  loggedAuth(){
+  loggedAuth() {
     return this.afAuth.auth.currentUser.uid == this.userInfo.activeData.id;
   }
   //sliding for resolved images
-  slideLeft(){
-    this.slide.slidePrev(500,null);
+  slideLeft() {
+    this.slide.slidePrev(500, null);
   }
-  slideRight(){
-    if(this.slide.getActiveIndex() == 3){
-      this.doSubmit();
+  slideRight(bool) {
+    if (!bool) {
+      if (this.slide.getActiveIndex() == 3) {
+        this.doSubmit();
+      }
     }
-    this.slide.slideNext(500,null);
+    if(this.slide.getActiveIndex() == 4){
+      this.mapPage.navCtrl.setRoot(MapPage);
+    }
+    this.slide.slideNext(500, null);
   }
-  doSubmit(){
+  goToSlide() {
+    this.slide.slideTo(this.scroll, 500);
+  }
+  doSubmit() {
     var loader = this.loadingCtrl.create({
       content: "Submtting Post..."
     });
@@ -56,7 +75,7 @@ export class AddComponent {
     promiseObj.promise.then(res => {
       this.url = res;
       this.refName = promiseObj.refName;
-    }).then(() => {   
+    }).then(() => {
       this.mapPage.mapView.submitReport({
         refName: this.refName,
         url: this.url,
@@ -64,20 +83,45 @@ export class AddComponent {
         type: this.type,
         desc: this.desc,
         loader: loader,
+        share: this.doShare()
       });
     })
   }
-  runCheck(slide){
-    if(slide == 1){
-      if(!this.dataSet) return false;
+  doShare() {
+    this.share = true;
+    setTimeout(() => {
+      this.slideRight(true);
+      this.slide.lockSwipes(true);
+    }, 50);
+
+  }
+  runCheck(slide) {
+    if (slide == 1) {
+      if (!this.dataSet) return false;
     }
-    if(this.slide.getActiveIndex() != slide) return false;
+    if (this.slide.getActiveIndex() != slide) return false;
     return true;
   }
-  submit(){
-    if(this.dataSet && this.type != undefined){
-      return true;
+  submit() {
+    if (this.dataSet) {
+      if (this.type != undefined) {
+        return true;
+      }
+      this.error = "*Add a type to the report*";
+      this.scroll = 0;
+      return false;
     }
+    this.error = "*Add a photo of the incident*";
+    this.scroll = 1;
     return false;
+  }
+  shareTwitter() {
+    this.socialSharing.shareViaTwitter(this.desc, this.url, null);
+  }
+  shareFacebook() {
+    this.socialSharing.shareViaFacebook(this.desc, this.url, null)
+  }
+  shareWhatsapp() {
+    this.socialSharing.shareViaWhatsApp(this.desc, this.url, null)
   }
 }

@@ -1,7 +1,7 @@
 //Ionic imports
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { NavController, NavParams, ModalController, AlertController, MenuController} from 'ionic-angular';
-import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-native/device-orientation';
+// import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-native/device-orientation';
 
 //page imports
 import { AddPage } from '../../pages/add/add';
@@ -62,7 +62,7 @@ export class MapViewComponent {
    myActiveMarker: any;
    
    /*Instantiate all imported classes*/
-   constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController, public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth,public alertCtrl: AlertController, public zones: ZonesProvider, public menuCtrl: MenuController,public userInfo: UserInfoProvider, public translate: TranslatorProvider,public likeProvider: LikeProvider, public click: ClickProvider, public mapPage: MapPage, public deviceOrientation: DeviceOrientation) {
+   constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController, public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth,public alertCtrl: AlertController, public zones: ZonesProvider, public menuCtrl: MenuController,public userInfo: UserInfoProvider, public translate: TranslatorProvider,public likeProvider: LikeProvider, public click: ClickProvider, public mapPage: MapPage) {
         mapPage.mapView = this;
                     
    }
@@ -268,8 +268,8 @@ export class MapViewComponent {
             userRating.child('posts').set(snap.val().posts + 1);
         }
     }).then(_ => {
-        this.navCtrl.setRoot(MapPage);
         data.loader.dismiss();
+        data.share();
     });
    }
    addPage(data){

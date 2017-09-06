@@ -1,0 +1,26 @@
+<div>
+  <div id="shader" (click)="mapPage.tut = false">
+  </div>
+  <!-- All content ends up in 'main' -->
+  <div id="main">    
+    <!-- here the check button is held -->
+    <div id="check-button">
+      <button ion-button clear (click)="skip()">
+        <img src="assets/images/buttons/arrow.png"/>
+      </button>
+    </div>
+
+    <ion-slides>
+      <ion-slide style="background-color: yellow">
+        <div class="upper">
+          <img src="http://www.placehold.it/1000x700" />
+        </div>
+        <div class="lower">
+          <p>
+            this is a paragraph with words in it. very, very exciting words. Not much of a paragraph tho, still exciting.
+          </p>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+</div>

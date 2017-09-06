@@ -12,6 +12,10 @@ import { TypeComponent } from '../../components/type/type';
 import { PictureComponent } from '../../components/picture/picture';
 import { DescriptionComponent } from '../../components/description/description';
 import { ConfirmComponent } from '../../components/confirm/confirm';
+import { LoginComponent } from '../../components/login/login';
+import { CreateComponent } from '../../components/create/create';
+import { ForgotComponent } from '../../components/forgot/forgot';
+import { TutorialComponent } from '../../components/tutorial/tutorial';
 
 @NgModule({
   declarations: [
@@ -26,7 +30,11 @@ import { ConfirmComponent } from '../../components/confirm/confirm';
     TypeComponent,
     PictureComponent,
     DescriptionComponent,
-    ConfirmComponent],
+    ConfirmComponent,
+    LoginComponent,
+    ForgotComponent,
+    CreateComponent,
+    TutorialComponent],
   imports: [
     IonicPageModule.forChild(MapPage)
   ],

@@ -1,0 +1,25 @@
+.ios, .md{
+    create {
+        .text-field{
+            font-size: 1.2em;
+        }
+        .top{
+            margin-top: 20px;
+        }
+        .button-ios, .button-md{
+            height: auto;
+            padding: 0;
+        }
+        .absolute{
+            top: 0;
+            float: left;
+            position: absolute;
+            margin: 0 auto;
+            text-align: center;
+            width: 110% !important;
+            .slide-image{
+                padding: 40px;
+            }           
+        }
+    }
+}

@@ -60,11 +60,11 @@ export class TranslatorProvider {
             info: "Info",
         },
         login: {
-            login: "Login",
-            account: "Don't have an account? ",
+            email: "Email",
+            password: "Password",
             noLogin: "Unable to sign user in at this time",
-            signUp: "Sign Up",
-            password: "Forgot Password",
+            signUp: "CREATE ACCOUNT",
+            forgot: "FORGOT ACCOUNT",
             anonymous: "Sign in anonymously",
             verify: "Verifying User...",
             anonymousAlertTitle: "Sign in anonymously",
@@ -192,7 +192,8 @@ export class TranslatorProvider {
             building: "Abandoned Building",
             pest: "Pests",
             trash: "Trash",
-            bug: "Mosquitos"
+            bug: "Mosquitos",
+            language: "ENGLISH"
         }
     }
     //Spanish Version of text
@@ -248,11 +249,11 @@ export class TranslatorProvider {
             info: "Detalles",
         },
         login: {
-            login: "Ingresar",
+            email: "Correo Electrónico",
             noLogin: "No se puede firmar usuario en este momento",
-            account: "No tiene una cuenta? ",
-            signUp: "Inscribirse",
-            password: "Olvidó su contraseña",
+            password: "Contraseña",
+            signUp: "CREAR UNA CUENTA",
+            forgot: "OLVIDÓ LA CUENTA",
             anonymous: "Ingresar de manera anónima",
             verify: "Verificando Usuario...",
             anonymousAlertTitle: "Ingresar de manera anónima",
@@ -380,7 +381,8 @@ export class TranslatorProvider {
             building: "Edificación Abandonada",
             pest: "Plagas",
             trash: "Desperdicio/Basura",
-            bug: "Mosquitos"
+            bug: "Mosquitos",
+            language: "ESPAÑOL"
         }
     }
     
