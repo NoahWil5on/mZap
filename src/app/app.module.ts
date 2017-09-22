@@ -13,6 +13,7 @@ import { MediaCapture } from 'ionic-native';
 import { File } from '@ionic-native/file';
 import { DeviceOrientation } from '@ionic-native/device-orientation';
 import { CallNumber } from '@ionic-native/call-number';
+//import { CloudSettings } from '@ionic/cloud-angular';
 
 //Angular fire imports
 import { AngularFireModule } from 'angularfire2';
@@ -75,6 +76,23 @@ export const firebaseConfig = {
   storageBucket: "mzap-45cd2.appspot.com",
   messagingSenderId: "550547782302"
 };
+// const cloudSettings: CloudSettings = {
+//   'core': {
+//     'app_id': '88f11293',
+//   },
+//   'push': {
+//     'sender_id': '550547782302',
+//     'pluginConfig': {
+//       'ios': {
+//         'badge': true,
+//         'sound': true
+//       },
+//       'android': {
+//         'iconColor': '#343434'
+//       }
+//     }
+//   }
+// };
 
 @NgModule({
   declarations: [

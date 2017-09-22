@@ -40,19 +40,19 @@
             padding: 40px 20px;
             //padding-top: 40px;
             width: 280px;
-            height: 280px;
+            height: 400px;
             @media screen and (min-device-width: 360px) {
                 width: 300px;
-                height: 320px;
+                height: 420px;
             }
             @media screen and (min-device-width: 500px) {
                 width: 400px;
-                height: 380px;
+                height: 540px;
                 transform: translate(-50%,140%);
             }
             @media screen and (min-device-width: 800px) {
                 width: 500px;
-                height: 460px;
+                height: 600px;
                 transform: translate(-50%,150%);
             }
             transition: all .5s;
@@ -60,9 +60,43 @@
             // -moz-box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
             // box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
         }
+        .notType{
+            width: 280px !important;
+            height: 280px !important;
+            @media screen and (min-device-width: 360px) {
+                width: 300px !important;
+                height: 280px !important;
+            }
+            @media screen and (min-device-width: 500px) {
+                width: 400px !important;
+                height: 360px !important;
+            }
+            @media screen and (min-device-width: 800px) {
+                width: 500px !important;
+                height: 420px !important;
+            }
+        }
+        .scroll-div{
+            width: 100%;
+            height: 100%;
+            overflow-y: scroll;
+        }
+        .full{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
         ion-slides{
+            width: 100%;
+            height: 100%;
+            overflow-y: scroll;
             ion-slide{
+                overflow: scroll;
+                height: 100%;
                 width: 100%;
+            }
+            .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets{
+                bottom: 0px;
             }
         }
         .nav-buttons{

@@ -99,7 +99,7 @@ export class EditPostPage {
         }else{
             if(this.data.refName){
                 firebase.storage().ref('/images/').child(this.data.refName).delete().then(_ => {
-                    var promiseObject = self.images.uploadToFirebase();
+                    var promiseObject = self.images.uploadToFirebase("posts");
                     promiseObject.promise.then(res => {
                         self.data.url = res;
                         self.data.refName = promiseObject.refName;
@@ -112,7 +112,7 @@ export class EditPostPage {
                 })
             }
             else{
-                var promiseObject = self.images.uploadToFirebase();
+                var promiseObject = self.images.uploadToFirebase("posts");
                 promiseObject.promise.then(res => {
                     self.data.url = res;
                     self.data.refName = promiseObject.refName;

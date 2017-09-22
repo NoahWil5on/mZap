@@ -1,5 +1,5 @@
 <div>
-  <ion-slides [class.absolute]="dataSet">
+  <ion-slides [class.absolute]="dataSet" pager>
     <ion-slide>
       <form autocomplete="off">
         <input type="email" class="text-field top" [(ngModel)]="name" name="myName" [placeholder]="translate.text.register.name"/>
@@ -10,21 +10,35 @@
     </ion-slide>
     <ion-slide>
         <ion-grid no-padding style="height: 100%" *ngIf="!dataSet">
-            <ion-row>
+            <ion-row [class.hidden]="userInfo.isApp">
+                <ion-col col-6 text-center>
+                    <label>
+                        <img src="assets/new/camera.png"/>
+                        <input #file type="file" accept="image/*" capture="camera" class="fileInput"/>
+                    </label>
+                </ion-col>
+                <ion-col col-6 text-center>
+                    <label>
+                        <img src="assets/new/album.png"/>
+                        <input #file1 type="file" accept="image/*" class="fileInput"/>
+                    </label>
+                </ion-col>
+            </ion-row>
+            <ion-row [class.hidden]="!userInfo.isApp">
                 <ion-col col-6 text-center>
                     <button ion-button clear (click)="cameraRequest()">
-                      <img src="assets/new/camera.png"/>
+                        <img src="assets/new/camera.png"/>
                     </button>
                 </ion-col>
                 <ion-col col-6 text-center>
                     <button ion-button clear (click)="albumRequest()">
-                      <img src="assets/new/album.png"/>
+                        <img src="assets/new/album.png"/>
                     </button>
                 </ion-col>
             </ion-row>
         </ion-grid>
         <div *ngIf="dataSet" class="slide-image">
-          <img (click)="previewImage()" #thisImage (click)="presentImage(thisImage)"/>
+          <img #thisImage (click)="presentImage(thisImage)"/>
         </div> 
     </ion-slide>
   </ion-slides>

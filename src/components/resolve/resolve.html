@@ -1,43 +1,81 @@
-<ion-slides>
-  <ion-slide *ngFor="let resolve of resolves">
-      <img src='{{resolve.url}}' alt="Resolve Image" #thisImage (click)="presentImage(thisImage)" />
-      <p>{{resolve.info}}</p>
-  </ion-slide>
-</ion-slides>
-<ion-item>
-  <ion-label floating>{{translate.text.infoWindow.note}}</ion-label>
-  <ion-input type='text' [(ngModel)]="info" (click)="infoClick()" autocorrect="on"></ion-input>
-</ion-item>
-<ion-item>
-  {{translate.text.infoWindow.photo}}
-  <ion-grid no-padding>
-      <ion-row>
-          <ion-col text-center no-padding [class.no-height]="imageData.length < 1">
-              <img width="100px" #preview />
-          </ion-col>
-      </ion-row>
-      <ion-row>
-          <ion-col col-6 no-padding>
-              <button ion-button block clear style="color: black;" (click)="cameraRequest()">
-                  <img src="assets/new/camera.png" style="width: 55px; padding-right: 10px;" alt="Camera" />
-                  </button>
-          </ion-col>
-          <ion-col col-6 no-padding>
-              <button ion-button block clear style="color: black;" (click)="albumRequest()">
-                  <img src="assets/new/album.png" style="width: 55px; padding-right: 10px;" alt="Album" />
-                  </button>
-          </ion-col>
-      </ion-row>
-  </ion-grid>
-</ion-item>
-<p text-center class="error">{{error}}</p>
-<ion-grid>
-  <ion-row>
-    <ion-col>
-        <button ion-button block color="secondary" (click)="submit()">{{translate.text.infoWindow.resolution}}</button>
-    </ion-col>
-    <ion-col *ngIf="checkLogin()">
-        <button ion-button block (click)="updateWindow()">{{translate.text.infoWindow.editPost}}</button>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+<div class="outer-div" [class.do-add]="infoComponent.addResolve">
+    <div id="resolve-content">
+        <ion-slides [pager]="resolves.length > 1" id="resolve-slides">
+            <ion-slide *ngFor="let resolve of resolves">
+                <div class="slide-div">
+                    <img src='{{resolve.url}}' alt="Resolve Image" #thisImage (click)="presentImage(thisImage)" />
+                </div>
+                <div class="status">
+                </div>
+                <p>{{resolve.info}}</p>
+            </ion-slide>
+            <ion-slide *ngIf="resolves.length < 1">
+                <p style="color: #666">No one has submitted a resolve yet. Gather up your friends and resolve this post!</p>
+            </ion-slide>
+        </ion-slides>
+        <ion-grid id="button-grid">
+            <ion-row>
+                <ion-col>
+                    <button ion-button block clear (click)="add()">Add a Resolve!</button>
+                </ion-col>
+                <ion-col *ngIf="checkLogin()" style="border-left: 1px solid #ddd">
+                    <button ion-button block clear (click)="updateWindow()">{{translate.text.infoWindow.editPost}}</button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <div id="resolve-add">
+        <add-resolve></add-resolve>
+    </div>
+</div>
+    <!-- <ion-item>
+        <ion-label floating>{{translate.text.infoWindow.note}}</ion-label>
+        <ion-input type='text' [(ngModel)]="info" autocorrect="on"></ion-input>
+    </ion-item>
+    <ion-item>
+        {{translate.text.infoWindow.photo}}
+        <ion-grid no-padding>
+            <ion-row>
+                <ion-col text-center no-padding [class.no-height]="!dataSet">
+                    <img width="100px" #preview />
+                </ion-col>
+            </ion-row>
+            <ion-row [class.hidden]="userInfo.isApp">
+                <ion-col col-6 text-center>
+                    <label>
+                        <img src="assets/new/camera.png" style="width: 55px; padding-right: 10px;" />
+                        <input #file type="file" accept="image/*" capture="camera" class="fileInput"/>
+                    </label>
+                </ion-col>
+                <ion-col col-6 text-center>
+                    <label>
+                        <img src="assets/new/album.png" style="width: 55px; padding-right: 10px;" />
+                        <input #file1 type="file" accept="image/*" class="fileInput"/>
+                    </label>
+                </ion-col>
+            </ion-row>
+            <ion-row [class.hidden]="!userInfo.isApp">
+                <ion-col col-6 no-padding>
+                    <button ion-button block clear style="color: black;" (click)="cameraRequest()">
+                        <img src="assets/new/camera.png" style="width: 55px; padding-right: 10px;" alt="Camera" />
+                    </button>
+                </ion-col>
+                <ion-col col-6 no-padding>
+                    <button ion-button block clear style="color: black;" (click)="albumRequest()">
+                        <img src="assets/new/album.png" style="width: 55px; padding-right: 10px;" alt="Album" />
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+    <p text-center class="error">{{error}}</p>
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <button ion-button block color="secondary" (click)="submit()">{{translate.text.infoWindow.resolution}}</button>
+            </ion-col>
+            <ion-col *ngIf="checkLogin()">
+                <button ion-button block (click)="updateWindow()">{{translate.text.infoWindow.editPost}}</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid> -->

@@ -1,7 +1,7 @@
 <div id="shader" (click)="closeOut()">
 
 </div>
-<div id="main" #main [class.extraPadding]="runCheck(1)" [class.noPadding]="!runCheck(1)">
+<div id="main" #main [class.extraPadding]="runCheck(1)" [class.noPadding]="!runCheck(1)" [class.notType]="this.slide.getActiveIndex() != 0">
   <div class="nav-buttons" [class.show]="runCheck(1)" [class.hidden]="!runCheck(1)">
     <ion-grid>
       <ion-row>
@@ -55,12 +55,15 @@
     <p>X</p>
   </div> -->
   <!-- <div style="height: 100%; width: 100%; overflow: scroll"> -->
-  <ion-slides>
+    <div class="scroll-div">
+  <ion-slides pager>
     <ion-slide>
       <type></type>
     </ion-slide>
     <ion-slide class="pic-slide">
-      <img #preview *ngIf="dataSet" />
+      <div class="full">
+        <img #preview *ngIf="dataSet" />
+      </div>
       <picture *ngIf="!dataSet"></picture>
     </ion-slide>
     <ion-slide>
@@ -70,9 +73,28 @@
       <confirm></confirm>
     </ion-slide>
     <ion-slide *ngIf="share">
-      <h2 text-center padding style="background-color:#3fbc05; color: white;">Thank You!</h2>
+      <h2 text-center padding style="background-color:#3fbc05; color: white;">{{translate.text.add.thanks}}</h2>
+      <p text-center style="color: #666">{{translate.text.add.share}}</p>
       <ion-grid>
-        <ion-row>
+        <ion-row *ngIf="!userInfo.isApp">
+          <ion-col text-center>
+            <a href="https://twitter.com/home?status=mzap.org">
+              <ion-icon name="logo-twitter" style="color: #00aced; font-size: 24pt"></ion-icon>
+            </a>
+          </ion-col>
+          <ion-col text-center>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=mzap.org">
+              <ion-icon name="logo-facebook" style="color: #3b5998; font-size: 24pt"></ion-icon>
+            </a>
+          </ion-col>
+          <ion-col text-center>
+            <a href="whatsapp://send" data-href="mzap.org">
+              <ion-icon name="logo-whatsapp" style="color: #34af23; font-size: 24pt"></ion-icon>
+            </a>
+          </ion-col>
+        </ion-row>
+        <!-- -->
+        <ion-row *ngIf="userInfo.isApp">
           <ion-col text-center>
             <button ion-button icon-only clear (click)='shareTwitter()'>
               <ion-icon name="logo-twitter" style="color: #00aced; font-size: 24pt"></ion-icon>
@@ -92,5 +114,6 @@
       </ion-grid>
     </ion-slide>
   </ion-slides>
+    </div>
   <!-- <button ion-button (click)="share = !share">Viewable</button> -->
 </div>

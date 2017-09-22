@@ -4,5 +4,19 @@
             height: auto;
             padding: 0;
         }
+        .fileInput{
+            width: .1px;
+            height: .1px;
+            opacity: 0;
+            z-index: -1;
+        }
+        .hidden{
+            transform: scale(0);
+            height: 0;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            opacity: 0;
+        }
     }
 }

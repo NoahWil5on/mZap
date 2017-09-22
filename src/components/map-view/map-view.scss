@@ -73,7 +73,7 @@
             overflow: hidden;
             width: 100%;
             bottom: 0;
-            z-index: 10;    
+            z-index: 1;    
             .button-center{
                 padding-top: 5px;
                 margin: 0 auto;
@@ -138,7 +138,7 @@
             background-color: #dcd80c;
         }
         .nav-div{
-            top: 35px;
+            bottom: 10px;
             position: absolute;
             z-index: 5;
             button{
@@ -200,6 +200,9 @@
         .show{
             transform: scale(1);
             transition: all .5s;
+        }
+        .top{
+            top: 30px !important;
         }
     }
 }

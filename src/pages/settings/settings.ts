@@ -20,8 +20,8 @@ import { ClickProvider } from '../../providers/click/click';
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
-
     language: any;
+
     constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider, public click: ClickProvider) {
         this.storage.get('mzap_language').then(language => {
             this.language = language;
@@ -62,21 +62,30 @@ export class SettingsPage {
         this.menuCtrl.open();
     }
     //set language
-    setLang(){
-        this.click.click('settingsUpdateLanguage');
+    setLang() {
         //check which language is selected
-        switch(this.language){
-            case 'en':
-                this.storage.set('mzap_language', 'en');
-                this.translate.selectLanguage(this.translate.en);
-                break;
-            case 'es':
-                this.storage.set('mzap_language', 'es');
-                this.translate.selectLanguage(this.translate.es);
-                break;
-            default:
-                break;
-        }
+        this.storage.get('mzap_language').then(res => {
+            switch (res) {
+                case 'en':
+                    this.storage.set('mzap_language', 'es');
+                    this.translate.selectLanguage(this.translate.es);
+                    break;
+                case 'es':
+                    this.storage.set('mzap_language', 'en');
+                    this.translate.selectLanguage(this.translate.en);
+                    break;
+                default:
+                    this.storage.set('mzap_language', 'en');
+                    this.translate.selectLanguage(this.translate.en);
+                    break;
+            }
+        }, e => {
+            this.storage.set('mzap_language', 'en');
+            this.translate.selectLanguage(this.translate.en);
+        }).catch(e => {
+            this.storage.set('mzap_language', 'en');
+            this.translate.selectLanguage(this.translate.en);
+        });
     }
     about(){
         this.navCtrl.push(AboutPage);

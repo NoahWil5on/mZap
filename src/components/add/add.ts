@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Slides, LoadingController } from 'ionic-angular';
+import { Slides, LoadingController, Events } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
 //page imports
@@ -32,8 +32,10 @@ export class AddComponent {
   scroll: number = 1;
   share: boolean = false;
 
-  constructor(public mapPage: MapPage, public translate: TranslatorProvider, public userInfo: UserInfoProvider, public afAuth: AngularFireAuth, public images: ImagesProvider, public loadingCtrl: LoadingController, public socialSharing: SocialSharing) {
-
+  constructor(public mapPage: MapPage, public translate: TranslatorProvider, public userInfo: UserInfoProvider, public afAuth: AngularFireAuth, public images: ImagesProvider, public loadingCtrl: LoadingController, public socialSharing: SocialSharing, public events: Events) {
+    events.subscribe("share", () => {
+      this.doShare();
+    })
   }
   ngAfterViewInit() {
     setTimeout(() => {
@@ -71,7 +73,7 @@ export class AddComponent {
       content: "Submtting Post..."
     });
     loader.present();
-    var promiseObj = this.images.uploadToFirebase();
+    var promiseObj = this.images.uploadToFirebase("posts");
     promiseObj.promise.then(res => {
       this.url = res;
       this.refName = promiseObj.refName;
@@ -83,7 +85,6 @@ export class AddComponent {
         type: this.type,
         desc: this.desc,
         loader: loader,
-        share: this.doShare()
       });
     })
   }

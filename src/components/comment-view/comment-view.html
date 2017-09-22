@@ -16,24 +16,5 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-        <div>
-            <p class="name" *ngIf="!checkUid(message.id)">{{message.name}}</p>
-        </div>
     </div>
-</div>
-<div class="chat">
-    <ion-grid>
-        <ion-row>
-            <ion-col>
-                <div>
-                    <textarea #msg rows="1" (keyup)="resize()" [(ngModel)]="myText" placeholder="Aa" (click)="textClick()" autocorrect="on"></textarea>
-                </div>
-            </ion-col>
-            <ion-col text-center col-auto>
-                <button ion-button clear icon-only (click)="submit()">
-                    <ion-icon name="send"></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
 </div>

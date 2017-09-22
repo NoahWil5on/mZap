@@ -204,7 +204,7 @@ export class InfoWindowPage {
             loader.present();
             
             //upload image
-            var promiseObject = this.images.uploadToFirebase();
+            var promiseObject = this.images.uploadToFirebase("posts");
             promiseObject.promise.then(res => {
                 let url = res;
                 let refName = promiseObject.refName;

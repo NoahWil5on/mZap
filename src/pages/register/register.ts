@@ -78,7 +78,7 @@ export class RegisterPage {
                         if(this.image){
                             
                             /*Fetches image*/
-                            var promiseObject = this.images.uploadToFirebase();
+                            var promiseObject = this.images.uploadToFirebase("posts");
                             promiseObject.promise.then(res => {
                                 this.url = res;
                                 this.refName = promiseObject.refName;

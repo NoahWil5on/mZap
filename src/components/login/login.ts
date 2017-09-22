@@ -170,11 +170,16 @@ export class LoginComponent {
                     this.translate.selectLanguage(this.translate.en);
                     break;
                 default:
+                    this.storage.set('mzap_language', 'en');
+                    this.translate.selectLanguage(this.translate.en);
                     break;
             }
         }, e => {
-            this.storage.set('mzap_language', 'es');
-            this.translate.selectLanguage(this.translate.es);
+            this.storage.set('mzap_language', 'en');
+            this.translate.selectLanguage(this.translate.en);
+        }).catch(e => {
+            this.storage.set('mzap_language', 'en');
+            this.translate.selectLanguage(this.translate.en);
         });
     }
     languageClick() {
@@ -182,6 +187,7 @@ export class LoginComponent {
     }
     skip(){
         this.userInfo.loggedIn = true;
+        this.mapPage.tut = true;
     }
     checkInput() {
         switch (this.mapPage.loginState) {

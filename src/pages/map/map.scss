@@ -11,4 +11,12 @@
         left: 50%;
         top: 50%;
     }
+    .show{
+        transform: scale(1);
+        transition: all .5s;
+    }
+    .hidden{
+        transform: scale(0);
+        transition: all .5s;
+    }
 }

@@ -3,8 +3,8 @@
     <ion-row text-center>
       <ion-col class="image-col">
         <div class="image-div" [class.smaller]="add.desc.length < 1">
-          <img #type class="type" [src]="getType()" [class.hidden]="add.type == undefined"/>
-          <img #preview [src]="getSource()" alt="*Add a photo!" class="error" [class.hidden]="!add.dataSet" />
+          <img #type class="type" [class.hidden]="add.type == undefined"/>
+          <img #preview alt="*Add a photo!" class="error" [class.hidden]="!add.dataSet" />
         </div>
       </ion-col>
       <ion-col class="desc" *ngIf="add.desc.length > 0" col-6>

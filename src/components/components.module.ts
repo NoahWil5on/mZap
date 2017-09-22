@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login';
 import { ForgotComponent } from './forgot/forgot';
 import { CreateComponent } from './create/create';
 import { TutorialComponent } from './tutorial/tutorial';
+import { AddResolveComponent } from './add-resolve/add-resolve';
 
 @NgModule({
 	declarations: [AddComponent,
@@ -20,7 +21,8 @@ import { TutorialComponent } from './tutorial/tutorial';
     LoginComponent,
     ForgotComponent,
     CreateComponent,
-    TutorialComponent],
+    TutorialComponent,
+    AddResolveComponent],
 	imports: [],
 	exports: [AddComponent,
     TypeComponent,
@@ -31,6 +33,7 @@ import { TutorialComponent } from './tutorial/tutorial';
     LoginComponent,
     ForgotComponent,
     CreateComponent,
-    TutorialComponent]
+    TutorialComponent,
+    AddResolveComponent]
 })
 export class ComponentsModule {}

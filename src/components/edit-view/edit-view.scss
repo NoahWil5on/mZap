@@ -6,8 +6,43 @@
         .red-text{
             color: red;
         }
+        .image-holder{
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .slide-div{
+            position: relative;
+            width: 100%;
+            display: block;
+            height: 8em;
+            overflow: hidden;
+            img{
+                position: absolute;
+                width: 100%;
+                max-height: none !important;
+                display: block;
+            }
+        }   
+        .status{
+            pointer-events: none;
+            position: absolute;
+            width: calc(100%) !important;
+            background-color: black;
+            color: white;
+            position: bottom;
+            height: 2em;
+            font-size: 16pt;
+            text-align: center;
+            z-index: 1;
+            transform: translate(0,-100%);
+            background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 99%, rgba(0,0,0,1) 100%);
+            background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 99%,rgba(0,0,0,1) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 99%,rgba(0,0,0,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 );
+        }
         .slide-x{
-            width: 1em;
+            margin: 0;
+            width: 1.5em;
             height: 2em;
             background-color: red;
             color: white;
@@ -15,6 +50,7 @@
             top:0; 
             right: 0;
             z-index: 10;
+            border-radius: 0;
         }
         .shader{
             position: absolute;
@@ -23,6 +59,23 @@
             z-index: 100;
             background-color: red;
             opacity: .5;
+        }
+        .fileInput{
+            width: .1px;
+            height: .1px;
+            opacity: 0;
+            z-index: -1;
+        }
+        .hidden{
+            transform: scale(0);
+            height: 0;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            opacity: 0;
+        }
+        .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets{
+            bottom: 0px;
         }
     }
 }

@@ -1,5 +1,5 @@
 //vanilla ionic import
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, LoadingController, AlertController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
@@ -10,6 +10,7 @@ import { LoginPage } from '../login/login';
 import { ImagesProvider } from '../../providers/images/images';
 import { TranslatorProvider } from '../../providers/translator/translator';
 import { ClickProvider } from '../../providers/click/click';
+import { UserInfoProvider } from '../../providers/user-info/user-info';
 
 //firebase imports
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -21,6 +22,9 @@ import * as firebase from 'firebase';
     templateUrl: 'edit-profile.html',
 })
 export class EditProfilePage {
+    @ViewChild('file') input:ElementRef
+    @ViewChild('file1') input1:ElementRef
+
     @ViewChild('preview') preview;
     imageData: string = "";
     
@@ -31,7 +35,7 @@ export class EditProfilePage {
     constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController,
                 public afAuth: AngularFireAuth, public translate: TranslatorProvider, public images: ImagesProvider,
                 public loadingCtrl: LoadingController, public alertCtrl: AlertController, private storage: Storage,
-                public click: ClickProvider) {
+                public click: ClickProvider, public userInfo: UserInfoProvider) {
         this.images.doClear();
     }
 
@@ -41,6 +45,27 @@ export class EditProfilePage {
         }).then(_ => {
             this.name = this.user.name;
         })
+    }
+    ngAfterViewInit(){
+        var self = this;
+        this.input.nativeElement.onchange = function(e){
+            var file = e.target.files[0];
+            
+            self.images.selectedFile = file;
+            self.dataSet = true;
+            setTimeout(() => {
+                self.preview.nativeElement.setAttribute('src', URL.createObjectURL(file));
+            },50)
+        }
+        this.input1.nativeElement.onchange = function(e){
+            var file = e.target.files[0];
+            
+            self.images.selectedFile = file;
+            self.dataSet = true;
+            setTimeout(() => {
+                self.preview.nativeElement.setAttribute('src', URL.createObjectURL(file));
+            },50)
+        }
     }
     nameClick(){
         this.click.click('editProfileName');
@@ -79,35 +104,46 @@ export class EditProfilePage {
         }
         loader.present();
         if(this.dataSet){
-            firebase.database().ref('/users/').child(this.afAuth.auth.currentUser.uid).once('value', snapshot => {
-                if(snapshot.hasChild('url')){
-                    firebase.storage().ref('/images/').child(snapshot.val().refName).delete().then(_ => {
-                        var promiseObject = this.images.uploadToFirebase();
-                        promiseObject.promise.then(res => {
-                            firebase.database().ref('/users/').child(this.afAuth.auth.currentUser.uid).update({
-                                url: res,
-                                refName: promiseObject.refName,
-                            }).then(() => {
-                                this.updateUser(loader);
-                            });
-                        }).catch(e => {
-                            alert("Error: " +e.message);
-                        });
-                    });
-                }else{
-                    var promiseObject = this.images.uploadToFirebase();
-                    promiseObject.promise.then(res => {
-                        firebase.database().ref('/users/').child(this.afAuth.auth.currentUser.uid).update({
-                            url: res,
-                            refName: promiseObject.refName,
-                        }).then(() => {
-                            this.updateUser(loader);
-                        });
-                    }).catch(e => {
-                        alert("Error: " +e.message);
-                    });
-                }
-            })
+            // firebase.database().ref('/users/').child(this.afAuth.auth.currentUser.uid).once('value', snapshot => {
+                // if(snapshot.hasChild('url')){
+                //     firebase.storage().ref('/images/').child("profile").child(snapshot.val().refName).delete().then(_ => {
+                //         var promiseObject = this.images.uploadToFirebase("profile");
+                //         promiseObject.promise.then(res => {
+                //             firebase.database().ref('/users/').child(this.afAuth.auth.currentUser.uid).update({
+                //                 url: res,
+                //                 refName: promiseObject.refName,
+                //             }).then(() => {
+                //                 this.updateUser(loader);
+                //             });
+                //         }).catch(e => {
+                //             alert("Error: " +e.message);
+                //         });
+                //     });
+                // }else{
+                //     var promiseObject = this.images.uploadToFirebase("profile");
+                //     promiseObject.promise.then(res => {
+                //         firebase.database().ref('/users/').child(this.afAuth.auth.currentUser.uid).update({
+                //             url: res,
+                //             refName: promiseObject.refName,
+                //         }).then(() => {
+                //             this.updateUser(loader);
+                //         });
+                //     }).catch(e => {
+                //         alert("Error: " +e.message);
+                //     });
+                // }
+            var promiseObject = this.images.uploadToFirebase("profile");
+            promiseObject.promise.then(res => {
+                firebase.database().ref('/users/').child(this.afAuth.auth.currentUser.uid).update({
+                    url: res,
+                    refName: promiseObject.refName,
+                }).then(() => {
+                    this.updateUser(loader);
+                });
+            }).catch(e => {
+                alert("Error: " +e.message);
+            });
+            // })
         }
         else{
             this.updateUser(loader);

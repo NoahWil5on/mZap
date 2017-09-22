@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "550547782302",
+    "firebase_url": "https://mzap-45cd2.firebaseio.com",
+    "project_id": "mzap-45cd2",
+    "storage_bucket": "mzap-45cd2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550547782302:android:f71a0aec03a691d8",
+        "android_client_info": {
+          "package_name": "com.mzap.mzap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "550547782302-f4st5bf2n8qde170r99qk4tntjgmo4sr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoGEhZFwizK2Mco0o0bQeS5xGsZz6Gjs0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

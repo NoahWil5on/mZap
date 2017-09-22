@@ -1,10 +1,11 @@
 //vanilla ionic imports
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, ViewChild, NgZone, ElementRef } from '@angular/core';
 import { NavController, NavParams, MenuController, Slides, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 //component imports 
 import { LoginComponent } from '../login/login';
+import { MapPage } from '../../pages/map/map'
 
 //firebase imports
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -25,6 +26,9 @@ import { ImageViewerController } from 'ionic-img-viewer';
   templateUrl: 'create.html'
 })
 export class CreateComponent {
+  @ViewChild('file') input:ElementRef
+  @ViewChild('file1') input1:ElementRef
+  
   @ViewChild('thisImage') preview;
   @ViewChild(Slides) slides: Slides;
 
@@ -44,13 +48,35 @@ export class CreateComponent {
 
   error: string = "";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public afDB: AngularFireDatabase, public images: ImagesProvider, public userInfo: UserInfoProvider, private storage: Storage, public translate: TranslatorProvider, public menuCtrl: MenuController, public click: ClickProvider, public login: LoginComponent, public imageViewerCtrl: ImageViewerController, public loadingCtrl: LoadingController, public ngZone: NgZone) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public afDB: AngularFireDatabase, public images: ImagesProvider, public userInfo: UserInfoProvider, private storage: Storage, public translate: TranslatorProvider, public menuCtrl: MenuController, public click: ClickProvider, public login: LoginComponent, public imageViewerCtrl: ImageViewerController, public loadingCtrl: LoadingController, public ngZone: NgZone, public mapPage: MapPage) {
     this.login.create = this;
     this.images.doClear();
-    //this.slides.lockSwipeToNext(true);
   }
   ngAfterViewInit() {
-    // this.slides.lockSwipes(true);
+    var self = this;
+    this.slides.lockSwipes(true);
+    this.input.nativeElement.onchange = function(e){
+        var file = e.target.files[0];
+        
+        self.images.selectedFile = file;
+        self.ngZone.run(() => {
+          self.dataSet = true;
+        })
+        setTimeout(() => {
+          self.preview.nativeElement.setAttribute('src', URL.createObjectURL(file));
+        },50)
+    }
+    this.input1.nativeElement.onchange = function(e){
+        var file = e.target.files[0];
+        
+        self.images.selectedFile = file;
+        self.ngZone.run(() => {
+          self.dataSet = true;
+        })
+        setTimeout(() => {
+          self.preview.nativeElement.setAttribute('src', URL.createObjectURL(file));
+        },50)
+    }
   }
   addPhoto() {
     if (!this.dataSet) return;
@@ -59,7 +85,7 @@ export class CreateComponent {
     });
     loader.present();
     /*Fetches image*/
-    var promiseObject = this.images.uploadToFirebase();
+    var promiseObject = this.images.uploadToFirebase("profile");
     promiseObject.promise.then(res => {
       this.url = res;
       this.refName = promiseObject.refName;
@@ -71,6 +97,7 @@ export class CreateComponent {
       }).then(_ => {
         loader.dismiss();
         this.userInfo.loggedIn = true;
+        this.mapPage.tut = true;
       });
     });
   }
@@ -182,7 +209,6 @@ export class CreateComponent {
   }
   //show pop up image
   presentImage(image) {
-    this.click.click('profilePresentImage');
     let imageViewer = this.imageViewerCtrl.create(image);
     imageViewer.present();
   }

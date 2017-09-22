@@ -46,46 +46,5 @@
                 }
             }
         }
-        .chat{
-            z-index: 100;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-            position: fixed;
-            display: block;
-            bottom: 0;
-            left: 0;
-            border-top: #ddd solid 1px;
-            ion-grid{
-                padding: 0;
-                margin: 0;
-                
-                ion-row{
-                    position: relative;
-                    background-color: white;
-                    padding: 5px 0px;
-                    ion-col{
-                        padding: 0 10px;
-                        button{
-                            height: 1em;
-                        }
-                        div{
-                            border: 1px solid #999;
-                            border-radius: 10px;
-                            padding-left: 5px;
-                            padding-right: 5px;
-                            background-color: white;
-                        }
-                        textarea{
-                            background: none;
-                            border: none;
-                            width: 100%;
-                            resize: none;
-                            overflow: hidden;
-                        }
-                    }
-                }
-            }
-        }
     }
 }

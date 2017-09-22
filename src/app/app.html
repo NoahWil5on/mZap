@@ -8,11 +8,11 @@
                 <button ion-button style="height: 100%" clear (click)="profile()">
                     <div *ngIf="imgSrc">
                         <img [src]="imgSrc" alt="" />
-                        <h2 style="color: black">{{name}}</h2>
+                        <h2 style="color: white">{{name}}</h2>
                     </div>
                     <div *ngIf="!imgSrc">
                         <img src="assets/profile.png" alt="" />
-                        <h2 style="color: black">{{name}}</h2>
+                        <h2 style="color: white">{{name}}</h2>
                     </div>
                 </button>
             </div>
@@ -25,91 +25,42 @@
                 </button>
             </div>
         </header>
-        <!--
-        <button class="menu-button" (click)="home()">
-            <ion-item [class.nav-item]="checkPage('home')">
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-auto no-padding>
-                            <img src="assets/home.png" style="height: 34px; padding: 0" alt="home" />
-                        </ion-col>
-                        <ion-col>
-                            <p class="option">{{translate.text.menu.home}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-        </button>-->
-        <button class="menu-button" (click)="map()">
-            <ion-item [class.nav-item]="checkPage('map')">
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-auto no-padding>
-                            <img src="assets/map.png" style="height: 34px; padding: 0" alt="map" />
-                        </ion-col>
-                        <ion-col>
-                            <p class="option">{{translate.text.menu.map}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-        </button>
-        <button class="menu-button" (click)="reports()">
-            <ion-item [class.nav-item]="checkPage('reports')">
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-auto no-padding>
-                            <img src="assets/report.png" style="height: 34px; padding: 0" alt="reports" />
-                        </ion-col>
-                        <ion-col>
-                            <p class="option">{{translate.text.menu.reports}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-        </button>
-        <button class="menu-button" (click)="topRated()">
-            <ion-item [class.nav-item]="checkPage('top')">
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-auto no-padding>
-                            <img src="assets/trophy.png" style="height: 34px; padding: 0" alt="trophy" />
-                        </ion-col>
-                        <ion-col>
-                            <p class="option">{{translate.text.menu.rankings}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-        </button>
-        <button class="menu-button" (click)="settings()">
-            <ion-item [class.nav-item]="checkPage('settings')">
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-auto no-padding>
-                            <img src="assets/cog.png" style="height: 34px; padding: 0" alt="cog" />
-                        </ion-col>
-                        <ion-col>
-                            <p class="option">{{translate.text.menu.settings}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-        </button>
-        <button class="menu-button" (click)="logout()">
-            <ion-item>
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-auto no-padding>
-                            <img src="assets/Logout.png" style="height: 34px; padding: 0" alt="logout" />
-                        </ion-col>
-                        <ion-col>
-                            <p class="option">{{translate.text.menu.logout}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </ion-item>
-        </button>
+        <div class="status">
+        </div>
+        <div class="background">
+            <button class="menu-button" (click)="map()" [class.nav-item]="checkPage('map')">
+                {{translate.text.menu.map}}
+            </button>
+        </div>
+        <div class="background">
+            <button class="menu-button" (click)="map()" [class.nav-item]="">
+                Notifications
+            </button>
+            <div class="notification">
+                <p>102</p>
+            </div>
+        </div>
+        <div class="background">
+            <button class="menu-button" (click)="reports()" [class.nav-item]="checkPage('reports')">
+                {{translate.text.menu.reports}}
+            </button>
+        </div>
+        <div class="background">
+            <button class="menu-button" (click)="topRated()" [class.nav-item]="checkPage('top')">
+                {{translate.text.menu.rankings}}
+            </button>
+        </div>
+        <div class="background">
+            <button class="menu-button" (click)="settings()" [class.nav-item]="checkPage('settings')">
+                {{translate.text.menu.settings}}
+            </button>
+        </div>
+        <div class="background">
+            <button class="menu-button" (click)="logout()">
+                {{translate.text.menu.logout}}
+            </button>
+        </div>
+        <button ion-button (click)="tutorial()" class="tutorial">Tutorial</button>
         <!-- <button ion-button (click)="call()">Call Mom</button> -->
     </ion-content>
 </ion-menu>

@@ -1,7 +1,7 @@
 .ios, .md{
     create {
         .text-field{
-            font-size: 1.2em;
+            font-size: 1em;
         }
         .top{
             margin-top: 20px;
@@ -20,6 +20,25 @@
             .slide-image{
                 padding: 40px;
             }           
+        }
+        ion-slides{
+            .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets{
+                bottom: 0px;
+            }
+        }
+        .fileInput{
+            width: .1px;
+            height: .1px;
+            opacity: 0;
+            z-index: -1;
+        }
+        .hidden{
+            transform: scale(0);
+            height: 0;
+            padding: 0;
+            margin: 0;
+            position: absolute;
+            opacity: 0;
         }
     }
 }

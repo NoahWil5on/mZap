@@ -1,36 +1,39 @@
 <div>
-  <div class="nav-div nav-div-left">
+  <div class="nav-div nav-div-left" style="top: 15px" [class.top]="userInfo.isApp">
       <button (click)="openMenu()">
           <div class="nav-button orange">
               <img class="hamburg" src="assets/hamburger.png" alt="nav"/>
           </div>
-      </button>
-      <button (click)="toggleMap()">
-          <div class="nav-button green">
-              <img class="cog" src="assets/images/buttons/toggle_02.png" alt="nav"/>
-          </div>
-      </button>
+      </button>      
+  </div>
+  <div class="nav-div nav-div-left">
+        
   </div>
   <div class="nav-div nav-div-right">
+      <button (click)="toggleMap()">
+            <div class="nav-button green">
+                <img class="cog" src="assets/images/buttons/toggle_02.png" alt="nav"/>
+            </div>
+      </button> 
+      <!-- <button (click)="openFilter()">
+          <div class="nav-button green">
+              <img class="filter" src="assets/images/buttons/filter.png" alt="nav"/>
+          </div>
+      </button> -->
       <button (click)="setCenter()">
           <div class="nav-button green">
               <img class="cog" src="assets/target.png" alt="nav"/>
           </div>
-      </button>
-      <button (click)="openFilter()">
-          <div class="nav-button orange">
-              <img class="filter" src="assets/images/buttons/filter.png" alt="nav"/>
-          </div>
-      </button>
+      </button>      
   </div>
-  <div id="center-div" *ngIf="isLoggedIn() && edit()">
+  <div id="center-div" *ngIf="isLoggedIn()">
       <div id="center-point">
           <img src="assets/location_marker.png" alt="Drop Position" [class.hidden]="!showButtons" [class.show]="showButtons"/>
       </div>
   </div>
-  <div id="controls" (pan)="addFalse()" *ngIf="isLoggedIn() && edit()">
+  <div id="controls" (pan)="addFalse()" *ngIf="isLoggedIn()">
       <div class="button-center add">
-          <button class="add-type" (click)="doAdd()" [class.hidden]="!showButtons" [class.show]="showButtons">
+          <button class="add-type" (click)="mapPage.addShow = true" [class.hidden]="!showButtons" [class.show]="showButtons">
               <img src="assets/images/buttons/plus.png" alt="Plus" width="60"/>
           </button>
       </div>

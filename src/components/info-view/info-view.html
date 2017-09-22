@@ -1,40 +1,60 @@
-<ion-grid no-padding *ngIf="myData.url">
-  <ion-row>
-    <ion-col no-padding>
-        <img [src]="myData.url" width="200" alt="Placeholder" #thisImage (click)="presentImage(thisImage)" />
-    </ion-col>
-    <ion-col col-auto class="likes" [class.row]="!myData.url" no-padding>
-      <ion-row text-center>
-          <button ion-button (click)="like(1)" full clear [class.greenButton]="likeValue == 1">
-              <ion-icon name="thumbs-up"></ion-icon>
-          </button>
-      </ion-row>
-      <ion-row text-center>
-        <h3 text-center>{{myData.likes}}</h3>
-      </ion-row>
-      <ion-row text-center>
-          <button ion-button (click)="like(-1)" full clear [class.greenButton]="likeValue == -1">
-              <ion-icon name="thumbs-down"></ion-icon>
-          </button>
-      </ion-row>
-    </ion-col>
-  </ion-row>
-</ion-grid>
-<p [class.noPic]="!myData.url">{{myData.description}}</p>
-<ion-grid *ngIf="!myData.url">
-  <ion-row>
-    <ion-col>
-        <button ion-button (click)="like(1)" full clear [class.greenButton]="likeValue == 1">
-            <ion-icon name="thumbs-up"></ion-icon>
-        </button>
-    </ion-col>
-    <ion-col>
-        <h3 text-center>{{myData.likes}}</h3>
-    </ion-col>
-    <ion-col>
-        <button ion-button (click)="like(-1)" full clear [class.greenButton]="likeValue == -1">
-            <ion-icon name="thumbs-down"></ion-icon>
-        </button>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+<div class="show" [class.hidden]="hide" style="position: relative" #mainContent>
+    <ion-grid no-padding *ngIf="myData.url" id="image-grid">
+        <ion-row>
+            <ion-col no-padding>
+                <img [src]="myData.url" width="200" alt="Placeholder" #thisImage (click)="presentImage(thisImage)" />
+            </ion-col>
+            <!-- <ion-col col-auto class="likes" [class.row]="!myData.url" no-padding>
+            <ion-row text-center>
+                <button ion-button (click)="like(1)" full clear [class.greenButton]="likeValue == 1">
+                    <ion-icon name="thumbs-up"></ion-icon>
+                </button>
+            </ion-row>
+            <ion-row text-center>
+                <h3 text-center>{{myData.likes}}</h3>
+            </ion-row>
+            <ion-row text-center>
+                <button ion-button (click)="like(-1)" full clear [class.greenButton]="likeValue == -1">
+                    <ion-icon name="thumbs-down"></ion-icon>
+                </button>
+            </ion-row>
+            </ion-col> -->
+        </ion-row>
+    </ion-grid>
+    <div class="status">
+        <p>{{status}}</p>
+    </div>
+    <p>{{myData.description}}</p>
+    <ion-grid id="buttons-grid">
+        <ion-row>
+            <ion-col col-6 style="border-right: 1px solid #ddd">
+                <button ion-button block clear (click)="comment()">Comment</button>
+            </ion-col>
+            <ion-col col-6>
+                <button ion-button block clear (click)="resolve()">Resolve</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <div id="comment" #commentContent>
+        <div class="messages">
+            <div *ngFor="let message of messages">
+                <ion-grid class="message" [class.newMessage]="checkMessage(message)">
+                    <ion-row class="header-row">
+                        <ion-col no-padding col-3>
+                            <img [src]="message.url" width="40" />
+                        </ion-col>
+                        <ion-col no-padding class="header-info">
+                            <p><b>{{message.name}}</b></p>
+                            <p class="meta">{{message.date}}</p>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="message-row">
+                        <ion-col no-padding>
+                            <p>{{message.message}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </div>
+        </div>
+    </div>
+</div>

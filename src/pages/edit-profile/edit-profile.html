@@ -30,21 +30,33 @@
             <p class="green-text">{{translate.text.editProfile.pic}}</p>
             <ion-grid no-padding>
                 <ion-row>
-                    <ion-col text-center no-padding [class.no-height]="imageData.length < 1">
+                    <ion-col text-center no-padding [class.no-height]="!dataSet">
                         <img width="100px" #preview />
                     </ion-col>
                 </ion-row>
-                <ion-row>
+                <ion-row [class.hidden]="userInfo.isApp">
+                    <ion-col col-6 text-center>
+                        <label>
+                            <img src="assets/new/camera.png" style="width: 55px; padding-right: 10px;"/>
+                            <input #file type="file" accept="image/*" capture="camera" class="fileInput"/>
+                        </label>
+                    </ion-col>
+                    <ion-col col-6 text-center>
+                        <label>
+                            <img src="assets/new/album.png" style="width: 55px; padding-right: 10px;"/>
+                            <input #file1 type="file" accept="image/*" class="fileInput"/>
+                        </label>
+                    </ion-col>
+                </ion-row>
+                <ion-row [class.hidden]="!userInfo.isApp">
                     <ion-col col-6 no-padding>
                         <button ion-button block clear style="color: black;" (click)="cameraRequest()">
                             <img src="assets/new/camera.png" style="width: 55px; padding-right: 10px;" alt="Camera" />
-                            {{translate.text.editProfile.openCam}}
                         </button>
                     </ion-col>
                     <ion-col col-6 no-padding>
                         <button ion-button block clear style="color: black;" (click)="albumRequest()">
                             <img src="assets/new/album.png" style="width: 55px; padding-right: 10px;" alt="Album" />
-                            {{translate.text.editProfile.openAlb}}
                         </button>
                     </ion-col>
                 </ion-row>

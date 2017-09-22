@@ -1,0 +1,55 @@
+<!-- Generated template for the AddResolveComponent component -->
+<div class="outer-div">
+  <ion-slides pager>
+    <ion-slide>
+        <ion-grid no-padding style="height: 100%" class="show" [class.hidden]="info.dataSet">
+            <ion-row [class.hidden]="userInfo.isApp">
+                <ion-col col-6 text-center>
+                    <label>
+                        <img src="assets/new/camera.png"/>
+                        <input #file type="file" accept="image/*" capture="camera" class="fileInput"/>
+                    </label>
+                </ion-col>
+                <ion-col col-6 text-center>
+                    <label>
+                        <img src="assets/new/album.png"/>
+                        <input #file1 type="file" accept="image/*" class="fileInput"/>
+                    </label>
+                </ion-col>
+            </ion-row>
+            <ion-row [class.hidden]="!userInfo.isApp">
+                <ion-col col-6 text-center>
+                    <button ion-button clear (click)="cameraRequest()">
+                        <img src="assets/new/camera.png"/>
+                    </button>
+                </ion-col>
+                <ion-col col-6 text-center>
+                    <button ion-button clear (click)="albumRequest()">
+                        <img src="assets/new/album.png"/>
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <div *ngIf="info.dataSet" class="slide-image">
+            <img #thisImage (click)="presentImage(thisImage)" />
+        </div> 
+    </ion-slide>
+    <ion-slide>
+      <ion-item>
+        <ion-label floating style="color: green" [class.red-text]="desc.length < 1">Note(optional)</ion-label>
+        <ion-input [(ngModel)]="desc"></ion-input>
+      </ion-item>
+    </ion-slide>
+    <ion-slide>
+        <div *ngIf="info.dataSet" class="slide-image2">
+          <img #thisImage2 (click)="presentImage(thisImage2)" />
+        </div> 
+        <div class="status" *ngIf="info.dataSet">
+        </div>
+        <p *ngIf="desc.trim().length > 0">{{desc}}</p>
+        <p *ngIf="desc.trim().length < 1" style="color: #666" (click)="slides.slideTo(1,500)"><em>*No Description*</em></p>
+        <p *ngIf="!info.dataSet" class="error" (click)="slides.slideTo(0,500)" style="border: 1px solid red; border-radius: 5px;">No Image Added</p>
+        <p *ngIf="info.dataSet" class="confirm" text-wrap>Does Everthing Look Good?</p>
+    </ion-slide>
+  </ion-slides>
+</div>

@@ -9,16 +9,68 @@
         <img src="assets/images/buttons/arrow.png"/>
       </button>
     </div>
-
     <ion-slides>
-      <ion-slide style="background-color: yellow">
-        <div class="upper">
-          <img src="http://www.placehold.it/1000x700" />
+      <ion-slide>
+        <div class="upper" padding style="background-color: #3fbc05;">
+          <img src="assets/images/logo.png" />
         </div>
+        <div style="clear: both"></div>
         <div class="lower">
           <p>
-            this is a paragraph with words in it. very, very exciting words. Not much of a paragraph tho, still exciting.
+            {{translate.text.tutorial.help1}}
           </p>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="upper">
+          <img src="assets/images/map.png" />
+        </div>
+        <div style="clear: both"></div>
+        <div class="lower">
+          <p>
+              {{translate.text.tutorial.help2}}
+          </p>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="upper">
+          <img src="assets/images/plus.png" />
+        </div>
+        <div style="clear: both"></div>
+        <div class="lower">
+          <p>
+              {{translate.text.tutorial.help3}}
+          </p>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="upper">
+          <img src="assets/images/edit.png" />
+        </div>
+        <div style="clear: both"></div>
+        <div class="lower">
+          <p>
+              {{translate.text.tutorial.help4}}
+          </p>
+        </div>
+      </ion-slide>
+      <ion-slide *ngFor="let type of types">
+          <div text-center>
+            <img [src]="type.src" />
+          </div>
+          <div style="clear: both"></div>
+          <div class="lower">
+            <h1 text-center>
+                {{type.name}}
+            </h1>
+          </div>
+      </ion-slide> 
+      <ion-slide>
+        <h2 text-center style="left: 50%; top: 50%; position: absolute; transform: translate(-50%,-50%); width: 100%">
+          {{translate.text.tutorial.ready}}
+        </h2>
+        <div class="upper" padding style="background-color: #3fbc05;">
+          <img src="assets/images/logo.png" />
         </div>
       </ion-slide>
     </ion-slides>

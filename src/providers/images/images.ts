@@ -6,35 +6,54 @@ import { File } from '@ionic-native/file';
 
 //firebase imports
 import * as firebase from 'firebase';
+import { UserInfoProvider } from '../user-info/user-info';
 
 declare var window;
 
 @Injectable()
 export class ImagesProvider {
     data: any;
-    constructor(public camera: Camera, public mediaCapture: MediaCapture, public file: File) {
+    selectedFile: any;
+
+    constructor(public camera: Camera, public mediaCapture: MediaCapture, public file: File, public userInfo: UserInfoProvider) {
 
     }
     //takes image and uploads it to firebase
-    uploadToFirebase(){
+    uploadToFirebase(location){
         //gives the file an original name based on date and time
-        var fileName = "sample-" + new Date().getTime() + ".png";
+        var fileName = location + "-" + new Date().getTime() + ".png";
         
-        //return promise with image url and key when image is successfully uploaded
-        return {
-            promise: new Promise((resolve,reject) => {
-                firebase.storage().ref('/images/').child(fileName).putString(this.data, 'base64', {contentType: 'image/png'}).then((data) => {
-                    resolve(data.downloadURL);
-                }).catch((e) => {
-                    reject(e);
-                })            
-            }),
-            refName: fileName
-        };
+        if(!this.userInfo.isApp){
+            //return promise with image url and key when image is successfully uploaded
+            return {
+                promise: new Promise((resolve,reject) => {
+                    firebase.storage().ref('/images/').child(location).child(fileName).put(this.selectedFile).then((data) => {
+                        resolve(data.downloadURL);
+                    }).catch((e) => {
+                        reject(e);
+                    })            
+                }),
+                refName: fileName
+            };
+        }
+        else{
+            //return promise with image url and key when image is successfully uploaded
+            return {
+                promise: new Promise((resolve,reject) => {
+                    firebase.storage().ref('/images/').child(location).child(fileName).putString(this.data, 'base64', {contentType: 'image/png'}).then((data) => {
+                        resolve(data.downloadURL);
+                    }).catch((e) => {
+                        reject(e);
+                    })            
+                }),
+                refName: fileName
+            };
+        }
     }
     //clears current data on image
     doClear(){
         this.data = null;
+        this.selectedFile = null;
     }
     //get picture from camera
     doGetCameraImage(width, height){

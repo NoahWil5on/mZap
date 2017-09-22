@@ -148,7 +148,7 @@ export class AddPage {
                 //if the user submitted a photo with their post
             }else{
                 loader.present();
-                var promiseObject = this.images.uploadToFirebase();
+                var promiseObject = this.images.uploadToFirebase("posts");
                 promiseObject.promise.then(res => {
                     this.url = res;
                     this.refName = promiseObject.refName;

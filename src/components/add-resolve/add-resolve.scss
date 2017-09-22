@@ -1,0 +1,99 @@
+.ios, .md{
+    add-resolve {
+        .button-ios, .button-md{
+            height: auto;
+            padding: 0;
+        }
+        width: 100%;
+        height: 100%;
+        ion-slides{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 50%;
+            transform: translate(0,-50%);
+            ion-slide{
+                width: 100%;
+                height: 100%;
+                overflow: scroll;
+                .slide-image{
+                    position: relative;
+                    width: 100%;
+                    display: block;
+                    height: 10em;
+                    overflow: hidden;
+                    @media screen and (min-device-width: 360px) {
+                        height: 16em;
+                    }
+                    @media screen and (min-device-width: 500px) {
+                        height: 22em;
+                    }
+                    @media screen and (min-device-width: 800px) {
+                        height: 27em;
+                    }
+                    img{
+                        position: absolute;
+                        width: 100%;
+                        max-height: none !important;
+                        display: block;
+                    }
+                }   
+            }   
+            .slide-image2{
+                position: relative;
+                width: 100%;
+                display: block;
+                height: 5em;
+                overflow: hidden;
+                @media screen and (min-device-width: 360px) {
+                    height: 8em;
+                }
+                @media screen and (min-device-width: 500px) {
+                    height: 11em;
+                }
+                @media screen and (min-device-width: 800px) {
+                    height: 13em;
+                }
+                img{
+                    position: absolute;
+                    width: 100%;
+                    max-height: none !important;
+                    display: block;
+                }
+            } 
+            .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets{
+                bottom: 0px;
+            }      
+        }
+        .red-text{
+            color: red !important;
+        }
+        .confirm{
+            border: 1px solid #59D000; 
+            border-radius: 5px; 
+            font-style: italic;
+            color:  #59D000;
+        }
+        .status{
+            pointer-events: none;
+            position: absolute;
+            width: calc(100%) !important;
+            background-color: black;
+            color: white;
+            position: bottom;
+            height: 2em;
+            font-size: 16pt;
+            text-align: center;
+            z-index: 1;
+            transform: translate(0,-100%);
+            background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 99%, rgba(0,0,0,1) 100%);
+            background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 99%,rgba(0,0,0,1) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 99%,rgba(0,0,0,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 );
+        }
+        .outer-div{
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

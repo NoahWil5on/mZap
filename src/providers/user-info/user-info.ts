@@ -16,7 +16,10 @@ export class UserInfoProvider {
     filterReports: any;
     profileView: any;
     loggedIn: boolean = false;
+    isApp: boolean = false;
     activeData: any;
+    
     constructor() {
+        this.isApp = !document.URL.startsWith('http');
     }
 }

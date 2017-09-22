@@ -10,7 +10,7 @@ export class TranslatorProvider {
     //English verstion of Text
     en: any = {
         add: {
-            describe: "Description",
+            describe: "Add Description",
             openCam: "Open Camera",
             openAlb: "Open Album",
             username: "Show Username?",
@@ -19,7 +19,9 @@ export class TranslatorProvider {
             imageAlertTitle: "Are you sure you want to submit this without a photo?",
             imageAlertSubTitle: "Adding a photo will allow other users to better assess your report",
             cancel: "Cancel",
-            error: "Fill out all fields"
+            error: "Fill out all fields",
+            thanks: "Thanks!",
+            share: "Tell your friends about mZAP!"
         },
         confirmation: {
             success: "Successfully Submitted!",
@@ -185,6 +187,13 @@ export class TranslatorProvider {
             enter: "Enter Email",
             send: "Email Me"
         },
+        tutorial:{
+            help1: "Thank you for creating an account! mZAP is an app that allows you to report things in your community that need to be cleaned up and fixed, including standing water, trash, and broken roofs among others. You can then view these reports and organize groups to clean up these issues.",
+            help2: "Here is the map. The blue location icon marks your location. Each red icon shows a report and its type.",
+            help3: "You can make a report by clicking the 'plus' button. Then you can take a picture, add a description, and upload it to the map!",
+            help4: "Other users can then view your post by clicking on it on the map. There they can comment and upload photos of the work they've done to improve or resolve the situation.",
+            ready: "Thats it! Now you're ready to become an mZAPPER!"
+        },
         other: {
             cnd: "Cats/Dogs",
             complete: "Complete",
@@ -193,6 +202,11 @@ export class TranslatorProvider {
             pest: "Pests",
             trash: "Trash",
             bug: "Mosquitos",
+            water: "Standing Water",
+            road: "Blocked Road",
+            tree: "Fallen Tree",
+            rocked: "Rocks in Road",
+            electricity: "Exposed Electricity",
             language: "ENGLISH"
         }
     }
@@ -208,7 +222,9 @@ export class TranslatorProvider {
             imageAlertTitle: "¿Está seguro de querer enviar sin foto?",
             imageAlertSubTitle: "Incluir una foto ayudará a otros usuarios a entender mejor su reporte",
             cancel: "Cancelar",
-            error: "Leene todos los espacios"
+            error: "Leene todos los espacios",
+            thanks: "¡Gracias!",
+            share: "¡Dile a tus amigos acerca mZAP!"
         },
         confirmation: {
             success: "¡Envio Exitoso!",
@@ -374,6 +390,13 @@ export class TranslatorProvider {
             enter: "Ingrese Correo Electrónico",
             send: "Envíeme un Correo Electrónico"
         },
+        tutorial:{
+            help1: "Gracias por crear una cuenta! mZAP es una aplicación que te permite reportar situaciones o cosas en tu comunidad que necesitan ser limpiadas y arregladas incluyendo estancamientos de agua, basura y techos rotos, entre otros. Tú puedes ver estos reportes y organizar grupos para limpiar estos problemas.",
+            help2: "Este es el mapa. El icono azul demarca tu ubicación. Cada icono rojo muestra un reporte y su características.",
+            help3: "Tú puedes hacer un reporte haciendo click en el botón 'mas' (+)). Después, puedes tomar una foto, añadir una descripción y subirla al mapa!",
+            help4: "Otros usuarios podrán entonces ver tus reportes haciendo click sobre ellos en el mapa. Allí, ellos podrán hacer comentarios y subir fotos del trabajo que han hecho para mejorar o resolver la situación.",
+            ready: "¡Esto es todo! ¡Ya estas listo para ser un mZAPPER!"
+        },
         other: {
             cnd: "Gatos/Perros",
             complete: "Completar",
@@ -382,6 +405,11 @@ export class TranslatorProvider {
             pest: "Plagas",
             trash: "Desperdicio/Basura",
             bug: "Mosquitos",
+            water: "Agua Estancada",
+            road: "Camino Bloqueado",
+            tree: "Arbol Caido",
+            rocked: "Rocas en la Carretera",
+            electricity: "Electricidad Expuesta",
             language: "ESPAÑOL"
         }
     }

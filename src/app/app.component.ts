@@ -1,9 +1,10 @@
 //vanilla ionic imports
 import { Component, ViewChild } from '@angular/core';
-import { Platform, MenuController, Nav} from 'ionic-angular';
+import { Platform, MenuController, Nav, Events} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
+// import { Push, PushToken } from '@ionic/cloud-angular';
 // import { CallNumber } from '@ionic-native/call-number';
 
 //page imports
@@ -33,12 +34,11 @@ export class MyApp {
     imgSrc: any = '';
     rootPage: any;
     
-    mapPage = MapPage;
     ratedPage = TopRatedPage;
     profilePage = ProfilePage;
     settingsPage = SettingsPage;
     
-constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, /*private caller: CallNumber*/) {
+constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, public events: Events, /*public push: Push private caller: CallNumber*/) {
         platform.ready().then(() => {
             
             statusBar.styleDefault();
@@ -64,6 +64,14 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
                 this.runLogin();
             });
         });
+        // this.push.register().then((t: PushToken) => {
+        //     return this.push.saveToken(t);
+        // }).then((t: PushToken) => {
+        //     console.log('Token saved:', t.token);
+        // });
+        // this.push.rx.notification().subscribe((msg) => {
+        //     alert(msg.title + ': ' + msg.text);
+        // });
         /*
         setTimeout(function updatePosition() {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -128,21 +136,18 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
     }
     //open top page
     topRated(){
-        this.click.click('topRated');
         this.nav.setRoot(TopRatedPage);
         this.userInfo.pageState = 'top';
         this.menuCtrl.close();
     }
     //open map page
     map(){
-        this.click.click('map');
         this.nav.setRoot(MapPage);
         this.userInfo.pageState = 'map';
         this.menuCtrl.close();
     }
     //open profile page
     profile(){
-        this.click.click('profile');
         this.userInfo.profileView = this.afAuth.auth.currentUser.uid;
         this.nav.setRoot(ProfilePage);
         this.userInfo.pageState = 'profile';
@@ -150,26 +155,22 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
     }
     //open register page
     register(){
-        this.click.click('register');
         this.nav.push(RegisterPage);
         this.menuCtrl.close();
     }
     //open settings page
     settings(){
-        this.click.click('settings');
         this.nav.setRoot(SettingsPage);
         this.userInfo.pageState = 'settings';
         this.menuCtrl.close();
     }
     //open reports page
     reports(){
-        this.click.click('reports');
         this.nav.setRoot(ReportsPage);
         this.userInfo.pageState = 'reports';
         this.menuCtrl.close();
     }
     home(){
-        this.click.click('home');
         this.nav.setRoot(MapPage);
         this.menuCtrl.close();
     }
@@ -181,6 +182,14 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
                 this.imgSrc = snapshot.val().url;
             });
         }
+    }
+    tutorial(){
+        this.nav.setRoot(MapPage);
+        this.userInfo.pageState = 'map';
+        setTimeout(() => {
+            this.menuCtrl.close(); 
+            this.events.publish('tut:open');
+        }, 100); 
     }
     //check if current user is signed in
     checkLogin(){

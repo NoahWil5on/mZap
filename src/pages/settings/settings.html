@@ -24,10 +24,23 @@
     <button ion-button (click)="logout()" *ngIf="isLoggedIn()">{{translate.text.settings.logout}}</button>
     <button ion-button (click)="goLogin()" *ngIf="!isLoggedIn()">{{translate.text.settings.return}}</button>
     -->
-    <ion-select [(ngModel)]="language" (ionChange)="setLang()">
-        <ion-option value="en">English</ion-option>
-        <ion-option value="es">Español</ion-option>
-    </ion-select>
+    <div>
+        <h2>Notifications</h2>
+        <p class="error">These are not operational yet</p>
+        <ion-item>
+            <ion-label>Your Posts</ion-label>
+            <ion-toggle color="main"></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>Post Resolutions</ion-label>
+            <ion-toggle color="main"></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>Post Comments</ion-label>
+            <ion-toggle color="main"></ion-toggle>
+        </ion-item> 
+    </div>
+    <button ion-button clear class="language" (click)="setLang()">{{translate.text.other.language}}</button>
     <!--
     <button ion-button (click)="about()">About</button>
     -->

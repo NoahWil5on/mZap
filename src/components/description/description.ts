@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 
 import { AddComponent } from '../add/add'
+import { TranslatorProvider } from '../../providers/translator/translator';
 
 @Component({
   selector: 'description',
@@ -8,7 +9,7 @@ import { AddComponent } from '../add/add'
 })
 export class DescriptionComponent {
 
-  constructor(public add: AddComponent) {
+  constructor(public add: AddComponent, public translate: TranslatorProvider) {
   }
   ionViewDidLoad(){
   }
