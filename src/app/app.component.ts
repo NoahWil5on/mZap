@@ -14,6 +14,7 @@ import { RegisterPage } from '../pages/register/register'
 import { ProfilePage } from '../pages/profile/profile';
 import { SettingsPage } from '../pages/settings/settings';
 import { ReportsPage } from '../pages/reports/reports';
+import { NotificationsPage } from '../pages/notifications/notifications';
 //import { HomePage } from '../pages/home/home';
 
 //provider imports
@@ -33,6 +34,7 @@ export class MyApp {
     name: any = '';
     imgSrc: any = '';
     rootPage: any;
+    notificationCount: any = 0;
     
     ratedPage = TopRatedPage;
     profilePage = ProfilePage;
@@ -170,16 +172,26 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
         this.userInfo.pageState = 'reports';
         this.menuCtrl.close();
     }
-    home(){
-        this.nav.setRoot(MapPage);
+    notifications(){
+        this.nav.setRoot(NotificationsPage);
+        this.userInfo.pageState = 'notifications';
         this.menuCtrl.close();
     }
     //open side nav
     openMenu(){
+        var self = this;
         if(this.checkLogin()){
             firebase.database().ref('users').child(this.afAuth.auth.currentUser.uid).once('value').then((snapshot) => {
                 this.name = snapshot.val().name;
                 this.imgSrc = snapshot.val().url;
+            });
+            firebase.database().ref(`/notifications/${this.afAuth.auth.currentUser.uid}`).once('value', snapshot => {
+                if(snapshot.hasChild('count')){
+                    self.notificationCount = snapshot.val().count;
+                }
+                else{
+                    self.notificationCount = 0;
+                }
             });
         }
     }

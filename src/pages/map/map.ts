@@ -23,12 +23,21 @@ export class MapPage {
   tut: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userInfo: UserInfoProvider, public events: Events /*private afAuth: AngularFireAuth*/) {
+    var self = this;
     this.events.subscribe('tut:open', () => {
       this.tut = true;
       // this.setup().then(token => {
       //   this.storeToken(token);
       // });
-    })
+    });
+    setTimeout(function() {
+      if(self.userInfo.openInfo){
+        self.infoShow = true;
+        self.addShow = false;
+        self.tut = false;
+        self.userInfo.openInfo = false;
+      }
+    }, 50); 
   }
   // ionViewDidLoad(){
   //   var fcm = setInterval(() => {

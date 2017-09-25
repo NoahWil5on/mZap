@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+      <ion-grid class="ionic-title">
+          <ion-row>
+              <ion-col text-left>
+                  <ion-buttons start>
+                      <button ion-button clear item-start (click)="openMenu()" class='nav-burg'>
+                          <img class="nav-burg" src="assets/hamburger.png" alt="nav"/>
+                      </button>
+                  </ion-buttons>
+              </ion-col>
+              <ion-col col-auto class="title">
+                  Notifications
+              </ion-col>
+              <ion-col></ion-col>
+          </ion-row>
+      </ion-grid>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <div *ngFor="let note of notes">
+        <ion-item [class.blue]="!note.seen" (click)="openPost(note.key)">
+            <h2>{{note.name}}</h2>
+            <p>{{note.message}}</p>
+        </ion-item>
+    </div>
+</ion-content>

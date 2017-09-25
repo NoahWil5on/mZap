@@ -2,7 +2,7 @@
 
 <!-- info view -->
 <div class="full" style="pointer-events: none">
-  <div class="section" [class.main]="checkState('comment') || checkState('info')">
+  <div class="section" [class.main]="checkState('comment') || checkState('info')" [class.resolve]="!userInfo.isMobile">
     <ion-grid class="check-button" [class.no-click]="!checkState('comment')">
       <ion-row>
         <ion-col text-center>

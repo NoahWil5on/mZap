@@ -9,6 +9,7 @@ import { AboutPage } from '../about/about';
 
 //firebase imports
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase';
 
 //provider imports
 import { TranslatorProvider } from '../../providers/translator/translator';
@@ -22,15 +23,47 @@ import { ClickProvider } from '../../providers/click/click';
 export class SettingsPage {
     language: any;
 
+    myPost: boolean = true;
+    comments: boolean = true;
+    resolves: boolean = true;
+
     constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider, public click: ClickProvider) {
         this.storage.get('mzap_language').then(language => {
             this.language = language;
         }).catch(e => {
             this.language = "es";
         });
+        firebase.database().ref(`users/${this.afAuth.auth.currentUser.uid}`).once('value', snapshot => {
+            if(snapshot.hasChild('notifyComments')){
+                this.comments = snapshot.val().notifyComments
+            }
+            else{
+                this.comments = true;
+            }
+            if(snapshot.hasChild('notifyMyPosts')){
+                this.myPost = snapshot.val().notifyMyPosts
+            }
+            else{
+                this.myPost = true;
+            }
+            if(snapshot.hasChild('notifyResolves')){
+                this.resolves = snapshot.val().notifyResolves
+            }
+            else{
+                this.resolves = true;
+            }
+        });
     }
 
     ionViewDidLoad() {
+        
+    }
+    toggle(){
+        firebase.database().ref(`users/${this.afAuth.auth.currentUser.uid}`).update({
+            notifyComments: this.comments,
+            notifyMyPosts: this.myPost,
+            notifyResolves: this.resolves
+        })
     }
     //sign user out if signed in
     logout(){

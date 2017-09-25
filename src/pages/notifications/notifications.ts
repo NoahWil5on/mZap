@@ -1,0 +1,71 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams, MenuController, Events } from 'ionic-angular';
+import { MapPage } from '../map/map'
+
+import { UserInfoProvider } from '../../providers/user-info/user-info';
+
+import * as firebase from 'firebase';
+import { AngularFireAuth } from 'angularfire2/auth';
+
+@IonicPage()
+@Component({
+  selector: 'page-notifications',
+  templateUrl: 'notifications.html',
+})
+export class NotificationsPage {
+
+  notes: any = [];
+  change: any = [];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, public afAuth: AngularFireAuth, public userInfo: UserInfoProvider, public events: Events) {
+    var self = this;
+    firebase.database().ref(`notifications/${this.afAuth.auth.currentUser.uid}`).once('value').then(snapshot => {
+      snapshot.forEach(function(post){
+        if(typeof post.val() == 'number') return;
+        firebase.database().ref(`notifications/${self.afAuth.auth.currentUser.uid}/${post.key}`).once('value').then(snap =>{
+          snap.forEach(function(item){
+            var note = {
+              message: item.val().message,
+              name: item.val().name,
+              seen: item.val().seen,
+              time: item.val().time,
+              key: post.key
+            }
+            self.notes.unshift(note);
+            if(!note.seen){
+              self.change.push({
+                key: post.key,
+                type: item.key
+              });
+            }
+          })
+        })
+      })
+    })
+  }
+  ionViewWillLeave(){
+    if(this.afAuth.auth.currentUser == null) return;
+    this.change.forEach(item => {
+      firebase.database().ref(`notifications/${this.afAuth.auth.currentUser.uid}/${item.key}/${item.type}`).update({seen: true});
+    });
+    firebase.database().ref(`notifications/${this.afAuth.auth.currentUser.uid}`).update({count: 0});
+  }
+  openPost(key){
+    var self = this;
+    this.navCtrl.setRoot(MapPage);
+    firebase.database().ref(`/positions/${key}`).once('value', snapshot => {      
+      self.userInfo.activeData = snapshot.val();    
+    }).then(() => {
+      setTimeout(function() {
+        self.navCtrl.setRoot(MapPage);
+        self.userInfo.pageState = 'map';
+        self.userInfo.openInfo = true;
+      }, 200);
+      
+    })
+  }
+  //open nav menu
+  openMenu(){
+      this.menuCtrl.open();
+  }
+}

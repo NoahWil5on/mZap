@@ -29,15 +29,15 @@
         <p class="error">These are not operational yet</p>
         <ion-item>
             <ion-label>Your Posts</ion-label>
-            <ion-toggle color="main"></ion-toggle>
+            <ion-toggle color="main" [(ngModel)]="myPost" (ionChange)="toggle()"></ion-toggle>
         </ion-item>
         <ion-item>
             <ion-label>Post Resolutions</ion-label>
-            <ion-toggle color="main"></ion-toggle>
+            <ion-toggle color="main" [(ngModel)]="resolves" (ionChange)="toggle()"></ion-toggle>
         </ion-item>
         <ion-item>
             <ion-label>Post Comments</ion-label>
-            <ion-toggle color="main"></ion-toggle>
+            <ion-toggle color="main" [(ngModel)]="comments" (ionChange)="toggle()"></ion-toggle>
         </ion-item> 
     </div>
     <button ion-button clear class="language" (click)="setLang()">{{translate.text.other.language}}</button>

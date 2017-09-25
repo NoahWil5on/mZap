@@ -146,6 +146,15 @@
                 background: none;
             }
         }
+        .top-div{
+            top: 15px;
+            position: absolute;
+            z-index: 5;
+            button{
+                display: block;
+                background: none;
+            }
+        }
         .nav-div-right{
             right: 8px;
         }

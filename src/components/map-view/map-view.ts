@@ -116,7 +116,9 @@ export class MapViewComponent {
             }else{
                 self.myOptions.center = latLng;
             }
-            self.myMarker.setPosition(latLng);
+            if(self.myMarker){
+                self.myMarker.setPosition(latLng);
+            }
         }, null, { enableHighAccuracy: true, maximumAge: 3000, timeout: 5000 });
     }
     //sets personal marker and circle

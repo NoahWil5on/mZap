@@ -4,6 +4,11 @@
             height: auto;
             padding: 0;
         }
+        label{
+            img{
+                cursor: pointer;
+            }
+        }
         .fileInput{
             width: .1px;
             height: .1px;
