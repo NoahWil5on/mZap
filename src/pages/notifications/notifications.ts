@@ -31,7 +31,7 @@ export class NotificationsPage {
               time: item.val().time,
               key: post.key
             }
-            self.notes.unshift(note);
+            self.notes.push(note);
             if(!note.seen){
               self.change.push({
                 key: post.key,
@@ -39,6 +39,8 @@ export class NotificationsPage {
               });
             }
           })
+        }).then(_ => {
+          self.notes.sort(function(a, b){ return b.time-a.time });
         })
       })
     })

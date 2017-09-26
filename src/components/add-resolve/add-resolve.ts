@@ -144,7 +144,13 @@ export class AddResolveComponent {
     promiseObject.promise.then(res => {
       let url = res;
       let refName = promiseObject.refName;
-      let data = { url: url, refName: refName, info: this.desc };
+      let data = { 
+        url: url, 
+        refName: refName, 
+        info: this.desc, 
+        id: this.afAuth.auth.currentUser.uid,
+        name: this.afAuth.auth.currentUser.displayName
+      };
 
       //get link to resolution info
       var key = firebase.database().ref('/resolves/').child(this.userInfo.activeData.key).push(data).key;
