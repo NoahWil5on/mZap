@@ -21,6 +21,7 @@ export class MapPage {
   mapView: any;
   loginState: string = 'login';
   tut: boolean = false;
+  mapState: string = "comment";
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userInfo: UserInfoProvider, public events: Events /*private afAuth: AngularFireAuth*/) {
     var self = this;
@@ -32,10 +33,7 @@ export class MapPage {
     });
     setTimeout(function() {
       if(self.userInfo.openInfo){
-        self.infoShow = true;
-        self.addShow = false;
-        self.tut = false;
-        self.userInfo.openInfo = false;
+        self.mapView.doOpen(self.userInfo.activeData,null)
       }
     }, 50); 
   }

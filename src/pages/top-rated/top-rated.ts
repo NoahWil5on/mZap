@@ -41,9 +41,9 @@ export class TopRatedPage {
     callback(){
         var self = this;
         var ref = firebase.database().ref('/users/');
-        ref.orderByChild("rating").limitToLast(5).once("value").then(function(snapshot) {
+        ref.orderByChild("rating").once("value").then(function(snapshot) {
             snapshot.forEach(function(user){
-                var imageURL = "http://www.placehold.it/100x100";
+                var imageURL = "../assets/profile.png";
                 if(user.val().url){
                     imageURL = user.val().url;
                 }
@@ -52,9 +52,15 @@ export class TopRatedPage {
                     id: user.key,
                     name: user.val().name,
                     rating: user.val().rating,
-                    img: imageURL
+                    img: imageURL,
+                    place: "",
                 });
-            })
+            });
+            self.users.sort(function(a, b){ return b.rating-a.rating });
+            self.users = self.users.splice(0,5);
+            for(var i = 0; i < 5; i++){
+                self.users.place = "#"+ (i+1);
+            }
         })
     }
     //Check out user's profile

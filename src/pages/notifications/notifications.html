@@ -19,10 +19,10 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
     <div *ngFor="let note of notes">
-        <ion-item [class.blue]="!note.seen" (click)="openPost(note.key)">
-            <h2>{{note.name}}</h2>
+        <ion-item  [class.blue]="!note.seen" (click)="openPost(note.key)">
+            <h2><b>{{note.name}}</b></h2>
             <p>{{note.message}}</p>
         </ion-item>
     </div>

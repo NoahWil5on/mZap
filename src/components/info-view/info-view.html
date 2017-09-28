@@ -1,10 +1,10 @@
 <div class="show" [class.hidden]="hide" style="position: relative" #mainContent>
-    <ion-grid no-padding *ngIf="myData.url" id="image-grid">
+    <!-- <ion-grid no-padding *ngIf="myData.url" id="image-grid">
         <ion-row>
             <ion-col no-padding>
                 <img [src]="myData.url" width="200" alt="Placeholder" #thisImage (click)="presentImage(thisImage)" />
             </ion-col>
-            <!-- <ion-col col-auto class="likes" [class.row]="!myData.url" no-padding>
+            <ion-col col-auto class="likes" [class.row]="!myData.url" no-padding>
             <ion-row text-center>
                 <button ion-button (click)="like(1)" full clear [class.greenButton]="likeValue == 1">
                     <ion-icon name="thumbs-up"></ion-icon>
@@ -18,9 +18,9 @@
                     <ion-icon name="thumbs-down"></ion-icon>
                 </button>
             </ion-row>
-            </ion-col> -->
+            </ion-col>
         </ion-row>
-    </ion-grid>
+    </ion-grid> 
     <div class="status">
         <p>{{status}}</p>
     </div>
@@ -34,7 +34,7 @@
                 <button ion-button block clear (click)="resolve()">Resolve</button>
             </ion-col>
         </ion-row>
-    </ion-grid>
+    </ion-grid>-->
     <div id="comment" #commentContent>
         <div class="messages">
             <div *ngFor="let message of messages">

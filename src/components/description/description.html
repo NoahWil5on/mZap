@@ -1,7 +1,7 @@
 <div>
   <ion-item>
     <ion-label floating style="color: green" [class.red-text]="add.desc.length < 1">{{translate.text.add.describe}}</ion-label>
-    <ion-input [(ngModel)]="add.desc"></ion-input>
+    <ion-input maxlength="120" [(ngModel)]="add.desc"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label>{{translate.text.add.username}}</ion-label>

@@ -63,7 +63,7 @@ export class InfoViewComponent {
   ngAfterViewInit(){
     var element = this.infoContent.nativeElement.parentElement;
     this.events.subscribe('backToInfo', () => {
-      this.hide = false;
+      //this.hide = false;
 
       //smooth scrolling to top
       var startTop = element.scrollTop;
@@ -112,11 +112,11 @@ export class InfoViewComponent {
   //called when user likes a post
   like(value){
     this.click.click('mapLike');
-    var self = this;
-    this.likeProvider.like(this.userInfo.activeData.key, value, function(likes){
-        //updates post locally with callback function
-        self.userInfo.activeData.likes = likes;
-    });
+    //var self = this;
+    // this.likeProvider.like(this.userInfo.activeData.key, value, function(likes){
+    //     //updates post locally with callback function
+    //     self.userInfo.activeData.likes = likes;
+    // });
     this.likeValue = value;
   }
   //show pop up of image when image is clicked on

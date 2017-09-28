@@ -131,7 +131,6 @@ export class ReportsPage {
     }
     //go to location of point on map
     showOnMap(lat, lng){
-        this.click.click('reportsShowOnMap');
         //remove filters and update menu pageState
         this.userInfo.filter = undefined;
         this.userInfo.pageState = 'map';

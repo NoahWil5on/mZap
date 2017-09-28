@@ -10,15 +10,15 @@
                 <p>{{resolve.info}}</p>
             </ion-slide>
             <ion-slide *ngIf="resolves.length < 1">
-                <p style="color: #666">No one has submitted a resolve yet. Gather up your friends and resolve this post!</p>
+                <p style="color: #666">{{translate.text.resolve.noPost}}</p>
             </ion-slide>
         </ion-slides>
         <ion-grid id="button-grid">
             <ion-row>
-                <ion-col>
-                    <button ion-button block clear (click)="add()">Add a Resolve!</button>
+                <ion-col col-6>
+                    <button ion-button block clear (click)="add()">{{translate.text.resolve.add}}</button>
                 </ion-col>
-                <ion-col *ngIf="checkLogin()" style="border-left: 1px solid #ddd">
+                <ion-col *ngIf="checkLogin()" style="border-left: 1px solid #ddd" col-6>
                     <button ion-button block clear (click)="updateWindow()">{{translate.text.infoWindow.editPost}}</button>
                 </ion-col>
             </ion-row>

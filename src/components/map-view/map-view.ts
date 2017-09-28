@@ -14,6 +14,12 @@ import { TranslatorProvider } from '../../providers/translator/translator';
 import { LikeProvider } from '../../providers/like/like';
 import { ClickProvider } from '../../providers/click/click';
 
+//image popup viewing import
+import { ImageViewerController } from 'ionic-img-viewer';
+
+//geographic distance calculator import
+// import geolib from 'geolib';
+
 //firebase imports
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -38,6 +44,12 @@ export class MapViewComponent {
     markers: any = [];
     heatMapData: any = [];
 
+    dropDown: boolean = false;
+    distance: any = 0;
+    likeValue: any = false;
+    likes: any = 0;
+    deactivate: boolean = false;
+
     myMarker: any = undefined;
     myCircle: any = undefined;
     myOptions: any = undefined;
@@ -51,7 +63,7 @@ export class MapViewComponent {
     myActiveMarker: any;
 
     /*Instantiate all imported classes*/
-    constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController, public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth, public zones: ZonesProvider, public menuCtrl: MenuController, public userInfo: UserInfoProvider, public translate: TranslatorProvider, public likeProvider: LikeProvider, public click: ClickProvider, public mapPage: MapPage, public events: Events) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController, public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth, public zones: ZonesProvider, public menuCtrl: MenuController, public userInfo: UserInfoProvider, public translate: TranslatorProvider, public likeProvider: LikeProvider, public click: ClickProvider, public mapPage: MapPage, public events: Events, public imageViewerCtrl: ImageViewerController) {
         mapPage.mapView = this;
 
     }
@@ -83,7 +95,6 @@ export class MapViewComponent {
         this.runNavigation();
     }
     toggleMap() {
-        this.click.click('mapToggleMap');
         this.hybrid = !this.hybrid;
         if (this.hybrid) {
             this.map.setMapTypeId(google.maps.MapTypeId.HYBRID);
@@ -94,7 +105,6 @@ export class MapViewComponent {
         }
     }
     setCenter() {
-        this.click.click('mapSetCenter');
         var self = this;
         //check if the user is allowing you to see their position
         navigator.geolocation.getCurrentPosition((position) => {
@@ -206,11 +216,11 @@ export class MapViewComponent {
             refName: data.refName,
             status: "To Do",
             key: "",
-            date: "",
+            date: Date.now(),
         }
-        var today = new Date();
-        var date = (today.getMonth() + 1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        newMarker.date = date;
+        //var today = new Date();
+        //var date = (today.getMonth() + 1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        //newMarker.date = date;
 
         /*Push point to firebase and give it a reference*/
         var key = this.fireDB.list('positions').push(newMarker).key;
@@ -237,6 +247,86 @@ export class MapViewComponent {
         if (this.afAuth.auth.currentUser)
             return true;
         return false;
+    }
+    //show pop up of image when image is clicked on
+    presentImage(myImage){
+        let imageViewer = this.imageViewerCtrl.create(myImage);
+        imageViewer.present();
+    }
+    //runs if the map is touched
+    //removes info drop down
+    mapTouch(){
+        this.dropDown = false;
+        this.userInfo.activeData = {};
+    }
+    translateStatus(status){
+        //console.log(status);
+        switch(status){
+            case 'Complete':
+                return this.translate.text.other.complete;
+            case 'To Do':
+                return this.translate.text.other.todo;
+            default:
+                break;
+        }
+    }
+    translateType(type){
+        switch(type){
+            case 'bugs':
+                return this.translate.text.other.bug;
+            case 'trash':
+                return this.translate.text.other.trash;
+            case 'building':
+                return this.translate.text.other.building;
+            case 'pest':
+                return this.translate.text.other.pest;
+            case 'cnd':
+              return this.translate.text.other.cnd;
+            case 'road':
+              return this.translate.text.other.road;
+            case 'electricity':
+              return this.translate.text.other.electricity;
+            case 'tree':
+              return this.translate.text.other.tree;
+            case 'rocked':
+              return this.translate.text.other.rocked;
+            case 'water':
+              return this.translate.text.other.water;
+            default:
+                break;
+          };
+    }
+    likeable(){
+        var self = this;
+        this.likeProvider.likeable(this.userInfo.activeData.key, function(value){
+            //ngZone.run updates the DOM otherwise change is not visible
+            self.ngZone.run(() =>{
+                if(value == 0 || value == -1){
+                    self.likeValue = false;
+                }   
+                else{
+                    self.likeValue = true;
+                }
+                self.deactivate = false;
+            });
+        });
+    }
+    like(){
+        this.deactivate = true;
+        var self = this;
+        this.likeProvider.like(this.userInfo.activeData.key, function(val){
+            self.likes = val;
+            self.likeable();
+            self.deactivate = false;
+        })
+    }
+    openChat(){
+        this.mapPage.infoShow = true;
+        this.mapPage.mapState = "comment";
+    }
+    openResolve(){
+        this.mapPage.infoShow = true;
+        this.mapPage.mapState = "edit";
     }
     /*Is called anytime a point is found in the database or created*/
     makeMarker(data) {
@@ -289,13 +379,7 @@ export class MapViewComponent {
         var self = this;
         /*Allows an info window to pop up when a point is clicked*/
         google.maps.event.addListener(marker, 'click', function(e){
-            self.myActiveData = data;
-            self.mapPage.infoShow = true;
-            self.userInfo.activeData = data;
-            if(!self.userInfo.activeData.likes){
-             self.userInfo.activeData.likes = 0;
-            }
-            self.myActiveMarker = marker;
+            self.doOpen(data, marker);
         });
         google.maps.event.addListener(this.map, 'zoom_changed', function (e) {
             var zoom = self.map.getZoom();
@@ -308,6 +392,22 @@ export class MapViewComponent {
                 self.showButtons = false;
             }
         })
+    }
+    doOpen(data, marker){
+        this.deactivate = true;
+        this.myActiveData = data;
+        this.dropDown = true;            
+        // self.distance = geolib.getDistance(
+        //     {latitude: marker.getPosition().lat(), longitude: marker.getPosition().lng()},
+        //     {latitude: self.myMarker.getPosition().lat(), longitude: self.myMarker.getPosition().lng()})/1000;
+        //self.mapPage.infoShow = true;
+        this.userInfo.activeData = data;
+        if(!this.userInfo.activeData.likes){
+            this.userInfo.activeData.likes = 0;
+        }
+        this.likeValue = false;
+        this.likeable();
+        this.myActiveMarker = marker;
     }
     //make sure each point passes filter
     checkPoint(item) {
@@ -393,7 +493,7 @@ export class MapViewComponent {
             this.userInfo.lat = this.map.getCenter().lat();
             this.userInfo.lng = this.map.getCenter().lng();
             this.userInfo.zoom = this.map.getZoom();
-        })
+        });
         //if the user let you see their position then place
         //a blinking dot at their location
         if (bool) {
@@ -422,6 +522,7 @@ export class MapViewComponent {
             this.animate(latLng);
         }
         google.maps.event.addListener(this.map, 'zoom_changed', function (e) {
+            self.mapTouch()
             if(self.myCircle == undefined || !self.myCircle || self.myCircle == null) return;
             var zoom = self.map.getZoom();
             if (zoom > 12) {

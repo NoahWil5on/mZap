@@ -25,9 +25,15 @@
         ion-row{
             border-bottom: 1px solid #eee;
             .show{
+                font-size: 12pt;
                 text-align: left;
                 display: inline; 
                 color: #59D000;
+            }
+            ion-col{
+                p{
+                    font-size: 10pt;
+                }
             }
         }
         .hidden{

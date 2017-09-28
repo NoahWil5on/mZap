@@ -92,13 +92,53 @@
             margin: 0px auto;
             text-align: center;
         }
+        .menu-share{
+            z-index: 10;
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translate(-50%, 0);
+            display: block;
+            width: 80%;
+            background-color: #222;
+            font-weight: bold;
+            margin: 0px auto;
+            text-align: center;
+            transition: all .5s;
+        }
+        .menu-sharing{
+            bottom: 120px;
+            transition: all .5s;
+        }
+        .show-symbols{
+            opacity: 1 !important;
+            //transition: all .3s;
+        }
+        .hide-symbols{
+            border-radius: 3px;
+            font-weight: bold;
+            background-color: white;
+            z-index: 0;
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translate(-50%, 0);
+            display: block;
+            width: 75%;
+            margin: 0px auto;
+            text-align: center;
+            opacity: 0;
+            transition: all .3s;
+            transition-delay: .2s;
+        }
     }
     .no-height{
         height: 0 !important;
     }
     header{
         position: relative;
-        background-image: url(../assets/images/beach.jpg);
+        background-image: url(../assets/images/flag_wave.jpg);
+        background-position-y: center;
         background-size: cover;
         .menu-shader{
             width: 100%;

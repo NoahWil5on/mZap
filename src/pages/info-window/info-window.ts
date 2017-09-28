@@ -87,7 +87,6 @@ export class InfoWindowPage {
         this.checkStatus();
     }
     openEdit(){
-        this.click.click('infoWindowEditPost');
         let editModal = this.modalCtrl.create(EditPostPage, {data: this.data});
         editModal.onDidDismiss(data => {
             if(data){
@@ -98,7 +97,6 @@ export class InfoWindowPage {
     }
     //show pop up of image when image is clicked on
     presentImage(myImage){
-        this.click.click('infoWindowPresentImage');
         let imageViewer = this.imageViewerCtrl.create(myImage);
         imageViewer.present();
     }

@@ -28,6 +28,7 @@ export class ProfilePage {
 
     reports: any = [];
     user: any = {};
+    rating: any = {};
     constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, 
                  public afAuth:    AngularFireAuth, public translate: TranslatorProvider, 
                  public imageViewerCtrl: ImageViewerController, public userInfo: UserInfoProvider,
@@ -42,6 +43,7 @@ export class ProfilePage {
         firebase.database().ref('/positions/').orderByChild('id').equalTo(this.userInfo.profileView)
         .once('value').then(snapshot => {
             snapshot.forEach(function(item){
+                if(!item.val().show && self.afAuth.auth.currentUser.uid != self.userInfo.profileView) return
                 //create object to hold data on each post
                 var obj = {
                     type: item.val().type,
@@ -84,6 +86,16 @@ export class ProfilePage {
         })
         firebase.database().ref('users').child(this.userInfo.profileView).once('value').then((snapshot) => {
             this.user = snapshot.val();
+        });
+        firebase.database().ref('userRating').child(this.userInfo.profileView).once('value').then((snapshot) => {
+            if(snapshot.val()){
+                this.rating = snapshot.val();
+            }else{
+                this.rating = {
+                    posts: 0,
+                    resolves: 0
+                }
+            }
         });
     }
     //Check if this is your own user profile

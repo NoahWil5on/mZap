@@ -35,12 +35,13 @@ export class MyApp {
     imgSrc: any = '';
     rootPage: any;
     notificationCount: any = 0;
+    share: boolean = false;
     
     ratedPage = TopRatedPage;
     profilePage = ProfilePage;
     settingsPage = SettingsPage;
     
-constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, public events: Events, /*public push: Push private caller: CallNumber*/) {
+constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, public events: Events/*public push: Push private caller: CallNumber*/) {
         platform.ready().then(() => {
             
             statusBar.styleDefault();

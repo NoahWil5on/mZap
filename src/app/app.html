@@ -60,7 +60,27 @@
                 {{translate.text.menu.logout}}
             </button>
         </div>
+        <ion-grid class="hide-symbols" [class.show-symbols]="share">
+            <ion-row *ngIf="!userInfo.isApp">
+                <ion-col text-center>
+                    <a href="https://twitter.com/home?status=mzap.org">
+                        <ion-icon name="logo-twitter" style="color: #00aced; font-size: 24pt"></ion-icon>
+                    </a>
+                </ion-col>
+                <ion-col text-center>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=mzap.org">
+                        <ion-icon name="logo-facebook" style="color: #3b5998; font-size: 24pt"></ion-icon>
+                    </a>
+                </ion-col>
+                <ion-col text-center>
+                    <a href="whatsapp://send" data-href="mzap.org">
+                        <ion-icon name="logo-whatsapp" style="color: #34af23; font-size: 24pt"></ion-icon>
+                    </a>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
         <button ion-button (click)="tutorial()" class="tutorial">Tutorial</button>
+        <button ion-button (click)="share = !share" [class.menu-sharing]="share" class="menu-share">{{translate.text.menu.share}}</button>
         <!-- <button ion-button (click)="call()">Call Mom</button> -->
     </ion-content>
 </ion-menu>

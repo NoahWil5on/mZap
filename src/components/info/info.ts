@@ -32,7 +32,7 @@ export class InfoComponent {
 
   constructor( public mapPage: MapPage, public translate: TranslatorProvider, public userInfo: UserInfoProvider, public afAuth: AngularFireAuth, public ngZone: NgZone, public events: Events, public images: ImagesProvider, public alertCtrl: AlertController ) {
     var data = this.userInfo.activeData
-
+    this.state = this.mapPage.mapState;
     switch(data.type){
       case 'bugs':
         this.selection = 'assets/images/icons/bug.png';
@@ -81,9 +81,7 @@ export class InfoComponent {
     this.id = this.userInfo.activeData.key;
   }
   ngAfterViewInit(){
-    setTimeout(() => {
-      this.state = 'info';
-    }, 50);
+    this.state = this.mapPage.mapState;
   }
   checkState(state){
     return state == this.state;
@@ -118,7 +116,7 @@ export class InfoComponent {
       hour + ":" + minutes + ":" + seconds;
 
     firebase.database().ref('/users/').child(this.afAuth.auth.currentUser.uid).once('value').then(snapshot => {
-      var url = "http://www.placehold.it/40";
+      var url = "../assets/profile.png";
       if(snapshot.hasChild('url')){
         url = snapshot.val().url+"";
       }
@@ -176,6 +174,7 @@ export class InfoComponent {
       return;
     }
     this.addResolve = false;
+    this.closeOut();
     this.state = 'info';
     this.events.publish('backToInfo');
   }
@@ -202,8 +201,8 @@ export class InfoComponent {
   }
   doCommentInfo(){
     var alert = this.alertCtrl.create({
-      title: "What is the commenting feature?",
-      message: "When you comment on a post everyone will be able to see your comment. This feature allows community members to better communicate what needs to be done in order to resolve an issue.",
+      title: this.translate.text.infoWindow.aboutTitle,
+      message: this.translate.text.infoWindow.aboutMessage,
       buttons: ['OK']
     });
     alert.present();

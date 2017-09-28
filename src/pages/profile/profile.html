@@ -25,18 +25,28 @@
 </ion-header>
 
 <ion-content padding>
-    <ion-grid>
+    <div text-center class="image-div" *ngIf="user.url" [style.background-image]="'url(' + user.url + ')'">
+        <!-- <img  width="100" alt="Profile Pic" #thisImage (click)="presentImage(thisImage)"/> -->
+    </div>
+    <div text-center>
+        <h2>
+            {{user.name}}
+        </h2>
+    </div>
+    <ion-grid *ngIf="rating != {}" class="stat-div">
         <ion-row>
-            <ion-col col-auto *ngIf='user.url'>
-                <img [src]='user.url' width="100" alt="Profile Pic" #thisImage (click)="presentImage(thisImage)"/>
+            <ion-col text-center>
+                <h2>{{rating.posts}}</h2>
+                <p>{{translate.text.profile.posts}}</p>
             </ion-col>
-            <ion-col>
-                <h2>
-                    {{user.name}}
-                </h2>
+            <ion-col text-center>
+                <h2>{{rating.resolves}}</h2>
+                <p>{{translate.text.profile.resolves}}</p>
             </ion-col>
         </ion-row>
-        <ion-row>
+    </ion-grid>
+
+        <!-- <ion-row>
             <ion-col>
                 <p>{{translate.text.profile.post}}{{user.posts}}</p>
             </ion-col>
@@ -50,9 +60,8 @@
             <ion-col>
                 <p>{{translate.text.profile.first}}{{user.firstActive}}</p>
             </ion-col>
-        </ion-row>
-    </ion-grid>
-    <div *ngIf="checkProfile() && reports.length > 0" padding-top>
+        </ion-row> -->
+    <div *ngIf="reports.length > 0" padding-top>
         <h2 text-left>{{translate.text.profile.reports}}</h2>
         <ion-card *ngFor="let report of reports">
             <ion-card-header text-wrap>

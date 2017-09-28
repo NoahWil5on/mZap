@@ -34,12 +34,13 @@ export class LoginComponent {
     forgotComponent: any;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public alertCtrl: AlertController, public afDB: AngularFireDatabase, public userInfo: UserInfoProvider, public loadingCtrl: LoadingController, public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider, public click: ClickProvider, public mapPage: MapPage, public ngZone: NgZone, public images: ImagesProvider) {
+        this.menuCtrl.enable(false);
+
         this.storage.get('mzap_language').then(language => {
             this.language = language;
         }).catch(e => {
             this.language = "es";
         });
-        this.menuCtrl.enable(false);
 
         this.storage.get('mzap_email').then(email => {
             if (!email) return;
@@ -62,8 +63,12 @@ export class LoginComponent {
         this.mapPage.loginState = 'login';
         this.menuCtrl.enable(false);
     }
+    ngAfterViewInit(){
+        this.menuCtrl.enable(false);
+    }
     ngOnDestroy() {
         this.menuCtrl.enable(true);
+        //this.userInfo.lookForUpdate();
     }
     //once a user is signed in, update all necessary information and change page
     runUser(user) {

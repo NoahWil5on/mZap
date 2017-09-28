@@ -25,18 +25,17 @@
     <button ion-button (click)="goLogin()" *ngIf="!isLoggedIn()">{{translate.text.settings.return}}</button>
     -->
     <div>
-        <h2>Notifications</h2>
-        <p class="error">These are not operational yet</p>
+        <h2>{{translate.text.settings.notifications}}</h2>
         <ion-item>
-            <ion-label>Your Posts</ion-label>
+            <ion-label>{{translate.text.settings.posts}}</ion-label>
             <ion-toggle color="main" [(ngModel)]="myPost" (ionChange)="toggle()"></ion-toggle>
         </ion-item>
         <ion-item>
-            <ion-label>Post Resolutions</ion-label>
+            <ion-label>{{translate.text.settings.resolves}}</ion-label>
             <ion-toggle color="main" [(ngModel)]="resolves" (ionChange)="toggle()"></ion-toggle>
         </ion-item>
         <ion-item>
-            <ion-label>Post Comments</ion-label>
+            <ion-label>{{translate.text.settings.comments}}</ion-label>
             <ion-toggle color="main" [(ngModel)]="comments" (ionChange)="toggle()"></ion-toggle>
         </ion-item> 
     </div>

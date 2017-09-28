@@ -1,5 +1,50 @@
 .ios, .md{
     map-view {
+        @media screen and (min-device-width: 360px) {                    
+            .h2-type{ font-size: 16pt !important;}
+            .p-description{ font-size: 9.5pt !important;}                    
+            .p-status{ font-size: 9pt !important;}
+            .div-image{
+                width: 80px !important;
+                height: 80px !important;
+            }
+        }
+        @media screen and (min-device-width: 500px) {
+            .info-grid{
+                ion-row{
+                    ion-col{ padding: 20px !important;}
+                }
+            }
+            .h2-type{ font-size: 24pt !important; }
+            .p-description{ font-size: 15pt !important;}                    
+            .p-status{font-size: 12pt !important;}
+            .map-status{
+                bottom: 20px !important;
+                left: 20px !important;
+            }
+            .div-image{
+                width: 120px !important;
+                height: 120px !important;
+            }
+        }
+        @media screen and (min-device-width: 800px) {
+            .info-grid{
+                ion-row{
+                    ion-col{ padding: 40px !important;}
+                }
+            }
+            .h2-type{ font-size: 28pt !important; }
+            .p-description{ font-size: 20pt;}                    
+            .p-status{ font-size: 14pt;}
+            .map-status{
+                bottom: 40px !important;
+                left: 40px !important;
+            }
+            .div-image{
+                width: 160px !important;
+                height: 160px !important;
+            }
+        }
         .greenButton{
             color: limegreen;
         }
@@ -9,43 +54,132 @@
             position: absolute;
             z-index: 10;
             width: 100%;
-            ion-grid{
+            background-color: #333;
+            height: 25vh;
+            transform: translate(0%, 0%);
+            transition: all .3s;
+            .top-padding{
+                padding: 20px;
+            }
+            .info-grid{
+                width: 100%;
+                height: 100%;
+                padding: 0px;
+                ion-row{
+                    height: 100%;
+                    ion-col{
+                        padding: 10px;
+                    }
+                    .map-info-col{
+                        text-align: left;
+                        .h2-type{
+                            font-size: 14pt;
+                            padding: 0;
+                            color: #ccc;
+                            margin: 0;
+                        }
+                        .map-status{
+                            position: absolute;
+                            bottom: 10px;
+                            left: 10px;
+                            .p-status{
+                                font-size: 7.5pt;
+                                height: 1em;
+                                margin: 0;
+                            }
+                        }
+                        .p-description{
+                            font-size: 7.5pt;
+                        }
+                    }
+                    .map-image-col{
+                        height: 100%;                      
+                        text-align: center;
+                        .div-image{
+                            position: relative;
+                            top: 50%;
+                            transform: translate(0,-50%);
+                            width: 70px;
+                            height: 70px;
+                            overflow: hidden;
+                            border-radius: 100%;
+                            background-position: center center;
+                            background-size: cover;
+                            -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+                            -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+                            box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+                            .invisable{
+                                opacity: 0;
+                            }
+                        }
+                    }
+                }
+            }
+            .button-grid{
+                width: 70%;
                 position: absolute;
                 bottom: 0;
-                transform: translateY(100%);
+                right: 0;
+                transform: translate(0, 50%) scale(1);
+                transition: all .5s;
+                ion-row{
+                    ion-col{
+                        padding: 0;
+                        text-align: center;
+                        button{
+                            position: relative;
+                            padding: 0;
+                            height: 3em;
+                            border-radius: 1.5em;
+                            width: 80%;  
+                            max-width: 150px;
+                            background-color: rgb(8,103,136);
+                            overflow: hidden;
+                            ion-icon{
+                                font-size: 2em;
+                            }                          
+                        }
+                        .clicked{
+                            background-color: #3fbc05;
+                        }
+                        .likeValue{
+                            z-index: 10;
+                            left: 50%;
+                            top: 50%;
+                            transform: translate(-50%, -50%) scale(0);
+                            width: 160px;
+                            height: 160px;
+                            border-radius: 100%;
+                            background-color: #3fbc05;
+                            position: absolute;
+                            transition: all .5s; 
+                            p{
+                                position: absolute;
+                                color: white;
+                                left: 50%;
+                                top: 50%;
+                                transform: translate(-50%, -50%);
+                                font-size: 2em;
+                                height: 1em;
+                                padding: 0;
+                                margin: 0;
+                            }
+                        }
+                        .show-like{
+                            transform: translate(-50%, -50%) scale(1) !important;
+                            transition: all .5s; 
+                        }
+                    }
+                }
+            }
+            .grid-hidden{
+                transform: translate(0, 50%) scale(0) !important;
+                transition: all .5s;
             }
         }
         .up{
-            pointer-events: none;
-            opacity: 0;
-            height: 0;
-            transition: height .25s ease, opacity .2s linear;
-        }
-        .down{
-            opacity: 1;
-            height: 110px;
-            transition: height .25s ease, opacity .2s linear;
-        }
-        .button-row{
-            border: black solid 3px;
-            background-color: rgba(255,255,255,.8)
-        }
-        .border-right{
-            border-right: 1px solid #888;
-        }
-        .border-left{
-            border-left: 1px solid #888;
-        }
-        
-        
-        
-        .controls-back{
-            z-index: -10;
-            position: absolute;
-            background-color: #000;
-            opacity: .7;
-            width: 100%;
-            height: 100%;
+            transform: translate(0%, -100%) !important;
+            transition: all .3s;
         }
         #map{
             width: 100%;
@@ -131,12 +265,6 @@
         .orange:active{
             background-color: #d46a00;
         }
-        .yellow{
-            background-color: #fcf80c;
-        }
-        .yellow:active{
-            background-color: #dcd80c;
-        }
         .nav-div{
             bottom: 10px;
             position: absolute;
@@ -203,7 +331,7 @@
             height: 100vh;
         }
         .hidden{
-            transform: scale(0);
+            transform: scale(0); 
             transition: all .5s;
         }
         .show{

@@ -60,6 +60,8 @@ export class TranslatorProvider {
             notes: "Notes",
             edit: "Edit",
             info: "Info",
+            aboutTitle: "What is the commenting feature?",
+            aboutMessage: "When you comment on a post everyone will be able to see your comment. This feature allows community members to better communicate what needs to be done in order to resolve an issue.",
         },
         login: {
             email: "Email",
@@ -96,7 +98,9 @@ export class TranslatorProvider {
             reports: "My Reports:",
             type: "Type: ",
             status: "Status: ",
-            map: "View on Map"
+            map: "View on Map",
+            posts: "Posts",
+            resolves: "Resolves",
         },
         register: {
             create: "Creat an Account",
@@ -124,7 +128,11 @@ export class TranslatorProvider {
             settings: "Settings",
             logout: "Logout",
             return: "Return to Login",
-            lang: "Language"
+            lang: "Language",
+            posts: "My Posts",
+            notifications: "Notifications",
+            resolves: "My Resolutions",
+            comments: "My Comments"
         },
         topRated: {
             topRated: "Top Rated Users",
@@ -139,6 +147,7 @@ export class TranslatorProvider {
             rankings: "Rankings",
             settings: "Settings",
             logout: "Logout",
+            share: "Share mZAP",
         },
         discussion: {
             discussion: "Discussion"
@@ -178,6 +187,14 @@ export class TranslatorProvider {
             view: "View Map",
             report: "Report",
             reports: "All Reports"
+        },
+        resolve: {
+            noPost: "No one has submitted a resolve yet. Gather up your friends and resolve this post!",
+            add: "Add a Resolve!",
+            note: "Note(optional)",
+            noDesc: "*No Description*",
+            good: "Does Everthing Look Good?",
+            noImage: "No Image Added",
         },
         forgot: {
             forgot: "Forgot Password",
@@ -263,6 +280,8 @@ export class TranslatorProvider {
             notes: "Notas",
             edit: "Editar",
             info: "Detalles",
+            aboutTitle: "¿Cuál es la función de comentarios?",
+            aboutMessage: "Cuando comenta una publicación, todos podrán ver su comentario. Esta característica permite a los miembros de la comunidad comunicar mejor lo que se debe hacer para resolver un problema.",
         },
         login: {
             email: "Correo Electrónico",
@@ -289,7 +308,7 @@ export class TranslatorProvider {
             cndTitle: "Gatos/Perros",
             cndDescription: "Reporte una cita de animales callejeros",
             ok: "OK",
-            cancel: "Cancelar"
+            cancel: "Cancelar",
         },
         profile: {
             profile: "Perfíl",
@@ -299,7 +318,9 @@ export class TranslatorProvider {
             reports: "Mis Reportes:",
             type: "Tipo: ",
             status: "Estado: ",
-            map: "Ver en el Mapa"
+            map: "Ver en el Mapa",
+            posts: "mensajes",
+            resolves: "resolvers",
         },
         register: {
             create: "Crear una cuenta",
@@ -327,7 +348,11 @@ export class TranslatorProvider {
             settings: "Ajustes",
             logout: "Salir",
             return: "Volver a Ingresar",
-            lang: "Idioma"
+            lang: "Idioma",
+            posts: "Mis Publicaciones",
+            notifications: "Notificaciones",
+            resolves: "Mis Resoluciones",
+            comments: "Mis Comentarios"
         },
         topRated: {
             topRated: "Usuarios mejor calificados",
@@ -342,6 +367,7 @@ export class TranslatorProvider {
             rankings: "Clasificación",
             settings: "Ajustes",
             logout: "Salir",
+            share: "Compártelo mZAP",
         },
         discussion: {
             discussion: "Discusión"
@@ -396,6 +422,14 @@ export class TranslatorProvider {
             help3: "Tú puedes hacer un reporte haciendo click en el botón 'mas' (+)). Después, puedes tomar una foto, añadir una descripción y subirla al mapa!",
             help4: "Otros usuarios podrán entonces ver tus reportes haciendo click sobre ellos en el mapa. Allí, ellos podrán hacer comentarios y subir fotos del trabajo que han hecho para mejorar o resolver la situación.",
             ready: "¡Esto es todo! ¡Ya estas listo para ser un mZAPPER!"
+        },
+        resolve: {
+            noPost: "Nadie ha presentado una resolución todavía. Recoge a tus amigos y resuelve este post!",
+            add: "¡Añada una resolución!",
+            note: "Nota (opcional)",
+            noDesc: "*Sin descripción*",
+            good: "¿Todo se ve bien?",
+            noImage: "No se ha añadido imagen",
         },
         other: {
             cnd: "Gatos/Perros",

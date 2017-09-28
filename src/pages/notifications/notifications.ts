@@ -58,12 +58,12 @@ export class NotificationsPage {
     firebase.database().ref(`/positions/${key}`).once('value', snapshot => {      
       self.userInfo.activeData = snapshot.val();    
     }).then(() => {
-      setTimeout(function() {
-        self.navCtrl.setRoot(MapPage);
-        self.userInfo.pageState = 'map';
-        self.userInfo.openInfo = true;
-      }, 200);
-      
+      self.userInfo.lat = self.userInfo.activeData.lat;
+      self.userInfo.lng = self.userInfo.activeData.lng;
+      self.userInfo.zoom = 20;
+      self.navCtrl.setRoot(MapPage);
+      self.userInfo.pageState = 'map';
+      self.userInfo.openInfo = true;      
     })
   }
   //open nav menu

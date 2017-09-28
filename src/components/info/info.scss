@@ -7,8 +7,8 @@
 //     100%    {transform: rotate(-90deg); transform-origin: top left;}
 // }
 @keyframes posRotate {
-    0%      {transform: translate(-100%,0);}
-    100%    {transform: translate(0%,0);}
+    0%      {transform: translate(-50%, 100%);}
+    100%    {transform: translate(-50%, -50%);}
 }
 @keyframes negRotate {
     0%      {transform: translate(0,0);}
@@ -84,7 +84,7 @@
             -webkit-box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
             -moz-box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
             box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
-            transition: all .8s;
+            animation: posRotate .5s;
         }
         .resolve{
             height: 400px !important;

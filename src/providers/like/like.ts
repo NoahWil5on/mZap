@@ -12,54 +12,60 @@ export class LikeProvider {
 
     }
     //takes post id, value of like (-1,1), and sends callback to tell map the new value
-    like(post, value, callback){
+    like(post, callback){
         var self = this;
-        var valToAdd = value;
+        var value = 0;
+        //var valToAdd = value;
         var ref = firebase.database().ref('/positions/').child(post);
         if(!this.afAuth.auth.currentUser) return;
         //check if the user has already liked this post and what value they posted on it
         var user = firebase.database().ref('/userLikes/').child(this.afAuth.auth.currentUser.uid).child('likedPosts').child(post);
         user.once('value',function(userSnapshot){
             //if user has liked the post and isn't changing their value return
-            if(Number.parseInt(userSnapshot.val()) == value){
-               return
+            if(Number.parseInt(userSnapshot.val()) == -1){
+               value = 1;
+            }else if(Number.parseInt(userSnapshot.val()) == 1){
+                value = -1;
+            }else{
+                value = 1;
             }
-            else{
+            ref.once('value', function(snapshot){
                 //if this is the first time the post is receiving a like
-                ref.once('value', function(snapshot){
-                    if(!snapshot.hasChild('likes')){
-                        ref.child('likes').set(valToAdd).then(_ => {
-                            ref.child('likes').once('value', snap => {
-                                self.updateOtherUserLikes(snapshot.val().id,value);
-                                callback(snap.val());
-                            });
-                        }); 
+                if(!snapshot.hasChild('likes')){
+                    ref.child('likes').set(value).then(_ => {
+                        ref.child('likes').once('value', snap => {
+                            self.updateOtherUserLikes(snapshot.val().id,value);
+                            callback(snap.val());
+                        });
+                    }); 
+                    self.updateLikes();
+                }
+                else{
+                    var likes = Number.parseInt(snapshot.val().likes);
+                    
+                    //if the user has already liked the post but this is a new value then the post should
+                    //be double valued. ex.) post starts at 0 and user 'A' likes it. Post should go to 1.
+                    //if user 'A' goes back and dislikes it post shouldn't go back to 0, it should go to -1
+                    //because if they had disliked it at 0 post would have gone to -1. so delta should be 2
+                    // if(userSnapshot.val() != undefined){
+                    //     valToAdd *= 2;
+                    // }
+                    // else{
+                    //     self.updateLikes();
+                    // }
+                    if(userSnapshot.val() == undefined){
                         self.updateLikes();
                     }
-                    else{
-                        var likes = Number.parseInt(snapshot.val().likes);
-                        
-                        //if the user has already liked the post but this is a new value then the post should
-                        //be double valued. ex.) post starts at 0 and user 'A' likes it. Post should go to 1.
-                        //if user 'A' goes back and dislikes it post shouldn't go back to 0, it should go to -1
-                        //because if they had disliked it at 0 post would have gone to -1. so delta should be 2
-                        if(userSnapshot.val() != undefined){
-                            valToAdd *= 2;
-                        }
-                        else{
-                            self.updateLikes();
-                        }
-                        ref.child('likes').set(likes + valToAdd).then(_ => {
-                            self.updateOtherUserLikes(snapshot.val().id,valToAdd);
-                            ref.child('likes').once('value', snap => {
-                                callback(snap.val());
-                            });
+                    ref.child('likes').set(likes + value).then(_ => {
+                        self.updateOtherUserLikes(snapshot.val().id,value);
+                        ref.child('likes').once('value', snap => {
+                            callback(snap.val());
                         });
-                    }
-                    //update user's like preference on this post
-                    user.set(value);
-                });
-            }
+                    });
+                }
+                //update user's like preference on this post
+                user.set(value);
+            });            
         });
     }
     updateLikes(){
