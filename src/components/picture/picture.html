@@ -1,15 +1,17 @@
-<div>
+<div class="pic-component-div">
     <ion-grid no-padding>
         <ion-row [class.hidden]="userInfo.isApp">
             <ion-col col-6 text-center>
-                <label>
                     <img src="assets/new/camera.png"/>
+                <label>
+                   
                     <input #file type="file" accept="image/*" capture="camera" class="fileInput"/>
                 </label>
             </ion-col>
             <ion-col col-6 text-center>
-                <label>
                     <img src="assets/new/album.png"/>
+                <label>
+                    
                     <input #file1 type="file" accept="image/*" class="fileInput"/>
                 </label>
             </ion-col>

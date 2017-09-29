@@ -56,12 +56,12 @@
   </div> -->
   <!-- <div style="height: 100%; width: 100%; overflow: scroll"> -->
     <div class="scroll-div">
-  <ion-slides pager>
+  <ion-slides>
     <ion-slide>
       <type></type>
     </ion-slide>
     <ion-slide class="pic-slide">
-      <div class="full">
+      <div class="full" style="padding-bottom: 40px;">
         <img #preview *ngIf="dataSet" />
       </div>
       <picture *ngIf="!dataSet"></picture>
@@ -72,9 +72,9 @@
     <ion-slide>
       <confirm></confirm>
     </ion-slide>
-    <ion-slide *ngIf="share">
-      <h2 text-center padding style="background-color:#3fbc05; color: white;">{{translate.text.add.thanks}}</h2>
-      <p text-center style="color: #666">{{translate.text.add.share}}</p>
+    <ion-slide *ngIf="share" class="thanks">
+      <h2 text-center padding>{{translate.text.add.thanks}}</h2>
+      <p text-center >{{translate.text.add.share}}</p>
       <ion-grid>
         <!-- <ion-row *ngIf="!userInfo.isApp">
           <ion-col text-center>

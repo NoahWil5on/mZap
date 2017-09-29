@@ -30,7 +30,7 @@ export class AddComponent {
   refName: any = "";
   error: string = "";
   scroll: number = 1;
-  share: boolean = false;
+  share: boolean = true;
 
   constructor(public mapPage: MapPage, public translate: TranslatorProvider, public userInfo: UserInfoProvider, public afAuth: AngularFireAuth, public images: ImagesProvider, public loadingCtrl: LoadingController, public socialSharing: SocialSharing, public events: Events) {
     events.subscribe("share", () => {

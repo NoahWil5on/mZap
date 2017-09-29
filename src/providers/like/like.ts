@@ -19,54 +19,51 @@ export class LikeProvider {
         var ref = firebase.database().ref('/positions/').child(post);
         if(!this.afAuth.auth.currentUser) return;
         //check if the user has already liked this post and what value they posted on it
-        var user = firebase.database().ref('/userLikes/').child(this.afAuth.auth.currentUser.uid).child('likedPosts').child(post);
+        var user = firebase.database().ref(`/userLikes/${this.afAuth.auth.currentUser.uid}/likedPosts/${post}`);
         user.once('value',function(userSnapshot){
             //if user has liked the post and isn't changing their value return
-            if(Number.parseInt(userSnapshot.val()) == -1){
-               value = 1;
-            }else if(Number.parseInt(userSnapshot.val()) == 1){
-                value = -1;
-            }else{
+            if(!userSnapshot.val()){
                 value = 1;
+            }else{
+                if(Number.parseInt(userSnapshot.val()) == -1){
+                    value = 1;
+                }else{
+                    value = -1;
+                }
             }
-            ref.once('value', function(snapshot){
-                //if this is the first time the post is receiving a like
-                if(!snapshot.hasChild('likes')){
-                    ref.child('likes').set(value).then(_ => {
-                        ref.child('likes').once('value', snap => {
+            user.set(value).then(_ => {
+                ref.once('value', function(snapshot){
+                    //if this is the first time the post is receiving a like
+                    if(!snapshot.hasChild('likes')){
+                        ref.child('likes').set(value).then(_ => {
                             self.updateOtherUserLikes(snapshot.val().id,value);
-                            callback(snap.val());
-                        });
-                    }); 
-                    self.updateLikes();
-                }
-                else{
-                    var likes = Number.parseInt(snapshot.val().likes);
-                    
-                    //if the user has already liked the post but this is a new value then the post should
-                    //be double valued. ex.) post starts at 0 and user 'A' likes it. Post should go to 1.
-                    //if user 'A' goes back and dislikes it post shouldn't go back to 0, it should go to -1
-                    //because if they had disliked it at 0 post would have gone to -1. so delta should be 2
-                    // if(userSnapshot.val() != undefined){
-                    //     valToAdd *= 2;
-                    // }
-                    // else{
-                    //     self.updateLikes();
-                    // }
-                    if(userSnapshot.val() == undefined){
-                        self.updateLikes();
+                            self.updateLikes();
+                            callback(value);
+                        }); 
                     }
-                    ref.child('likes').set(likes + value).then(_ => {
-                        self.updateOtherUserLikes(snapshot.val().id,value);
-                        ref.child('likes').once('value', snap => {
-                            callback(snap.val());
+                    else{
+                        var likes = Number.parseInt(snapshot.val().likes);
+                        ref.child('likes').set(likes + value).then(_ => {
+                            self.updateOtherUserLikes(snapshot.val().id,value);
+                            if(!userSnapshot.val()){
+                                self.updateLikes();
+                            }
+                            callback(likes + value);
                         });
-                    });
-                }
-                //update user's like preference on this post
-                user.set(value);
+                    }
+                })
             });            
         });
+        //if the user has already liked the post but this is a new value then the post should
+        //be double valued. ex.) post starts at 0 and user 'A' likes it. Post should go to 1.
+        //if user 'A' goes back and dislikes it post shouldn't go back to 0, it should go to -1
+        //because if they had disliked it at 0 post would have gone to -1. so delta should be 2
+        // if(userSnapshot.val() != undefined){
+        //     valToAdd *= 2;
+        // }
+        // else{
+        //     self.updateLikes();
+        // }
     }
     updateLikes(){
         var self = this;
@@ -94,7 +91,7 @@ export class LikeProvider {
     //takes post ID and sends a callback of the user's like preference for this post
     likeable(post, callback){
         if(!this.afAuth.auth.currentUser) return;
-        var user = firebase.database().ref('/userLikes/').child(this.afAuth.auth.currentUser.uid).child('likedPosts').child(post);
+        var user = firebase.database().ref(`/userLikes/${this.afAuth.auth.currentUser.uid}/likedPosts/${post}`);
         user.once('value',function(userSnapshot){
             if(userSnapshot.val()){
                 callback(Number.parseInt(userSnapshot.val()));

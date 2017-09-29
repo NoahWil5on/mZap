@@ -72,7 +72,7 @@ export class RegisterPage {
                         this.storage.set('mzap_email', this.email);
                         this.storage.set('mzap_password', this.pass1);
                         var today = new Date();
-                        let date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                        //let date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                         
                         /*Checks if user submitted an image*/
                         if(this.image){
@@ -86,10 +86,9 @@ export class RegisterPage {
                                 /*pushes user details to database*/
                                 this.afDB.object('users/'+this.afAuth.auth.currentUser.uid).update({
                                     rating: 0, 
-                                    posts: 0, 
                                     visits: 1, 
-                                    lastActive: date, 
-                                    firstActive: date, 
+                                    lastActive: today, 
+                                    firstActive: today, 
                                     name: this.name, 
                                     refName: this.refName, 
                                     email: this.email,
@@ -111,8 +110,8 @@ export class RegisterPage {
                                 rating: 0, 
                                 posts: 0, 
                                 visits: 1, 
-                                lastActive: date, 
-                                firstActive: date, 
+                                lastActive: today, 
+                                firstActive: today, 
                                 name: this.name,
                                 email: this.email
                             }

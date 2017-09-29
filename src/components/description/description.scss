@@ -1,7 +1,15 @@
 .ios, .md{
-    description {
-        .red-text{
-            color: red !important;            
+    description {   
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) !important;     
+        #description-main{
+            position: relative;
+            display: block;
+            .red-text{
+                color: red !important;            
+            }
         }
     }
 }

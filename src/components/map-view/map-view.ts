@@ -296,6 +296,7 @@ export class MapViewComponent {
                 break;
           };
     }
+    ////////////////////////////////////////////////////////////////////////////////////////
     likeable(){
         var self = this;
         this.likeProvider.likeable(this.userInfo.activeData.key, function(value){
@@ -315,11 +316,13 @@ export class MapViewComponent {
         this.deactivate = true;
         var self = this;
         this.likeProvider.like(this.userInfo.activeData.key, function(val){
+            if(val > 99) val = 99;
             self.likes = val;
             self.likeable();
             self.deactivate = false;
         })
     }
+    ////////////////////////////////////////////////////////////////////////////////////////
     openChat(){
         this.mapPage.infoShow = true;
         this.mapPage.mapState = "comment";
@@ -407,7 +410,13 @@ export class MapViewComponent {
         }
         this.likeValue = false;
         this.likeable();
+        this.checkLikes(this.myActiveData.key);
         this.myActiveMarker = marker;
+    }
+    checkLikes(postId){
+        firebase.database().ref(`/positions/${postId}/likes`).once('value', snapshot => {
+            this.likes = snapshot.val();
+        });
     }
     //make sure each point passes filter
     checkPoint(item) {

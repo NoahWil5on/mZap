@@ -15,7 +15,7 @@
             <button ion-button clear (click)="skip()" *ngIf="checkCreate()">
               <img src="assets/images/buttons/arrow.png"/>
             </button>
-            <button ion-button clear (click)="submit()" [disabled]="!checkInput()" *ngIf="!checkCreate()">
+            <button ion-button clear (click)="submit()" [disabled]="!checkInput(press)" *ngIf="!checkCreate()">
               <img src="assets/images/buttons/check.png"/>
             </button>
         </ion-col>

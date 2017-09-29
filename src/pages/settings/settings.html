@@ -38,6 +38,10 @@
             <ion-label>{{translate.text.settings.comments}}</ion-label>
             <ion-toggle color="main" [(ngModel)]="comments" (ionChange)="toggle()"></ion-toggle>
         </ion-item> 
+        <ion-item>
+            <ion-label>{{translate.text.settings.likes}}</ion-label>
+            <ion-toggle color="main" [(ngModel)]="likes" (ionChange)="toggle()"></ion-toggle>
+        </ion-item> 
     </div>
     <button ion-button clear class="language" (click)="setLang()">{{translate.text.other.language}}</button>
     <!--

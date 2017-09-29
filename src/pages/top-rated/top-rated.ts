@@ -43,7 +43,7 @@ export class TopRatedPage {
         var ref = firebase.database().ref('/users/');
         ref.orderByChild("rating").once("value").then(function(snapshot) {
             snapshot.forEach(function(user){
-                var imageURL = "../assets/profile.png";
+                var imageURL = "assets/profile.png";
                 if(user.val().url){
                     imageURL = user.val().url;
                 }

@@ -1,12 +1,13 @@
 <div>
-  <ion-slides [class.absolute]="dataSet" pager>
+  <ion-slides [class.absolute]="dataSet">
     <ion-slide>
       <form autocomplete="off">
-        <input type="email" class="text-field top" [(ngModel)]="name" name="myName" [placeholder]="translate.text.register.name"/>
-        <input type="email" class="text-field" [(ngModel)]="email" name="myEmail" [placeholder]="translate.text.register.email"/>
-        <input type="password" class="text-field" [(ngModel)]="pass1" name="myPass1" [placeholder]="translate.text.register.pass1"/>
-        <input type="password" class="text-field" [(ngModel)]="pass2" name="myPass2" [placeholder]="translate.text.register.pass2"/>
+        <input type="email" class="text-field top" [(ngModel)]="name" name="myName" [placeholder]="translate.text.register.name" (keyup)="checkInput(press)"/>
+        <input type="email" class="text-field" [(ngModel)]="email" name="myEmail" [placeholder]="translate.text.register.email" (keyup)="checkInput(press)"/>
+        <input type="password" class="text-field" [(ngModel)]="pass1" name="myPass1" [placeholder]="translate.text.register.pass1" (keyup)="checkInput(press)"/>
+        <input type="password" class="text-field" [(ngModel)]="pass2" name="myPass2" [placeholder]="translate.text.register.pass2" (keyup)="checkInput(press)"/>
       </form>
+      <p class="error">{{error}}</p>
     </ion-slide>
     <ion-slide>
         <ion-grid no-padding style="height: 100%" *ngIf="!dataSet">

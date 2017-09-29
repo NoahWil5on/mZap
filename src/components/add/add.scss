@@ -37,7 +37,6 @@
             position: absolute;
             transform: translate(-50%,120%);
             background-color: white;
-            padding: 40px 20px;
             //padding-top: 40px;
             width: 280px;
             height: 400px;
@@ -124,12 +123,22 @@
             transition: all .5s;
         }
         .noPadding{
-            padding-top: 20px;
+            //padding-top: 20px;
             transition: all .5s;
         }
         .move{
             transform: translate(-50%,-50%);
             transition: all 1s;
+        }
+        .thanks{
+            padding: 10px;
+            h2{
+                background-color:#3fbc05; 
+                color: white;
+            }
+            p{
+                color: #666
+            }
         }
     }
 }

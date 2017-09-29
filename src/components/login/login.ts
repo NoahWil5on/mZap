@@ -32,6 +32,7 @@ export class LoginComponent {
     create: any;
     bounce: boolean = true;
     forgotComponent: any;
+    press: boolean = false;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public alertCtrl: AlertController, public afDB: AngularFireDatabase, public userInfo: UserInfoProvider, public loadingCtrl: LoadingController, public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider, public click: ClickProvider, public mapPage: MapPage, public ngZone: NgZone, public images: ImagesProvider) {
         this.menuCtrl.enable(false);
@@ -72,9 +73,9 @@ export class LoginComponent {
     }
     //once a user is signed in, update all necessary information and change page
     runUser(user) {
-        var today = new Date();
+        var today = Date.now();
         /*get current date and time*/
-        var date = (today.getMonth() + 1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        //var date = (today.getMonth() + 1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         var self = this;
         /*upate user visits and last active time*/
         if (firebase.database().ref('users/').child(user.uid + "")) {
@@ -82,7 +83,7 @@ export class LoginComponent {
                 if (snapshot.val() && snapshot.val().visits) {
                     self.afDB.object('users/' + self.afAuth.auth.currentUser.uid).update({
                         visits: snapshot.val().visits + 1,
-                        lastActive: date
+                        lastActive: today
                     }).then(_ => {
                         self.userInfo.pageState = 'map';
                         self.userInfo.loggedIn = true;
@@ -150,6 +151,8 @@ export class LoginComponent {
         });
     }
     register(){
+        this.press = true;
+        this.create.press = true;
         this.create.createAccount();
     }
     //display info about signing in anonymously

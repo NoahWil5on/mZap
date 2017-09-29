@@ -45,6 +45,7 @@ export class CreateComponent {
   url: any = "";
   photoState: boolean = false;
   dataSet: boolean = false;
+  press: boolean = false;
 
   error: string = "";
 
@@ -103,7 +104,7 @@ export class CreateComponent {
   }
   /*Tries to create account*/
   createAccount() {
-    if (this.photoState) {
+    if (this.photoState || !this.checkInput(true)) {
       this.addPhoto();
       return
     }
@@ -135,6 +136,7 @@ export class CreateComponent {
         }
         ).catch(e => {
           this.error = e.message;
+          return;
         })
       }).then(_ => {
         firebase.database().ref('/userRating/').child(this.afAuth.auth.currentUser.uid).set({
@@ -152,10 +154,12 @@ export class CreateComponent {
       }).catch(e => {
         this.error = e.message;
         loader.dismiss();
+        return;
       });
     }).catch(e => {
       this.error = e.message;
       loader.dismiss();
+      return;
     });
   }
   /*Fetch image from camera*/
@@ -191,21 +195,26 @@ export class CreateComponent {
     this.slides.slideNext(500, null);
     this.slides.lockSwipes(true);
   }
-  checkInput(): boolean {
-    var r = false;
+  checkInput(press): boolean {
+    var ready = false;
     // /*Checks to make sure fields are filled in (no profile image required)*/
     if (this.pass1 === this.pass2) {
-      if (this.pass1.length > 0 && this.email.length > 0 && this.name.length > 0) {
-        r = true;
+      if (this.pass1.length > 0 && this.pass2.length > 0 && this.email.length > 0 && this.name.length > 0) {
+        console.log(this.pass1.length);
+        console.log(this.pass2.length);
+        console.log(this.name.length);
+        console.log(this.email.length);
+        ready = true;
       }
-      else {
-        this.error = this.translate.text.register.fill;
+      else{
+        console.log("perfect");
+        if(press)this.error = this.translate.text.register.fill;
       }
     }
-    else {
-      this.error = this.translate.text.register.identical;
+    else{
+      if(press)this.error = this.translate.text.register.identical;
     }
-    return r;
+    return ready;
   }
   //show pop up image
   presentImage(image) {

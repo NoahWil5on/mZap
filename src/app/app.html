@@ -1,8 +1,8 @@
-<ion-menu side="left" type="push" [content]="mycontent" (ionOpen)="openMenu()" >
+<ion-menu side="left" type="push" [content]="mycontent" (ionOpen)="openMenu()">
     <ion-content>
         <header text-center>
             <div class="menu-shader">
-                
+
             </div>
             <div class="div-holder" *ngIf="checkLogin()">
                 <button ion-button style="height: 100%" clear (click)="profile()">
@@ -78,6 +78,23 @@
                     </a>
                 </ion-col>
             </ion-row>
+            <!-- <ion-row *ngIf="userInfo.isApp">
+                <ion-col text-center>
+                    <button ion-button icon-only clear (click)='shareTwitter()'>
+                        <ion-icon name="logo-twitter" style="color: #00aced; font-size: 24pt"></ion-icon>
+                    </button>
+                </ion-col>
+                <ion-col text-center>
+                    <button ion-button icon-only clear (click)='shareFacebook()'>
+                        <ion-icon name="logo-facebook" style="color: #3b5998; font-size: 24pt"></ion-icon>
+                    </button>
+                </ion-col>
+                <ion-col text-center>
+                    <button ion-button icon-only clear (click)='shareWhatsapp()'>
+                        <ion-icon name="logo-whatsapp" style="color: #34af23; font-size: 24pt"></ion-icon>
+                    </button>
+                </ion-col>
+            </ion-row> -->
         </ion-grid>
         <button ion-button (click)="tutorial()" class="tutorial">Tutorial</button>
         <button ion-button (click)="share = !share" [class.menu-sharing]="share" class="menu-share">{{translate.text.menu.share}}</button>

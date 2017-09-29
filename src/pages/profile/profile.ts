@@ -29,6 +29,8 @@ export class ProfilePage {
     reports: any = [];
     user: any = {};
     rating: any = {};
+    theReports: any = "";
+
     constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, 
                  public afAuth:    AngularFireAuth, public translate: TranslatorProvider, 
                  public imageViewerCtrl: ImageViewerController, public userInfo: UserInfoProvider,
@@ -86,6 +88,12 @@ export class ProfilePage {
         })
         firebase.database().ref('users').child(this.userInfo.profileView).once('value').then((snapshot) => {
             this.user = snapshot.val();
+        }).then(_ => {
+            if(this.translate.text == this.translate.en){
+                this.theReports = this.user.name + "'s Reports";
+            }else{
+                this.theReports = "Los informes de " + this.user.name;
+            }
         });
         firebase.database().ref('userRating').child(this.userInfo.profileView).once('value').then((snapshot) => {
             if(snapshot.val()){
@@ -100,28 +108,21 @@ export class ProfilePage {
     }
     //Check if this is your own user profile
     checkProfile(){
-        if(this.afAuth.auth.currentUser){
-            return (this.userInfo.profileView == this.afAuth.auth.currentUser.uid) ? true: false;
-        }
-        else{
-            return false;
-        }
+        return (this.userInfo.profileView == this.afAuth.auth.currentUser.uid) ? true: false;
     }
     
     //show pop up image
     presentImage(image){
-        this.click.click('profilePresentImage');
         let imageViewer = this.imageViewerCtrl.create(image);
         imageViewer.present();
     }
     //open menu
     openMenu(){
-        this.click.click('profileMenu');
         this.menuCtrl.open();
     }
     //Bring up Edit Modal
     openEdit(){
-        this.click.click('profileMenu');
+        if(!this.checkProfile()) return;
         var editModal = this.modalCtrl.create(EditProfilePage, null);
         editModal.onDidDismiss(res => {
             if(res){

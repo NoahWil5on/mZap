@@ -23,13 +23,20 @@
         text-align: center;
     }
     .ionic-title{
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        left: 0;
         padding: 0;
-        .title{
-            font-size: 16pt;
-        }
-        ion-col{
-            padding: 0;
-            text-align: center;
+        transform: translate(0,-50%);
+        ion-row{
+            .title{
+                font-size: 16pt;
+            }
+            ion-col{                
+                padding: 0;
+                text-align: center;
+            }
         }
     }
     ion-header{

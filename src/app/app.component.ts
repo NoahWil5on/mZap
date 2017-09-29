@@ -4,6 +4,7 @@ import { Platform, MenuController, Nav, Events} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
+//import { SocialSharing } from '@ionic-native/social-sharing';
 // import { Push, PushToken } from '@ionic/cloud-angular';
 // import { CallNumber } from '@ionic-native/call-number';
 
@@ -41,7 +42,7 @@ export class MyApp {
     profilePage = ProfilePage;
     settingsPage = SettingsPage;
     
-constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, public events: Events/*public push: Push private caller: CallNumber*/) {
+constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, public events: Events, /*public socialSharing: SocialSharingpublic push: Push private caller: CallNumber*/) {
         platform.ready().then(() => {
             
             statusBar.styleDefault();
@@ -224,5 +225,14 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
             })
         });   
     }
+    // shareTwitter() {
+    //     this.socialSharing.shareViaTwitter(null, null, "mzap.org");
+    // }
+    // shareFacebook() {
+    //     this.socialSharing.shareViaFacebook(null, null, "mzap.org");
+    // }
+    // shareWhatsapp() {
+    //     this.socialSharing.shareViaWhatsApp(null, null, "mzap.org");
+    // }
 }
 

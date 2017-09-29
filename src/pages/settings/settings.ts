@@ -26,6 +26,7 @@ export class SettingsPage {
     myPost: boolean = true;
     comments: boolean = true;
     resolves: boolean = true;
+    likes: boolean = true;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider, public click: ClickProvider) {
         this.storage.get('mzap_language').then(language => {
@@ -52,6 +53,12 @@ export class SettingsPage {
             else{
                 this.resolves = true;
             }
+            if(snapshot.hasChild('notifyLikes')){
+                this.likes = snapshot.val().notifyLikes
+            }
+            else{
+                this.likes = true;
+            }
         });
     }
 
@@ -62,7 +69,8 @@ export class SettingsPage {
         firebase.database().ref(`users/${this.afAuth.auth.currentUser.uid}`).update({
             notifyComments: this.comments,
             notifyMyPosts: this.myPost,
-            notifyResolves: this.resolves
+            notifyResolves: this.resolves,
+            notifyLikes: this.likes
         })
     }
     //sign user out if signed in

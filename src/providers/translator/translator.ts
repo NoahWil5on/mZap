@@ -21,7 +21,9 @@ export class TranslatorProvider {
             cancel: "Cancel",
             error: "Fill out all fields",
             thanks: "Thanks!",
-            share: "Tell your friends about mZAP!"
+            share: "Tell your friends about mZAP!",
+            show: "Username is visible",
+            noShow: "Username is NOT visible",
         },
         confirmation: {
             success: "Successfully Submitted!",
@@ -132,7 +134,8 @@ export class TranslatorProvider {
             posts: "My Posts",
             notifications: "Notifications",
             resolves: "My Resolutions",
-            comments: "My Comments"
+            comments: "My Comments",
+            likes: "My Liked Posts"
         },
         topRated: {
             topRated: "Top Rated Users",
@@ -202,7 +205,8 @@ export class TranslatorProvider {
             sent: "Email sent successfully!",
             check: "Check your email to reset your password",
             enter: "Enter Email",
-            send: "Email Me"
+            send: "Email Me",
+            directions: "Enter your email and we will send you a link to reset your password."
         },
         tutorial:{
             help1: "Thank you for creating an account! mZAP is an app that allows you to report things in your community that need to be cleaned up and fixed, including standing water, trash, and broken roofs among others. You can then view these reports and organize groups to clean up these issues.",
@@ -241,7 +245,9 @@ export class TranslatorProvider {
             cancel: "Cancelar",
             error: "Leene todos los espacios",
             thanks: "¡Gracias!",
-            share: "¡Dile a tus amigos acerca mZAP!"
+            share: "¡Dile a tus amigos acerca mZAP!",
+            show: "Nombre de usuario visible",
+            noShow: "El nombre de usuario NO está visible",
         },
         confirmation: {
             success: "¡Envio Exitoso!",
@@ -352,7 +358,8 @@ export class TranslatorProvider {
             posts: "Mis Publicaciones",
             notifications: "Notificaciones",
             resolves: "Mis Resoluciones",
-            comments: "Mis Comentarios"
+            comments: "Mis Comentarios",
+            likes: "Mis Posts Favoritos"
         },
         topRated: {
             topRated: "Usuarios mejor calificados",
@@ -414,7 +421,8 @@ export class TranslatorProvider {
             sent: "¡Correo enviado correctamente!",
             check: "Revise su correo electrónico para restablecer su contraseña",
             enter: "Ingrese Correo Electrónico",
-            send: "Envíeme un Correo Electrónico"
+            send: "Envíeme un Correo Electrónico",
+            directions: "Ingrese su correo electrónico y le enviaremos un enlace para restablecer su contraseña."
         },
         tutorial:{
             help1: "Gracias por crear una cuenta! mZAP es una aplicación que te permite reportar situaciones o cosas en tu comunidad que necesitan ser limpiadas y arregladas incluyendo estancamientos de agua, basura y techos rotos, entre otros. Tú puedes ver estos reportes y organizar grupos para limpiar estos problemas.",

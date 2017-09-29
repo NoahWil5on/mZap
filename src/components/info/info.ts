@@ -112,11 +112,11 @@ export class InfoComponent {
       minutes = "0" + minutes;
     }
     /*get current date and time*/
-    var date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + 
+    //var date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + 
       hour + ":" + minutes + ":" + seconds;
 
     firebase.database().ref('/users/').child(this.afAuth.auth.currentUser.uid).once('value').then(snapshot => {
-      var url = "../assets/profile.png";
+      var url = "assets/profile.png";
       if(snapshot.hasChild('url')){
         url = snapshot.val().url+"";
       }
@@ -128,7 +128,7 @@ export class InfoComponent {
         name: this.afAuth.auth.currentUser.displayName,
         message: this.myText,
         id: this.afAuth.auth.currentUser.uid,
-        date: date,
+        //date: date,
         time: Date.now(),
         url: url
       }

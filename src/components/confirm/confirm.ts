@@ -1,7 +1,12 @@
+//vanilla ionic imports
 import { Component, ViewChild } from '@angular/core';
 import { Events } from 'ionic-angular';
 
+//component imports
 import { AddComponent } from '../add/add'
+
+//provider imports
+import { TranslatorProvider } from '../../providers/translator/translator';
 
 @Component({
   selector: 'confirm',
@@ -13,7 +18,7 @@ export class ConfirmComponent {
   @ViewChild('type') type;
 
   skip:boolean = true;
-  constructor(public add: AddComponent, public events: Events) {
+  constructor(public add: AddComponent, public events: Events, public translate: TranslatorProvider) {
     
   }
   ngAfterViewInit(){
