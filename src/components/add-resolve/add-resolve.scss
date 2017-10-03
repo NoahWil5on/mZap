@@ -37,7 +37,15 @@
                         max-height: none !important;
                         display: block;
                     }
-                }   
+                }  
+                .center{
+                    width: 100%;
+                    height: auto;
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%,-50%);
+                } 
             }   
             .slide-image2{
                 position: relative;

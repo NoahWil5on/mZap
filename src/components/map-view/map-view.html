@@ -74,7 +74,7 @@
             <img src="assets/location_marker.png" alt="Drop Position" [class.hidden]="!showButtons" [class.show]="showButtons" />
         </div>
     </div>
-    <div id="controls" (pan)="addFalse()" *ngIf="isLoggedIn()">
+    <div id="controls" *ngIf="isLoggedIn()">
         <div class="button-center add">
             <button class="add-type" (click)="mapPage.addShow = true" [class.hidden]="!showButtons" [class.show]="showButtons">
               <img src="assets/images/buttons/plus.png" alt="Plus" width="60"/>

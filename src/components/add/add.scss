@@ -97,14 +97,16 @@
         }
         .nav-buttons{
             // overflow: hidden;
-            background-color: white;
+            pointer-events: all;
+            background-color: none;
             position: absolute;
             bottom: 0;
             width: 100%;
             left: 0;
             transform: translateY(48%);
-            z-index: 00;
+            z-index: 10;
             .button-ios, .button-md{
+                z-index: 20;
                 transform: translateY(78%);
                 height: auto;
                 padding: 0;

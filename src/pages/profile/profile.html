@@ -3,7 +3,7 @@
         <ion-grid class="ionic-title">
             <ion-row>
                 <ion-col text-left>
-                    <ion-buttons start *ngIf="checkProfile()">
+                    <ion-buttons start *ngIf="checkProfile() && !navCtrl.canGoBack()">
                         <button ion-button clear item-start (click)="openMenu()" class='nav-burg'>
                             <img class="nav-burg" src="assets/hamburger.png" alt="nav"/>
                         </button>

@@ -24,6 +24,8 @@ export class TranslatorProvider {
             share: "Tell your friends about mZAP!",
             show: "Username is visible",
             noShow: "Username is NOT visible",
+            errorType: "*Add a type to the report*",
+            errorImage: "*Add a photo of the incident*",
         },
         confirmation: {
             success: "Successfully Submitted!",
@@ -248,6 +250,8 @@ export class TranslatorProvider {
             share: "¡Dile a tus amigos acerca mZAP!",
             show: "Nombre de usuario visible",
             noShow: "El nombre de usuario NO está visible",
+            errorType: "*Añadir un tipo al informe*",
+            errorImage: "*Añadir una foto del incidente*",
         },
         confirmation: {
             success: "¡Envio Exitoso!",
@@ -427,7 +431,7 @@ export class TranslatorProvider {
         tutorial:{
             help1: "Gracias por crear una cuenta! mZAP es una aplicación que te permite reportar situaciones o cosas en tu comunidad que necesitan ser limpiadas y arregladas incluyendo estancamientos de agua, basura y techos rotos, entre otros. Tú puedes ver estos reportes y organizar grupos para limpiar estos problemas.",
             help2: "Este es el mapa. El icono azul demarca tu ubicación. Cada icono rojo muestra un reporte y su características.",
-            help3: "Tú puedes hacer un reporte haciendo click en el botón 'mas' (+)). Después, puedes tomar una foto, añadir una descripción y subirla al mapa!",
+            help3: "Tú puedes hacer un reporte haciendo click en el botón 'mas' (+). Después, puedes tomar una foto, añadir una descripción y subirla al mapa!",
             help4: "Otros usuarios podrán entonces ver tus reportes haciendo click sobre ellos en el mapa. Allí, ellos podrán hacer comentarios y subir fotos del trabajo que han hecho para mejorar o resolver la situación.",
             ready: "¡Esto es todo! ¡Ya estas listo para ser un mZAPPER!"
         },

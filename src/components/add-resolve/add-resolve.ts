@@ -157,6 +157,7 @@ export class AddResolveComponent {
 
       //link resolution info to actual report
       firebase.database().ref('/positions/').child(this.userInfo.activeData.key).child('resolves').push(key).then(_ => {
+        firebase.database().ref(`/positions/${this.userInfo.activeData.key}/status`).set('Complete');
         //update # of resolves
         var userRating = firebase.database().ref('/userRating/').child(self.afAuth.auth.currentUser.uid)
         userRating.once('value', snap => {

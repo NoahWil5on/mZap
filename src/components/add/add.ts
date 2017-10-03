@@ -70,7 +70,7 @@ export class AddComponent {
   }
   doSubmit() {
     var loader = this.loadingCtrl.create({
-      content: "Submtting Post..."
+      content: this.translate.text.add.submitting,
     });
     loader.present();
     var promiseObj = this.images.uploadToFirebase("posts");
@@ -91,7 +91,7 @@ export class AddComponent {
   doShare() {
     this.share = true;
     setTimeout(() => {
-      this.slideRight(true);
+      //this.slideRight(true);
       this.slide.lockSwipes(true);
     }, 50);
 
@@ -108,11 +108,11 @@ export class AddComponent {
       if (this.type != undefined) {
         return true;
       }
-      this.error = "*Add a type to the report*";
+      this.error = this.translate.text.add.errorType;
       this.scroll = 0;
       return false;
     }
-    this.error = "*Add a photo of the incident*";
+    this.error = this.translate.text.add.errorImage;
     this.scroll = 1;
     return false;
   }

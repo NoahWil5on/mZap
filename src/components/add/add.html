@@ -75,7 +75,7 @@
     <ion-slide *ngIf="share" class="thanks">
       <h2 text-center padding>{{translate.text.add.thanks}}</h2>
       <p text-center >{{translate.text.add.share}}</p>
-      <ion-grid>
+      <ion-grid *ngIf="userInfo.isApp">
         <!-- <ion-row *ngIf="!userInfo.isApp">
           <ion-col text-center>
             <a href="https://twitter.com/home?status=mzap.org">
@@ -94,7 +94,7 @@
           </ion-col>
         </ion-row> -->
         <!-- -->
-        <ion-row *ngIf="userInfo.isApp">
+        <ion-row>
           <ion-col text-center>
             <button ion-button icon-only clear (click)='shareTwitter()'>
               <ion-icon name="logo-twitter" style="color: #00aced; font-size: 24pt"></ion-icon>

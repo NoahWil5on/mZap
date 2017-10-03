@@ -149,7 +149,7 @@ export class MapViewComponent {
         this.myMarker = new google.maps.Marker({
             position: latLng,
             icon: markerImage,
-            map: this.map
+            map: this.map,
         });
         //personal circle
         this.myCircle = new google.maps.Circle({
@@ -162,6 +162,10 @@ export class MapViewComponent {
             center: latLng,
             radius: 150
         });
+        if(this.map.getZoom() <= 12){
+            this.myMarker.setVisible(false);
+            this.myCircle.setVisible(false);
+        }
         this.animate(latLng);
     }
     runNavigation() {
@@ -339,47 +343,63 @@ export class MapViewComponent {
         //tells google what image to use as the marker
         switch (data.type) {
             case 'bugs':
-                selection = 'assets/images/icons/bug.png';
+                selection = 'assets/images/icons/bug';
                 break;
             case 'trash':
-                selection = 'assets/images/icons/trash.png';
+                selection = 'assets/images/icons/trash';
                 break;
             case 'building':
-                selection = 'assets/images/icons/building.png';
+                selection = 'assets/images/icons/building';
                 break;
             case 'pest':
-                selection = 'assets/images/icons/pest.png';
+                selection = 'assets/images/icons/pest';
                 break;
             case 'cnd':
-                selection = 'assets/images/icons/cnd.png';
+                selection = 'assets/images/icons/cnd';
                 break;
             case 'water':
-                selection = 'assets/images/icons/droplet.png';
+                selection = 'assets/images/icons/droplet';
                 break;
             case 'road':
-                selection = "assets/images/icons/road.png";
+                selection = "assets/images/icons/road";
                 break;
             case 'electricity':
-                selection = "assets/images/icons/electricity.png";
+                selection = "assets/images/icons/electricity";
                 break;
             case 'tree':
-                selection = "assets/images/icons/tree.png";
+                selection = "assets/images/icons/tree";
                 break;
             case 'rocked':
-                selection = "assets/images/icons/blocked_road.png";
+                selection = "assets/images/icons/blocked_road";
                 break;
             default:
-                selection = 'assets/images/icons/bug.png';
+                selection = 'assets/images/icons/bug';
                 break;
+        };
+        if(data.status == "To Do"){
+            selection += ".png";
+        }else{
+            selection += "_gray.png";
+        }
+        var image = {
+            url: selection,
+            size: new google.maps.Size(40,40),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(15,15),
+            scaledSize: new google.maps.Size(30,30),
         };
         //creates the marker with the specified icon
         let marker = new google.maps.Marker({
             position: new google.maps.LatLng(data.lat, data.lng),
-            icon: selection,
+            icon: image,
             map: this.map
         });
         this.markers.push(marker);
         var self = this;
+        if(this.map.getZoom() <= 12){
+            marker.setVisible(false);
+            this.showButtons = false;
+        }
         /*Allows an info window to pop up when a point is clicked*/
         google.maps.event.addListener(marker, 'click', function(e){
             self.doOpen(data, marker);
@@ -473,7 +493,9 @@ export class MapViewComponent {
                             radius: 25,
                             maxIntensity: 250
                         });
-
+                        if(self.map.getZoom() > 12){
+                            self.heatMap.setMap(null);  
+                        }
                         self.setOnce = false;
 
                     }
@@ -516,7 +538,7 @@ export class MapViewComponent {
             this.myMarker = new google.maps.Marker({
                 position: latLng,
                 icon: markerImage,
-                map: this.map
+                map: this.map,
             });
             this.myCircle = new google.maps.Circle({
                 strokeColor: '#444',
@@ -529,6 +551,10 @@ export class MapViewComponent {
                 radius: 150
             });
             this.animate(latLng);
+            if(this.map.getZoom() <= 12){
+                this.myMarker.setVisible(false);
+                this.myCircle.setVisible(false);
+            }
         }
         google.maps.event.addListener(this.map, 'zoom_changed', function (e) {
             self.mapTouch()
@@ -537,10 +563,12 @@ export class MapViewComponent {
             if (zoom > 12) {
                 self.myMarker.setVisible(true);
                 self.myCircle.setVisible(true);
+                self.heatMap.setMap(null);                
             }
             else {
                 self.myMarker.setVisible(false);
                 self.myCircle.setVisible(false);
+                self.heatMap.setMap(self.map);
             }
         })
     }
