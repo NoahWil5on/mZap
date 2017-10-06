@@ -25,6 +25,7 @@ export class InfoViewComponent {
   @ViewChild('mainContent') infoContent;
 
   myData: any;
+  checks: any = [];
   likeValue: any;
   hide: boolean = false;
   messages: any = [];
@@ -34,6 +35,7 @@ export class InfoViewComponent {
 
   constructor(public userInfo: UserInfoProvider, public likeProvider: LikeProvider, public ngZone: NgZone, public click: ClickProvider, public imageViewerCtrl: ImageViewerController, public translate: TranslatorProvider, public info: InfoComponent, public events: Events) {
     this.myData = this.userInfo.activeData;
+    this.checks = this.myData.checks;
     this.likeable();    
 
     switch(this.userInfo.activeData.status){
@@ -99,6 +101,9 @@ export class InfoViewComponent {
         this.info.hideType = false;
       }
     })
+  }
+  updateChecks(){
+    firebase.database().ref(`/positions/${this.myData.key}/checks`).set(this.checks);
   }
   likeable(){
     var self = this;

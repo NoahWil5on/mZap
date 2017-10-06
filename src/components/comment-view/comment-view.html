@@ -1,20 +1,58 @@
-<div class="messages">
-    <div *ngFor="let message of messages">
-        <ion-grid class="message">
-            <ion-row class="header-row">
-                <ion-col no-padding col-3>
-                    <img [src]="message.url" width="40" />
+<div id="shader" (click)="closeOut()"></div>
+<div class="full" style="pointer-events: none">
+    <div class="section main">
+        <ion-grid class="check-button">
+            <ion-row>
+                <ion-col text-center>
+                    <button ion-button clear (click)="closeOut()">
+                        <img src="assets/images/buttons/ex.png"/>
+                    </button>
                 </ion-col>
-                <ion-col no-padding class="header-info">
-                    <p><b>{{message.name}}</b></p>
-                    <p style="color: #444">{{message.date}}</p>
-                </ion-col>
-            </ion-row>
-            <ion-row class="message-row">
-                <ion-col no-padding>
-                    <p>{{message.message}}</p>
+                <ion-col text-center>
+                    <button ion-button clear (click)="submit()" [disabled]="myText.trim().length < 1">
+                        <img src="assets/images/buttons/check.png"/>
+                    </button>
                 </ion-col>
             </ion-row>
         </ion-grid>
+        <div class="type" style="right: 0">
+            <button ion-button clear icon-only (click)="doCommentInfo()">
+                <img src="assets/images/icons/question.png" width="50px" alt="type" />
+            </button>
+        </div>
+        <div id="comment" #commentContent>
+            <div class="messages">
+                <div *ngFor="let message of messages">
+                    <ion-grid class="message" [class.newMessage]="checkMessage(message)" [class.my-message]="checkUID(message)">
+                        <ion-row class="header-row">
+                            <ion-col no-padding col-3>
+                                <div class="image-div" [style.background-image]="'url(' + message.url + ')'">
+                                </div>
+                            </ion-col>
+                            <ion-col no-padding class="header-info">
+                                <p><b>{{message.name}}</b></p>
+                                <p class="meta">{{message.date}}</p>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row class="message-row">
+                            <ion-col no-padding>
+                                <p>{{message.message}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </div>
+            </div>
+        </div>
+        <div class="chat show">
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <div>
+                            <textarea #msg rows="1" (keyup)="resize()" [(ngModel)]="myText" placeholder="Aa" autocorrect="on"></textarea>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
     </div>
 </div>

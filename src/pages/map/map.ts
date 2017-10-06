@@ -18,10 +18,11 @@ export class MapPage {
 
   infoShow: boolean = false;
   addShow: boolean = false;
-  mapView: any;
-  loginState: string = 'login';
+  comment: boolean = false;
   tut: boolean = false;
-  mapState: string = "comment";
+  mapView: any;
+  loginState: string = 'login';  
+  mapState: string = "comment";  
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userInfo: UserInfoProvider, public events: Events /*private afAuth: AngularFireAuth*/) {
     var self = this;

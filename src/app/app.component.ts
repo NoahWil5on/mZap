@@ -88,12 +88,12 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
         }, 15000);*/
     }
     runLogin(){
-        this.storage.get('mzap_email').then(email => {
+        this.storage.get('mission_x_email').then(email => {
             if(!email){
                 this.rootPage = MapPage;
                 return;
             };
-            this.storage.get('mzap_password').then(pass => {
+            this.storage.get('mission_x_password').then(pass => {
                  this.afAuth.auth.signInWithEmailAndPassword(email,pass).then(data => {
                      this.runUser(this.afAuth.auth.currentUser);
                  })
@@ -116,9 +116,9 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
     //     })
     // }
     runUser(user){
-        var today = new Date();
+        //var today = new Date();
         /*get current date and time*/
-        var date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        //var date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         var self = this;
         /*upate user visits and last active time*/
         if(firebase.database().ref('users/').child(user.uid+"")){
@@ -126,7 +126,7 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
                 if(snapshot.val() && snapshot.val().visits){
                     firebase.database().ref('/users/').child(self.afAuth.auth.currentUser.uid).update({
                         visits: snapshot.val().visits+1,
-                        lastActive: date 
+                        lastActive: Date.now() 
                     }).then(_ => {
                         self.userInfo.pageState = 'map';
                         self.userInfo.loggedIn = true;
@@ -216,8 +216,8 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
     logout(){
         this.click.click('settingsLogout');
         this.afAuth.auth.signOut().then(out => {
-            this.storage.remove('mzap_password').then(_ => {
-                this.storage.remove('mzap_email').then(_ => {
+            this.storage.remove('mission_x_password').then(_ => {
+                this.storage.remove('mission_x_email').then(_ => {
                     this.userInfo.loggedIn = false;
                     this.nav.setRoot(MapPage);
                     this.menuCtrl.close();

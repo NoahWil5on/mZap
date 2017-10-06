@@ -98,7 +98,7 @@ export class CreateComponent {
       }).then(_ => {
         loader.dismiss();
         this.userInfo.loggedIn = true;
-        this.mapPage.tut = true;
+        //this.mapPage.tut = true;
       });
     });
   }
@@ -120,8 +120,8 @@ export class CreateComponent {
         displayName: this.name,
         photoURL: ""
       }).then(_ => {
-        this.storage.set('mzap_email', this.email);
-        this.storage.set('mzap_password', this.pass1);
+        this.storage.set('mission_x_email', this.email);
+        this.storage.set('mission_x_password', this.pass1);
         var today = Date.now();
         //let date = (today.getMonth() + 1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 

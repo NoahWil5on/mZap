@@ -64,8 +64,8 @@ export class TranslatorProvider {
             notes: "Notes",
             edit: "Edit",
             info: "Info",
-            aboutTitle: "What is the commenting feature?",
-            aboutMessage: "When you comment on a post everyone will be able to see your comment. This feature allows community members to better communicate what needs to be done in order to resolve an issue.",
+            aboutTitle: "What is Global Chat?",
+            aboutMessage: "Global chat is a way for you to communicate with everyone using the app. When you post a message here, everyone will be able to see and respond to it.",
         },
         login: {
             email: "Email",
@@ -219,7 +219,7 @@ export class TranslatorProvider {
         },
         other: {
             cnd: "Cats/Dogs",
-            complete: "Complete",
+            complete: "Resolved",
             todo: "To Do",
             building: "Abandoned Building",
             pest: "Pests",
@@ -290,8 +290,8 @@ export class TranslatorProvider {
             notes: "Notas",
             edit: "Editar",
             info: "Detalles",
-            aboutTitle: "¿Cuál es la función de comentarios?",
-            aboutMessage: "Cuando comenta una publicación, todos podrán ver su comentario. Esta característica permite a los miembros de la comunidad comunicar mejor lo que se debe hacer para resolver un problema.",
+            aboutTitle: "¿Qué es Global Chat?",
+            aboutMessage: "El chat global es una forma de comunicarse con todos los usuarios de la aplicación. Cuando publique un mensaje aquí, todo el mundo podrá verlo y responder a él.",
         },
         login: {
             email: "Correo Electrónico",
@@ -445,7 +445,7 @@ export class TranslatorProvider {
         },
         other: {
             cnd: "Gatos/Perros",
-            complete: "Completar",
+            complete: "Resuelto",
             todo: "Incompleto",
             building: "Edificación Abandonada",
             pest: "Plagas",

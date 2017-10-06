@@ -1,5 +1,5 @@
 <div id="main-confirm">
-  <ion-grid no-padding>
+  <!-- <ion-grid no-padding>
     <ion-row text-center>
       <ion-col class="image-col">
         <div class="full">
@@ -22,5 +22,16 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <p *ngIf="!add.submit()" class="error" (click)="add.goToSlide()" style="border: 1px solid red; border-radius: 5px;">{{add.error}}</p>
+  <p *ngIf="!add.submit()" class="error" (click)="add.goToSlide()" style="border: 1px solid red; border-radius: 5px;">{{add.error}}</p> -->
+  <div class="check-input" *ngFor="let check of add.checks">
+    <div class="remove" *ngIf="add.checks.length > 1">
+      <div class="image-holder" (click)="add.checks.splice(add.checks.indexOf(check),1)">
+        <ion-icon name="remove"></ion-icon>
+      </div>
+    </div>
+    <ion-input type="text" maxlength="40" [(ngModel)]="check.text"></ion-input>
+  </div>
+  <button ion-button [disabled]="add.checks[add.checks.length-1].text.length < 1" (click)="add.checks.push({text: '', state: false})" class="add">
+    <ion-icon name="add"></ion-icon>
+  </button>
 </div>

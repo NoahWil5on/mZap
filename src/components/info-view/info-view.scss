@@ -9,12 +9,31 @@
         overflow: scroll;
         position: relative;
         display: block;
-        .likes{
-            display: flex;
-            flex-direction: column;
-            ion-row{
-                flex: 1;
+        .description{
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .checks{
+            padding: 5px 0;
+            display: table;
+            vertical-align: middle;
+            text-align: center;
+            ion-checkbox{
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
             }
+            p{
+                padding-left: 5px;
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
+                margin: 0;
+                height: 1em;
+            }
+        }
+        #main-content{
+            overflow: scroll;
         }
         .row{
             display: flex;
@@ -114,6 +133,19 @@
         .show{
             transform: translate(0,0%);
             transition: all .5s;
+        }
+        .author{
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 3px;
+            p{
+                display: inline-block;
+                margin: 0;
+            }
+            div{
+                display: inline-block;
+                width: 1em;
+                height: 1em;
+            }
         }
         .messages{
             padding-top: 10px;

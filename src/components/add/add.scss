@@ -37,6 +37,7 @@
             position: absolute;
             transform: translate(-50%,120%);
             background-color: white;
+            border-radius: 8px;
             //padding-top: 40px;
             width: 280px;
             height: 400px;
@@ -97,7 +98,7 @@
         }
         .nav-buttons{
             // overflow: hidden;
-            pointer-events: all;
+            pointer-events: none;
             background-color: none;
             position: absolute;
             bottom: 0;
@@ -106,6 +107,7 @@
             transform: translateY(48%);
             z-index: 10;
             .button-ios, .button-md{
+                pointer-events: all;
                 z-index: 20;
                 transform: translateY(78%);
                 height: auto;

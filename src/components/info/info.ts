@@ -30,44 +30,11 @@ export class InfoComponent {
   dataSet: boolean = false;
   resolve: any;
 
+  editComponent: any;
+
   constructor( public mapPage: MapPage, public translate: TranslatorProvider, public userInfo: UserInfoProvider, public afAuth: AngularFireAuth, public ngZone: NgZone, public events: Events, public images: ImagesProvider, public alertCtrl: AlertController ) {
     var data = this.userInfo.activeData
     this.state = this.mapPage.mapState;
-    switch(data.type){
-      case 'bugs':
-        this.selection = 'assets/images/icons/bug.png';
-        break;
-      case 'trash':
-        this.selection = 'assets/images/icons/trash.png';
-        break;
-      case 'building':
-        this.selection = 'assets/images/icons/building.png';
-        break;
-      case 'pest':
-        this.selection = 'assets/images/icons/pest.png';
-        break;
-      case 'cnd':
-        this.selection = 'assets/images/icons/cnd.png';
-        break;
-      case 'road':
-        this.selection = "assets/images/icons/road.png";
-        break;
-      case 'electricity':
-        this.selection = "assets/images/icons/electricity.png";
-        break;
-      case 'tree':
-        this.selection = "assets/images/icons/tree.png";
-        break;
-      case 'rocked':
-        this.selection = "assets/images/icons/blocked_road.png";
-        break;
-      case 'water':
-        this.selection = "assets/images/icons/droplet.png";
-        break;
-      default:
-        this.selection = 'assets/images/icons/bug.png';
-        break;
-    };
 
     //translate status
     switch(data.status){
@@ -112,7 +79,7 @@ export class InfoComponent {
       minutes = "0" + minutes;
     }
     /*get current date and time*/
-    //var date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + 
+    var date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + 
       hour + ":" + minutes + ":" + seconds;
 
     firebase.database().ref('/users/').child(this.afAuth.auth.currentUser.uid).once('value').then(snapshot => {
@@ -128,7 +95,7 @@ export class InfoComponent {
         name: this.afAuth.auth.currentUser.displayName,
         message: this.myText,
         id: this.afAuth.auth.currentUser.uid,
-        //date: date,
+        date: date,
         time: Date.now(),
         url: url
       }

@@ -1,4 +1,15 @@
-<div class="show" [class.hidden]="hide" style="position: relative" #mainContent>
+<div class="show" [class.hidden]="hide" style="position: relative" #mainContent id="main-content">
+    <div class="author">
+        <p>{{translate.text.infoWindow.author}} {{myData.name}}</p>
+        <div [style.background-color]="myData.type">
+        </div>
+    </div>
+    <p class="description" *ngIf="myData.description.length > 0">{{myData.description}}</p>
+    <div *ngFor="let check of checks" class="checks">
+        <ion-checkbox [(ngModel)]="check.state" (click)="updateChecks()" color="secondary">
+        </ion-checkbox>
+        <p (click)="check.state = !check.state; updateChecks()">{{check.text}}</p>
+    </div>
     <!-- <ion-grid no-padding *ngIf="myData.url" id="image-grid">
         <ion-row>
             <ion-col no-padding>
@@ -35,7 +46,7 @@
             </ion-col>
         </ion-row>
     </ion-grid>-->
-    <div id="comment" #commentContent>
+    <!-- <div id="comment" #commentContent>
         <div class="messages">
             <div *ngFor="let message of messages">
                 <ion-grid class="message" [class.newMessage]="checkMessage(message)">
@@ -56,5 +67,5 @@
                 </ion-grid>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
