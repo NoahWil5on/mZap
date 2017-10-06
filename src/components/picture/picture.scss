@@ -16,6 +16,7 @@
                 ion-row{
                     height: 100%;
                     img{
+                        pointer-events: none;
                         z-index: 0;
                         position: absolute;
                         top: 50%;
@@ -24,6 +25,7 @@
                         cursor: pointer;
                     }
                     label{
+                        pointer-events: all;
                         display: block;
                         position: relative;
                         z-index: 10;
