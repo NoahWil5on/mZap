@@ -1,14 +1,15 @@
 //vanilla ionic imports
-import { Component, NgZone } from '@angular/core';
-import { NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
+import { Component, ViewChild, NgZone, ElementRef } from '@angular/core';
+import { NavController, NavParams, ViewController, Slides, AlertController } from 'ionic-angular';
 
 //provider imports
+import { ImagesProvider } from '../../providers/images/images';
 import { TranslatorProvider } from '../../providers/translator/translator';
 import { ClickProvider } from '../../providers/click/click';
 import { UserInfoProvider } from '../../providers/user-info/user-info';
 
-//component imports
-import { InfoComponent } from '../info/info';
+//image popup viewing import
+import { ImageViewerController } from 'ionic-img-viewer';
 
 //page imports
 import { MapPage } from '../../pages/map/map';
@@ -22,7 +23,11 @@ import * as firebase from 'firebase';
     templateUrl: 'edit-view.html'
 })
 export class EditViewComponent {
+    @ViewChild('file') input: ElementRef
+    @ViewChild('file1') input1: ElementRef
 
+    @ViewChild(Slides) slide: Slides;
+    @ViewChild('preview') preview;
     imageData: string = "";
 
     data: any = {};
@@ -30,25 +35,78 @@ export class EditViewComponent {
     deleted: any = [];
     dataSet: boolean = false;
     error: string = "";
-    colors: any = []
-;
-    constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public translate: TranslatorProvider, public ngZone: NgZone, public click: ClickProvider, public userInfo: UserInfoProvider, public mapPage: MapPage, public afAuth: AngularFireAuth, public alertCtrl: AlertController, public infoComponent: InfoComponent) {
-        this.data = this.userInfo.activeData;
+    constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public images: ImagesProvider, public translate: TranslatorProvider, public ngZone: NgZone, public click: ClickProvider, public userInfo: UserInfoProvider, public mapPage: MapPage, public afAuth: AngularFireAuth, public alertCtrl: AlertController, public imageViewerCtrl: ImageViewerController) {
+        this.images.doClear();
 
-        this.colors = [
-            '#ff0000',
-            '#ffff00',
-            '#00ff00',
-            '#00ffff',
-            '#0000ff',
-            '#ff00ff'
-        ]
+        var self = this;
+        this.data = this.userInfo.activeData;
+        var ref = firebase.database().ref('/resolves/');
+        ref.once('value', snapshot => {
+            if (!snapshot.hasChild(this.data.key)) return;
+            ref.child(this.data.key).once('value').then(snap => {
+                snap.forEach(function (item) {
+                    var obj = {
+                        url: item.val().url,
+                        refName: item.val().refName,
+                        info: "",
+                        delete: false,
+                        key: item.key
+                    }
+                    if (item.val().info) {
+                        obj.info = item.val().info;
+                    }
+                    self.resolves.push(obj);
+                });
+            });
+        });
     }
-    ngAfterViewInit(){
-        this.infoComponent.editComponent = this;
+    ngAfterViewInit() {
+        var self = this;
+        this.input.nativeElement.onchange = function (e) {
+            var file = e.target.files[0];
+
+            self.images.selectedFile = file;
+            self.dataSet = true;
+            setTimeout(() => {
+                self.preview.nativeElement.setAttribute('src', URL.createObjectURL(file));
+            }, 50)
+        }
+        this.input1.nativeElement.onchange = function (e) {
+            var file = e.target.files[0];
+
+            self.images.selectedFile = file;
+            self.dataSet = true;
+            setTimeout(() => {
+                self.preview.nativeElement.setAttribute('src', URL.createObjectURL(file));
+            }, 50)
+        }
+    }
+    presentImage(myImage) {
+        let imageViewer = this.imageViewerCtrl.create(myImage);
+        imageViewer.present();
     }
     dismiss(bool) {
         this.navCtrl.setRoot(MapPage);
+    }
+    cameraRequest() {
+        this.click.click('editPostCamera');
+        var promise = this.images.doGetCameraImage(600, 600);
+        promise.then(res => {
+            this.imageData = "data:image/jpg;base64," + res;
+            this.preview.nativeElement.setAttribute('src', this.imageData);
+            this.dataSet = true;
+        }).catch(e => {
+        });
+    }
+    albumRequest() {
+        this.click.click('editPostAlbum');
+        var promise = this.images.doGetAlbumImage(600, 600);
+        promise.then(res => {
+            this.imageData = "data:image/jpg;base64," + res;
+            this.preview.nativeElement.setAttribute('src', this.imageData);
+            this.dataSet = true;
+        }).catch(e => {
+        });
     }
     statusClick() {
         this.click.click('editPostStatus');
@@ -60,23 +118,67 @@ export class EditViewComponent {
         this.click.click('editPostDescription');
     }
     submit() {
-        if(this.data.checks[0].text.length < 1) return;
-        var temp = this.data.checks
-        for(var i = 0; i < temp.length; i++){
-            if(!temp[i] || !temp[i].text || temp[i].text == ""){
-                temp.splice(i,1);
-                continue;
+        /*
+        if(this.data.description.length < 1){
+            this.error = this.translate.text.editPost.error;
+            return;
+        }*/
+        var self = this;
+        if (!this.dataSet) {
+            firebase.database().ref('/positions/').child(self.data.key).update(self.data).then(_ => {
+                self.actuallyDeleteResolves()
+            });
+        } else {
+            if (this.data.refName) {
+                firebase.storage().ref('/images/').child("posts").child(this.data.refName).delete().then(_ => {
+                    var promiseObject = self.images.uploadToFirebase("posts");
+                    promiseObject.promise.then(res => {
+                        self.data.url = res;
+                        self.data.refName = promiseObject.refName;
+                        firebase.database().ref('/positions/').child(self.data.key).update(self.data).then(_ => {
+                            self.actuallyDeleteResolves();
+                        });
+                    }).catch(e => {
+                        alert("Error: " + e.message);
+                    });
+                })
             }
-            temp[i].text = temp[i].text.trim();
-            if(temp[i].text.length < 1){
-                temp.splice(i,1);
+            else {
+                var promiseObject = self.images.uploadToFirebase("posts");
+                promiseObject.promise.then(res => {
+                    self.data.url = res;
+                    self.data.refName = promiseObject.refName;
+                    firebase.database().ref('/positions/').child(self.data.key).update(self.data).then(_ => {
+                        self.actuallyDeleteResolves();
+                    });
+                }).catch(e => {
+                    alert("Error: " + e.message);
+                });
             }
         }
-        if(temp.length < 1) return;
-        this.data.checks = temp;
-        firebase.database().ref('/positions/').child(this.data.key).set(this.data).then(_ => {
+    }
+    actuallyDeleteResolves() {
+        var self = this;
+        if (this.deleted.length < 1) {
             this.dismiss(true);
+            return;
+        }
+        this.deleted.forEach(function (item) {
+            firebase.database().ref('/positions/').child(self.data.key).child('resolves').child(item.key).remove()
+                .then(_ => {
+                    firebase.database().ref('/resolves/').child(self.data.key).child(item.key).remove().then(_ => {
+                        firebase.storage().ref('/images/').child("resolves").child(item.refName).delete();
+                    })
+                })
         });
+        this.dismiss(true);
+    }
+    deleteResolve(item) {
+        this.click.click('editPostDelete');
+        this.ngZone.run(() => {
+            this.resolves[this.resolves.indexOf(item)].delete = true;
+        });
+        this.deleted.push(item);
     }
     delete() {
         var alert = this.alertCtrl.create({

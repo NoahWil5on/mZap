@@ -216,8 +216,9 @@ export class MapViewComponent {
             show: data.show,
             name: this.afAuth.auth.currentUser.displayName,
             id: this.afAuth.auth.currentUser.uid,
+            url: data.url,
+            refName: data.refName,
             status: "To Do",
-            checks: data.checks,
             key: "",
             date: Date.now(),
         }
@@ -241,6 +242,7 @@ export class MapViewComponent {
             }
         }).then(_ => {
             data.loader.dismiss();
+            this.events.publish("share");
         });
     }    
 
@@ -340,23 +342,38 @@ export class MapViewComponent {
         //switch for positions markers around the map
         //tells google what image to use as the marker
         switch (data.type) {
-            case '#0000ff':
-                selection = 'assets/images/icons/blue';
+            case 'bugs':
+                selection = 'assets/images/icons/bug';
                 break;
-            case '#00ff00':
-                selection = 'assets/images/icons/green';
+            case 'trash':
+                selection = 'assets/images/icons/trash';
                 break;
-            case '#ff0000':
-                selection = 'assets/images/icons/red';
+            case 'building':
+                selection = 'assets/images/icons/building';
                 break;
-            case '#ffff00':
-                selection = 'assets/images/icons/yellow';
+            case 'pest':
+                selection = 'assets/images/icons/pest';
                 break;
-            case '#00ffff':
-                selection = 'assets/images/icons/cyan';
+            case 'cnd':
+                selection = 'assets/images/icons/cnd';
                 break;
-            case '#ff00ff':
-                selection = 'assets/images/icons/violet';
+            case 'water':
+                selection = 'assets/images/icons/droplet';
+                break;
+            case 'road':
+                selection = "assets/images/icons/road";
+                break;
+            case 'electricity':
+                selection = "assets/images/icons/electricity";
+                break;
+            case 'tree':
+                selection = "assets/images/icons/tree";
+                break;
+            case 'rocked':
+                selection = "assets/images/icons/blocked_road";
+                break;
+            default:
+                selection = 'assets/images/icons/bug';
                 break;
         };
         if(data.status == "To Do"){
@@ -401,14 +418,20 @@ export class MapViewComponent {
     }
     doOpen(data, marker){
         this.deactivate = true;
-        this.mapPage.infoShow = true;
-        this.mapPage.mapState = "info"
+        this.myActiveData = data;
+        this.dropDown = true;            
+        // self.distance = geolib.getDistance(
+        //     {latitude: marker.getPosition().lat(), longitude: marker.getPosition().lng()},
+        //     {latitude: self.myMarker.getPosition().lat(), longitude: self.myMarker.getPosition().lng()})/1000;
+        //self.mapPage.infoShow = true;
         this.userInfo.activeData = data;
+        if(!this.userInfo.activeData.likes){
+            this.userInfo.activeData.likes = 0;
+        }
+        this.likeValue = false;
+        this.likeable();
+        this.checkLikes(this.myActiveData.key);
         this.myActiveMarker = marker;
-    }
-    message(){
-        this.deactivate = true;
-        this.mapPage.comment = true;
     }
     checkLikes(postId){
         firebase.database().ref(`/positions/${postId}/likes`).once('value', snapshot => {
@@ -542,12 +565,12 @@ export class MapViewComponent {
             if (zoom > 12) {
                 self.myMarker.setVisible(true);
                 self.myCircle.setVisible(true);
-                self.heatMap.setMap(null);                
+                if(self.heatMap) self.heatMap.setMap(null);                
             }
             else {
                 self.myMarker.setVisible(false);
                 self.myCircle.setVisible(false);
-                self.heatMap.setMap(self.map);
+                if(self.heatMap) self.heatMap.setMap(self.map);
             }
         })
     }

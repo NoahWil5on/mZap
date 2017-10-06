@@ -1,17 +1,10 @@
 <div id="description-main">
-  <ion-item class="content">
+  <ion-item>
     <ion-label floating style="color: green" [class.red-text]="add.desc.length < 1">{{translate.text.add.describe}}</ion-label>
-    <!-- <ion-input maxlength="120" [(ngModel)]="add.desc"></ion-input> -->
-    <ion-textarea maxlength="240" rows="5" [(ngModel)]="add.desc"></ion-textarea>
+    <ion-input maxlength="120" [(ngModel)]="add.desc"></ion-input>
   </ion-item>
-    <ion-grid class="content">
-      <ion-row>
-        <ion-col text-center *ngFor="let color of colors">
-            <div class="select" [class.select-border]="checkColor(color)" (click)="add.currentColor = color">
-              <div class="color-holder" [style.background-color]="color">
-            </div>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  <ion-item>
+    <ion-label>{{translate.text.add.username}}</ion-label>
+    <ion-checkbox color="secondary" [(ngModel)]="add.show"></ion-checkbox>
+  </ion-item>
 </div>

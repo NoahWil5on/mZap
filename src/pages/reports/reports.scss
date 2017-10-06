@@ -1,10 +1,11 @@
 .ios, .md{
     page-reports {
-        h1{
-            border-width: 2px;
-            border-radius: 4px;
-            border-style: solid;
-            padding: 3px;
+        ion-content{
+            background: rgb(6,174,213); /* Old browsers */
+            background: -moz-linear-gradient(top, rgba(6,174,213,1) 0%, rgba(8,103,136,1) 99%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, rgba(6,174,213,1) 0%,rgba(8,103,136,1) 99%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, rgba(6,174,213,1) 0%,rgba(8,103,136,1) 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#06aed5', endColorstr='#086788',GradientType=0 ); /* IE6-9 */
         }
         .flex-row{
             padding-bottom: 10px;
@@ -14,7 +15,10 @@
                 padding: 0;
                 ion-item{
                     padding: 0;
-                    flex-grow: 2;
+                    flex: 1;
+                }
+                img{
+                    border-radius: 4px;
                 }
             }
         }

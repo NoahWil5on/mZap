@@ -1,7 +1,3 @@
-@keyframes rotate {
-    0%      {transform: translate(-50%,-50%) rotate(90deg);}
-    100%    {transform: translate(-50%,-50%) rotate(0deg);}
-}
 .ios, .md{
     edit-view {
         .green-text{
@@ -80,98 +76,6 @@
         }
         .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets{
             bottom: 0px;
-        }
-        .text-area{
-            padding: 0 !important;
-            ion-item{
-                padding: 5px;
-                .item-inner{
-                    padding: 0
-                }
-                ion-label{
-                    padding-left: 5px;
-                }
-                ion-textarea{
-                    padding: 5px;
-                    border: solid 1px #ddd;
-                }
-            }            
-        }
-        .color-grid{
-            padding: 0;
-            .select{
-                display: inline-block;
-                padding: 3px;
-                border-radius: 100%;
-                width: 25px;
-                height: 25px;                
-                .color-holder{
-                    border-radius: 100%;
-                    width: 100%;
-                    height: 100%;
-                    background-color: green;
-                }
-            }
-            .select-border{
-                border: 1px solid blue;
-            }
-        }
-        .check-input{
-            position: relative;
-            display: flex;
-            flex-direction: row;
-            padding: 5px 0;
-            .remove{
-                vertical-align: middle;
-                display: inline-block;
-                position: relative;
-                height: auto;
-                width: 40px;
-                .image-holder{
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%,-50%);
-                    width: 20px;
-                    height: 20px;
-                    background-color: red;
-                    border-radius: 100%;
-                    ion-icon{
-                        position: absolute;
-                        font-size: 1.5em;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%,-50%);
-                        color: white;
-                        animation: rotate .5s;
-                    }
-                }
-            }
-            ion-input{
-                flex: 1;
-                vertical-align: middle;
-                display: inline-block;
-                border: solid 1px #ddd;
-                .text-input{
-                    margin: 5px 10px;
-                    padding-right: 10px;
-                }
-            }
-        }
-        .hidden{
-            display: none;
-        }
-        .add{
-            background-color: #3fbc05;
-            width: 30px;
-            height: 30px;                
-            border-radius: 100%;
-            padding: 0;
-            margin: 0 auto;
-            text-align: center;
-            ion-icon{
-                font-size: 1.5em;
-            }
         }
     }
 }

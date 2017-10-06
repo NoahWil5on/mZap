@@ -56,6 +56,7 @@
             transition: all .8s;
         }
         .section{
+            border-radius: 8px;
             pointer-events: all;
             opacity: 0;
             left: 50%;
@@ -69,7 +70,6 @@
             padding: 20px;
             width: 300px;
             height: 450px;
-            border-radius: 8px;
             @media screen and (min-device-width: 360px) {
                 width: 300px;
                 height: 500px;
@@ -105,10 +105,19 @@
             transform: translate(0,-40%) scale(1); 
             z-index: 10;
             transition: all .5s;
+            button{
+                height: auto;
+            }
         }
         .hideType{
             transform: translate(0,-40%) scale(0) !important; 
             transition: all .5s !important;
+        }
+        ion-textarea{
+            textarea{
+                padding: 3px;
+                margin: 0;
+            }
         }
         #nav-grid{
             width: 100%;
@@ -144,6 +153,7 @@
             padding: 0;
         }
         .chat{
+            border-radius: 8px;
             z-index: 10;
             width: 100%;
             padding: 0;
@@ -153,6 +163,7 @@
             bottom: 0;
             left: 0;
             border-top: #ddd solid 1px;
+            overflow: hidden;
             ion-grid{
                 padding: 0;
                 margin: 0;

@@ -9,31 +9,12 @@
         overflow: scroll;
         position: relative;
         display: block;
-        .description{
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-        }
-        .checks{
-            padding: 5px 0;
-            display: table;
-            vertical-align: middle;
-            text-align: center;
-            ion-checkbox{
-                display: table-cell;
-                vertical-align: middle;
-                text-align: center;
+        .likes{
+            display: flex;
+            flex-direction: column;
+            ion-row{
+                flex: 1;
             }
-            p{
-                padding-left: 5px;
-                display: table-cell;
-                vertical-align: middle;
-                text-align: center;
-                margin: 0;
-                height: 1em;
-            }
-        }
-        #main-content{
-            overflow: scroll;
         }
         .row{
             display: flex;
@@ -134,19 +115,6 @@
             transform: translate(0,0%);
             transition: all .5s;
         }
-        .author{
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 3px;
-            p{
-                display: inline-block;
-                margin: 0;
-            }
-            div{
-                display: inline-block;
-                width: 1em;
-                height: 1em;
-            }
-        }
         .messages{
             padding-top: 10px;
             padding-bottom: 60px;
@@ -174,6 +142,12 @@
                         padding: 3px;
                     }
                     .header-row{
+                        .image-div{
+                            width: 40px;
+                            height: 40px;
+                            background-size: cover;
+                            background-position: center center;
+                        }
                         background-color: white;
                         .header-info{
                             display: flex;

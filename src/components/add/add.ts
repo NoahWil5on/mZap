@@ -31,18 +31,16 @@ export class AddComponent {
   error: string = "";
   scroll: number = 1;
   share: boolean = true;
-  submitted: boolean = false;
-
-  currentColor: string = '#ff0000';
-  checks: any = [];
-
 
   constructor(public mapPage: MapPage, public translate: TranslatorProvider, public userInfo: UserInfoProvider, public afAuth: AngularFireAuth, public images: ImagesProvider, public loadingCtrl: LoadingController, public socialSharing: SocialSharing, public events: Events) {
-    this.checks.push({text: "", state: false});
+    events.subscribe("share", () => {
+      this.doShare();
+    })
   }
   ngAfterViewInit() {
     setTimeout(() => {
-      this.main.nativeElement.style.transform = "translate(-50%,-50%)"
+      this.main.nativeElement.style.transform = "translate(-50%,-50%)";
+
     }, 10);
   }
 
@@ -58,11 +56,11 @@ export class AddComponent {
   }
   slideRight(bool) {
     if (!bool) {
-      if (this.slide.getActiveIndex() == 1) {
+      if (this.slide.getActiveIndex() == 3) {
         this.doSubmit();
       }
     }
-    if(this.slide.getActiveIndex() == 2){
+    if(this.slide.getActiveIndex() == 4){
       this.mapPage.navCtrl.setRoot(MapPage);
     }
     this.slide.slideNext(500, null);
@@ -71,30 +69,24 @@ export class AddComponent {
     this.slide.slideTo(this.scroll, 500);
   }
   doSubmit() {
-    for(var i = 0; i < this.checks.length; i++){
-      this.checks[i].text = this.checks[i].text.trim();
-      if(this.checks[i].text.length < 1){
-        this.checks.splice(i,1);
-      }
-    }
-    if(this.checks.length < 1) return;
     var loader = this.loadingCtrl.create({
       content: this.translate.text.add.submitting,
     });
     loader.present();
-    this.submitted = true;
-    var self = this;
-    setTimeout(function() {
-      self.slideRight(true);
-      self.slide.lockSwipes(true);
-    }, 100);
-    this.mapPage.mapView.submitReport({
-      show: true,
-      type: this.currentColor,
-      desc: this.desc,
-      checks: this.checks,
-      loader: loader,
-    });
+    var promiseObj = this.images.uploadToFirebase("posts");
+    promiseObj.promise.then(res => {
+      this.url = res;
+      this.refName = promiseObj.refName;
+    }).then(() => {
+      this.mapPage.mapView.submitReport({
+        refName: this.refName,
+        url: this.url,
+        show: this.show,
+        type: this.type,
+        desc: this.desc,
+        loader: loader,
+      });
+    })
   }
   doShare() {
     this.share = true;
@@ -105,15 +97,15 @@ export class AddComponent {
 
   }
   runCheck(slide) {
-    // if (slide == 1) {
-    //   if (!this.dataSet) return false;
-    // }
+    if (slide == 1) {
+      if (!this.dataSet) return false;
+    }
     if (this.slide.getActiveIndex() != slide) return false;
     return true;
   }
   submit() {
-    if (this.checks[0].text.length > 0) {
-      if (this.currentColor != undefined) {
+    if (this.dataSet) {
+      if (this.type != undefined) {
         return true;
       }
       this.error = this.translate.text.add.errorType;
@@ -123,5 +115,14 @@ export class AddComponent {
     this.error = this.translate.text.add.errorImage;
     this.scroll = 1;
     return false;
+  }
+  shareTwitter() {
+    this.socialSharing.shareViaTwitter(this.desc, this.url, null);
+  }
+  shareFacebook() {
+    this.socialSharing.shareViaFacebook(this.desc, this.url, null)
+  }
+  shareWhatsapp() {
+    this.socialSharing.shareViaWhatsApp(this.desc, this.url, null)
   }
 }

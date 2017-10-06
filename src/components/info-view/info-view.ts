@@ -1,12 +1,15 @@
 //vanilla ionic imports
 import { Component, NgZone, ViewChild } from '@angular/core';
-import { Events} from 'ionic-angular';
+import { Events, NavController} from 'ionic-angular';
 
 //provider imports
 import { UserInfoProvider } from '../../providers/user-info/user-info';
 import { LikeProvider } from '../../providers/like/like';
 import { ClickProvider } from '../../providers/click/click';
 import { TranslatorProvider } from '../../providers/translator/translator'
+
+//page imports
+import { ProfilePage } from '../../pages/profile/profile';
 
 //image popup viewing import
 import { ImageViewerController } from 'ionic-img-viewer';
@@ -25,7 +28,6 @@ export class InfoViewComponent {
   @ViewChild('mainContent') infoContent;
 
   myData: any;
-  checks: any = [];
   likeValue: any;
   hide: boolean = false;
   messages: any = [];
@@ -33,9 +35,8 @@ export class InfoViewComponent {
 
   status: string = "";
 
-  constructor(public userInfo: UserInfoProvider, public likeProvider: LikeProvider, public ngZone: NgZone, public click: ClickProvider, public imageViewerCtrl: ImageViewerController, public translate: TranslatorProvider, public info: InfoComponent, public events: Events) {
+  constructor(public userInfo: UserInfoProvider, public likeProvider: LikeProvider, public ngZone: NgZone, public click: ClickProvider, public imageViewerCtrl: ImageViewerController, public translate: TranslatorProvider, public info: InfoComponent, public events: Events, public navCtrl: NavController) {
     this.myData = this.userInfo.activeData;
-    this.checks = this.myData.checks;
     this.likeable();    
 
     switch(this.userInfo.activeData.status){
@@ -58,7 +59,13 @@ export class InfoViewComponent {
         //for every message found, add to array
         for (var snap in snapshots.val()) {           
             if(snapshots.hasOwnProperty(snap)) continue;
-            self.messages.unshift(snapshots.val()[snap]);
+            var message = snapshots.val()[snap];
+            if(self.checkMessage(message)){
+               message.new = true;
+            }else{
+              message.new = false;
+            }
+            self.messages.unshift(message);
         }
     });
   }
@@ -102,9 +109,6 @@ export class InfoViewComponent {
       }
     })
   }
-  updateChecks(){
-    firebase.database().ref(`/positions/${this.myData.key}/checks`).set(this.checks);
-  }
   likeable(){
     var self = this;
     this.likeProvider.likeable(this.userInfo.activeData.key, function(value){
@@ -139,10 +143,15 @@ export class InfoViewComponent {
   }
   //checks if this is a new message
   checkMessage(message){
-    if(!message.time) return false;
-    if(Date.now()-message.time < 5000){
+    //if(!message.time) return false;
+    if(Date.now()-message.time < 2000){
       return true;
+    }else{
+      return false;
     }
-    return false;
+  }
+  goToProfile(id){
+    this.userInfo.profileView = id;
+    this.navCtrl.push(ProfilePage);
   }
 }

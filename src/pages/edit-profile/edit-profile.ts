@@ -220,8 +220,8 @@ export class EditProfilePage {
                 firebase.database().ref('/users/').child(self.afAuth.auth.currentUser.uid).remove().then(() => {
                     //permanently delete user
                     self.afAuth.auth.currentUser.delete().then(() => {
-                        self.storage.remove('mission_x_password').then(_ => {
-                            self.storage.remove('mission_x_email').then(_ => {
+                        self.storage.remove('mzap_password').then(_ => {
+                            self.storage.remove('mzap_email').then(_ => {
                                 loader.dismiss();
                                 self.navCtrl.setRoot(LoginPage);
                             })

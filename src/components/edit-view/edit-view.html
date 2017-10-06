@@ -1,21 +1,47 @@
 <div>
-    <ion-card class="text-area">
+    <div>
+        <ion-slides *ngIf="resolves.length > 0" [pager]="resolves.length > 1">
+            <ion-slide text-center *ngFor="let item of resolves">
+                <div text-center class="image-holder">
+                    <div>
+                        <div *ngIf="item.delete" class="shader"></div>
+                        <div>
+                            <button ion-button clear class="slide-x" (click)="deleteResolve(item)">X</button>
+                        </div>
+                        <div class="slide-div">
+                            <img [src]='item.url' #thisImage (click)="presentImage(thisImage)" />
+                        </div>
+                        <div class="status">
+                        </div>
+                    </div>
+                </div>
+                <p *ngIf="item.info.length > 0">{{item.info}}</p>
+            </ion-slide>
+        </ion-slides>
+    </div>
+    <ion-card padding-bottom>
         <ion-item>
-            <ion-label floating class="green-text" [class.red-text]="data.description.trim().length < 1">{{translate.text.editPost.description}}</ion-label>
-            <ion-textarea type="text" maxlength="240" rows="5" [(ngModel)]="data.description" autocorrect="on"></ion-textarea>
+            <ion-label floating class="green-text">{{translate.text.editPost.description}}</ion-label>
+            <ion-input type="text" style="border-bottom: solid black 1px" [(ngModel)]="data.description" (click)="descriptionClick()"
+                autocorrect="on"></ion-input>
         </ion-item>
     </ion-card>
     <ion-card>
-        <ion-grid class="color-grid">
-            <ion-row>
-                <ion-col text-center *ngFor="let color of colors">
-                    <div class="select" [class.select-border]="color == data.type" (click)="data.type = color">
-                        <div class="color-holder" [style.background-color]="color">
-                        </div>
-                    </div>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+        <ion-item>
+            <ion-label>{{translate.text.editPost.type}}</ion-label>
+            <ion-select [(ngModel)]="data.type" (click)="typeClick()">
+                <ion-option value="bugs">{{translate.text.other.bug}}</ion-option>
+                <ion-option value="pest">{{translate.text.other.pest}}</ion-option>
+                <ion-option value="trash">{{translate.text.other.trash}}</ion-option>
+                <ion-option value="building">{{translate.text.other.building}}</ion-option>
+                <ion-option value="cnd">{{translate.text.other.cnd}}</ion-option>
+                <ion-option value="water">{{translate.text.other.water}}</ion-option>
+                <ion-option value="road">{{translate.text.other.road}}</ion-option>
+                <ion-option value="tree">{{translate.text.other.tree}}</ion-option>
+                <ion-option value="electricity">{{translate.text.other.electricity}}</ion-option>
+                <ion-option value="rocked">{{translate.text.other.rocked}}</ion-option>
+            </ion-select>
+        </ion-item>
     </ion-card>
     <ion-card>
         <ion-item>
@@ -26,31 +52,60 @@
             </ion-select>
         </ion-item>
     </ion-card>
-    <ion-card padding>
-        <div class="check-input" *ngFor="let check of data.checks">
-            <div class="remove" *ngIf="data.checks.length > 1">
-                <div class="image-holder" (click)="data.checks.splice(data.checks.indexOf(check),1)">
-                    <ion-icon name="remove"></ion-icon>
-                </div>
-            </div>  
-            <ion-input type="text" maxlength="40" [(ngModel)]="check.text"></ion-input>
-        </div>
-        <div text-center>
-            <button ion-button [disabled]="data.checks[data.checks.length-1].text.length < 1" (click)="data.checks.push({text: '', state: false})" class="add">
-                <ion-icon name="add"></ion-icon>
-            </button>
-        </div>
+    <ion-card>
+        <ion-item>
+            <ion-label>{{translate.text.editPost.show}}</ion-label>
+            <ion-checkbox [(ngModel)]="data.show"></ion-checkbox>
+        </ion-item>
     </ion-card>
+
+    <ion-item>
+        <p class="green-text">{{translate.text.editPost.change}}</p>
+        <ion-grid no-padding>
+            <ion-row>
+                <ion-col text-center no-padding [class.no-height]="!dataSet">
+                    <img width="100px" #preview (click)="presentImage(preview)"/>
+                </ion-col>
+            </ion-row>
+            <ion-row [class.hidden]="userInfo.isApp">
+                <ion-col col-6 text-center>
+                    <label>
+                        <img src="assets/new/camera.png" style="width: 55px; padding-right: 10px;" />
+                        <input #file type="file" accept="image/*" capture="camera" class="fileInput"/>
+                    </label>
+                </ion-col>
+                <ion-col col-6 text-center>
+                    <label>
+                        <img src="assets/new/album.png" style="width: 55px; padding-right: 10px;" />
+                        <input #file1 type="file" accept="image/*" class="fileInput"/>
+                    </label>
+                </ion-col>
+            </ion-row>
+            <ion-row [class.hidden]="!userInfo.isApp">
+                <ion-col col-6 no-padding>
+                    <button ion-button block clear style="color: black;" (click)="cameraRequest()">
+                            <img src="assets/new/camera.png" style="width: 55px; padding-right: 10px;" alt="Camera" />
+                        </button>
+                </ion-col>
+                <ion-col col-6 no-padding>
+                    <button ion-button block clear style="color: black;" (click)="albumRequest()">
+                            <img src="assets/new/album.png" style="width: 55px; padding-right: 10px;" alt="Album" />
+                        </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+
     <div text-center padding-top>
         <ion-grid>
             <ion-row>
-                <!-- <ion-col>
-                    <button ion-button color="secondary" (click)="submit()" style="padding: 0 10px">
+                <ion-col>
+                    <button ion-button color="secondary" block (click)="submit()" style="padding: 0 10px">
                         {{translate.text.editPost.submit}}
                     </button>
-                </ion-col> -->
+                </ion-col>
                 <ion-col>
-                    <button ion-button color="danger" (click)="delete()" block style="padding: 0 10px">
+                    <button ion-button color="danger" block (click)="delete()" style="padding: 0 10px">
                         {{translate.text.infoWindow.delete}}
                     </button>
                 </ion-col>
