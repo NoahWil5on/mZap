@@ -317,6 +317,15 @@
             margin: 0 auto;
             height: 30px;
         }
+        .message-box{
+            pointer-events:none; 
+            top: 13px;
+            position: relative;
+            display: block;
+            text-align: center;
+            margin: 0 auto;
+            height: 25px;
+        }        
         .filter{
             pointer-events:none; 
             top: 14px;

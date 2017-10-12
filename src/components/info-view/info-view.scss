@@ -9,12 +9,32 @@
         overflow: scroll;
         position: relative;
         display: block;
-        .likes{
-            display: flex;
-            flex-direction: column;
-            ion-row{
-                flex: 1;
+        .description{
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            font-weight: bold;
+        }
+        .checks{
+            padding: 5px 0;
+            display: table;
+            vertical-align: middle;
+            text-align: center;
+            ion-checkbox{
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
             }
+            p{
+                padding-left: 5px;
+                display: table-cell;
+                vertical-align: middle;
+                text-align: center;
+                margin: 0;
+                height: 1em;
+            }
+        }
+        #main-content{
+            overflow: scroll;
         }
         .row{
             display: flex;
@@ -115,6 +135,24 @@
             transform: translate(0,0%);
             transition: all .5s;
         }
+        .author{
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 5px;
+            position: relative;
+            p{
+                display: inline-block;
+                position: absolute;
+                top: 50%;
+                left: 30px;
+                transform: translate(0, -50%);
+                margin: 0;
+                font-size: 1.2em;
+                font-weight: bold;
+            }
+            img{
+                width: 20px;
+            }
+        }
         .messages{
             padding-top: 10px;
             padding-bottom: 60px;
@@ -142,12 +180,6 @@
                         padding: 3px;
                     }
                     .header-row{
-                        .image-div{
-                            width: 40px;
-                            height: 40px;
-                            background-size: cover;
-                            background-position: center center;
-                        }
                         background-color: white;
                         .header-info{
                             display: flex;

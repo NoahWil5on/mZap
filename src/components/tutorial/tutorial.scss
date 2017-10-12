@@ -12,7 +12,6 @@
             transform: translate(-50%, -50%);
         }
         #main{
-            border-radius: 8px;
             z-index: 10;
             display: inline-block;
             position: absolute;
@@ -60,10 +59,8 @@
                 width: 100%;
             }
             .upper{
-                border-radius: 4px;
                 display: block;
                 img{
-                    border-radius: 4px;
                     width: 100% !important;
                 }
             }

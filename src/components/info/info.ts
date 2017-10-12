@@ -1,7 +1,7 @@
 //vanilla ionic imports
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { MapPage } from '../../pages/map/map';
-import { Events, AlertController} from 'ionic-angular';
+import { Events, AlertController, NavController} from 'ionic-angular';
 
 //provider imports 
 import { UserInfoProvider } from '../../providers/user-info/user-info';
@@ -17,7 +17,6 @@ import * as firebase from 'firebase';
   templateUrl: 'info.html'
 })
 export class InfoComponent {
-  @ViewChild('msg') msg;
 
   state: string = 'none';
   edit: boolean = false;
@@ -29,45 +28,14 @@ export class InfoComponent {
   myText: string = "";
   dataSet: boolean = false;
   resolve: any;
+  myData: any;
 
-  constructor( public mapPage: MapPage, public translate: TranslatorProvider, public userInfo: UserInfoProvider, public afAuth: AngularFireAuth, public ngZone: NgZone, public events: Events, public images: ImagesProvider, public alertCtrl: AlertController ) {
-    var data = this.userInfo.activeData
+  editComponent: any;
+
+  constructor( public mapPage: MapPage, public translate: TranslatorProvider, public userInfo: UserInfoProvider, public afAuth: AngularFireAuth, public ngZone: NgZone, public events: Events, public images: ImagesProvider, public alertCtrl: AlertController, public navCtrl: NavController ) {
+    var data = this.userInfo.activeData;
+    this.myData = JSON.parse(JSON.stringify(data));
     this.state = this.mapPage.mapState;
-    switch(data.type){
-      case 'bugs':
-        this.selection = 'assets/images/icons/bug.png';
-        break;
-      case 'trash':
-        this.selection = 'assets/images/icons/trash.png';
-        break;
-      case 'building':
-        this.selection = 'assets/images/icons/building.png';
-        break;
-      case 'pest':
-        this.selection = 'assets/images/icons/pest.png';
-        break;
-      case 'cnd':
-        this.selection = 'assets/images/icons/cnd.png';
-        break;
-      case 'road':
-        this.selection = "assets/images/icons/road.png";
-        break;
-      case 'electricity':
-        this.selection = "assets/images/icons/electricity.png";
-        break;
-      case 'tree':
-        this.selection = "assets/images/icons/tree.png";
-        break;
-      case 'rocked':
-        this.selection = "assets/images/icons/blocked_road.png";
-        break;
-      case 'water':
-        this.selection = "assets/images/icons/droplet.png";
-        break;
-      default:
-        this.selection = 'assets/images/icons/bug.png';
-        break;
-    };
 
     //translate status
     switch(data.status){
@@ -95,97 +63,6 @@ export class InfoComponent {
   }
   loggedAuth(){
     return this.afAuth.auth.currentUser.uid == this.userInfo.activeData.id;
-  }
-   //submit a message
-  submit(){
-    var today = new Date();
-    var hour = today.getHours()+"";
-    if(Number(hour) < 10){
-      hour = "0" + hour;
-    }
-    var seconds = today.getSeconds()+"";
-    if(Number(seconds) < 10){
-      seconds = "0" + seconds;
-    }
-    var minutes = today.getMinutes()+"";
-    if(Number(minutes) < 10){
-      minutes = "0" + minutes;
-    }
-    /*get current date and time*/
-      var date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + 
-      hour + ":" + minutes + ":" + seconds;
-
-    firebase.database().ref('/users/').child(this.afAuth.auth.currentUser.uid).once('value').then(snapshot => {
-      var url = "assets/profile.png";
-      if(snapshot.hasChild('url')){
-        url = snapshot.val().url+"";
-      }
-      else{
-        console.log("false");
-      }
-      if(this.myText.trim().length < 1) return;
-      let data = {
-        name: this.afAuth.auth.currentUser.displayName,
-        message: this.myText,
-        id: this.afAuth.auth.currentUser.uid,
-        date: date,
-        time: Date.now(),
-        url: url
-      }
-      //record messsage on firebase and format screen to fit new image
-      firebase.database().ref('/messages/').child(this.id).push(data).then(res => {
-        this.events.publish('newMessage');
-        this.myText = "";
-        setTimeout(() => {
-          // get elements
-          var element   = document.getElementById('messageInputBox');
-          var textarea  = element.getElementsByTagName('textarea')[0];
-
-          // set default style for textarea
-          textarea.style.minHeight  = '0';
-          textarea.style.height     = '0';
-
-          // limit size to 96 pixels (6 lines of text)
-          var scroll_height = textarea.scrollHeight;
-          if(scroll_height > 160)
-            scroll_height = 160;
-          scroll_height += 3;
-          // apply new style
-          element.style.height      = scroll_height + "px";
-          textarea.style.minHeight  = scroll_height + "px";
-          textarea.style.height     = scroll_height + "px";
-          textarea.style.paddingBottom = "0px";
-        },10) 
-      });
-    })
-  }
-  //input box autoresizing
-  // resize(){
-  //   this.ngZone.run(() =>{
-  //       let el = this.msg.nativeElement;
-  //       el.style.cssText = 'height:auto; padding:0;';
-  //       // /el.style.cssText = 'height:' + (el.scrollHeight+ 4) + 'px';
-  //   });
-  // }
-  resize(){
-    // get elements
-    var element   = document.getElementById('messageInputBox');
-    var textarea  = element.getElementsByTagName('textarea')[0];
-
-    // set default style for textarea
-    textarea.style.minHeight  = '0';
-    textarea.style.height     = '0';
-
-    // limit size to 96 pixels (6 lines of text)
-    var scroll_height = textarea.scrollHeight;
-    if(scroll_height > 160)
-      scroll_height = 160;
-    scroll_height += 3;
-    // apply new style
-    element.style.height      = scroll_height + "px";
-    textarea.style.minHeight  = scroll_height + "px";
-    textarea.style.height     = scroll_height + "px";
-    textarea.style.paddingBottom = "0px";
   }
   backToInfo(){
     if(this.edit){
@@ -234,6 +111,11 @@ export class InfoComponent {
       }
     }
     return false;
+  }
+  updateChecks(){
+    firebase.database().ref(`/positions/${this.myData.key}/checks`).set(this.myData.checks).then(_ => {
+      this.navCtrl.setRoot(MapPage);
+    });
   }
   doCommentInfo(){
     var alert = this.alertCtrl.create({

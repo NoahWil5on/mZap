@@ -7,13 +7,11 @@
             <div class="div-holder" *ngIf="checkLogin()">
                 <button ion-button style="height: 100%" clear (click)="profile()">
                     <div *ngIf="imgSrc">
-                        <div text-center class="image-div"[style.background-image]="'url(' + imgSrc + ')'">
-                        </div>                                
+                        <div text-center class="image-div" [style.background-image]="'url(' + imgSrc + ')'"></div>
                         <h2 style="color: white">{{name}}</h2>
                     </div>
                     <div *ngIf="!imgSrc">
-                        <div text-center class="image-div">
-                        </div>
+                        <div text-center class="image-div"></div>
                         <h2 style="color: white">{{name}}</h2>
                     </div>
                 </button>
@@ -34,24 +32,24 @@
                 {{translate.text.menu.map}}
             </button>
         </div>
-        <div class="background">
+        <!-- <div class="background">
             <button class="menu-button" (click)="notifications()" [class.nav-item]="checkPage('notifications')">
                 Notifications
             </button>
             <div class="notification" *ngIf="notificationCount != 0">
                 <p>{{notificationCount}}</p>
             </div>
-        </div>
+        </div> -->
         <div class="background">
             <button class="menu-button" (click)="reports()" [class.nav-item]="checkPage('reports')">
                 {{translate.text.menu.reports}}
             </button>
         </div>
-        <div class="background">
+        <!-- <div class="background">
             <button class="menu-button" (click)="topRated()" [class.nav-item]="checkPage('top')">
                 {{translate.text.menu.rankings}}
             </button>
-        </div>
+        </div> -->
         <div class="background">
             <button class="menu-button" (click)="settings()" [class.nav-item]="checkPage('settings')">
                 {{translate.text.menu.settings}}
@@ -98,8 +96,8 @@
                 </ion-col>
             </ion-row> -->
         </ion-grid>
-        <button ion-button (click)="tutorial()" class="tutorial">Tutorial</button>
-        <button ion-button (click)="share = !share" [class.menu-sharing]="share" class="menu-share">{{translate.text.menu.share}}</button>
+        <!-- <button ion-button (click)="tutorial()" class="tutorial">Tutorial</button>
+        <button ion-button (click)="share = !share" [class.menu-sharing]="share" class="menu-share">{{translate.text.menu.share}}</button> -->
         <!-- <button ion-button (click)="call()">Call Mom</button> -->
     </ion-content>
 </ion-menu>

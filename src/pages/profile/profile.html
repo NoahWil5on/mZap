@@ -29,6 +29,7 @@
 
 <ion-content padding>
     <div text-center class="image-div" *ngIf="user.url" [style.background-image]="'url(' + user.url + ')'" (click)="openEdit()">
+        <!-- <img  width="100" alt="Profile Pic" #thisImage (click)="presentImage(thisImage)"/> -->
     </div>
     <div text-center class="image-div" *ngIf="!user.url" (click)="openEdit()">
     </div>
@@ -44,10 +45,10 @@
                     <h2>{{rating.posts}}</h2>
                     <p>{{translate.text.profile.posts}}</p>
                 </ion-col>
-                <ion-col text-center>
+                <!-- <ion-col text-center>
                     <h2>{{rating.resolves}}</h2>
                     <p>{{translate.text.profile.resolves}}</p>
-                </ion-col>
+                </ion-col> -->
             </ion-row>
         </ion-grid>
     </ion-card>
@@ -72,15 +73,12 @@
         <h2 text-left *ngIf="!checkProfile()">{{theReports}}</h2>
         <ion-card *ngFor="let report of reports">
             <ion-card-header text-wrap>
-                <h2>{{report.description}}</h2>
+                    <h1 [style.border-color]="report.type">{{report.description}}</h1>   
             </ion-card-header>
             <ion-card-content>
                 <ion-grid>
                     <ion-row class='flex-row'>
                         <ion-col col-6>
-                            <ion-item>
-                                <p text-wrap><b>{{translate.text.profile.type}}</b>{{report.type}}</p>
-                            </ion-item>
                             <ion-item>
                                 <p text-wrap><b>{{translate.text.profile.status}}</b>{{report.status}}</p>
                             </ion-item>

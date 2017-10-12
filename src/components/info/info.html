@@ -3,97 +3,49 @@
 <!-- info view -->
 <div class="full" style="pointer-events: none">
   <div class="section" [class.main]="checkState('comment') || checkState('info')" [class.resolve]="!userInfo.isMobile">
-    <ion-grid class="check-button" [class.no-click]="!checkState('comment')">
+    <button class="edit show" ion-button clear (click)="state = 'edit'; edit=true" [class.hidden]="checkState('comment')">
+      <img src="assets/images/buttons/edit_button.png" width="40"/>
+    </button>
+    <ion-grid class="check-button">
       <ion-row>
         <ion-col text-center>
-          <button class="show" ion-button clear (click)="closeOut()" [class.hidden]="!checkState('comment')">
+          <button class="show" ion-button clear (click)="closeOut()" [class.hidden]="checkState('comment')">
             <img src="assets/images/buttons/ex.png"/>
           </button>
         </ion-col>
         <ion-col text-center>
-            <button class="show" ion-button clear [disabled]="myText.trim() == ''" (click)="submit()" [class.hidden]="!checkState('comment')">
+          <button class="show chat-button" ion-button clear (click)="mapPage.comment = true;" [class.hidden]="checkState('comment')">
+            <img src="assets/images/buttons/chat.png"/>
+          </button>
+        </ion-col>
+        <ion-col text-center>
+            <button class="show" ion-button clear (click)="updateChecks()" [class.hidden]="checkState('comment')">
               <img src="assets/images/buttons/check.png"/>
             </button>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <!-- <div class="dismiss" (click)="closeOut()">
-      <p>X</p>
-    </div> -->
-    <div class="type" [class.hideType]="!checkState('info') || hideType">
-      <img [src]="selection" alt="type" />
-    </div>
-    <div class="type" [class.hideType]="!checkState('comment') && !hideType" style="right: 0">
-      <button ion-button clear icon-only (click)="doCommentInfo()">
-        <img src="assets/images/icons/question.png" width="50px" alt="type" />
-      </button>
-    </div>
     <div style="height: 100%; width: 100%; overflow: hidden; position: relative;">
       <info-view class="page"></info-view>
-    </div>
-    <div class="chat show" [class.hidden]="state != 'comment'">
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <div>
-              <ion-textarea #msg rows="1" id="messageInputBox" (input)="resize()" [(ngModel)]="myText" placeholder="Aa" autocorrect="on"></ion-textarea>
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </div>
-
-  </div>
-
-  <!-- resolve view -->
-  <div class="section resolve" [class.main]="checkState('edit') && !edit">
-    <ion-grid class="check-button" [class.no-click]="!checkState('edit')">
-      <ion-row>
-        <ion-col text-center>
-          <button class="show" ion-button clear (click)="backToInfo()" [class.hidden]="!checkState('edit')">
-            <img src="assets/images/buttons/ex.png"/>
-          </button>
-        </ion-col>
-        <ion-col text-center class="show" *ngIf="checkCheck()">
-            <button class="show" ion-button clear (click)="next()">
-              <img src="assets/images/buttons/check.png"/>
-            </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <!-- <div class="dismiss" (click)="closeOut()">
-      <p>X</p>
-    </div> -->
-
-    <div style="height: 100%; width: 100%; overflow: hidden; position: relative;">
-      <div class="page">
-        <resolve></resolve>
-      </div>
-      <!-- <div class="page" style="overflow: scroll">
-        <edit-view></edit-view>
-      </div> -->
     </div>
   </div>
 
   <!-- edit view -->
-  <div class="section" [class.main]="checkState('edit') && edit">
+  <div class="full" class="section" [class.main]="checkState('edit') && edit">
       <ion-grid class="check-button" [class.no-click]="!checkState('edit')">
         <ion-row>
           <ion-col text-center>
-            <button class="show" ion-button clear (click)="backToInfo()" [class.hidden]="!checkState('edit')">
+            <button class="show" ion-button clear (click)="state = 'info'; edit = false;" [class.hidden]="!checkState('edit')">
               <img src="assets/images/buttons/ex.png"/>
             </button>
           </ion-col>
-          <ion-col text-center class="show" *ngIf="checkCheck()">
-              <button class="show" ion-button clear (click)="next()">
+          <ion-col text-center class="show">
+              <button class="show" ion-button clear (click)="editComponent.submit()">
                 <img src="assets/images/buttons/check.png"/>
               </button>
           </ion-col>
         </ion-row>
       </ion-grid>
-      <!-- <div class="dismiss" (click)="closeOut()">
-        <p>X</p>
-      </div> -->
   
       <div style="height: 100%; width: 100%; overflow: hidden; position: relative;">
         <div class="page" style="overflow: scroll">

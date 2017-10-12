@@ -71,12 +71,12 @@ import { AboutPageModule } from '../pages/about/about.module';
 import { NotificationsPageModule} from '../pages/notifications/notifications.module';
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyAm-f7wqiP0Qa-FifoqrVa0rlCC1iZG3xk",
-  authDomain: "mzap-45cd2.firebaseapp.com",
-  databaseURL: "https://mzap-45cd2.firebaseio.com",
-  projectId: "mzap-45cd2",
-  storageBucket: "mzap-45cd2.appspot.com",
-  messagingSenderId: "550547782302"
+  apiKey: "AIzaSyDRGJKVHK1rsrUkff5wbocn33B4Dy2J0Wo",
+  authDomain: "missionx-2247e.firebaseapp.com",
+  databaseURL: "https://missionx-2247e.firebaseio.com",
+  projectId: "missionx-2247e",
+  storageBucket: "missionx-2247e.appspot.com",
+  messagingSenderId: "856543302522"
 };
 // const cloudSettings: CloudSettings = {
 //   'core': {

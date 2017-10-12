@@ -1,4 +1,14 @@
-<div class="show" [class.hidden]="hide" style="position: relative" #mainContent>
+<div class="show" [class.hidden]="hide" style="position: relative" #mainContent id="main-content">
+    <div class="author">
+        <img [src]="type"/>
+        <p>{{translate.text.infoWindow.author}} {{myData.name}}</p>
+    </div>
+    <p class="description" *ngIf="myData.description.length > 0">{{myData.description}}</p>
+    <div *ngFor="let check of checks" class="checks">
+        <ion-checkbox [(ngModel)]="check.state" color="secondary">
+        </ion-checkbox>
+        <p (click)="check.state = !check.state;" text-wrap>{{check.amount}} {{check.text}}</p>
+    </div>
     <!-- <ion-grid no-padding *ngIf="myData.url" id="image-grid">
         <ion-row>
             <ion-col no-padding>
@@ -35,13 +45,13 @@
             </ion-col>
         </ion-row>
     </ion-grid>-->
-    <div id="comment" #commentContent>
+    <!-- <div id="comment" #commentContent>
         <div class="messages">
             <div *ngFor="let message of messages">
-                <ion-grid class="message" [class.newMessage]="message.new">
-                    <ion-row class="header-row" (click)="goToProfile(message.id)">
+                <ion-grid class="message" [class.newMessage]="checkMessage(message)">
+                    <ion-row class="header-row">
                         <ion-col no-padding col-3>
-                            <div class="image-div" [style.background-image]="'url(' + message.url + ')'"></div>
+                            <img [src]="message.url" width="40" />
                         </ion-col>
                         <ion-col no-padding class="header-info">
                             <p><b>{{message.name}}</b></p>
@@ -56,5 +66,5 @@
                 </ion-grid>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>

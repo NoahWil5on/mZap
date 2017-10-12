@@ -1,3 +1,7 @@
+@keyframes rotate {
+    0%      {transform: translate(-50%,-50%) rotate(90deg);}
+    100%    {transform: translate(-50%,-50%) rotate(0deg);}
+}
 .ios, .md{
     .slide-zoom{
         width: 100%;
@@ -19,111 +23,148 @@
             margin: 0;
             width: 100%;
             height: 100%;
-            ion-grid{
-                width: 100%;
-                height: 100%;
-                display: -webkit-box;
-                display: -ms-flexbox;
+            overflow: scroll;
+            .check-input{
+                position: relative;
                 display: flex;
-                -webkit-box-orient: vertical;
-                -webkit-box-direction: normal;
-                    -ms-flex-direction: column;
-                        flex-direction: column;
-                overflow: visible;
-                ion-row{
-                    overflow: visible;
-                    -webkit-box-flex: 4;
-                        -ms-flex: 4;
-                            flex: 4;
-                    ion-col{
-                        overflow: visible;
-                    }
-                }
-                .auto{
-                    -webkit-box-flex: 1;
-                        -ms-flex: 1;
-                            flex: 1;
-                    ion-col{
-                        border-bottom: 1px solid #eee;
-                        border-top: 1px solid #eee;
-                        .show{
-                            display: block;
-                            position: absolute;
-                            top: 50%;
-                            left: 50%;
-                            -webkit-transform: translate(-50%,-50%);
-                            transform: translate(-50%,-50%);
-                            height: 1em;
-                            margin: 0;
-                            font-size: 1em;
+                flex-direction: row;
+                padding: 5px 0;
+                .num-holder{
+                    padding: 0;
+                    padding-left: 5px;                    
+                    ion-input{
+                        text-align: center;
+                        height: 100%;
+                        width: 60px;
+                        margin: 0;
+                        input{
                             text-align: center;
-                            margin: 0 auto;
-                            width: 100%;
-                            text-align: left;
-                            color: #59D000;   
-                            p{
-                                margin: 0;
-                                height: 1em;
-                                font-size: .8em;
-                                text-align: center;
-                            }                        
                         }
                     }
                 }
-            }
-            .image-col{
-                padding-bottom: 5px;
-                .image-div{
-                    width: 100%;
-                    height: 100%;
-                    text-align: center;
+                .remove{
+                    vertical-align: middle;
                     display: inline-block;
                     position: relative;
-                    margin: 0;
-                    .type{
-                        z-index: 20;
+                    height: 100%;
+                    width: 40px;
+                    .image-holder{
                         position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 40px;
-                        height: 40px;
-                    }
-                    .inner-image-div{
-                        z-index: 10;
-                        width: 100%;
-                        height: 100%;
-                        overflow: hidden;
-                        position: relative;
-                        img{
-                            max-width: 100%;
-                            width: auto;
-                            z-index: 20;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%,-50%);
+                        width: 20px;
+                        height: 20px;
+                        background-color: red;
+                        border-radius: 100%;
+                        ion-icon{
                             position: absolute;
-                            top: 0;
+                            font-size: 1.5em;
+                            top: 50%;
                             left: 50%;
-                            -webkit-transform: translate(-50%,0);
-                                    transform: translate(-50%,0);
+                            transform: translate(-50%,-50%);
+                            color: white;
+                            animation: rotate .5s;
                         }
                     }
                 }
-            }
-            .desc{
-                padding: 5px;
-                p{
-                    font-size: .8em;
-                    margin: 0;
-                    text-align: left;
+                ion-input{
+                    flex: 1;
+                    vertical-align: middle;
+                    display: inline-block;
+                    border: solid 1px #ddd;
+                    .text-input{
+                        margin: 5px 10px;
+                        padding-right: 10px;
+                    }
                 }
             }
-            ion-row{
-                ion-col{
-                    .p{
-                        font-size: 1em;
+            .helper{
+                color: #aaa;
+                font-style: italic;
+                p{
+                    margin: 0;
+                }
+                .number{
+                    width: 50px;
+                }
+            }
+            .add-row{
+                .left-padding{
+                    padding-left: 5px;
+                }
+                .number{
+                    width: 60px;
+                    text-align: left;
+                    padding: 0;
+                    margin: 0;
+                    height: 100%;
+                    font-size: 0;
+                    .changer{
+                        display: inline-block;
+                        vertical-align: top;
+                        margin: 0;
+                        padding: 0;
+                        height: 100%;
+                        width: 50%;
+                        color: black;
+                        font-size: 18px;
+                        text-align: center;
                     }
                 }
             }
             .hidden{
                 display: none;
+            }
+            .add{
+                background-color: #3fbc05;
+                width: 30px;
+                height: 30px;                
+                border-radius: 100%;
+                padding: 0;
+                margin: 0;
+                ion-icon{
+                    font-size: 1.5em;
+                }
+            }
+            .preset{
+                position: relative;
+                display: flex;
+                flex-direction: row;
+                padding: 5px 0;
+                .num-holder{
+                    padding: 0;
+                    padding-left: 5px;                    
+                    ion-input{
+                        text-align: center;
+                        height: 100%;
+                        width: 60px;
+                        margin: 0;
+                        border: solid 1px #ddd;
+                        input{
+                            text-align: center;
+                        }
+                    }
+                }
+                ion-input{
+                    flex: 1;
+                    vertical-align: middle;
+                    display: inline-block;
+                    border: solid 1px #ddd;
+                    .text-input{
+                        margin: 5px 10px;
+                        padding-right: 10px;
+                    }
+                }
+                p{
+                    margin: 0;
+                    width: 100%;
+                    position: absolute;
+                    top: 50%;
+                    text-align: center;
+                    transform: translate(0,-50%);
+                    font-size: 10pt;
+                }
             }
             // .smaller{
             //     max-width: 50%;

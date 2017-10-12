@@ -18,10 +18,11 @@ export class MapPage {
 
   infoShow: boolean = false;
   addShow: boolean = false;
-  mapView: any;
-  loginState: string = 'login';
+  comment: boolean = false;
   tut: boolean = false;
-  mapState: string = "comment";
+  mapView: any;
+  loginState: string = 'login';  
+  mapState: string = "comment";  
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userInfo: UserInfoProvider, public events: Events /*private afAuth: AngularFireAuth*/) {
     var self = this;
@@ -33,10 +34,7 @@ export class MapPage {
     });
     setTimeout(function() {
       if(self.userInfo.openInfo){
-        self.mapView.doOpen(self.userInfo.activeData,null);
-        setTimeout(function() {
-          self.userInfo.openInfo = false;
-        }, 100); 
+        self.mapView.doOpen(self.userInfo.activeData,null)
       }
     }, 50); 
   }

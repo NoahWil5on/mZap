@@ -69,8 +69,8 @@ export class RegisterPage {
                         displayName: this.name,
                         photoURL: ""
                     }).then(_ =>{
-                        this.storage.set('mzap_email', this.email);
-                        this.storage.set('mzap_password', this.pass1);
+                        this.storage.set('mission_x_email', this.email);
+                        this.storage.set('mission_x_password', this.pass1);
                         var today = new Date();
                         //let date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
                         

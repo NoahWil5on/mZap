@@ -65,6 +65,7 @@ export class TopRatedPage {
     }
     //Check out user's profile
     doProfile(id){
+        this.click.click('topRatedViewProfile');
         this.userInfo.profileView = id;
         this.navCtrl.push(ProfilePage);
     }

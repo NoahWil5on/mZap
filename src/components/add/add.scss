@@ -32,12 +32,12 @@
             transform: translate(-50%, -50%);
         }
         #main{
-            border-radius: 8px;
             z-index: 10;
             display: inline-block;
             position: absolute;
             transform: translate(-50%,120%);
             background-color: white;
+            border-radius: 8px;
             //padding-top: 40px;
             width: 280px;
             height: 400px;
@@ -62,18 +62,18 @@
         }
         .notType{
             width: 280px !important;
-            height: 280px !important;
+            height: 200px !important;
             @media screen and (min-device-width: 360px) {
                 width: 300px !important;
-                height: 280px !important;
+                height: 200px !important;
             }
             @media screen and (min-device-width: 500px) {
                 width: 400px !important;
-                height: 360px !important;
+                height: 280px !important;
             }
             @media screen and (min-device-width: 800px) {
                 width: 500px !important;
-                height: 420px !important;
+                height: 320px !important;
             }
         }
         .scroll-div{
@@ -84,6 +84,16 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
+        }
+        .type{
+            pointer-events: all;
+            position: absolute;
+            transform: translate(0,-40%) scale(1); 
+            z-index: 10;
+            transition: all .5s;
+            img{
+                pointer-events: none;
+            }
         }
         ion-slides{
             width: 100%;
@@ -98,7 +108,7 @@
         }
         .nav-buttons{
             // overflow: hidden;
-            pointer-events: all;
+            pointer-events: none;
             background-color: none;
             position: absolute;
             bottom: 0;
@@ -107,6 +117,7 @@
             transform: translateY(48%);
             z-index: 10;
             .button-ios, .button-md{
+                pointer-events: all;
                 z-index: 20;
                 transform: translateY(78%);
                 height: auto;
