@@ -28,10 +28,13 @@
 
 <ion-content padding>
     <ion-card padding *ngFor="let report of reports">
-        <h1 [style.border-color]="report.type">{{report.description}}</h1>          
+        <h1>{{report.description}}</h1>  
         <ion-grid no-padding>
             <ion-row class="flex-row">
-                <ion-col>
+                <ion-col col-6>
+                    <ion-item>
+                        <p text-wrap><b>{{translate.text.reports.type}}</b>{{report.type}}</p>
+                    </ion-item>
                     <ion-item>
                         <p text-wrap><b>{{translate.text.reports.status}}</b>{{report.status}}</p>
                     </ion-item>
@@ -42,9 +45,9 @@
                         <p text-wrap><b>{{translate.text.reports.by}}</b>{{translate.text.reports.anonymous}}</p>
                     </ion-item>
                 </ion-col>
-                <!-- <ion-col col-6>
+                <ion-col col-6>
                     <img *ngIf="report.url" [src]="report.url" #thisImage (click)="presentImage(thisImage)"/>
-                </ion-col> -->
+                </ion-col>
             </ion-row>
             <ion-row>
                 <ion-col text-left no-padding>

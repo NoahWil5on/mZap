@@ -1,5 +1,10 @@
 .ios, .md{
     picture {
+        .data-set{
+            height: 66% !important;
+            top: 100% !important;
+            transform: translate(0,-100%) !important;
+        }
         .pic-component-div{
             width: 100%;
             height: 100%;
@@ -10,48 +15,67 @@
                 position: absolute;
                 left: 50%;
                 top: 50%;
-                transform: translate(-50%,-50%);
+                -webkit-transform: translate(-50%,-50%);
+                        transform: translate(-50%,-50%);
                 height: 100%;
                 width: 100%;
                 ion-row{
                     height: 100%;
+                    position: relative;
+                    z-index: 10;
                     img{
+                        pointer-events: none;
                         z-index: 0;
                         position: absolute;
                         top: 50%;
                         left: 50%;
-                        transform: translate(-50%,-50%);
+                        -webkit-transform: translate(-50%,-50%);
+                                transform: translate(-50%,-50%);
                         cursor: pointer;
                     }
+                    ion-col{
+                        height: 100%;
+                        button{
+                            pointer-events: all !important;
+                            width: 100% !important;
+                            height: 100% !important;
+                        }
+                    }
                     label{
-                        display: block;
-                        position: relative;
-                        z-index: 10;
+                        pointer-events: all;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
                         width: 100%;
                         height: 100%;
-                        font-size: 0;
+                        z-index: 10;
                         margin: 0;
-                        padding: 0;                    
+                        padding: 0;       
+                        .fileInput{
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            opacity: 0;
+                            z-index: 1;
+                        }         
                     }
                 }
             }
             .button-ios, .button-md{
-                height: auto;
+                //height: auto;
                 padding: 0;
-            }
-            .fileInput{
-                width: .1px;
-                height: .1px;
-                opacity: 0;
-                z-index: -1;
             }
             .hidden{
-                transform: scale(0);
-                height: 0;
-                padding: 0;
-                margin: 0;
-                position: absolute;
-                opacity: 0;
+                -webkit-transform: scale(0);
+                        transform: scale(0);
+                height: 0 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                position: absolute !important;
+                opacity: 0 !important;
+                z-index: -1 !important;
             }
         }
     }

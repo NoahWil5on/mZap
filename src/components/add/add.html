@@ -1,57 +1,74 @@
-<div id="shader" (click)="closeOut()">
-
-</div>
-<div id="main" #main  class="noPadding" [class.notType]="this.slide.getActiveIndex() != 0">
-  <div class="type" (click)="openInfo()" *ngIf="this.slide.getActiveIndex() != 2">
-    <img width="40" src="assets/images/icons/question.png"/>
-  </div>
-  <div class="nav-buttons" [class.show]="runCheck(0)" [class.hidden]="!runCheck(0)">
-    <ion-grid>
-      <ion-row>
-        <ion-col text-center>
-          <button ion-button clear (click)="slideRight(true)">
-            <img src='assets/images/buttons/check.png'/>
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-  <div class="nav-buttons" [class.show]="runCheck(1) && submit()" [class.hidden]="!runCheck(1) || !submit()">
-    <ion-grid>
-      <ion-row>
-        <ion-col text-center>
-          <button ion-button clear (click)="slideRight(false)">
-            <img src='assets/images/buttons/check.png'/>
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-  <!-- <div class="nav-buttons" [class.show]="runCheck(2)" [class.hidden]="!runCheck(2)">
-    <ion-grid>
-      <ion-row>
-        <ion-col text-center>
-          <button ion-button clear (click)="slideRight(false)">
-            <img src='assets/images/buttons/check.png'/>
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div> -->
-
-  <div class="scroll-div">
-  <ion-slides>
-    <ion-slide>
-      <confirm></confirm>
-    </ion-slide>
-    <ion-slide>
-      <description></description>
-    </ion-slide>
-    <!-- <ion-slide class="thanks" *ngIf="submitted">
-      <h2 text-center padding>{{translate.text.add.thanks}}</h2>
-      <p text-center >{{translate.text.add.share}}</p>
-    </ion-slide> -->
-  </ion-slides>
+<div id="shader" (click)="closeOut()"></div>
+<div id="main" #main [class.not-type]="state != 'type'">
+  <ion-grid class="nav-buttons" *ngIf="state != 'share'">
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button clear (click)="notify()">
+          <img src="assets/images/buttons/ex.png" />
+        </button>
+      </ion-col>
+      <ion-col *ngIf="checkShow()" col-6 text-center>
+        <button ion-button clear (click)="doSomething()" [disabled]="submitting">
+          <img src="assets/images/buttons/check.png" />
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="nav-buttons" *ngIf="state == 'share'">
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button clear (click)="closeOut()">
+          <img src="assets/images/buttons/check.png" />
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div class="preview-div" *ngIf="checkShow() && dataURL.length < 1" (click)="state = 'pic'" [style.background-image]="file">
+    <div class="tint-holder">
+      <div class="tint">
+      </div>
     </div>
-  <!-- <button ion-button (click)="share = !share">Viewable</button> -->
+  </div>
+  <div class="preview-div" *ngIf="checkShow() && dataURL.length > 0" (click)="state = 'pic'" [style.background-image]="dataURL">
+    <div class="tint-holder">
+      <div class="tint">
+      </div>
+    </div>
+  </div>
+  <div class="type-div" *ngIf="state != 'type' && state != 'share'" (click)="state = 'type'" [class.type-top]="dataSet" [style.background-image]="myType">
+  </div>
+  <div class="hidden" [class.show]="state == 'type'">
+    <type></type>
+  </div>
+  <div class="hidden" [class.show]="state == 'pic'">
+    <picture></picture>
+  </div>
+  <div class="hidden" [class.show]="state == 'confirm'">
+    <confirm></confirm>
+  </div>
+  <div class="hidden" [class.show]="state == 'share'">
+    <div class="thanks">
+      <h2 text-center padding>{{translate.text.add.thanks}}</h2>
+      <p text-center>{{translate.text.add.share}}</p>
+      <ion-grid *ngIf="userInfo.isApp">
+        <ion-row>
+          <ion-col text-center>
+            <button ion-button icon-only clear (click)='shareTwitter()'>
+                <ion-icon name="logo-twitter" style="color: #00aced; font-size: 24pt"></ion-icon>
+              </button>
+          </ion-col>
+          <ion-col text-center>
+            <button ion-button icon-only clear (click)='shareFacebook()'>
+                <ion-icon name="logo-facebook" style="color: #3b5998; font-size: 24pt"></ion-icon>
+              </button>
+          </ion-col>
+          <ion-col text-center>
+            <button ion-button icon-only clear (click)='shareWhatsapp()'>
+                <ion-icon name="logo-whatsapp" style="color: #34af23; font-size: 24pt"></ion-icon>
+              </button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
 </div>

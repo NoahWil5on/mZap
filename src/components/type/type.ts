@@ -61,6 +61,11 @@ export class TypeComponent {
       type: 'rocked',
       selected: false,
     });
+    this.types.push({
+      url: 'assets/images/buttons/water.png',
+      type: 'drop',
+      selected: false,
+    });
     if(this.add.type != undefined){
       this.checkSelection();
     }
@@ -81,8 +86,12 @@ export class TypeComponent {
       }
     });
     this.add.type = selection;
-    this.add.slideRight(false);
-    this.events.publish('confirmType', selection);
+    this.add.getType();
+    if(!this.add.dataSet){
+      this.add.state = 'pic';
+    }else{
+      this.add.state = 'confirm';
+    }
   }
 
 }

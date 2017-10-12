@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { Slides, LoadingController, Events, AlertController } from 'ionic-angular';
+import { LoadingController, Events, AlertController } from 'ionic-angular';
+import { SafeUrl } from '@angular/platform-browser';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
 //page imports
@@ -19,158 +20,139 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class AddComponent {
   @ViewChild('main') main;
-  @ViewChild(Slides) slide: Slides;
-  @ViewChild('preview') preview;
 
+  state: string = "type";
   dataSet: boolean = false;
   type: any = undefined;
+  myType: string = "";
   desc: string = "";
   show: boolean = true;
   url: any = "";
   refName: any = "";
   error: string = "";
-  scroll: number = 1;
   share: boolean = true;
-  submitted: boolean = false;
-
-  currentColor: string = 'a';
-  checks: any = [];
-  presets: any = [];
-
+  file: SafeUrl;
+  dataURL: string = "";
+  submitting: boolean = false;
 
   constructor(public mapPage: MapPage, public translate: TranslatorProvider, public userInfo: UserInfoProvider, public afAuth: AngularFireAuth, public images: ImagesProvider, public loadingCtrl: LoadingController, public socialSharing: SocialSharing, public events: Events, public alertCtrl: AlertController) {
-    this.checks.push({text: "", state: false, amount: 0});
-    this.presets = [
-      {text: this.translate.text.items.e00, state: false, amount: 0},
-      {text: this.translate.text.items.e01, state: false, amount: 0},
-      {text: this.translate.text.items.e02, state: false, amount: 0},
-      {text: this.translate.text.items.e03, state: false, amount: 0},
-      {text: this.translate.text.items.e04, state: false, amount: 0},
-      {text: this.translate.text.items.e05, state: false, amount: 0},
-      {text: this.translate.text.items.e06, state: false, amount: 0},
-      {text: this.translate.text.items.e07, state: false, amount: 0},
-      {text: this.translate.text.items.e08, state: false, amount: 0},
-      {text: this.translate.text.items.e09, state: false, amount: 0},
-      {text: this.translate.text.items.e10, state: false, amount: 0},
-      {text: this.translate.text.items.e11, state: false, amount: 0},
-      {text: this.translate.text.items.e12, state: false, amount: 0},
-      {text: this.translate.text.items.e13, state: false, amount: 0},
-      {text: this.translate.text.items.e14, state: false, amount: 0},
-      {text: this.translate.text.items.e15, state: false, amount: 0},
-      {text: this.translate.text.items.e16, state: false, amount: 0},
-      {text: this.translate.text.items.e17, state: false, amount: 0},
-      {text: this.translate.text.items.e18, state: false, amount: 0},
-      {text: this.translate.text.items.e19, state: false, amount: 0},
-    ]
+
   }
   ngAfterViewInit() {
     setTimeout(() => {
-      this.main.nativeElement.style.transform = "translate(-50%,-50%)"
+      this.main.nativeElement.style.transform = "translate(-50%,-50%)";
     }, 10);
+    this.events.subscribe("share", () => {
+      this.state = "share";
+    });
   }
-  openInfo(){
-    if(this.slide.getActiveIndex() == 0){
-      var alert1 = this.alertCtrl.create({
-        title: this.translate.text.add.title1,
-        subTitle: this.translate.text.add.sub1,
-        buttons: ['OK']
-      });
-      alert1.present();
-    }else{
-      var alert2 = this.alertCtrl.create({
-        title: this.translate.text.add.title2,
-        buttons: ['OK']
-      })
-      alert2.present();
-    }    
-  }
+
   closeOut() {
     this.mapPage.addShow = false;
   }
   loggedAuth() {
     return this.afAuth.auth.currentUser.uid == this.userInfo.activeData.id;
   }
-  //sliding for resolved images
-  slideLeft() {
-    this.slide.slidePrev(500, null);
-  }
-  slideRight(bool) {
-    if (!bool) {
-      if (this.slide.getActiveIndex() == 1) {
-        this.doSubmit();
-      }
-    }
-    if(this.slide.getActiveIndex() == 2){
-      this.mapPage.navCtrl.setRoot(MapPage);
-    }
-    this.slide.slideNext(500, null);
-  }
-  goToSlide() {
-    this.slide.slideTo(this.scroll, 500);
-  }
   doSubmit() {
-    for(var b = 0; b < this.checks.length; b++){
-      this.checks[b].text = this.checks[b].text.trim();
-      if(this.checks[b].amount > 999){
-        this.checks[b].amount = 999;
-      }
-      if(this.checks[b].text.length < 1 || !this.checks[b].amount || this.checks[b].amount < 1){
-        this.checks.splice(b,1);
-        b--;
-      }
-    }
-    for(var i = 0; i < this.presets.length; i++){
-      if(this.presets[i].amount > 999){
-        this.presets[i].amount = 999;
-      }
-      if(!this.presets[i].amount || this.presets[i].amount < 1){
-        this.presets.splice(i,1);
-        i--;
-      }
-    }
-    this.checks = this.presets.concat(this.checks);
-    if(this.checks.length < 1) return;
     var loader = this.loadingCtrl.create({
       content: this.translate.text.add.submitting,
     });
     loader.present();
-    this.submitted = true;
-    this.mapPage.mapView.submitReport({
-      show: true,
-      type: this.currentColor,
-      desc: this.desc,
-      checks: this.checks,
-      loader: loader,
-    });
-    loader.onDidDismiss(() => {
-      this.mapPage.navCtrl.setRoot(MapPage);
+    var promiseObj = this.images.uploadToFirebase("posts");
+    promiseObj.promise.then(res => {
+      this.url = res;
+      this.refName = promiseObj.refName;
+    }).then(() => {
+      this.mapPage.mapView.submitReport({
+        refName: this.refName,
+        url: this.url,
+        show: this.show,
+        type: this.type,
+        desc: this.desc,
+        loader: loader,
+      });
     })
   }
-  doShare() {
-    this.share = true;
-    setTimeout(() => {
-      //this.slideRight(true);
-      this.slide.lockSwipes(true);
-    }, 50);
-
+  shareTwitter() {
+    this.socialSharing.shareViaTwitter(this.desc, this.url, null);
   }
-  runCheck(slide) {
-    // if (slide == 1) {
-    //   if (!this.dataSet) return false;
-    // }
-    if (this.slide.getActiveIndex() != slide) return false;
-    return true;
+  shareFacebook() {
+    this.socialSharing.shareViaFacebook(this.desc, this.url, null)
   }
-  submit() {
-    var amount = 0;
-    this.presets.forEach(function(item){
-      if(item.amount && item.amount > 0) amount++;
+  shareWhatsapp() {
+    this.socialSharing.shareViaWhatsApp(this.desc, this.url, null)
+  }
+  checkShow(){
+    return (this.state == 'confirm' || this.state == 'pic') && this.dataSet;
+  }
+  doSomething(){
+    if(this.state == "confirm"){
+      this.submitting = true;
+      this.doSubmit();
+    }else if(this.state == 'pic'){
+      this.state = "confirm";
+    }
+  }
+  getType(){
+    var src = "";
+    switch(this.type){
+      case 'bugs':
+        src = "../assets/images/buttons/bug.png";
+        break;
+      case 'cnd':
+        src = "../assets/images/buttons/cnd.png";
+        break;
+      case 'trash':
+        src = "../assets/images/buttons/trash.png";
+        break;
+      case 'building':
+        src = "../assets/images/buttons/building.png";
+        break;
+      case 'pest':
+        src = "../assets/images/buttons/pest.png";
+        break;
+      case 'water':
+        src = "../assets/images/buttons/droplet.png";
+        break;
+      case 'road':
+        src = "../assets/images/buttons/road.png";
+        break;
+      case 'electricity':
+        src = "../assets/images/buttons/electricity.png";
+        break;
+      case 'tree':
+        src = "../assets/images/buttons/tree.png";
+        break;
+      case 'rocked':
+        src = "../assets/images/buttons/blocked_road.png";
+        break;
+      case 'drop':
+        src = "../assets/images/buttons/water.png";
+        break;
+    }
+    var image = new Image();
+    image.src = src;
+    this.myType = `url(${image.src})`;
+  }
+  notify(){
+    if(!this.dataSet){
+      this.closeOut();
+      return;
+    }
+    var checkClose = this.alertCtrl.create({
+      title: this.translate.text.add.leaveTitle,
+      subTitle: this.translate.text.add.leaveSubTitle,
+      buttons: [{
+        text: this.translate.text.add.leave,
+        handler: () => {
+          this.closeOut();
+        }
+      },{
+        text: this.translate.text.add.stay,
+        handler: () => {
+        }
+      }]
     });
-    this.checks.forEach(function(item){
-      item.amount = Math.floor(item.amount);
-      if(item.text.trim().length > 0 && item.amount && item.amount >= 1) amount++;
-    })
-    if(amount > 0) return true;
-    return false;
+    checkClose.present();
   }
 }

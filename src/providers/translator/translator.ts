@@ -10,7 +10,7 @@ export class TranslatorProvider {
     //English verstion of Text
     en: any = {
         add: {
-            describe: "Additional Description",
+            describe: "Add Description",
             openCam: "Open Camera",
             openAlb: "Open Album",
             username: "Show Username?",
@@ -26,10 +26,10 @@ export class TranslatorProvider {
             noShow: "Username is NOT visible",
             errorType: "*Add a type to the report*",
             errorImage: "*Add a photo of the incident*",
-            title1: "Here you can specify what and how many items you need.",
-            title2: "Here you can add additional details and give the post a color.",
-            sub1: "Don't see something on the list? You can enter other items at the bottom. Click the plus/minus buttons on the bottom right to change all the amounts of needed items.",
-            item: "Item Name"
+            leaveTitle: "Are you sure you want to abandon this post?",
+            leaveSubTitle: "The photo you've submitted will not be saved",
+            leave: "Leave",
+            stay: "Stay"
         },
         confirmation: {
             success: "Successfully Submitted!",
@@ -68,10 +68,8 @@ export class TranslatorProvider {
             notes: "Notes",
             edit: "Edit",
             info: "Info",
-            aboutTitle: "What is Global Chat?",
-            aboutMessage: "Global chat is a way for you to communicate with everyone using the app. When you post a message here, everyone will be able to see and respond to it.",
-            aboutTitle2: "What is the commenting feature?",
-            aboutMessage2: "When you comment on a post everyone will be able to see your comment. This feature allows community members to better communicate what needs to be done in order to resolve an issue.",
+            aboutTitle: "What is the commenting feature?",
+            aboutMessage: "When you comment on a post everyone will be able to see your comment. This feature allows community members to better communicate what needs to be done in order to resolve an issue.",
         },
         login: {
             email: "Email",
@@ -225,7 +223,7 @@ export class TranslatorProvider {
         },
         other: {
             cnd: "Cats/Dogs",
-            complete: "Resolved",
+            complete: "Complete",
             todo: "To Do",
             building: "Abandoned Building",
             pest: "Pests",
@@ -235,36 +233,15 @@ export class TranslatorProvider {
             road: "Blocked Road",
             tree: "Fallen Tree",
             rocked: "Rocks in Road",
+            drink: "Drinkable Water Needed",
             electricity: "Exposed Electricity",
             language: "ENGLISH"
-        },
-        items: {
-            e00: "Solar Panel Nomad 100",
-            e01: "Yeti 400 Lithium Generator",
-            e02: "Lighthouse Lantern (LAL 350 x 3)",
-            e03: "Outfitter Shelter",
-            e04: "Lodge Shelter",
-            e05: "GZ Power + Outfitter Shelter",
-            e06: "GZ Power + Lodge Shelte",
-            e07: "Porter cooling bag",
-            e08: "Insulin Cooling Case L x 150",
-            e09: "Insulin Cooling Case XL x 150",
-            e10: "Lifestraw",
-            e11: "Mosquito Nets",
-            e12: "Insulin",
-            e13: "Glucometers",
-            e14: "Maternal care",
-            e15: "High blood pressure cuffs",
-            e16: "Portable devices (tablets)",
-            e17: "Cots",
-            e18: "First Aid Kit",
-            e19: "Hand sanitizer",
         }
     }
     //Spanish Version of text
     es: any = {
         add: {
-            describe: "Despicion Adicional",
+            describe: "Descripción",
             openCam: "Abrir Cámara",
             openAlb: "Abrir Album",
             username: "¿Mostrar su nombre de usuario?",
@@ -280,10 +257,10 @@ export class TranslatorProvider {
             noShow: "El nombre de usuario NO está visible",
             errorType: "*Añadir un tipo al informe*",
             errorImage: "*Añadir una foto del incidente*",
-            title1: "Aquí puede especificar qué y cuántos elementos necesita.",
-            title2: "Aquí puede agregar detalles adicionales y darle un color a la publicación.",
-            sub1: "¿No ves algo en la lista? Puede ingresar otros elementos en la parte inferior. Haga clic en los botones más / menos en la parte inferior derecha para cambiar todas las cantidades de elementos necesarios.",
-            item: "Nombre del Árticulo"
+            leaveTitle: "¿Estás seguro de que quieres abandonar esta publicación?",
+            leaveSubTitle: "La foto que has enviado no se guardará",
+            leave: "Dejo",
+            stay: "Quedo"
         },
         confirmation: {
             success: "¡Envio Exitoso!",
@@ -322,10 +299,8 @@ export class TranslatorProvider {
             notes: "Notas",
             edit: "Editar",
             info: "Detalles",
-            aboutTitle: "¿Qué es Global Chat?",
-            aboutMessage: "El chat global es una forma de comunicarse con todos los usuarios de la aplicación. Cuando publique un mensaje aquí, todo el mundo podrá verlo y responder a él.",
-            aboutTitle2: "¿Cuál es la función de comentarios?",
-            aboutMessage2: "Cuando comenta una publicación, todos podrán ver su comentario. Esta característica permite a los miembros de la comunidad comunicar mejor lo que se debe hacer para resolver un problema.",
+            aboutTitle: "¿Cuál es la función de comentarios?",
+            aboutMessage: "Cuando comenta una publicación, todos podrán ver su comentario. Esta característica permite a los miembros de la comunidad comunicar mejor lo que se debe hacer para resolver un problema.",
         },
         login: {
             email: "Correo Electrónico",
@@ -479,7 +454,7 @@ export class TranslatorProvider {
         },
         other: {
             cnd: "Gatos/Perros",
-            complete: "Resuelto",
+            complete: "Completar",
             todo: "Incompleto",
             building: "Edificación Abandonada",
             pest: "Plagas",
@@ -490,29 +465,8 @@ export class TranslatorProvider {
             tree: "Arbol Caido",
             rocked: "Rocas en la Carretera",
             electricity: "Electricidad Expuesta",
+            drink: "Necesidad de Agua Potable",
             language: "ESPAÑOL"
-        },
-        items: {
-            e00: "Solar Panel Nomad 100",
-            e01: "Yeti 400 Lithium Generator",
-            e02: "Lighthouse Lantern (LAL 350 x 3)",
-            e03: "Outfitter Shelter",
-            e04: "Lodge Shelter",
-            e05: "GZ Power + Outfitter Shelter",
-            e06: "GZ Power + Lodge Shelte",
-            e07: "Porter cooling bag",
-            e08: "Insulin Cooling Case L x 150",
-            e09: "Insulin Cooling Case XL x 150",
-            e10: "Lifestraw",
-            e11: "Mosquito Nets",
-            e12: "Insulin",
-            e13: "Glucometers",
-            e14: "Maternal care",
-            e15: "High blood pressure cuffs",
-            e16: "Portable devices (tablets)",
-            e17: "Cots",
-            e18: "First Aid Kit",
-            e19: "Hand sanitizer",
         }
     }
     

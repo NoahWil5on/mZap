@@ -77,8 +77,8 @@ export class SettingsPage {
     logout(){
         this.click.click('settingsLogout');
         this.afAuth.auth.signOut().then(out => {
-            this.storage.remove('mission_x_password').then(_ => {
-                this.storage.remove('mission_x_email').then(_ => {
+            this.storage.remove('mzap_password').then(_ => {
+                this.storage.remove('mzap_email').then(_ => {
                     this.navCtrl.setRoot(LoginPage);
                 })
             })

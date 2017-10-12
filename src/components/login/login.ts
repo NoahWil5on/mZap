@@ -43,9 +43,9 @@ export class LoginComponent {
             this.language = "es";
         });
 
-        this.storage.get('mission_x_email').then(email => {
+        this.storage.get('mzap_email').then(email => {
             if (!email) return;
-            this.storage.get('mission_x_password').then(pass => {
+            this.storage.get('mzap_password').then(pass => {
                 this.afAuth.auth.signInWithEmailAndPassword(email, pass).then(data => {
                     this.runUser(this.afAuth.auth.currentUser);
                 }).catch(e => {
@@ -141,8 +141,8 @@ export class LoginComponent {
 
         //try signing in user and updating their local sign in data
         this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password).then(data => {
-            this.storage.set('mission_x_email', this.email);
-            this.storage.set('mission_x_password', this.password);
+            this.storage.set('mzap_email', this.email);
+            this.storage.set('mzap_password', this.password);
             loader.dismiss();
             this.runUser(this.afAuth.auth.currentUser);
         }).catch(e => {

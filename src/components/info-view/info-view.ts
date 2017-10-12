@@ -1,12 +1,15 @@
 //vanilla ionic imports
 import { Component, NgZone, ViewChild } from '@angular/core';
-import { Events } from 'ionic-angular';
+import { Events, NavController} from 'ionic-angular';
 
 //provider imports
 import { UserInfoProvider } from '../../providers/user-info/user-info';
 import { LikeProvider } from '../../providers/like/like';
 import { ClickProvider } from '../../providers/click/click';
 import { TranslatorProvider } from '../../providers/translator/translator'
+
+//page imports
+import { ProfilePage } from '../../pages/profile/profile';
 
 //image popup viewing import
 import { ImageViewerController } from 'ionic-img-viewer';
@@ -25,65 +28,48 @@ export class InfoViewComponent {
   @ViewChild('mainContent') infoContent;
 
   myData: any;
-  checks: any = [];
   likeValue: any;
   hide: boolean = false;
   messages: any = [];
   id: any;
-  type: string = 'assets/images/icons/cyan.png';
 
   status: string = "";
 
-  constructor(public userInfo: UserInfoProvider, public likeProvider: LikeProvider, public ngZone: NgZone, public click: ClickProvider, public imageViewerCtrl: ImageViewerController, public translate: TranslatorProvider, public info: InfoComponent, public events: Events) {
-    this.myData = this.info.myData;
-    this.checks = this.myData.checks;
-    this.likeable();
+  constructor(public userInfo: UserInfoProvider, public likeProvider: LikeProvider, public ngZone: NgZone, public click: ClickProvider, public imageViewerCtrl: ImageViewerController, public translate: TranslatorProvider, public info: InfoComponent, public events: Events, public navCtrl: NavController) {
+    this.myData = this.userInfo.activeData;
+    this.likeable();    
 
-    switch (this.userInfo.activeData.status) {
+    switch(this.userInfo.activeData.status){
       case 'Complete':
-        this.status = this.translate.text.other.complete;
-        break;
+          this.status = this.translate.text.other.complete;
+          break;
       case 'To Do':
-        this.status = this.translate.text.other.todo;
-        break;
+          this.status = this.translate.text.other.todo;
+          break;
     }
-    switch (this.myData.type) {
-      case 'a':
-        this.type = 'assets/images/icons/cyan.png';
-        break;
-      case 'b':
-        this.type = 'assets/images/icons/yellow.png';
-        break;
-      case 'c':
-        this.type = 'assets/images/icons/blue.png';
-        break;
-      case 'd':
-        this.type = 'assets/images/icons/green.png';
-        break;
-      case 'e':
-        this.type = 'assets/images/icons/red.png';
-        break;
-      case 'f':
-        this.type = 'assets/images/icons/purple.png';
-        break;
-    };
 
     this.messages = [];
     //the id of where the messages are stored in the db
     this.id = this.userInfo.activeData.key;
     var self = this;
-
+    
     //fetch all messages
     firebase.database().ref('/messages/').child(this.id).on('value', snapshots => {
-      self.messages = [];
-      //for every message found, add to array
-      for (var snap in snapshots.val()) {
-        if (snapshots.hasOwnProperty(snap)) continue;
-        self.messages.unshift(snapshots.val()[snap]);
-      }
+        self.messages = [];
+        //for every message found, add to array
+        for (var snap in snapshots.val()) {           
+            if(snapshots.hasOwnProperty(snap)) continue;
+            var message = snapshots.val()[snap];
+            if(self.checkMessage(message)){
+               message.new = true;
+            }else{
+              message.new = false;
+            }
+            self.messages.unshift(message);
+        }
     });
   }
-  ngAfterViewInit() {
+  ngAfterViewInit(){
     var element = this.infoContent.nativeElement.parentElement;
     this.events.subscribe('backToInfo', () => {
       //this.hide = false;
@@ -100,40 +86,40 @@ export class InfoViewComponent {
 
         //find the percentage of distance to travel given 
         //start,end, and current time
-        var mult = 1 - ((point - startTime) / (endTime - startTime));
+        var mult = 1-((point - startTime)/(endTime-startTime));
         current = startTop * mult;
 
         element.scrollTop = current;
         //if top is less than or equal to 0 exit
-        if (current <= 0) {
+        if(current <= 0){
           element.scrollTop = 0;
           clearInterval(smoothSlide);
         }
-      }, 10);
+      },10);
     });
     this.events.subscribe('newMessage', () => {
       element.scrollTop = 0;
     });
     element.addEventListener("scroll", (e) => {
-      if (element.scrollTop > this.infoContent.nativeElement.offsetHeight) {
+      if(element.scrollTop > this.infoContent.nativeElement.offsetHeight){
         this.info.hideType = true;
       }
-      else {
+      else{
         this.info.hideType = false;
       }
     })
   }
-  likeable() {
+  likeable(){
     var self = this;
-    this.likeProvider.likeable(this.userInfo.activeData.key, function (value) {
-      //ngZone.run updates the DOM otherwise change is not visible
-      self.ngZone.run(() => {
-        self.likeValue = value;
-      })
+    this.likeProvider.likeable(this.userInfo.activeData.key, function(value){
+        //ngZone.run updates the DOM otherwise change is not visible
+        self.ngZone.run(() =>{
+            self.likeValue = value;   
+        })
     });
   }
   //called when user likes a post
-  like(value) {
+  like(value){
     this.click.click('mapLike');
     //var self = this;
     // this.likeProvider.like(this.userInfo.activeData.key, value, function(likes){
@@ -143,24 +129,29 @@ export class InfoViewComponent {
     this.likeValue = value;
   }
   //show pop up of image when image is clicked on
-  presentImage(myImage) {
-    this.click.click('infoWindowPresentImage');
-    let imageViewer = this.imageViewerCtrl.create(myImage);
-    imageViewer.present();
+  presentImage(myImage){
+      this.click.click('infoWindowPresentImage');
+      let imageViewer = this.imageViewerCtrl.create(myImage);
+      imageViewer.present();
   }
-  comment() {
+  comment(){
     this.hide = true;
     this.info.state = "comment";
   }
-  resolve() {
+  resolve(){
     this.info.state = "edit";
   }
   //checks if this is a new message
-  checkMessage(message) {
-    if (!message.time) return false;
-    if (Date.now() - message.time < 5000) {
+  checkMessage(message){
+    //if(!message.time) return false;
+    if(Date.now()-message.time < 2000){
       return true;
+    }else{
+      return false;
     }
-    return false;
+  }
+  goToProfile(id){
+    this.userInfo.profileView = id;
+    this.navCtrl.push(ProfilePage);
   }
 }

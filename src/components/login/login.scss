@@ -11,6 +11,7 @@
             transform: translate(-50%, -50%);
         }
         #main{
+            border-radius: 8px;
             z-index: 10;
             display: inline-block;
             position: absolute;
@@ -37,6 +38,7 @@
         }
         #logo-div{
             width: 100%;
+            border-radius: 4px;
             padding: 5px 0;
             height: 25% !important;
             background-color: #3fbc05;                    

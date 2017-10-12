@@ -1,61 +1,10 @@
 <div id="main-confirm">
-  <ion-grid>
-
-    <!-- helper row -->
-    <ion-row class="helper">
-      <ion-col no-padding text-center>
-        <p>{{translate.text.add.item}}</p>
-      </ion-col>
-      <ion-col class="number" col-auto text-center>
-        <p>#</p>
-      </ion-col>
-    </ion-row>
-
-    <!--Presets-->
-    <ion-row class="preset" *ngFor="let preset of add.presets">
-      <ion-col no-padding>
-        <p text-wrap>{{preset.text}}</p>
-      </ion-col>
-      <ion-col class="num-holder" col-auto>
-        <ion-input type="number" min="0" max="999" step="1" [(ngModel)]="preset.amount" (ngModelChange)="preset.amount = convertToNumber($event)"></ion-input>
-      </ion-col>
-    </ion-row>
-
-    <!-- own addage -->
-    <ion-row class="check-input" *ngFor="let check of add.checks">
-      <ion-col col-auto no-padding>
-        <div class="remove" *ngIf="add.checks.length > 1">
-          <div class="image-holder" (click)="add.checks.splice(add.checks.indexOf(check),1)">
-            <ion-icon name="remove"></ion-icon>
-          </div>
-        </div>
-      </ion-col>
-      <ion-col no-padding>
-        <ion-input type="text" maxlength="40" [(ngModel)]="check.text"></ion-input>
-      </ion-col>
-      <ion-col class="num-holder" col-auto>
-        <ion-input type="number" min="0" max="999" step="1" [(ngModel)]="check.amount" (ngModelChange)="check.amount = convertToNumber($event)"></ion-input>
-      </ion-col>
-    </ion-row>
-
-    <!--Add/Sub row-->
-    <ion-row class="add-row">
-      <ion-col no-padding>
-          <button ion-button [disabled]="add.checks[add.checks.length-1].text.length < 1" (click)="add.checks.push({text: '', state: false, amount: 0})"
-          class="add">
-          <ion-icon name="add"></ion-icon>
-        </button>
-      </ion-col>
-      <ion-col col-auto no-padding class="left-padding">
-        <div class="number">
-          <div class="changer" (click)="subAll()">
-            -
-          </div>
-          <div class="changer" (click)="addAll()">
-            +
-          </div>          
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ion-item>
+      <ion-label floating style="color: #3fbc05" [class.red-text]="add.desc.length < 1">{{translate.text.add.describe}}</ion-label>
+      <ion-input maxlength="120" rows="2" [(ngModel)]="add.desc"></ion-input>
+    </ion-item>
+    <div class="auto">
+        <div class="show" *ngIf="add.show" (click)="add.show = false"><p>{{translate.text.add.show}}</p></div>
+        <div class="show" *ngIf="!add.show" (click)="add.show = true"><p>{{translate.text.add.noShow}}</p></div>
+    </div>
 </div>

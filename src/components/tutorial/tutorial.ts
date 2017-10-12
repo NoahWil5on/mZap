@@ -57,6 +57,10 @@ export class TutorialComponent {
       name: this.translate.text.other.electricity,
       src: "assets/images/buttons/electricity.png"
     });
+    this.types.push({
+      name: this.translate.text.other.drink,
+      src: "assets/images/buttons/water.png"
+    });
   }
   skip(){
     if(this.slides.isEnd()){
