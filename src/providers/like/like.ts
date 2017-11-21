@@ -37,7 +37,7 @@ export class LikeProvider {
                     if(!snapshot.hasChild('likes')){
                         ref.child('likes').set(value).then(_ => {
                             self.updateOtherUserLikes(snapshot.val().id,value);
-                            self.updateLikes();
+                            self.updateLikes(post);
                             callback(value);
                         }); 
                     }
@@ -46,7 +46,7 @@ export class LikeProvider {
                         ref.child('likes').set(likes + value).then(_ => {
                             self.updateOtherUserLikes(snapshot.val().id,value);
                             if(!userSnapshot.val()){
-                                self.updateLikes();
+                                self.updateLikes(post);
                             }
                             callback(likes + value);
                         });
@@ -65,9 +65,8 @@ export class LikeProvider {
         //     self.updateLikes();
         // }
     }
-    updateLikes(){
-        var self = this;
-        var userRating = firebase.database().ref('/userRating/').child(self.afAuth.auth.currentUser.uid)
+    updateLikes(post){
+        var userRating = firebase.database().ref('/userRating/').child(this.afAuth.auth.currentUser.uid)
         userRating.once('value', snap => {
             if(!snap.hasChild('likes')){
                 userRating.child('likes').set(1);
@@ -75,6 +74,17 @@ export class LikeProvider {
                 userRating.child('likes').set(snap.val().likes + 1);
             }
         });
+        // firebase.database().ref(`/subscriptions/${this.afAuth.auth.currentUser.uid}/${post}`).once('value').then(snapshot => {
+        //     var found = false;
+        //     snapshot.forEach(item => {
+        //         if(item.val() == this.afAuth.auth.currentUser.uid){
+        //             found = true;
+        //         }
+        //     });
+        //     if(!found){
+        //         firebase.database().ref(`/subscriptions/${post}/${this.afAuth.auth.currentUser.uid}`).push(this.afAuth.auth.currentUser.uid);
+        //     }
+        // })
     }
     updateOtherUserLikes(uid,val){
         var userRating = firebase.database().ref('/userRating/').child(uid)

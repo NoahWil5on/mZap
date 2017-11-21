@@ -1,8 +1,10 @@
 <div>
     <div id="drop-down" [class.up]="!dropDown">
-        <ion-grid class="info-grid" *ngIf="userInfo.activeData != {} && userInfo.activeData">
+        <!-- <ion-grid class="info-grid" *ngIf="userInfo.activeData != {} && userInfo.activeData">
             <ion-row [class.top-padding]="userInfo.isApp">
-                <ion-col class="map-info-col">
+                <ion-col class="map-info-col"> -->
+            <div class="info-grid" *ngIf="userInfo.activeData != {} && userInfo.activeData" [class.top-padding]="userInfo.isApp">
+                <div class="map-info-col">
                     <div class="map-status">
                         <p class="p-status">{{translateStatus(userInfo.activeData.status)}}</p>
                     </div>
@@ -10,15 +12,17 @@
                     <p class="p-description" *ngIf="userInfo.activeData.description">
                         {{userInfo.activeData.description}}
                     </p>
+                </div>
                     <!-- <p class="p-status">{{distance}} Km Away</p>                -->
-                </ion-col>
-                <ion-col col-auto class="map-image-col">
-                    <div class="div-image" [style.background-image]="'url(' + userInfo.activeData.url + ')'">
-                        <img [src]="userInfo.activeData.url" class="invisable" #thisImage (click)="presentImage(thisImage)"/>
-                    </div>
-                </ion-col>
+                <!-- </ion-col>
+                <ion-col col-auto class="map-image-col"> -->
+                <div class="div-image" [style.background-image]="'url(' + userInfo.activeData.url + ')'">
+                    <img [src]="userInfo.activeData.url" class="invisable" #thisImage (click)="presentImage(thisImage)"/>
+                </div>
+            </div>
+                <!-- </ion-col>
             </ion-row>
-        </ion-grid>
+        </ion-grid> -->
         <ion-grid class="button-grid" [class.grid-hidden]="!dropDown">
             <ion-row>
                 <ion-col col-4>

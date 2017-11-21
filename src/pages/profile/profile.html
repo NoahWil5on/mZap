@@ -41,11 +41,13 @@
         <ion-grid *ngIf="rating != {}" class="stat-div">
             <ion-row>
                 <ion-col text-center>
-                    <h2>{{rating.posts}}</h2>
+                    <h2 *ngIf="rating.posts">{{rating.posts}}</h2>
+                    <h2 *ngIf="!rating.posts">0</h2>
                     <p>{{translate.text.profile.posts}}</p>
                 </ion-col>
                 <ion-col text-center>
-                    <h2>{{rating.resolves}}</h2>
+                    <h2 *ngIf="rating.resolves">{{rating.resolves}}</h2>
+                    <h2 *ngIf="!rating.resolves">0</h2>
                     <p>{{translate.text.profile.resolves}}</p>
                 </ion-col>
             </ion-row>

@@ -103,17 +103,37 @@ export class ReportsPage {
                     case 'bugs':
                         obj.type = self.translate.text.other.bug;
                         break;
-                    case 'building':
-                        obj.type = self.translate.text.other.building;
-                        break;
                     case 'trash':
                         obj.type = self.translate.text.other.trash;
+                        break;
+                    case 'building':
+                        obj.type = self.translate.text.other.building;
                         break;
                     case 'pest':
                         obj.type = self.translate.text.other.pest;
                         break;
                     case 'cnd':
                         obj.type = self.translate.text.other.cnd;
+                        break;
+                    case 'road':
+                        obj.type = self.translate.text.other.road;
+                        break;
+                    case 'electricity':
+                        obj.type = self.translate.text.other.electricity;
+                        break;
+                    case 'tree':
+                        obj.type = self.translate.text.other.tree;
+                        break;
+                    case 'rocked':
+                        obj.type = self.translate.text.other.rocked;
+                        break;
+                    case 'water':
+                        obj.type = self.translate.text.other.water;
+                        break;
+                    case 'drop':
+                        obj.type = self.translate.text.other.drink;
+                        break;
+                    default:
                         break;
                 }
                 //translate status

@@ -296,6 +296,8 @@ export class MapViewComponent {
               return this.translate.text.other.rocked;
             case 'water':
               return this.translate.text.other.water;
+            case 'drop':
+              return this.translate.text.other.drink;
             default:
                 break;
           };
