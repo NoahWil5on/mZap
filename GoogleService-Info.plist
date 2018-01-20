@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.mzap.mzap</string>
+	<string>com.mzap.www</string>
 	<key>PROJECT_ID</key>
 	<string>mzap-45cd2</string>
 	<key>STORAGE_BUCKET</key>

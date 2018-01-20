@@ -12,7 +12,6 @@ import { SMS } from '@ionic-native/sms';
 import { MediaCapture } from 'ionic-native';
 import { File } from '@ionic-native/file';
 import { DeviceOrientation } from '@ionic-native/device-orientation';
-import { CallNumber } from '@ionic-native/call-number';
 //import { CloudSettings } from '@ionic/cloud-angular';
 
 //Angular fire imports
@@ -165,8 +164,7 @@ export const firebaseConfig = {
     SMS,
     ClickProvider,
     MediaCapture,
-    DeviceOrientation,
-    CallNumber
+    DeviceOrientation
   ]
 })
 export class AppModule { }

@@ -97,37 +97,37 @@ export class AddComponent {
     var src = "";
     switch(this.type){
       case 'bugs':
-        src = "../assets/images/buttons/bug.png";
+        src = "assets/images/buttons/bug.png";
         break;
       case 'cnd':
-        src = "../assets/images/buttons/cnd.png";
+        src = "assets/images/buttons/cnd.png";
         break;
       case 'trash':
-        src = "../assets/images/buttons/trash.png";
+        src = "assets/images/buttons/trash.png";
         break;
       case 'building':
-        src = "../assets/images/buttons/building.png";
+        src = "assets/images/buttons/building.png";
         break;
       case 'pest':
-        src = "../assets/images/buttons/pest.png";
+        src = "assets/images/buttons/pest.png";
         break;
       case 'water':
-        src = "../assets/images/buttons/droplet.png";
+        src = "assets/images/buttons/droplet.png";
         break;
       case 'road':
-        src = "../assets/images/buttons/road.png";
+        src = "assets/images/buttons/road.png";
         break;
       case 'electricity':
-        src = "../assets/images/buttons/electricity.png";
+        src = "assets/images/buttons/electricity.png";
         break;
       case 'tree':
-        src = "../assets/images/buttons/tree.png";
+        src = "assets/images/buttons/tree.png";
         break;
       case 'rocked':
-        src = "../assets/images/buttons/blocked_road.png";
+        src = "assets/images/buttons/blocked_road.png";
         break;
       case 'drop':
-        src = "../assets/images/buttons/water.png";
+        src = "assets/images/buttons/water.png";
         break;
     }
     var image = new Image();
