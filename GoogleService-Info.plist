@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>550547782302-p57s2ronom31n4l1v8rj6hped9nn9e3u.apps.googleusercontent.com</string>
+	<string>550547782302-7a6j751t4n2hsvjnr58dt0mk5s38alri.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.550547782302-p57s2ronom31n4l1v8rj6hped9nn9e3u</string>
+	<string>com.googleusercontent.apps.550547782302-7a6j751t4n2hsvjnr58dt0mk5s38alri</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCacfYyHhzQPU-EFZ6-0SgyBFJZS-Sbb6o</string>
 	<key>GCM_SENDER_ID</key>
@@ -23,17 +23,17 @@
 	<key>STORAGE_BUCKET</key>
 	<string>mzap-45cd2.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:550547782302:ios:f71a0aec03a691d8</string>
+	<string>1:550547782302:ios:2eeb98a263b883b3</string>
 	<key>DATABASE_URL</key>
 	<string>https://mzap-45cd2.firebaseio.com</string>
 </dict>

@@ -27,6 +27,7 @@ import { ClickProvider } from '../providers/click/click';
 import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 
+declare let FCMPlugin;
 @Component({
   templateUrl: 'app.html'
 })
@@ -67,6 +68,9 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
             }).catch(e => {
                 this.runLogin();
             });
+            if(typeof(FCMPlugin) != 'undefined'){
+                this.runSetup();
+            }
         });
         // this.push.register().then((t: PushToken) => {
         //     return this.push.saveToken(t);
@@ -86,6 +90,26 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
                 },null,{enableHighAccuracy: true, maximumAge:3000, timeout: 5000});                
             setTimeout(updatePosition, 15000);
         }, 15000);*/
+    }
+    runSetup(){
+        console.log("One small step for man, one huge step for someone trying to get notifications on this app to work.");
+        FCMPlugin.getToken(
+            (t) => {
+              console.log("got token " + t);
+            },
+            (e) => {
+              console.log("token error " + e);
+            }
+          );
+          
+          FCMPlugin.onNotification(
+            (data) => {
+              console.log("got data " + data);
+            },
+            (e) => {
+              console.log("notification error " + e);
+            }
+          );
     }
     runLogin(){
         this.storage.get('mzap_email').then(email => {
