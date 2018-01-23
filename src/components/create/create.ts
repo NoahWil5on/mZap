@@ -21,6 +21,7 @@ import { ClickProvider } from '../../providers/click/click';
 //image pop up import
 import { ImageViewerController } from 'ionic-img-viewer';
 
+declare var FCMPlugin;
 @Component({
   selector: 'create',
   templateUrl: 'create.html'
@@ -139,6 +140,18 @@ export class CreateComponent {
           return;
         })
       }).then(_ => {
+        if(typeof(FCMPlugin) != 'undefined'){
+          FCMPlugin.getToken(
+              (t) => {
+              firebase.database().ref(`/users/${this.afAuth.auth.currentUser.uid}`).update({
+                  pushToken: t
+              });
+              },
+              (e) => {
+              console.log("token error " + e);
+              }
+          );
+      }
         firebase.database().ref('/userRating/').child(this.afAuth.auth.currentUser.uid).set({
           likes: 0,
           posts: 0,

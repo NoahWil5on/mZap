@@ -9,22 +9,22 @@ const ref = admin.database().ref();
 exports.commentTrigger = functions.database.ref('/messages/{postId}/{messageId}').onWrite(event => {
     var data = event.data.val();
 
-    if(!data.id || data.id == "" || data.id == undefined || data.id == null) return
+    if (!data.id || data.id == "" || data.id == undefined || data.id == null) return
     return ref.child(`/subscriptions/${event.params.postId}`).once('value').then(snapshot => {
         var foundUser = false;
-        if(!snapshot.val()){
+        if (!snapshot.val()) {
             ref.child(`/subscriptions/${event.params.postId}`).push(data.id);
             return;
         }
-        snapshot.forEach(function(element) {
+        snapshot.forEach(function (element) {
             var id = element.val();
-            if(id == data.id){
+            if (id == data.id) {
                 foundUser = true;
                 return;
             }
             checkNotify(id, 'notifyComments', data, event.params.postId);
         });
-        if(!foundUser){
+        if (!foundUser) {
             ref.child(`/subscriptions/${event.params.postId}`).push(data.id);
             return;
         }
@@ -33,34 +33,34 @@ exports.commentTrigger = functions.database.ref('/messages/{postId}/{messageId}'
 exports.resolveTrigger = functions.database.ref('/resolves/{postId}/{resolveId}').onWrite(event => {
     var data = {};
 
-    if(event.data.val().info){
+    if (event.data.val().info) {
         data.message = event.data.val().info;
     }
-    else{
+    else {
         data.message = "";
     }
-    if(event.data.val().name){
+    if (event.data.val().name) {
         data.name = event.data.val().name;
     }
-    if(event.data.val().id){
+    if (event.data.val().id) {
         data.id = event.data.val().id;
     }
-    if(!data.id || data.id == "" || data.id == undefined || data.id == null) return
+    if (!data.id || data.id == "" || data.id == undefined || data.id == null) return
     return ref.child(`/subscriptions/${event.params.postId}`).once('value').then(snapshot => {
         var foundUser = false;
-        if(!snapshot.val()){
+        if (!snapshot.val()) {
             ref.child(`/subscriptions/${event.params.postId}`).push(data.id);
             return;
         }
-        snapshot.forEach(function(element) {
+        snapshot.forEach(function (element) {
             var id = element.val();
-            if(id == data.id){
+            if (id == data.id) {
                 foundUser = true;
                 return;
             }
             checkNotify(id, 'notifyResolves', data, event.params.postId);
         });
-        if(!foundUser){
+        if (!foundUser) {
             ref.child(`/subscriptions/${event.params.postId}`).push(data.id);
             return;
         }
@@ -71,7 +71,7 @@ exports.resolveTrigger = functions.database.ref('/resolves/{postId}/{resolveId}'
 //created so no one can possibly be subscribed, no checks needed.
 exports.postCreateTrigger = functions.database.ref('/positions/{postId}').onCreate(event => {
     var data = event.data.val();
-    if(!data.id || data.id == "" || data.id == undefined || data.id == null) return;
+    if (!data.id || data.id == "" || data.id == undefined || data.id == null) return;
     return ref.child(`/subscriptions/${event.params.postId}`).push(data.id);
 });
 exports.likeTrigger = functions.database.ref(`/userLikes/{userId}/likedPosts/{postId}`).onWrite(event => {
@@ -79,9 +79,9 @@ exports.likeTrigger = functions.database.ref(`/userLikes/{userId}/likedPosts/{po
     return ref.child(`/subscriptions/${event.params.postId}`).once('value').then(snapshot => {
         var foundUser = false;
         var myElement;
-        snapshot.forEach(function(element) {
+        snapshot.forEach(function (element) {
             var id = element.val();
-            if(id == event.params.userId){
+            if (id == event.params.userId) {
                 myElement = element;
                 foundUser = true;
                 return;
@@ -91,21 +91,21 @@ exports.likeTrigger = functions.database.ref(`/userLikes/{userId}/likedPosts/{po
         //if last time you subscribed then this time you unsubscribe (and vise versa)
         //however if something weird happens in between, doubling checking the new 
         //'like' value they submitted will help prevent a false positive on a toggle
-        if(!foundUser){
-            if(data > 0){
+        if (!foundUser) {
+            if (data > 0) {
                 ref.child(`/subscriptions/${event.params.postId}`).push(event.params.userId);
             }
-        }else if(myElement){
-            if(data < 0){
+        } else if (myElement) {
+            if (data < 0) {
                 ref.child(`/subscriptions/${event.params.postId}/${myElement.key}`).remove();
             }
         }
     });
 })
-function checkNotify(id, notifyType, data, postId){
-    if(!id || id == "" || id == undefined || id == null) return
+function checkNotify(id, notifyType, data, postId) {
+    if (!id || id == "" || id == undefined || id == null) return
     ref.child(`/users/${id}`).once('value', snapshot => {
-        if(!snapshot.hasChild(notifyType)){
+        if (!snapshot.hasChild(notifyType)) {
             ref.child(`/users/${id}`).update({
                 notifyMyPosts: true,
                 notifyComments: true,
@@ -113,51 +113,53 @@ function checkNotify(id, notifyType, data, postId){
                 notifyLikes: true
             });
             notify(id, notifyType, data, postId);
-        }else{
+        } else {
             ref.child(`/positions/${postId}`).once('value', snap => {
-                if(id == snap.val().id){
-                    if(snapshot.val().notifyMyPosts)
+                if (id == snap.val().id) {
+                    if (snapshot.val().notifyMyPosts)
                         notify(id, notifyType, data, postId);
                     return;
                 }
-                else if(snapshot.val()[notifyType] || snapshot.val().notifyLikes){
+                else if (snapshot.val()[notifyType] || snapshot.val().notifyLikes) {
                     notify(id, notifyType, data, postId);
                 }
             })
-                        
+
         }
     })
 }
-function notify(id, notifyType, data, postId){
+function notify(id, notifyType, data, postId) {
     ref.child(`/notifications/${id}/${postId}`).once('value', snapshot => {
-        if(snapshot.hasChild(notifyType)){
-            if(snapshot.val()[notifyType].seen){
+        if (snapshot.hasChild(notifyType)) {
+            if (snapshot.val()[notifyType].seen) {
                 ref.child(`/notifications/${id}`).once('value', snap => {
-                    if(!snap.hasChild('count')){
+                    if (!snap.hasChild('count')) {
                         ref.child(`/notifications/${id}/count`).set(1);
-                    }else{
+                    } else {
                         ref.child(`/notifications/${id}`).update({
                             count: snap.val().count + 1
                         })
                     }
                 })
             }
+            sendNotification(id, data, notifyType);
             ref.child(`/notifications/${id}/${postId}/${notifyType}`).update({
                 message: data.message,
                 name: data.name,
                 seen: false,
                 time: Date.now()
-            }); 
-        }else{
+            });
+        } else {
             ref.child(`/notifications/${id}`).once('value', snap => {
-                if(!snap.hasChild('count')){
+                if (!snap.hasChild('count')) {
                     ref.child(`/notifications/${id}/count`).set(1);
-                }else{
+                } else {
                     ref.child(`/notifications/${id}`).update({
                         count: snap.val().count + 1
                     })
                 }
             }).then(_ => {
+                sendNotification(id, data, notifyType);
                 ref.child(`/notifications/${id}/${postId}/${notifyType}`).set({
                     message: data.message,
                     name: data.name,
@@ -167,6 +169,43 @@ function notify(id, notifyType, data, postId){
             });
         }
     });
+}
+function sendNotification(id, data, notifyType) {
+    var header = "";
+    message = data.message;
+
+    if(notifyType == "notifyComments"){
+        header = "New message from " + data.name + ":";
+    }else{
+        header = data.name + " has resolved a post."
+        if(data.message != undefined && data.message != ""){
+            message = '"' + message + '"';
+        }
+    }
+    
+
+    const payload = {
+        notification: {
+            title: header,
+            body: message,
+        },
+        data: {
+            type: "",
+        }
+    };
+    
+    ref.child(`/users/${id}`).once('value', snapshot => {
+        let token = snapshot.val().pushToken;
+        if (token && token != undefined && token != null) {
+            return admin.messaging().sendToDevice(token, payload).then(response => {
+            }).catch(error => {
+            });
+        }else{
+            return;
+        }
+    }).catch(e => {
+        return;
+    })
 }
 // var wroteData;
 // exports.pushTrigger = functions.database.ref('/pushMessage/{messageId}').onWrite( event =>{

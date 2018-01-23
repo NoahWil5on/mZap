@@ -17,6 +17,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase';
 
+declare var FCMPlugin;
 @Component({
     selector: 'login',
     templateUrl: 'login.html'
@@ -85,6 +86,18 @@ export class LoginComponent {
                         visits: snapshot.val().visits + 1,
                         lastActive: today
                     }).then(_ => {
+                        if(typeof(FCMPlugin) != 'undefined'){
+                            FCMPlugin.getToken(
+                                (t) => {
+                                firebase.database().ref(`/users/${self.afAuth.auth.currentUser.uid}`).update({
+                                    pushToken: t
+                                });
+                                },
+                                (e) => {
+                                console.log("token error " + e);
+                                }
+                            );
+                        }
                         self.userInfo.pageState = 'map';
                         self.userInfo.loggedIn = true;
                         //self.mapPage.tut = true;

@@ -12,6 +12,7 @@ import { SMS } from '@ionic-native/sms';
 import { MediaCapture } from 'ionic-native';
 import { File } from '@ionic-native/file';
 import { DeviceOrientation } from '@ionic-native/device-orientation';
+import { Geolocation } from '@ionic-native/geolocation';
 //import { CloudSettings } from '@ionic/cloud-angular';
 
 //Angular fire imports
@@ -164,7 +165,8 @@ export const firebaseConfig = {
     SMS,
     ClickProvider,
     MediaCapture,
-    DeviceOrientation
+    DeviceOrientation,
+    Geolocation
   ]
 })
 export class AppModule { }

@@ -1,6 +1,7 @@
 //Ionic imports
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { NavController, NavParams, ModalController, MenuController, Events } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
 // import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-native/device-orientation';
 
 //page imports
@@ -63,7 +64,7 @@ export class MapViewComponent {
     myActiveMarker: any;
 
     /*Instantiate all imported classes*/
-    constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController, public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth, public zones: ZonesProvider, public menuCtrl: MenuController, public userInfo: UserInfoProvider, public translate: TranslatorProvider, public likeProvider: LikeProvider, public click: ClickProvider, public mapPage: MapPage, public events: Events, public imageViewerCtrl: ImageViewerController) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController, public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth, public zones: ZonesProvider, public menuCtrl: MenuController, public userInfo: UserInfoProvider, public translate: TranslatorProvider, public likeProvider: LikeProvider, public click: ClickProvider, public mapPage: MapPage, public events: Events, public imageViewerCtrl: ImageViewerController, public geolocation: Geolocation) {
         mapPage.mapView = this;
 
     }
@@ -84,10 +85,10 @@ export class MapViewComponent {
             //if the user allows you to see their position add a blinking dot to their location
             if (this.userInfo.allowPosition) {
                 var self = this;
-                navigator.geolocation.getCurrentPosition((position) => {
+                this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
                     let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                     self.setPin(latLng);
-                }, null, { enableHighAccuracy: true, maximumAge: 3000, timeout: 5000 });
+                });
             }
             return;
         }
@@ -107,7 +108,7 @@ export class MapViewComponent {
     setCenter() {
         var self = this;
         //check if the user is allowing you to see their position
-        navigator.geolocation.getCurrentPosition((position) => {
+        this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
             let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             self.map.setCenter(latLng);
             self.map.setZoom(17);
@@ -129,7 +130,7 @@ export class MapViewComponent {
             if(self.myMarker){
                 self.myMarker.setPosition(latLng);
             }
-        }, null, { enableHighAccuracy: true, maximumAge: 3000, timeout: 5000 });
+        });
     }
     //sets personal marker and circle
     setPin(latLng) {
@@ -172,7 +173,7 @@ export class MapViewComponent {
         var self = this;
 
         //check if the user will let you see their position
-        navigator.geolocation.getCurrentPosition(function (position) {
+        this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then(function (position) {
             self.userInfo.allowPosition = true;
             let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             let options = {
@@ -182,7 +183,7 @@ export class MapViewComponent {
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             self.initMap(options, true);
-        }, function () {
+        }).catch( function () {
             let latLng = new google.maps.LatLng(18.318407, -65.296514);
             let options = {
                 center: latLng,
@@ -191,7 +192,7 @@ export class MapViewComponent {
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             self.initMap(options, false);
-        }, { enableHighAccuracy: true, maximumAge: 3000, timeout: 5000 });
+        });
     }
     //any time the "menu" button is clicked
     openMenu() {

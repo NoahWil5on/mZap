@@ -83,7 +83,6 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
     <allow-navigation href="http://10.162.2.119:8100" />
-    <engine name="android" spec="^6.2.3" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1">
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" " />
@@ -120,5 +119,5 @@
     <plugin name="mx.ferreyra.callnumber" spec="0.0.2" />
     <plugin name="call-number" spec="^1.0.1" />
     <plugin name="cordova-plugin-fcm" spec="^2.1.2" />
-    <engine name="ios" spec="~4.4.0" />
+    <engine name="android" spec="^6.2.3" />
 </widget>

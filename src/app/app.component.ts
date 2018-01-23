@@ -93,14 +93,7 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
     }
     runSetup(){
         console.log("One small step for man, one huge step for someone trying to get notifications on this app to work.");
-        FCMPlugin.getToken(
-            (t) => {
-              console.log("got token " + t);
-            },
-            (e) => {
-              console.log("token error " + e);
-            }
-          );
+        
           
           FCMPlugin.onNotification(
             (data) => {
@@ -144,7 +137,7 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
         /*get current date and time*/
         //var date = (today.getMonth()+1) + "-" + today.getDate() + "-" + today.getFullYear() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         var self = this;
-        /*upate user visits and last active time*/
+        /*update user visits and last active time*/
         if(firebase.database().ref('users/').child(user.uid+"")){
             firebase.database().ref('users/').child(user.uid+"").once("value", function(snapshot){
                 if(snapshot.val() && snapshot.val().visits){
@@ -152,6 +145,18 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
                         visits: snapshot.val().visits+1,
                         lastActive: Date.now()
                     }).then(_ => {
+                        if(typeof(FCMPlugin) != 'undefined'){
+                            FCMPlugin.getToken(
+                                (t) => {
+                                firebase.database().ref(`/users/${self.afAuth.auth.currentUser.uid}`).update({
+                                    pushToken: t
+                                });
+                                },
+                                (e) => {
+                                console.log("token error " + e);
+                                }
+                            );
+                        }
                         self.userInfo.pageState = 'map';
                         self.userInfo.loggedIn = true;
                         self.rootPage = MapPage;
