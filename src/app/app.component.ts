@@ -91,10 +91,7 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
             setTimeout(updatePosition, 15000);
         }, 15000);*/
     }
-    runSetup(){
-        console.log("One small step for man, one huge step for someone trying to get notifications on this app to work.");
-        
-          
+    runSetup(){     
           FCMPlugin.onNotification(
             (data) => {
               console.log("got data " + data);

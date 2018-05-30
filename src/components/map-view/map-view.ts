@@ -64,9 +64,8 @@ export class MapViewComponent {
     myActiveMarker: any;
 
     /*Instantiate all imported classes*/
-    constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController, public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth, public zones: ZonesProvider, public menuCtrl: MenuController, public userInfo: UserInfoProvider, public translate: TranslatorProvider, public likeProvider: LikeProvider, public click: ClickProvider, public mapPage: MapPage, public events: Events, public imageViewerCtrl: ImageViewerController, public geolocation: Geolocation) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController, public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth, public zones: ZonesProvider, public menuCtrl: MenuController, public userInfo: UserInfoProvider, public translate: TranslatorProvider, public likeProvider: LikeProvider, public click: ClickProvider, public mapPage: MapPage, public events: Events, public imageViewerCtrl: ImageViewerController, public geolocation: Geolocation){
         mapPage.mapView = this;
-
     }
     ngAfterViewInit() {
 
@@ -394,6 +393,25 @@ export class MapViewComponent {
             anchor: new google.maps.Point(15,15),
             scaledSize: new google.maps.Size(30,30),
         };
+        //geofence instance
+        // let fence = {
+        //     id: data.key,
+        //     latitude: data.lat,
+        //     longitude: data.lng,
+        //     radius: 10,
+        //     translateType: 1,
+        //     notification: {
+        //         id: data.key,
+        //         title: "You just crossed a fence",
+        //         text: "Test text",
+        //         openAppOnClick: true
+        //     }
+        // }
+        // this.geofence.addOrUpdate(fence).then(
+        //     () => console.log('Geofence added'),
+        //     (err) => {console.log(`Error: ${err}`)}
+        // );
+
         //creates the marker with the specified icon
         let marker = new google.maps.Marker({
             position: new google.maps.LatLng(data.lat, data.lng),
