@@ -48,7 +48,27 @@
         .greenButton{
             color: limegreen;
         }
-        #drop-down{
+        #ship-drop-down{
+            .p-description{
+                width: auto !important;
+                font-size: 12pt !important;
+                margin-top: 5px;
+            }
+            .ship-name{
+                right: 20px;
+                position: absolute;
+                color: #ccd !important;
+                p{
+                    color: white;
+                    margin-top: 5px;
+                    span{
+                        color: #1f9c05;
+                    }
+                }
+            }
+            height: 14vh !important;
+        }
+        #ship-drop-down, #drop-down{
             color: white;
             top: 0;
             position: absolute;
@@ -90,6 +110,7 @@
                             }
                         }
                         .p-description{
+                            color: #ccc;
                             width: 70%;
                             font-size: 7.5pt;
                         }

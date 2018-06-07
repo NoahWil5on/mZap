@@ -1,0 +1,47 @@
+<div id="shader" (click)="closeOut()"></div>
+<div id="main" #main>
+    <ion-grid class="nav-buttons">
+        <ion-row>
+            <ion-col text-center>
+                <button ion-button clear (click)="markShip()">
+                    <img src="assets/images/buttons/check.png" />
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <div class="hidden" [class.show]="true">
+        <div id="current-time">Current Time <span>{{myTime}}</span></div>
+        <div id="select-div">
+            <ion-item>
+                <ion-label>Ship</ion-label>
+                <ion-select [(ngModel)]="ship" multiple="false">
+                    <ion-option value="ship1">Cayo Blanco</ion-option>
+                    <ion-option value="ship2">Cayo Largo</ion-option>
+                    <ion-option value="ship3">Cayo Norte</ion-option>
+                    <ion-option value="ship4">Isleño</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Start</ion-label>
+                <ion-select [(ngModel)]="start" multiple="false">
+                    <ion-option value="faj">FAJARDO</ion-option>
+                    <ion-option value="vq">VIEQUES</ion-option>
+                    <ion-option value="cul">CULEBRA</ion-option>
+                    <ion-option value="cei">CEIBA</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Destination</ion-label>
+                <ion-select [(ngModel)]="end" multiple="false">
+                    <ion-option value="faj">FAJARDO</ion-option>
+                    <ion-option value="vq">VIEQUES</ion-option>
+                    <ion-option value="cul">CULEBRA</ion-option>
+                    <ion-option value="cei">CEIBA</ion-option>
+                </ion-select>
+            </ion-item>
+        </div>
+    </div>
+    <div class="hidden" [class.show]="false">
+        <!-- <confirm></confirm> -->
+    </div>
+</div>

@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="data != undefined">
     <div>
         <ion-slides *ngIf="resolves.length > 0" [pager]="resolves.length > 1">
             <ion-slide text-center *ngFor="let item of resolves">

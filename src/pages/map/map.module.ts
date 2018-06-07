@@ -17,6 +17,7 @@ import { CreateComponent } from '../../components/create/create';
 import { ForgotComponent } from '../../components/forgot/forgot';
 import { TutorialComponent } from '../../components/tutorial/tutorial';
 import { AddResolveComponent } from '../../components/add-resolve/add-resolve';
+import { FerryComponent } from '../../components/ferry/ferry';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AddResolveComponent } from '../../components/add-resolve/add-resolve';
     ForgotComponent,
     CreateComponent,
     TutorialComponent,
-    AddResolveComponent],
+    AddResolveComponent,
+    FerryComponent],
   imports: [
     IonicPageModule.forChild(MapPage)
   ],

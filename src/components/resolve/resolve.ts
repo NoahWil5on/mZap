@@ -26,13 +26,13 @@ import { AngularFireAuth } from 'angularfire2/auth';
     templateUrl: 'resolve.html'
 })
 export class ResolveComponent {
-  //  @ViewChild('file') input: ElementRef
-  //  @ViewChild('file1') input1: ElementRef
+    //  @ViewChild('file') input: ElementRef
+    //  @ViewChild('file1') input1: ElementRef
 
     //resolve image slides
     @ViewChild(Slides) slide: Slides;
 
-   // @ViewChild('preview') preview;
+    // @ViewChild('preview') preview;
     imageData: any = "";
 
     section: any = "info";
@@ -49,9 +49,13 @@ export class ResolveComponent {
         public viewCtrl: ViewController, public afAuth: AngularFireAuth, public images: ImagesProvider,
         public loadingCtrl: LoadingController, public ngZone: NgZone, public translate: TranslatorProvider,
         public imageViewerCtrl: ImageViewerController, public modalCtrl: ModalController,
-        public click: ClickProvider, public userInfo: UserInfoProvider, public infoComponent: InfoComponent, public events: Events) {
-        this.images.doClear();
+        public click: ClickProvider, public userInfo: UserInfoProvider, public infoComponent: InfoComponent, public events: Events, public mapPage: MapPage) {
 
+        this.images.doClear();
+        if (this.mapPage.shipChat){
+            this.data = this.userInfo.activeShipData;
+            return;
+        }
         this.data = this.userInfo.activeData;
         let self = this;
 
@@ -111,7 +115,7 @@ export class ResolveComponent {
     updateWindow() {
         this.infoComponent.edit = true;
     }
-    add(){
+    add() {
         this.infoComponent.addResolve = true;
         this.events.publish("resolveRestart");
     }

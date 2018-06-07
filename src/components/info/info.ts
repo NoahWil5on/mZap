@@ -29,10 +29,20 @@ export class InfoComponent {
   myText: string = "";
   dataSet: boolean = false;
   resolve: any;
+  myData: any;
 
   constructor( public mapPage: MapPage, public translate: TranslatorProvider, public userInfo: UserInfoProvider, public afAuth: AngularFireAuth, public ngZone: NgZone, public events: Events, public images: ImagesProvider, public alertCtrl: AlertController ) {
-    var data = this.userInfo.activeData
     this.state = this.mapPage.mapState;
+
+    if(this.mapPage.shipChat){
+        this.myData = this.userInfo.activeShipData;
+        this.id = this.userInfo.activeShipData.key;
+        return;
+    }
+    this.myData = this.userInfo.activeData;
+    var data = this.userInfo.activeData
+    this.id = this.userInfo.activeData.key;
+
     switch(data.type){
       case 'bugs':
         this.selection = 'assets/images/icons/bug.png';
@@ -81,7 +91,6 @@ export class InfoComponent {
           this.status = this.translate.text.other.todo;
           break;
     }
-    this.id = this.userInfo.activeData.key;
   }
   ngAfterViewInit(){
     this.state = this.mapPage.mapState;
@@ -97,7 +106,7 @@ export class InfoComponent {
     this.mapPage.infoShow = false;
   }
   loggedAuth(){
-    return this.afAuth.auth.currentUser.uid == this.userInfo.activeData.id;
+    return this.afAuth.auth.currentUser.uid == this.myData.id;
   }
    //submit a message
   submit(){
@@ -135,8 +144,10 @@ export class InfoComponent {
         time: Date.now(),
         url: url
       }
+      var myDir = 'messages';
+      if(this.mapPage.shipChat) myDir = 'shipMessages'
       //record messsage on firebase and format screen to fit new image
-      firebase.database().ref('/messages/').child(this.id).push(data).then(res => {
+      firebase.database().ref(`/${myDir}/`).child(this.id).push(data).then(res => {
         this.events.publish('newMessage');
         this.myText = "";
         setTimeout(() => {

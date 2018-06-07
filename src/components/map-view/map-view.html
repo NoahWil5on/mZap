@@ -1,28 +1,20 @@
 <div>
+    <!-- Position Drop Down -->
     <div id="drop-down" [class.up]="!dropDown">
-        <!-- <ion-grid class="info-grid" *ngIf="userInfo.activeData != {} && userInfo.activeData">
-            <ion-row [class.top-padding]="userInfo.isApp">
-                <ion-col class="map-info-col"> -->
-            <div class="info-grid" *ngIf="userInfo.activeData != {} && userInfo.activeData" [class.top-padding]="userInfo.isApp">
-                <div class="map-info-col">
-                    <div class="map-status">
-                        <p class="p-status">{{translateStatus(userInfo.activeData.status)}}</p>
-                    </div>
-                    <h2 class="h2-type">{{translateType(userInfo.activeData.type)}}</h2>    
-                    <p class="p-description" *ngIf="userInfo.activeData.description">
-                        {{userInfo.activeData.description}}
-                    </p>
+        <div class="info-grid" *ngIf="userInfo.activeData != {} && userInfo.activeData" [class.top-padding]="userInfo.isApp">
+            <div class="map-info-col">
+                <div class="map-status">
+                    <p class="p-status">{{translateStatus(userInfo.activeData.status)}}</p>
                 </div>
-                    <!-- <p class="p-status">{{distance}} Km Away</p>                -->
-                <!-- </ion-col>
-                <ion-col col-auto class="map-image-col"> -->
-                <div class="div-image" [style.background-image]="'url(' + userInfo.activeData.url + ')'">
-                    <img [src]="userInfo.activeData.url" class="invisable" #thisImage (click)="presentImage(thisImage)"/>
-                </div>
+                <h2 class="h2-type">{{translateType(userInfo.activeData.type)}}</h2>
+                <p class="p-description" *ngIf="userInfo.activeData.description">
+                    {{userInfo.activeData.description}}
+                </p>
             </div>
-                <!-- </ion-col>
-            </ion-row>
-        </ion-grid> -->
+            <div class="div-image" [style.background-image]="'url(' + userInfo.activeData.url + ')'">
+                <img [src]="userInfo.activeData.url" class="invisable" #thisImage (click)="presentImage(thisImage)" />
+            </div>
+        </div>
         <ion-grid class="button-grid" [class.grid-hidden]="!dropDown">
             <ion-row>
                 <ion-col col-4>
@@ -31,12 +23,12 @@
                     </button>
                 </ion-col>
                 <ion-col col-4>
-                    <button ion-button (click)="openChat()">
+                    <button ion-button (click)="openChat(false)">
                         <ion-icon name="chatbubbles"></ion-icon>
                     </button>
                 </ion-col>
                 <ion-col col-4>
-                    <button ion-button (click)="like()" *ngIf="userInfo.activeData != {}" [disabled]="deactivate">
+                    <button ion-button (click)="like(false)" *ngIf="userInfo.activeData != {}" [disabled]="deactivate">
                         <div class="likeValue" [class.show-like]="likeValue">
                             <p>+{{likes}}</p>
                         </div>
@@ -46,12 +38,47 @@
             </ion-row>
         </ion-grid>
     </div>
+    <!-- Ship Drop Down -->
+    <div id="ship-drop-down" [class.up]="!shipDrop">
+        <div class="info-grid" *ngIf="userInfo.activeShipData != {} && userInfo.activeShipData" [class.top-padding]="userInfo.isApp">
+            <div class="map-info-col">
+                <div text-right class="ship-name">
+                    <h2 class="h2-type" *ngIf="userInfo.activeShipData">{{shipName()}}</h2>
+                    <p>Departure Time: <span>{{getTime()}}</span></p>
+                </div>
+                <h2 class="h2-type" *ngIf="myActiveShipData">To: {{getName(myActiveShipData.end)}}</h2>
+                <p class="p-description" *ngIf="myActiveShipData">
+                    From: {{getName(myActiveShipData.start)}}
+                </p>
+            </div>
+        </div>
+        <ion-grid class="button-grid" [class.grid-hidden]="!shipDrop">
+            <ion-row>
+                <ion-col col-4>
+                </ion-col>
+                <ion-col col-4>
+                    <button ion-button (click)="openChat(true)">
+                        <ion-icon name="chatbubbles"></ion-icon>
+                    </button>
+                </ion-col>
+                <ion-col col-4>
+                    <button ion-button (click)="like(true)" *ngIf="userInfo.activeData != {}" [disabled]="deactivate">
+                        <div class="likeValue" [class.show-like]="likeValue">
+                            <p>+{{likes}}</p>
+                        </div>
+                        <ion-icon name="thumbs-up" [class.show]="!likeValue" [class.hidden]="likeValue"></ion-icon>
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+    <!-- map buttons -->
     <div class="top-div nav-div-left" [class.top]="userInfo.isApp">
         <button (click)="openMenu()">
-          <div class="nav-button orange">
-              <img class="hamburg" src="assets/hamburger.png" alt="nav"/>
-          </div>
-      </button>
+            <div class="nav-button orange">
+                <img class="hamburg" src="assets/hamburger.png" alt="nav" />
+            </div>
+        </button>
     </div>
     <div class="nav-div nav-div-left">
 
@@ -59,19 +86,19 @@
     <div class="nav-div nav-div-right">
         <button (click)="toggleMap()">
             <div class="nav-button green">
-                <img class="cog" src="assets/images/buttons/toggle_02.png" alt="nav"/>
+                <img class="cog" src="assets/images/buttons/toggle_02.png" alt="nav" />
             </div>
-      </button>
+        </button>
         <!-- <button (click)="openFilter()">
           <div class="nav-button green">
               <img class="filter" src="assets/images/buttons/filter.png" alt="nav"/>
           </div>
       </button> -->
         <button (click)="setCenter()">
-          <div class="nav-button green">
-              <img class="cog" src="assets/target.png" alt="nav"/>
-          </div>
-      </button>
+            <div class="nav-button green">
+                <img class="cog" src="assets/target.png" alt="nav" />
+            </div>
+        </button>
     </div>
     <div id="center-div" *ngIf="isLoggedIn()">
         <div id="center-point">
@@ -81,8 +108,8 @@
     <div id="controls" *ngIf="isLoggedIn()">
         <div class="button-center add">
             <button class="add-type" (click)="mapPage.addShow = true" [class.hidden]="!showButtons" [class.show]="showButtons">
-              <img src="assets/images/buttons/plus.png" alt="Plus" width="60"/>
-          </button>
+                <img src="assets/images/buttons/plus.png" alt="Plus" width="60" />
+            </button>
         </div>
     </div>
     <div #map id="map" (mousedown)="mapTouch()"></div>

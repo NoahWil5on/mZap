@@ -10,6 +10,7 @@ import { ForgotComponent } from './forgot/forgot';
 import { CreateComponent } from './create/create';
 import { TutorialComponent } from './tutorial/tutorial';
 import { AddResolveComponent } from './add-resolve/add-resolve';
+import { FerryComponent } from './ferry/ferry';
 
 @NgModule({
 	declarations: [AddComponent,
@@ -22,7 +23,8 @@ import { AddResolveComponent } from './add-resolve/add-resolve';
     ForgotComponent,
     CreateComponent,
     TutorialComponent,
-    AddResolveComponent],
+    AddResolveComponent,
+    FerryComponent],
 	imports: [],
 	exports: [AddComponent,
     TypeComponent,
@@ -34,6 +36,7 @@ import { AddResolveComponent } from './add-resolve/add-resolve';
     ForgotComponent,
     CreateComponent,
     TutorialComponent,
-    AddResolveComponent]
+    AddResolveComponent,
+    FerryComponent]
 })
 export class ComponentsModule {}

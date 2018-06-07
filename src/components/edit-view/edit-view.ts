@@ -39,6 +39,10 @@ export class EditViewComponent {
         this.images.doClear();
 
         var self = this;
+        if(this.mapPage.shipChat){
+            this.data = this.userInfo.activeShipData;
+            return;
+        }
         this.data = this.userInfo.activeData;
         var ref = firebase.database().ref('/resolves/');
         ref.once('value', snapshot => {

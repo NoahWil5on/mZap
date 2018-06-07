@@ -223,13 +223,22 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
             });
         }
     }
-    tutorial(){
-        this.nav.setRoot(MapPage);
+    shareLocation(){
+        this.nav.setRoot(MapPage).then(() => {
+            this.events.publish('ferry:open');
+            this.menuCtrl.close();
+        });
         this.userInfo.pageState = 'map';
-        setTimeout(() => {
+    }
+    tutorial(){
+        this.nav.setRoot(MapPage).then(() => {
             this.menuCtrl.close(); 
             this.events.publish('tut:open');
-        }, 100); 
+        });
+        this.userInfo.pageState = 'map';
+        // setTimeout(() => {
+            
+        // }, 100); 
     }
     //check if current user is signed in
     checkLogin(){

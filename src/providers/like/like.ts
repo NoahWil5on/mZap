@@ -12,14 +12,21 @@ export class LikeProvider {
 
     }
     //takes post id, value of like (-1,1), and sends callback to tell map the new value
-    like(post, callback){
+    like(ship, shipType, post, callback){
+        var reportType = "positions";
+        var myDir = "userLikes";
+        if(ship){
+            reportType = `ships/${shipType}`;
+            myDir = "userShipLikes";
+        }
+
         var self = this;
         var value = 0;
         //var valToAdd = value;
-        var ref = firebase.database().ref('/positions/').child(post);
+        var ref = firebase.database().ref(`/${reportType}/`).child(post);
         if(!this.afAuth.auth.currentUser) return;
         //check if the user has already liked this post and what value they posted on it
-        var user = firebase.database().ref(`/userLikes/${this.afAuth.auth.currentUser.uid}/likedPosts/${post}`);
+        var user = firebase.database().ref(`/${myDir}/${this.afAuth.auth.currentUser.uid}/likedPosts/${post}`);
         user.once('value',function(userSnapshot){
             //if user has liked the post and isn't changing their value return
             if(!userSnapshot.val()){
@@ -99,9 +106,11 @@ export class LikeProvider {
     //check if the user has already liked this post before
     //used for styling
     //takes post ID and sends a callback of the user's like preference for this post
-    likeable(post, callback){
+    likeable(ship, post, callback){
+        var myDir = 'userLikes'
+        if(ship) myDir = 'userShipLikes';
         if(!this.afAuth.auth.currentUser) return;
-        var user = firebase.database().ref(`/userLikes/${this.afAuth.auth.currentUser.uid}/likedPosts/${post}`);
+        var user = firebase.database().ref(`/${myDir}/${this.afAuth.auth.currentUser.uid}/likedPosts/${post}`);
         user.once('value',function(userSnapshot){
             if(userSnapshot.val()){
                 callback(Number.parseInt(userSnapshot.val()));

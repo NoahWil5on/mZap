@@ -25,6 +25,7 @@ import { ImageViewerController } from 'ionic-img-viewer';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase';
+import geolib from 'geolib';
 
 //if not declared ionic will throw an error
 declare var google;
@@ -46,6 +47,7 @@ export class MapViewComponent {
     heatMapData: any = [];
 
     dropDown: boolean = false;
+    shipDrop: boolean = false;
     distance: any = 0;
     likeValue: any = false;
     likes: any = 0;
@@ -54,21 +56,97 @@ export class MapViewComponent {
     myMarker: any = undefined;
     myCircle: any = undefined;
     myOptions: any = undefined;
+    myPosition: any = undefined;
     // myDirection: any;
     // orientationSub: any;
 
     hybrid: boolean = false;
 
     myActiveData: any = {};
+    myActiveShipData: any = {};
     type: any = '';
     myActiveMarker: any;
 
-    /*Instantiate all imported classes*/
-    constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController, public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth, public zones: ZonesProvider, public menuCtrl: MenuController, public userInfo: UserInfoProvider, public translate: TranslatorProvider, public likeProvider: LikeProvider, public click: ClickProvider, public mapPage: MapPage, public events: Events, public imageViewerCtrl: ImageViewerController, public geolocation: Geolocation){
-        mapPage.mapView = this;
-    }
-    ngAfterViewInit() {
 
+    /*Instantiate all imported classes*/
+    constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController, public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth, public zones: ZonesProvider, public menuCtrl: MenuController, public userInfo: UserInfoProvider, public translate: TranslatorProvider, public likeProvider: LikeProvider, public click: ClickProvider, public mapPage: MapPage, public events: Events, public imageViewerCtrl: ImageViewerController, public geolocation: Geolocation) {
+        mapPage.mapView = this;
+
+        if(this.events['_channels'].markShip != undefined &&
+        this.events['_channels'].markShip.length > 0){
+            this.events.unsubscribe('markShip');
+        }
+        this.events.subscribe('markShip', (data) => {
+            this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((position) => { 
+                let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                var myStart = {
+                    lat: latLng.lat(),
+                    lng: latLng.lng()
+                }
+                var start = { lat: 0, lng: 0 };
+                switch (data.start) {
+                    case 'faj':
+                        start = {
+                            lat: 18.334442,
+                            lng: -65.631465
+                        }
+                        break;
+                    case 'vq':
+                        start = {
+                            lat: 18.152701,
+                            lng: -65.444698
+                        }
+                        break;
+                    case 'cul':
+                        start = {
+                            lat: 18.30123,
+                            lng: -65.30251
+                        }
+                        break;
+                    case 'cei':
+                        start = {
+                            lat: 18.22694,
+                            lng: -65.60559
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                var lat = (Math.random() - .5) * .001;
+                var lng = (Math.random() - .5) * .001;
+
+                myStart.lat += lat;
+                myStart.lng += lng;
+                if(geolib.getDistance(
+                    {latitude: myStart.lat, longitude: myStart.lng},
+                    {latitude: start.lat, longitude: start.lng}) > 1500){
+                        start.lat += lat;
+                        start.lng += lng;
+
+                        myStart = start;
+                        latLng = new google.maps.LatLng(start.lat, start.lng);
+                }
+
+                var shipData = {
+                    key: "",
+                    date: Date.now(),
+                    start: data.start,
+                    end: data.end,
+                    lat: myStart.lat,
+                    lng: myStart.lng,
+                    likes: 0,
+                    ship: data.ship,
+                    id: this.afAuth.auth.currentUser.uid,
+                    name: this.afAuth.auth.currentUser.displayName
+                };
+                var key = firebase.database().ref(`ships/${data.ship}`).push(shipData).key;
+                shipData.key = key;
+                firebase.database().ref(`ships/${data.ship}/${key}/key`).set(key);
+                this.makeShipMarkers(shipData);
+            });
+        });
+    }
+    ngAfterViewInit() {        
         //checks if this is NOT the first time you're opening up the map
         if (this.userInfo.zoom != null) {
             //initializes map
@@ -82,17 +160,153 @@ export class MapViewComponent {
             this.initMap(options, false);
 
             //if the user allows you to see their position add a blinking dot to their location
-            if (this.userInfo.allowPosition) {
-                var self = this;
-                this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
-                    let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    self.setPin(latLng);
-                });
-            }
             return;
         }
         //if this is the first time opening up maps then run this function
         this.runNavigation();
+    }
+    getName(c_name){
+        var name = "";
+        switch (c_name) {
+            case 'faj':
+                name = "Fajardo";
+                break;
+            case 'vq':
+                name = "Vieques";
+                break;
+            case 'cul':
+                name = "Culebra";
+                break;
+            case 'cei':
+                name = "Ceibra";
+                break;
+            default:
+                break;
+        }
+        return name;
+    }
+    getTime(){
+        var myTime = new Date(this.myActiveShipData.date).toLocaleTimeString();
+        return myTime;
+    }
+    shipName(){
+        if(!this.myActiveShipData) return "";
+
+        var shipName = "Cayo Blanco";
+        switch(this.myActiveShipData.ship){
+            case 'ship1':
+                shipName = "Cayo Blanco"
+                break;
+            case 'ship2':
+                shipName = "Cayo Largo"
+                break;
+            case 'ship3':
+                shipName = "Cayo Norte"
+                break;
+            case 'ship4':
+                shipName = "Isleño"
+                break;
+            default: 
+                break;
+        }
+        return shipName
+    }
+    makeShipMarkers(data) {
+        var color = "green";
+        switch(data.ship){
+            case 'ship1':
+                color = 'green';
+                break;
+            case 'ship2':
+                color = 'blue';
+                break;
+            case 'ship3':
+                color = 'orange';
+                break;
+            case 'ship4':
+                color = 'yellow';
+                break;
+            default:
+                break;
+        }
+        var difference = Date.now() - data.date;
+        if(difference > 1000 * 180 * 60){return}
+        else if(difference > 1000 * 90 * 60){color = "gray"};
+
+        var image = {
+            url: `assets/images/icons/ship_${color}.png`,
+            size: new google.maps.Size(40, 40),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(15, 15),
+            scaledSize: new google.maps.Size(30, 30),
+        };
+        var end = { lat: 0, lng: 0 };
+        switch (data.end) {
+            case 'faj':
+                end = {
+                    lat: 18.334442,
+                    lng: -65.631465
+                }
+                break;
+            case 'vq':
+                end = {
+                    lat: 18.152701,
+                    lng: -65.444698
+                }
+                break;
+            case 'cul':
+                end = {
+                    lat: 18.30123,
+                    lng: -65.30251
+                }
+                break;
+            case 'cei':
+                end = {
+                    lat: 18.22694,
+                    lng: -65.60559
+                }
+                break;
+            default:
+                break;
+        }
+        var pathCoordinates = [
+            { lat: data.lat, lng: data.lng },
+            { lat: end.lat, lng: end.lng }
+        ];
+        var latLng = new google.maps.LatLng(data.lat, data.lng);
+        var marker = new google.maps.Marker({
+            position: latLng,
+            icon: image,
+            map: this.map,
+            zIndex: 100
+        });
+        var self = this;
+        google.maps.event.addListener(marker, 'click', function (e) {
+            self.openShip(data, marker);
+        });
+        new google.maps.Polyline({
+            path: pathCoordinates,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2,
+            map: this.map,
+            zIndex: 99
+        });
+    }
+    openShip(data, marker) {
+        this.deactivate = true; 
+        this.myActiveShipData = data; 
+        this.shipDrop = true;
+        this.dropDown = false;
+        this.userInfo.activeShipData = data;
+        if (!this.userInfo.activeShipData.likes) {
+            this.userInfo.activeShipData.likes = 0;
+        }
+        this.likeValue = false;
+        this.likeable(true);
+        this.checkLikes(this.myActiveShipData.key, `ships/${data.ship}`);
+        this.myActiveMarker = marker;
     }
     toggleMap() {
         this.hybrid = !this.hybrid;
@@ -107,12 +321,12 @@ export class MapViewComponent {
     setCenter() {
         var self = this;
         //check if the user is allowing you to see their position
-        this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then((position) => {
+        this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((position) => {
             let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             self.map.setCenter(latLng);
             self.map.setZoom(17);
             //self.myOptions.center = latLng;
-            if(self.myOptions == undefined){
+            if (self.myOptions == undefined) {
                 self.myOptions = {
                     strokeColor: '#444',
                     strokeOpacity: 0.8,
@@ -123,10 +337,10 @@ export class MapViewComponent {
                     center: latLng,
                     radius: 150
                 }
-            }else{
+            } else {
                 self.myOptions.center = latLng;
             }
-            if(self.myMarker){
+            if (self.myMarker) {
                 self.myMarker.setPosition(latLng);
             }
         });
@@ -162,7 +376,7 @@ export class MapViewComponent {
             center: latLng,
             radius: 150
         });
-        if(this.map.getZoom() <= 12){
+        if (this.map.getZoom() <= 12) {
             this.myMarker.setVisible(false);
             this.myCircle.setVisible(false);
         }
@@ -172,7 +386,7 @@ export class MapViewComponent {
         var self = this;
 
         //check if the user will let you see their position
-        this.geolocation.getCurrentPosition({enableHighAccuracy: true}).then(function (position) {
+        this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then(function (position) {
             self.userInfo.allowPosition = true;
             let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             let options = {
@@ -182,7 +396,7 @@ export class MapViewComponent {
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             self.initMap(options, true);
-        }).catch( function () {
+        }).catch(function () {
             let latLng = new google.maps.LatLng(18.318407, -65.296514);
             let options = {
                 center: latLng,
@@ -244,7 +458,7 @@ export class MapViewComponent {
             data.loader.dismiss();
             this.events.publish("share");
         });
-    }    
+    }
 
     /*Checks if user is logged im*/
     isLoggedIn() {
@@ -253,19 +467,20 @@ export class MapViewComponent {
         return false;
     }
     //show pop up of image when image is clicked on
-    presentImage(myImage){
+    presentImage(myImage) {
         let imageViewer = this.imageViewerCtrl.create(myImage);
         imageViewer.present();
     }
     //runs if the map is touched
     //removes info drop down
-    mapTouch(){
+    mapTouch() {
         this.dropDown = false;
+        this.shipDrop = false;
         this.userInfo.activeData = {};
     }
-    translateStatus(status){
+    translateStatus(status) {
         //console.log(status);
-        switch(status){
+        switch (status) {
             case 'Complete':
                 return this.translate.text.other.complete;
             case 'To Do':
@@ -274,8 +489,8 @@ export class MapViewComponent {
                 break;
         }
     }
-    translateType(type){
-        switch(type){
+    translateType(type) {
+        switch (type) {
             case 'bugs':
                 return this.translate.text.other.bug;
             case 'trash':
@@ -285,55 +500,70 @@ export class MapViewComponent {
             case 'pest':
                 return this.translate.text.other.pest;
             case 'cnd':
-              return this.translate.text.other.cnd;
+                return this.translate.text.other.cnd;
             case 'road':
-              return this.translate.text.other.road;
+                return this.translate.text.other.road;
             case 'electricity':
-              return this.translate.text.other.electricity;
+                return this.translate.text.other.electricity;
             case 'tree':
-              return this.translate.text.other.tree;
+                return this.translate.text.other.tree;
             case 'rocked':
-              return this.translate.text.other.rocked;
+                return this.translate.text.other.rocked;
             case 'water':
-              return this.translate.text.other.water;
+                return this.translate.text.other.water;
             case 'drop':
-              return this.translate.text.other.drink;
+                return this.translate.text.other.drink;
             default:
                 break;
-          };
+        };
     }
     ////////////////////////////////////////////////////////////////////////////////////////
-    likeable(){
+    likeable(ship) {
         var self = this;
-        this.likeProvider.likeable(this.userInfo.activeData.key, function(value){
+        var key;
+        if(ship){
+            key = this.userInfo.activeShipData.key;
+        }else{
+            key = this.userInfo.activeData.key;
+        }
+        this.likeProvider.likeable(ship, key, function (value) {
             //ngZone.run updates the DOM otherwise change is not visible
-            self.ngZone.run(() =>{
-                if(value == 0 || value == -1){
+            self.ngZone.run(() => {
+                if (value == 0 || value == -1) {
                     self.likeValue = false;
-                }   
-                else{
+                }
+                else {
                     self.likeValue = true;
                 }
                 self.deactivate = false;
             });
         });
     }
-    like(){
+    like(ship) {
         this.deactivate = true;
         var self = this;
-        this.likeProvider.like(this.userInfo.activeData.key, function(val){
-            if(val > 99) val = 99;
+        var key;
+        var shipType = '';
+        if(ship){
+            key = this.userInfo.activeShipData.key
+            shipType = this.userInfo.activeShipData.ship;
+        }else{
+            key = this.userInfo.activeData.key
+        }
+        this.likeProvider.like(ship, shipType, key, function (val) {
+            if (val > 99) val = 99;
             self.likes = val;
-            self.likeable();
+            self.likeable(ship);
             self.deactivate = false;
         })
     }
     ////////////////////////////////////////////////////////////////////////////////////////
-    openChat(){
+    openChat(ship) {
+        this.mapPage.shipChat = ship;
         this.mapPage.infoShow = true;
         this.mapPage.mapState = "comment";
     }
-    openResolve(){
+    openResolve() {
         this.mapPage.infoShow = true;
         this.mapPage.mapState = "edit";
     }
@@ -381,17 +611,17 @@ export class MapViewComponent {
                 selection = 'assets/images/icons/bug';
                 break;
         };
-        if(data.status == "To Do"){
+        if (data.status == "To Do") {
             selection += ".png";
-        }else{
+        } else {
             selection += "_gray.png";
         }
         var image = {
             url: selection,
-            size: new google.maps.Size(40,40),
+            size: new google.maps.Size(40, 40),
             origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(15,15),
-            scaledSize: new google.maps.Size(30,30),
+            anchor: new google.maps.Point(15, 15),
+            scaledSize: new google.maps.Size(30, 30),
         };
         //geofence instance
         // let fence = {
@@ -420,12 +650,12 @@ export class MapViewComponent {
         });
         this.markers.push(marker);
         var self = this;
-        if(this.map.getZoom() <= 12){
+        if (this.map.getZoom() <= 12) {
             marker.setVisible(false);
             this.showButtons = false;
         }
         /*Allows an info window to pop up when a point is clicked*/
-        google.maps.event.addListener(marker, 'click', function(e){
+        google.maps.event.addListener(marker, 'click', function (e) {
             self.doOpen(data, marker);
         });
         google.maps.event.addListener(this.map, 'zoom_changed', function (e) {
@@ -440,25 +670,26 @@ export class MapViewComponent {
             }
         })
     }
-    doOpen(data, marker){
+    doOpen(data, marker) {
         this.deactivate = true;
         this.myActiveData = data;
-        this.dropDown = true;            
+        this.dropDown = true;
+        this.shipDrop = false;
         // self.distance = geolib.getDistance(
         //     {latitude: marker.getPosition().lat(), longitude: marker.getPosition().lng()},
         //     {latitude: self.myMarker.getPosition().lat(), longitude: self.myMarker.getPosition().lng()})/1000;
         //self.mapPage.infoShow = true;
         this.userInfo.activeData = data;
-        if(!this.userInfo.activeData.likes){
+        if (!this.userInfo.activeData.likes) {
             this.userInfo.activeData.likes = 0;
         }
         this.likeValue = false;
-        this.likeable();
-        this.checkLikes(this.myActiveData.key);
+        this.likeable(false);
+        this.checkLikes(this.myActiveData.key, 'positions');
         this.myActiveMarker = marker;
     }
-    checkLikes(postId){
-        firebase.database().ref(`/positions/${postId}/likes`).once('value', snapshot => {
+    checkLikes(postId, pointType) {
+        firebase.database().ref(`/${pointType}/${postId}/likes`).once('value', snapshot => {
             this.likes = snapshot.val();
         });
     }
@@ -509,7 +740,7 @@ export class MapViewComponent {
                             if (!self.checkPoint(item.val())) return;
                             self.makeMarker(item.val());
                             self.points.push(item.val());
-                            if(item.val().status != "Complete"){
+                            if (item.val().status != "Complete") {
                                 self.heatMapData.push({ location: new google.maps.LatLng(item.val().lat, item.val().lng), weight: 100 });
                             }
                         });
@@ -519,13 +750,34 @@ export class MapViewComponent {
                             radius: 25,
                             maxIntensity: 250
                         });
-                        if(self.map.getZoom() > 12){
-                            self.heatMap.setMap(null);  
+                        if (self.map.getZoom() > 12) {
+                            self.heatMap.setMap(null);
                         }
                         self.setOnce = false;
 
                     }
                 });
+                var ships = ['ship1', 'ship2', 'ship3', 'ship4'];
+                ships.forEach(ship => {
+                    firebase.database().ref(`ships/${ship}`).limitToLast(2).once('value').then(snapshot => {
+                        snapshot.forEach(item => {
+                            var shipData = {
+                                ship: item.val().ship,
+                                end: item.val().end,
+                                start: item.val().start,
+                                lat: item.val().lat,
+                                lng: item.val().lng,
+                                date: item.val().date,
+                                name: item.val().name,
+                                id: item.val().id,
+                                likes: item.val().likes,
+                                key: item.val().key
+                            }
+                            self.makeShipMarkers(shipData);                    
+                        });
+                    })
+                });
+                
             // self.myDirection = new google.maps.Marker({
             //     position: new google.maps.LatLng(self.map.getCenter().lat(),self.map.getCenter().lng()),
             //     map: self.map,
@@ -577,24 +829,24 @@ export class MapViewComponent {
                 radius: 150
             });
             this.animate(latLng);
-            if(this.map.getZoom() <= 12){
+            if (this.map.getZoom() <= 12) {
                 this.myMarker.setVisible(false);
                 this.myCircle.setVisible(false);
             }
         }
         google.maps.event.addListener(this.map, 'zoom_changed', function (e) {
             self.mapTouch()
-            if(self.myCircle == undefined || !self.myCircle || self.myCircle == null) return;
+            if (self.myCircle == undefined || !self.myCircle || self.myCircle == null) return;
             var zoom = self.map.getZoom();
             if (zoom > 12) {
                 self.myMarker.setVisible(true);
                 self.myCircle.setVisible(true);
-                if(self.heatMap) self.heatMap.setMap(null);                
+                if (self.heatMap) self.heatMap.setMap(null);
             }
             else {
                 self.myMarker.setVisible(false);
                 self.myCircle.setVisible(false);
-                if(self.heatMap) self.heatMap.setMap(self.map);
+                if (self.heatMap) self.heatMap.setMap(self.map);
             }
         })
     }

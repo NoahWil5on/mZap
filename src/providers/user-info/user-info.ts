@@ -24,6 +24,7 @@ export class UserInfoProvider {
     loggedIn: boolean = false;
     isApp: boolean = false;
     activeData: any;
+    activeShipData: any;
     isMobile: boolean = false;
     openInfo: boolean = false;
     

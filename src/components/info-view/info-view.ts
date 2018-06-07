@@ -10,6 +10,7 @@ import { TranslatorProvider } from '../../providers/translator/translator'
 
 //page imports
 import { ProfilePage } from '../../pages/profile/profile';
+import { MapPage } from '../../pages/map/map';
 
 //image popup viewing import
 import { ImageViewerController } from 'ionic-img-viewer';
@@ -35,26 +36,32 @@ export class InfoViewComponent {
 
   status: string = "";
 
-  constructor(public userInfo: UserInfoProvider, public likeProvider: LikeProvider, public ngZone: NgZone, public click: ClickProvider, public imageViewerCtrl: ImageViewerController, public translate: TranslatorProvider, public info: InfoComponent, public events: Events, public navCtrl: NavController) {
-    this.myData = this.userInfo.activeData;
-    this.likeable();    
-
-    switch(this.userInfo.activeData.status){
-      case 'Complete':
-          this.status = this.translate.text.other.complete;
-          break;
-      case 'To Do':
-          this.status = this.translate.text.other.todo;
-          break;
+  constructor(public userInfo: UserInfoProvider, public likeProvider: LikeProvider, public ngZone: NgZone, public click: ClickProvider, public imageViewerCtrl: ImageViewerController, public translate: TranslatorProvider, public info: InfoComponent, public events: Events, public navCtrl: NavController, public mapPage: MapPage) {
+    this.myData = this.userInfo.activeData; 
+ 
+    if(this.mapPage.shipChat){
+        this.myData = this.userInfo.activeShipData;
+    }else{
+        switch(this.userInfo.activeData.status){
+        case 'Complete':
+            this.status = this.translate.text.other.complete;
+            break;
+        case 'To Do':
+            this.status = this.translate.text.other.todo;
+            break;
+        }
     }
+    this.likeable(this.mapPage.shipChat);   
 
     this.messages = [];
     //the id of where the messages are stored in the db
-    this.id = this.userInfo.activeData.key;
+    this.id = this.myData.key;
     var self = this;
     
     //fetch all messages
-    firebase.database().ref('/messages/').child(this.id).on('value', snapshots => {
+    var myDir = 'messages';
+    if(this.mapPage.shipChat) myDir = 'shipMessages'
+    firebase.database().ref(`/${myDir}/`).child(this.id).on('value', snapshots => {
         self.messages = [];
         //for every message found, add to array
         for (var snap in snapshots.val()) {           
@@ -109,9 +116,9 @@ export class InfoViewComponent {
       }
     })
   }
-  likeable(){
+  likeable(ship){
     var self = this;
-    this.likeProvider.likeable(this.userInfo.activeData.key, function(value){
+    this.likeProvider.likeable(ship, this.myData.key, function(value){
         //ngZone.run updates the DOM otherwise change is not visible
         self.ngZone.run(() =>{
             self.likeValue = value;   
