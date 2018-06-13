@@ -41,26 +41,26 @@ export class TutorialComponent {
       name: this.translate.text.other.water,
       src: "assets/images/buttons/droplet.png"
     });
-    this.types.push({
-      name: this.translate.text.other.road,
-      src: "assets/images/buttons/road.png"
-    });
-    this.types.push({
-      name: this.translate.text.other.tree,
-      src: "assets/images/buttons/tree.png"
-    });
-    this.types.push({
-      name: this.translate.text.other.rocked,
-      src: "assets/images/buttons/blocked_road.png"
-    });
-    this.types.push({
-      name: this.translate.text.other.electricity,
-      src: "assets/images/buttons/electricity.png"
-    });
-    this.types.push({
-      name: this.translate.text.other.drink,
-      src: "assets/images/buttons/water.png"
-    });
+    // this.types.push({
+    //   name: this.translate.text.other.road,
+    //   src: "assets/images/buttons/road.png"
+    // });
+    // this.types.push({
+    //   name: this.translate.text.other.tree,
+    //   src: "assets/images/buttons/tree.png"
+    // });
+    // this.types.push({
+    //   name: this.translate.text.other.rocked,
+    //   src: "assets/images/buttons/blocked_road.png"
+    // });
+    // this.types.push({
+    //   name: this.translate.text.other.electricity,
+    //   src: "assets/images/buttons/electricity.png"
+    // });
+    // this.types.push({
+    //   name: this.translate.text.other.drink,
+    //   src: "assets/images/buttons/water.png"
+    // });
   }
   skip(){
     if(this.slides.isEnd()){

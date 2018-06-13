@@ -1,21 +1,15 @@
 <div id="shader" (click)="closeOut()"></div>
 <div id="main" #main>
-    <div class="type" style="right: 0">
-        <button ion-button clear icon-only (click)="doShipTutorial()">
-            <img src="assets/images/icons/question.png" width="50px" alt="type" />
-        </button>
-    </div> 
     <ion-grid class="nav-buttons">
         <ion-row>
             <ion-col text-center>
-                <button ion-button clear (click)="markShip()">
+                <button ion-button clear (click)="updateShip()">
                     <img src="assets/images/buttons/check.png" />
                 </button>
             </ion-col>
         </ion-row>
     </ion-grid>
     <div class="hidden" [class.show]="true">
-        <div id="current-time">Current Time <span>{{myTime}}</span></div>
         <div id="select-div">
             <ion-item>
                 <ion-label>Ship</ion-label>

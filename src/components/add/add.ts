@@ -114,21 +114,21 @@ export class AddComponent {
       case 'water':
         src = "assets/images/buttons/droplet.png";
         break;
-      case 'road':
-        src = "assets/images/buttons/road.png";
-        break;
-      case 'electricity':
-        src = "assets/images/buttons/electricity.png";
-        break;
-      case 'tree':
-        src = "assets/images/buttons/tree.png";
-        break;
-      case 'rocked':
-        src = "assets/images/buttons/blocked_road.png";
-        break;
-      case 'drop':
-        src = "assets/images/buttons/water.png";
-        break;
+    //   case 'road':
+    //     src = "assets/images/buttons/road.png";
+    //     break;
+    //   case 'electricity':
+    //     src = "assets/images/buttons/electricity.png";
+    //     break;
+    //   case 'tree':
+    //     src = "assets/images/buttons/tree.png";
+    //     break;
+    //   case 'rocked':
+    //     src = "assets/images/buttons/blocked_road.png";
+    //     break;
+    //   case 'drop':
+    //     src = "assets/images/buttons/water.png";
+    //     break;
     }
     var image = new Image();
     image.src = src;

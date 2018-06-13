@@ -221,6 +221,15 @@ export class TranslatorProvider {
             help4: "Other users can then view your post by clicking on it on the map. There they can comment and upload photos of the work they've done to improve or resolve the situation.",
             ready: "Thats it! Now you're ready to become an mZAPPER!"
         },
+        shipTutorial:{
+            help1: "The ferry tracking system is a crowd sourced feature designed to keep you informed of where ferry's are and what they're up to.",
+            help2: "You can create a report of a ferry by clicking the \"marker ferry location\" button in the menu.",
+            help3: "Designate which ferry you're reporting along with the departure and arrival locations of your ferry. Each ferry is given its own unique color. After you make the report we take care of everything else!",
+            help4: "You can click on ferry markers on the map to see information about the ferry, there you can comment, like, and even edit the report.",
+            help5: "The ferry's location on the map will start near the port of departure. Each individual ferry's location can only be reported once every 1.5 hours, after which the ferry will turn gray on the map.",
+            help6: "If a ferry is gray on the map this means that it was reported between 1.5 and 3 hours ago so information about the ferry may be inaccurate.",
+            help7: "Ferry locations are always estimates based on information about when the ferry departed and where the ferry is headed. The \"red\" line of a ferry's path represents distance the ferry has already traveled. The gray line represents distance left to be traveled.",
+        },
         other: {
             cnd: "Cats/Dogs",
             complete: "Complete",
@@ -443,6 +452,15 @@ export class TranslatorProvider {
             help3: "Tú puedes hacer un reporte haciendo click en el botón 'mas' (+). Después, puedes tomar una foto, añadir una descripción y subirla al mapa!",
             help4: "Otros usuarios podrán entonces ver tus reportes haciendo click sobre ellos en el mapa. Allí, ellos podrán hacer comentarios y subir fotos del trabajo que han hecho para mejorar o resolver la situación.",
             ready: "¡Esto es todo! ¡Ya estas listo para ser un mZAPPER!"
+        },
+        shipTutorial:{
+            help1: "The ferry tracking system is a crowd sourced feature designed to keep you informed of where ferry's are and what they're up to.",
+            help2: "You can create a report of a ferry by clicking the \"marker ferry location\" button in the menu.",
+            help3: "Designate which ferry you're reporting along with the departure and arrival locations of your ferry. Each ferry is given its own unique color. After you make the report we take care of everything else!",
+            help4: "You can click on ferry markers on the map to see information about the ferry, there you can comment, like, and even edit the report.",
+            help5: "The ferry's location on the map will start near the port of departure. Each individual ferry's location can only be reported once every 1.5 hours, after which the ferry will turn gray on the map.",
+            help6: "If a ferry is gray on the map this means that it was reported between 1.5 and 3 hours ago so information about the ferry may be inaccurate.",
+            help7: "Ferry locations are always estimates based on information about when the ferry departed and where the ferry is headed. The \"red\" line of a ferry's path represents distance the ferry has already traveled. The gray line represents distance left to be traveled.",
         },
         resolve: {
             noPost: "Nadie ha presentado una resolución todavía. Recoge a tus amigos y resuelve este post!",

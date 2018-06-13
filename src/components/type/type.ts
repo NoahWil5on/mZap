@@ -41,31 +41,31 @@ export class TypeComponent {
       type: 'water',
       selected: false,
     });
-    this.types.push({
-      url: 'assets/images/buttons/road.png',
-      type: 'road',
-      selected: false,
-    });
-    this.types.push({
-      url: 'assets/images/buttons/tree.png',
-      type: 'tree',
-      selected: false,
-    });
-    this.types.push({
-      url: 'assets/images/buttons/electricity.png',
-      type: 'electricity',
-      selected: false,
-    });
-    this.types.push({
-      url: 'assets/images/buttons/blocked_road.png',
-      type: 'rocked',
-      selected: false,
-    });
-    this.types.push({
-      url: 'assets/images/buttons/water.png',
-      type: 'drop',
-      selected: false,
-    });
+    // this.types.push({
+    //   url: 'assets/images/buttons/road.png',
+    //   type: 'road',
+    //   selected: false,
+    // });
+    // this.types.push({
+    //   url: 'assets/images/buttons/tree.png',
+    //   type: 'tree',
+    //   selected: false,
+    // });
+    // this.types.push({
+    //   url: 'assets/images/buttons/electricity.png',
+    //   type: 'electricity',
+    //   selected: false,
+    // });
+    // this.types.push({
+    //   url: 'assets/images/buttons/blocked_road.png',
+    //   type: 'rocked',
+    //   selected: false,
+    // });
+    // this.types.push({
+    //   url: 'assets/images/buttons/water.png',
+    //   type: 'drop',
+    //   selected: false,
+    // });
     if(this.add.type != undefined){
       this.checkSelection();
     }

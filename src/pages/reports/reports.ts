@@ -1,6 +1,6 @@
 //vanilla ionic imports
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, LoadingController, ModalController, Events } from 'ionic-angular';
 
 //image viewer import
 import { ImageViewerController } from 'ionic-img-viewer'
@@ -29,7 +29,7 @@ export class ReportsPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, 
                  public translate: TranslatorProvider, public loadCtrl: LoadingController,
                 public userInfo: UserInfoProvider, public imageViewerCtrl: ImageViewerController,
-                public modal: ModalController, public click: ClickProvider) {
+                public modal: ModalController, public click: ClickProvider, public events: Events) {
     }
 
     ionViewDidLoad() {
@@ -96,7 +96,8 @@ export class ReportsPage {
                     id: item.val().id,
                     url: item.val().url,
                     lat: item.val().lat,
-                    lng: item.val().lng
+                    lng: item.val().lng,
+                    key: item.val().key
                 }
                 //translate type
                 switch(item.val().type){
@@ -150,18 +151,22 @@ export class ReportsPage {
         });
     }
     //go to location of point on map
-    showOnMap(lat, lng){
-        //remove filters and update menu pageState
-        this.userInfo.filter = undefined;
-        this.userInfo.pageState = 'map';
+    showOnMap(report){
         
         //set zoom and position of map
-        this.userInfo.lat = lat;
-        this.userInfo.lng = lng;
+        this.userInfo.lat = report.lat;
+        this.userInfo.lng = report.lng;
         this.userInfo.zoom = 20;
-        
+
+        this.userInfo.activeData = report;
+        var self = this;
         //go to map
-        this.navCtrl.setRoot(MapPage);
+        this.navCtrl.setRoot(MapPage).then(() => {
+            //remove filters and update menu pageState
+            self.userInfo.filter = undefined;
+            self.userInfo.pageState = 'map';
+            self.events.publish('report:show');
+        });
     }
     
     //Check out user's profile

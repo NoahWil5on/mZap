@@ -4,8 +4,8 @@ import { IonicPage, NavController, NavParams, Events} from 'ionic-angular';
 
 //provider imports
 import { UserInfoProvider } from '../../providers/user-info/user-info';
-//import * as firebase from 'firebase';
-//import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 //declare var FCMPlugin;
 
@@ -20,19 +20,31 @@ export class MapPage {
   addShow: boolean = false;
   ferryShow: boolean = false;
   shipChat: boolean = false;
+  editShip: boolean = false;
+  shipTut: boolean = false;
+  tut: boolean = false;
   mapView: any;
   loginState: string = 'login';
-  tut: boolean = false;
   mapState: string = "comment";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userInfo: UserInfoProvider, public events: Events /*private afAuth: AngularFireAuth*/) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public userInfo: UserInfoProvider, public events: Events, private afAuth: AngularFireAuth) {
     var self = this;
     this.events.subscribe('ferry:open', () => {
         this.ferryShow = true;
+        firebase.database().ref(`users/${this.afAuth.auth.currentUser.uid}`).once('value', snap => {
+            if(snap.val().shipTut === undefined || !snap.val().shipTut){
+                this.shipTut = true;
+                firebase.database().ref(`users/${this.afAuth.auth.currentUser.uid}/shipTut`).set(true);
+            }
+        })
+        
     });
     this.events.subscribe('tut:open', () => {
-      this.tut = true;
+        this.tut = true;
     });
+    this.events.subscribe('report:show', () => {
+        this.mapView.dropDown = true;
+    })
     setTimeout(function() {
       if(self.userInfo.openInfo){
         self.mapView.doOpen(self.userInfo.activeData,null);

@@ -1,6 +1,6 @@
 //Ionic imports
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { NavController, NavParams, ModalController, MenuController, Events } from 'ionic-angular';
+import { NavController, NavParams, ModalController, MenuController, Events, AlertController, LoadingController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 // import { DeviceOrientation, DeviceOrientationCompassHeading } from '@ionic-native/device-orientation';
 
@@ -69,7 +69,7 @@ export class MapViewComponent {
 
 
     /*Instantiate all imported classes*/
-    constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController, public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth, public zones: ZonesProvider, public menuCtrl: MenuController, public userInfo: UserInfoProvider, public translate: TranslatorProvider, public likeProvider: LikeProvider, public click: ClickProvider, public mapPage: MapPage, public events: Events, public imageViewerCtrl: ImageViewerController, public geolocation: Geolocation) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public modal: ModalController, public ngZone: NgZone, public fireDB: AngularFireDatabase, public afAuth: AngularFireAuth, public zones: ZonesProvider, public menuCtrl: MenuController, public userInfo: UserInfoProvider, public translate: TranslatorProvider, public likeProvider: LikeProvider, public click: ClickProvider, public mapPage: MapPage, public events: Events, public imageViewerCtrl: ImageViewerController, public geolocation: Geolocation, public alertCtrl: AlertController, public loadCtrl: LoadingController) {
         mapPage.mapView = this;
 
         if(this.events['_channels'].markShip != undefined &&
@@ -78,6 +78,11 @@ export class MapViewComponent {
         }
         this.events.subscribe('markShip', (data) => {
             this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((position) => { 
+                var reportLoad = this.loadCtrl.create({
+                    content: "Submitting post...",
+                });
+                reportLoad.present();
+
                 let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 var myStart = {
                     lat: latLng.lat(),
@@ -119,7 +124,7 @@ export class MapViewComponent {
                 myStart.lng += lng;
                 if(geolib.getDistance(
                     {latitude: myStart.lat, longitude: myStart.lng},
-                    {latitude: start.lat, longitude: start.lng}) > 1500){
+                    {latitude: start.lat, longitude: start.lng}) > 800){
                         start.lat += lat;
                         start.lng += lng;
 
@@ -141,7 +146,20 @@ export class MapViewComponent {
                 };
                 var key = firebase.database().ref(`ships/${data.ship}`).push(shipData).key;
                 shipData.key = key;
-                firebase.database().ref(`ships/${data.ship}/${key}/key`).set(key);
+
+                var confirmation = this.alertCtrl.create({
+                    title: "Successfully Submitted!",
+                    subTitle: "Thank you for marking this ferry! Your submission well help others in your community stay informed about the ferry's position",
+                    buttons: [{
+                        text: 'OK'
+                    }]
+                });
+
+                firebase.database().ref(`ships/${data.ship}/${key}/key`).set(key).then(() => {
+                    reportLoad.dismiss().then(() => {
+                        confirmation.present();
+                    });
+                });
                 this.makeShipMarkers(shipData);
             });
         });
@@ -269,11 +287,24 @@ export class MapViewComponent {
             default:
                 break;
         }
-        var pathCoordinates = [
+        var latLng;
+        var hour2 = 1000 * 120 * 60;
+        if(difference < hour2){
+            var lat = data.lat + ((end.lat - data.lat) * difference / hour2);
+            var lng = data.lng + ((end.lng - data.lng) * difference / hour2);
+            latLng = new google.maps.LatLng(lat, lng);
+        }else{
+            latLng = new google.maps.LatLng(end.lat, end.lng);
+        }
+        var pathCoordinates1 = [
             { lat: data.lat, lng: data.lng },
+            { lat: latLng.lat(), lng: latLng.lng() }
+        ];
+        var pathCoordinates2 = [
+            { lat: latLng.lat(), lng: latLng.lng() },
             { lat: end.lat, lng: end.lng }
         ];
-        var latLng = new google.maps.LatLng(data.lat, data.lng);
+        
         var marker = new google.maps.Marker({
             position: latLng,
             icon: image,
@@ -284,15 +315,26 @@ export class MapViewComponent {
         google.maps.event.addListener(marker, 'click', function (e) {
             self.openShip(data, marker);
         });
-        new google.maps.Polyline({
-            path: pathCoordinates,
-            geodesic: true,
-            strokeColor: '#FF0000',
-            strokeOpacity: 1.0,
-            strokeWeight: 2,
-            map: this.map,
-            zIndex: 99
-        });
+        if(difference < hour2){
+            new google.maps.Polyline({
+                path: pathCoordinates2,
+                geodesic: true,
+                strokeColor: '#888888',
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                map: this.map,
+                zIndex: 99
+            });
+            new google.maps.Polyline({
+                path: pathCoordinates1,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2,
+                map: this.map,
+                zIndex: 99
+            });
+        }
     }
     openShip(data, marker) {
         this.deactivate = true; 
@@ -514,7 +556,7 @@ export class MapViewComponent {
             case 'drop':
                 return this.translate.text.other.drink;
             default:
-                break;
+                return type;
         };
     }
     ////////////////////////////////////////////////////////////////////////////////////////

@@ -61,9 +61,10 @@ export class NotificationsPage {
       self.userInfo.lat = self.userInfo.activeData.lat;
       self.userInfo.lng = self.userInfo.activeData.lng;
       self.userInfo.zoom = 20;
-      self.navCtrl.setRoot(MapPage);
-      self.userInfo.pageState = 'map';
-      self.userInfo.openInfo = true;      
+      self.navCtrl.setRoot(MapPage).then(() => {
+        self.userInfo.pageState = 'map';
+        self.userInfo.openInfo = true;    
+      });  
     })
   }
   //open nav menu

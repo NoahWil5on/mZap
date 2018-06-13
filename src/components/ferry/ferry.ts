@@ -34,19 +34,33 @@ export class FerryComponent {
             this.main.nativeElement.style.transform = "translate(-50%,-50%)";
         }, 10);
     }
-
+    doShipTutorial(){
+        this.mapPage.shipTut = true;
+    }
     markShip() {
         var self = this;
-        if (this.start != this.end) {
-            firebase.database().ref(`ships/${this.ship}`).limitToLast(1).once('value').then(snapshot => {
-                if (!snapshot.val()) {
-                    console.log('no value');
+
+        var submit = this.alertCtrl.create({
+            title: "Are you sure you want to submit this post?",
+            buttons: [{
+                text: 'Submit',
+                handler: () => {
                     self.event.publish('markShip', {
                         ship: this.ship,
                         start: this.start,
                         end: this.end
                     });
                     self.closeOut();
+                }
+            },{
+                text: 'Cancel'
+            }]
+        });
+
+        if (this.start != this.end) {
+            firebase.database().ref(`ships/${this.ship}`).limitToLast(1).once('value').then(snapshot => {
+                if (!snapshot.val()) {
+                    submit.present();
                     return;
                 }
                 var snap;
@@ -84,14 +98,8 @@ export class FerryComponent {
                     noReport.present();
                     return;
                 }
-                self.event.publish('markShip', {
-                    ship: this.ship,
-                    start: this.start,
-                    end: this.end
-                });
-                self.closeOut();
+                submit.present();
             })
-
         }
     }
     closeOut() {

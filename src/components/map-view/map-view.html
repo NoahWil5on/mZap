@@ -55,6 +55,9 @@
         <ion-grid class="button-grid" [class.grid-hidden]="!shipDrop">
             <ion-row>
                 <ion-col col-4>
+                    <button *ngIf="userInfo.activeShipData && afAuth.auth.currentUser && afAuth.auth.currentUser.uid === userInfo.activeShipData.id" ion-button (click)="mapPage.editShip = true">
+                        <ion-icon name="hammer"></ion-icon>
+                    </button>
                 </ion-col>
                 <ion-col col-4>
                     <button ion-button (click)="openChat(true)">
@@ -62,7 +65,7 @@
                     </button>
                 </ion-col>
                 <ion-col col-4>
-                    <button ion-button (click)="like(true)" *ngIf="userInfo.activeData != {}" [disabled]="deactivate">
+                    <button ion-button (click)="like(true)" *ngIf="userInfo.activeShipData != {}" [disabled]="deactivate">
                         <div class="likeValue" [class.show-like]="likeValue">
                             <p>+{{likes}}</p>
                         </div>

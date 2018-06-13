@@ -11,6 +11,8 @@ import { CreateComponent } from './create/create';
 import { TutorialComponent } from './tutorial/tutorial';
 import { AddResolveComponent } from './add-resolve/add-resolve';
 import { FerryComponent } from './ferry/ferry';
+import { EditShipComponent } from './edit-ship/edit-ship';
+import { ShipTutorialComponent } from './ship-tutorial/ship-tutorial';
 
 @NgModule({
 	declarations: [AddComponent,
@@ -24,7 +26,9 @@ import { FerryComponent } from './ferry/ferry';
     CreateComponent,
     TutorialComponent,
     AddResolveComponent,
-    FerryComponent],
+    FerryComponent,
+    EditShipComponent,
+    ShipTutorialComponent],
 	imports: [],
 	exports: [AddComponent,
     TypeComponent,
@@ -37,6 +41,8 @@ import { FerryComponent } from './ferry/ferry';
     CreateComponent,
     TutorialComponent,
     AddResolveComponent,
-    FerryComponent]
+    FerryComponent,
+    EditShipComponent,
+    ShipTutorialComponent]
 })
 export class ComponentsModule {}

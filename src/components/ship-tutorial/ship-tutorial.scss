@@ -1,0 +1,93 @@
+.ios, .md{
+    ship-tutorial {
+        width: auto;
+        z-index: 100;
+        #shader{
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            z-index: 5;
+            background-color: black;
+            opacity: .7;
+            transform: translate(-50%, -50%);
+        }
+        #main{
+            border-radius: 8px;
+            z-index: 10;
+            display: inline-block;
+            position: absolute;
+            transform: translate(-50%,-50%);
+            background-color: white;
+            padding: 20px 20px;
+            width: 280px;
+            height: 350px;
+            @media screen and (min-device-width: 360px) {
+                width: 300px;
+                height: 380px;
+            }
+            @media screen and (min-device-width: 500px) {
+                width: 450px;
+                height: 580px;
+            }
+            @media screen and (min-device-width: 800px) {
+                width: 600px;
+                height: 740px;
+            }
+            -webkit-box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
+            -moz-box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
+            box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.7);
+        }
+        #check-button{
+            padding: 0;
+            z-index: 5;
+            height: auto;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%,55%);
+            button{
+                height: auto;
+            }
+            img{
+                width: 80%;
+            }       
+        }
+        ion-slides{
+            width: 100%;
+            height: 100%;
+            .slide-zoom{
+                height: 100%;
+                width: 100%;
+            }
+            .upper{
+                border-radius: 4px;
+                display: block;
+                img{
+                    border-radius: 4px;
+                    width: 100% !important;
+                }
+            }
+            .lower{
+                display: block;
+                clear: both;
+                p{
+                    font-family: Helvetica, sans-serif;
+                    color: #555;
+                    font-size: 10pt;
+                    padding-top: 0;
+                    margin-top: 0;
+                    text-align: left;
+                    @media screen and (min-device-width: 360px) {
+                        font-size: 12pt;
+                    }
+                    @media screen and (min-device-width: 500px) {
+                        font-size: 18pt;
+                    }
+                    @media screen and (min-device-width: 800px) {
+                        font-size: 24pt;
+                    }
+                }
+            }
+        }
+    }
+}

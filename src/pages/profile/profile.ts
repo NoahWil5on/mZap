@@ -1,6 +1,6 @@
 //vanilla ionic imports
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController, ModalController, Events } from 'ionic-angular';
 
 //pages import
 import { MapPage } from '../map/map';
@@ -34,7 +34,7 @@ export class ProfilePage {
     constructor(public navCtrl: NavController, public navParams: NavParams, public menuCtrl: MenuController, 
                  public afAuth:    AngularFireAuth, public translate: TranslatorProvider, 
                  public imageViewerCtrl: ImageViewerController, public userInfo: UserInfoProvider,
-                public modalCtrl: ModalController, public click: ClickProvider) {
+                public modalCtrl: ModalController, public click: ClickProvider, public events: Events) {
         
     }
 
@@ -53,7 +53,9 @@ export class ProfilePage {
                     description: item.val().description,
                     url: item.val().url,
                     lat: item.val().lat,
-                    lng: item.val().lng
+                    lng: item.val().lng,
+                    id: item.val().id,
+                    key: item.val().key
                 }
                 //translate type
                 switch(item.val().type){                        
@@ -128,7 +130,10 @@ export class ProfilePage {
     }
     //Check if this is your own user profile
     checkProfile(){
-        return (this.userInfo.profileView == this.afAuth.auth.currentUser.uid) ? true: false;
+        if(this.afAuth.auth.currentUser){
+            return (this.userInfo.profileView == this.afAuth.auth.currentUser.uid) ? true: false;
+        }
+        return false;
     }
     
     //show pop up image
@@ -152,18 +157,22 @@ export class ProfilePage {
         editModal.present();
     }
     //bring user to location on map
-    showOnMap(lat, lng){    
-        this.click.click('profileShowOnMap');
-        //remove filters and update menu pageState
-        this.userInfo.filter = undefined;
-        this.userInfo.pageState = 'map';
+    showOnMap(report){    
+
+        this.userInfo.activeData = report;
         
         //set zoom and position of map
-        this.userInfo.lat = lat;
-        this.userInfo.lng = lng;
+        this.userInfo.lat = report.lat;
+        this.userInfo.lng = report.lng;
         this.userInfo.zoom = 20;
         
+        var self = this;
         //go to map
-        this.navCtrl.setRoot(MapPage);
+        this.navCtrl.setRoot(MapPage).then(() => {
+            //remove filters and update menu pageState
+            self.userInfo.filter = undefined;
+            self.userInfo.pageState = 'map';
+            self.events.publish('report:show');
+        });
     }
 }

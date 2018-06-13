@@ -1,0 +1,34 @@
+<div>
+    <div id="shader" (click)="mapPage.shipTut = false">
+    </div>
+    <!-- All content ends up in 'main' -->
+    <div id="main">   
+      <!-- here the check button is held -->
+      <div id="check-button">
+        <button ion-button clear (click)="skip()">
+          <img src="assets/images/buttons/arrow.png"/>
+        </button>
+      </div>
+      <ion-slides>
+        <ion-slide *ngFor="let page of pages">
+            <div class="upper">
+                <img [src]='page.src' alt="image could not load"/>
+              </div>
+              <div style="clear: both"></div>
+              <div class="lower">
+                <p>
+                    {{page.text}}
+                </p>
+            </div>
+        </ion-slide> 
+        <!-- <ion-slide>
+          <h2 text-center style="left: 50%; top: 50%; position: absolute; transform: translate(-50%,-50%); width: 100%">
+            {{translate.text.tutorial.ready}}
+          </h2>
+          <div class="upper" padding style="background-color: #3fbc05;">
+            <img src="assets/images/logo.png" />
+          </div>
+        </ion-slide> -->
+      </ion-slides>
+    </div>
+  </div>
