@@ -228,7 +228,25 @@ export class TranslatorProvider {
             help4: "You can click on ferry markers on the map to see information about the ferry, there you can comment, like, and even edit the report.",
             help5: "The ferry's location on the map will start near the port of departure. Each individual ferry's location can only be reported once every 1.5 hours, after which the ferry will turn gray on the map.",
             help6: "If a ferry is gray on the map this means that it was reported between 1.5 and 3 hours ago so information about the ferry may be inaccurate.",
-            help7: "Ferry locations are always estimates based on information about when the ferry departed and where the ferry is headed. The \"red\" line of a ferry's path represents distance the ferry has already traveled. The gray line represents distance left to be traveled.",
+            help7: "Ferry locations are always estimates based on information about when the ferry departed and where the ferry is headed.<br/><br/>The \"red\" line of a ferry's path represents distance the ferry has already traveled. The gray line represents distance left to be traveled.",
+        },
+        shipReport: {
+            ready: "Are you sure you want to submit this report?",
+            submitted: "Successfully submitted!",
+            thanks: "Thank you for reporting the location of the ferry! Your report will help others in and around your community to stay informed!",
+            ferry: "Ship",
+            start: "Start",
+            end: "Destination",
+            time: "Current Time:",
+            oops: "Oops! You can't do that yet",
+            made: "Someone recently made a positing about this ship, try again in",
+            hours: "1 hour? and ? minute(s)",
+            minutes: "minutes"
+        },
+        shipInformation: {
+            depTime: "Departure Time:",
+            from: "From:",
+            to: "To:"
         },
         other: {
             cnd: "Cats/Dogs",
@@ -244,7 +262,8 @@ export class TranslatorProvider {
             rocked: "Rocks in Road",
             drink: "Drinkable Water Needed",
             electricity: "Exposed Electricity",
-            language: "ENGLISH"
+            language: "ENGLISH",
+            ferry: "Mark Ferry Location"
         }
     }
     //Spanish Version of text
@@ -454,13 +473,31 @@ export class TranslatorProvider {
             ready: "¡Esto es todo! ¡Ya estas listo para ser un mZAPPER!"
         },
         shipTutorial:{
-            help1: "The ferry tracking system is a crowd sourced feature designed to keep you informed of where ferry's are and what they're up to.",
-            help2: "You can create a report of a ferry by clicking the \"marker ferry location\" button in the menu.",
-            help3: "Designate which ferry you're reporting along with the departure and arrival locations of your ferry. Each ferry is given its own unique color. After you make the report we take care of everything else!",
-            help4: "You can click on ferry markers on the map to see information about the ferry, there you can comment, like, and even edit the report.",
-            help5: "The ferry's location on the map will start near the port of departure. Each individual ferry's location can only be reported once every 1.5 hours, after which the ferry will turn gray on the map.",
-            help6: "If a ferry is gray on the map this means that it was reported between 1.5 and 3 hours ago so information about the ferry may be inaccurate.",
-            help7: "Ferry locations are always estimates based on information about when the ferry departed and where the ferry is headed. The \"red\" line of a ferry's path represents distance the ferry has already traveled. The gray line represents distance left to be traveled.",
+            help1: "El sistema de rastreo del ferry o lancha es uno \"crowdsource\" diseñado para mantenerte informado sobre que está pasando y dónde se encuentran las embarcaciones.",
+            help2: "Puedes crear un reporte sobre el ferry o lancha al presionar el recuadro que dice \"Localizar Embarcación\"",
+            help3: "Selecciona que ferry/lancha estás reportando junto con la ubicación, salida y llegada de la embarcación. Cada embarcación tiene su propio color. ¡Después de hacer el reporte, nosotros nos ocupamos de todo lo demás!",
+            help4: "En el mapa puedes presionar en el ícono de la embarcación para poder ver mas información acerca de esta, también puedes comentar, darle \"me gusta\" y hasta editar este reporte.",
+            help5: "La localización del ferry/lancha en el mapa comenzará muy cerca del muelle de salida. La localización de la embarcación puede ser reportada cada hora y media, luego de pasado este tiempo el ícono se volverá de color gris en el mapa.",
+            help6: "Si el ícono de la embarcación está gris, significa que el reporte se generó entre 1.5 a 3 horas. Entonces la información sobre ese reporte podría no estar actualizada.",
+            help7: "La localización del ferry/lancha son siempre estimados en base a la información reportada sobre de donde salió la embarcación y cual es su destino.<br/><br/>La línea \"roja\" representa la trayectoria que la embarcación ha recorrido. La línea \"gris\" representa la distancia que aún resta por terminar",
+        },
+        shipReport: {
+            ready: "¿Estás seguro/a que quieres someter este reporte?",
+            submitted: "¡Exitosamente sometido!",
+            thanks: "¡Gracias por reportar la localización de la embarcación! ¡Tu reporte ayudará a otros en tu comunidad a estar informados!",
+            ferry: "Lancha o Ferry",
+            start: "Comienzo",
+            end: "Destino",
+            time: "Hora Actual:",
+            oops: "¡Uy, por ahora no puedes realizar esto!",
+            made: "Alguien recientemente creó un post acerca de esta embarcación, trata nuevamente en",
+            hours: "1 hora? y ? minuto(s)",
+            minutes: "minuto(s)"
+        },
+        shipInformation: {
+            depTime: "Tiempo de Salida:",
+            from: "Para:",
+            to: "De:"
         },
         resolve: {
             noPost: "Nadie ha presentado una resolución todavía. Recoge a tus amigos y resuelve este post!",
@@ -484,7 +521,8 @@ export class TranslatorProvider {
             rocked: "Rocas en la Carretera",
             electricity: "Electricidad Expuesta",
             drink: "Necesidad de Agua Potable",
-            language: "ESPAÑOL"
+            language: "ESPAÑOL",
+            ferry: "Localizar Embarcación"
         }
     }
     

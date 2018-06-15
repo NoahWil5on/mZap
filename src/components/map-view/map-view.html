@@ -44,11 +44,11 @@
             <div class="map-info-col">
                 <div text-right class="ship-name">
                     <h2 class="h2-type" *ngIf="userInfo.activeShipData">{{shipName()}}</h2>
-                    <p>Departure Time: <span>{{getTime()}}</span></p>
+                    <p>{{translate.text.shipInformation.depTime}} <span>{{getTime()}}</span></p>
                 </div>
-                <h2 class="h2-type" *ngIf="myActiveShipData">To: {{getName(myActiveShipData.end)}}</h2>
+                <h2 class="h2-type" *ngIf="myActiveShipData">{{translate.text.shipInformation.to}} {{getName(myActiveShipData.end)}}</h2>
                 <p class="p-description" *ngIf="myActiveShipData">
-                    From: {{getName(myActiveShipData.start)}}
+                    {{translate.text.shipInformation.from}} {{getName(myActiveShipData.start)}}
                 </p>
             </div>
         </div>

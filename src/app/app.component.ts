@@ -27,6 +27,10 @@ import { ClickProvider } from '../providers/click/click';
 import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 
+//excel functions
+import * as XLSX from 'xlsx';
+import * as fileSave from 'file-saver';
+
 declare let FCMPlugin;
 @Component({
   templateUrl: 'app.html'
@@ -45,7 +49,7 @@ export class MyApp {
     
 constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, public events: Events, /*public socialSharing: SocialSharingpublic push: Push private caller: CallNumber*/) {
         platform.ready().then(() => {
-            
+
             statusBar.styleDefault();
             splashScreen.hide();
             this.storage.get('mzap_language').then(res => {
@@ -163,6 +167,29 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
                 }
             });
         }
+    }
+    excel(){
+        var wb = XLSX.utils.book_new();
+        wb.Props = {
+            Title: "mZAP Data",
+            Subject: "Environment Risk Intervention",
+            Author: "Noah Wilson",
+            CreatedDate: new Date()
+        };
+        wb.SheetNames.push("mZAP Data");
+        var ws_data = [['hello','world']];
+        var ws = XLSX.utils.aoa_to_sheet(ws_data);
+        wb.Sheets["mZAP Data"] = ws;
+        var wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+
+        function s2ab(s){
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for(var i=0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+        fileSave.saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), 'mzap.xlsx');
+        //saveAs(new Blob());
     }
     //open top page
     topRated(){

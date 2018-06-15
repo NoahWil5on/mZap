@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { MapPage } from '../../pages/map/map';
 import { Events, AlertController } from 'ionic-angular';
 
+import { TranslatorProvider } from '../../providers/translator/translator';
+
 import * as firebase from 'firebase';
 
 @Component({
@@ -28,7 +30,7 @@ export class FerryComponent {
     //18.30172709763306
     //-65.30488036258896
 
-    constructor(public mapPage: MapPage, public event: Events, public alertCtrl: AlertController) {
+    constructor(public mapPage: MapPage, public event: Events, public alertCtrl: AlertController, public translate: TranslatorProvider) {
         this.myTime = new Date().toLocaleTimeString();
         setTimeout(() => {
             this.main.nativeElement.style.transform = "translate(-50%,-50%)";
@@ -41,9 +43,9 @@ export class FerryComponent {
         var self = this;
 
         var submit = this.alertCtrl.create({
-            title: "Are you sure you want to submit this post?",
+            title: this.translate.text.shipReport.ready,
             buttons: [{
-                text: 'Submit',
+                text: this.translate.text.add.submit,
                 handler: () => {
                     self.event.publish('markShip', {
                         ship: this.ship,
@@ -53,7 +55,7 @@ export class FerryComponent {
                     self.closeOut();
                 }
             },{
-                text: 'Cancel'
+                text: this.translate.text.add.cancel
             }]
         });
 
@@ -77,17 +79,18 @@ export class FerryComponent {
                 var hours = Math.floor(minutes/60);
                 minutes %= 60;
                 if(hours > 0){
-                    time = `${hours} hour`
+                    var text = this.translate.text.shipReport.hours.split('?');
+                    time = text[0];
                     if(minutes > 0){
-                        time += ` and ${minutes} minute(s)`;
+                        time = `${time}${text[1]}${minutes}${text[2]}`;
                     }
                 }else{
-                    time = `${minutes} minute(s)`;
+                    time = `${minutes} ${this.translate.text.shipReport.minutes}`;
                 }
                 if (difference < 1000 * 60 * 90) {
                     var noReport = this.alertCtrl.create({
-                        title: "Oops! You can't do that yet",
-                        subTitle: `Someone recently made a positing about this ship, try again in ${time}`,
+                        title: this.translate.text.shipReport.oops,
+                        subTitle: `${this.translate.text.shipReport.made} ${time}`,
                         buttons: [{
                             text: 'OK',
                             handler: () => {

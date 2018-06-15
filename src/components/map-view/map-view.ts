@@ -79,7 +79,7 @@ export class MapViewComponent {
         this.events.subscribe('markShip', (data) => {
             this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then((position) => { 
                 var reportLoad = this.loadCtrl.create({
-                    content: "Submitting post...",
+                    content: this.translate.text.add.submitting,
                 });
                 reportLoad.present();
 
@@ -148,8 +148,8 @@ export class MapViewComponent {
                 shipData.key = key;
 
                 var confirmation = this.alertCtrl.create({
-                    title: "Successfully Submitted!",
-                    subTitle: "Thank you for marking this ferry! Your submission well help others in your community stay informed about the ferry's position",
+                    title: this.translate.text.shipReport.submitted,
+                    subTitle: this.translate.text.shipReport.thanks,
                     buttons: [{
                         text: 'OK'
                     }]
