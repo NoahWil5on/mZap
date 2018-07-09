@@ -46,7 +46,10 @@
     <ion-grid>
         <ion-row>
             <ion-col col-6 text-center>
-                <button ion-button clear class="language" (click)="setLang()">{{translate.text.other.language}}</button>
+                <div class="language-div" (click)="setLang()">
+                    <div class="language-inner" [class.language-active]="language != 'es'">English</div>
+                    <div class="language-inner" [class.language-active]="language == 'es'">Español</div>
+                </div>
             </ion-col>
             <ion-col col-6 text-center *ngIf="isLoggedIn()">
                 <button ion-button clear class="language" (click)="doProfile()">{{translate.text.profile.profile}}</button>

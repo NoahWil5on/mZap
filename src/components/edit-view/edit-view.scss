@@ -23,6 +23,17 @@
                 display: block;
             }
         }   
+        ion-col{
+            p{
+                position: absolute;
+                pointer-events: none;
+                bottom: -3px;
+                color: gray;
+                left: 50%;
+                font-size: 12pt;
+                transform: translate(-50%, 0%);
+            }
+        }
         .status{
             pointer-events: none;
             position: absolute;

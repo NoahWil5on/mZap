@@ -95,23 +95,23 @@ export class ResolveComponent {
     }
     doReport(){
         var sentAlert = this.alertCtrl.create({
-            title: "Report Sent",
+            title: this.translate.text.report.sent,
             buttons: [{
                 text: 'OK'
             }]
         });
         var errorAlert = this.alertCtrl.create({
-            title: "An Error Occurred",
-            subTitle: "We're not sure what the issue is, please try again in a few moments.",
+            title: this.translate.text.report.error,
+            subTitle: this.translate.text.report.problem,
             buttons: [{
                 text: 'OK'
             }]
         });
         var myAlert = this.alertCtrl.create({
-            title: "Report as inappropriate",
-            subTitle: "Reporting this post will send a notification to the developers that could lead to this post being taken down or further action. Are you sure you'd like to do this?",
+            title: this.translate.text.report.make,
+            subTitle: this.translate.text.report.confirm,
             buttons: [
-                'Cancel',
+                this.translate.text.report.cancel,
                 {text: 'OK',
                 handler: () => {
                     this.sendReport(sentAlert, errorAlert);

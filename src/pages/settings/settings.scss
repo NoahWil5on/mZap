@@ -6,5 +6,32 @@
             margin-top: 20px;
             width: 100px;
         }
+        .language-div{
+            color: white;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-top: 20px;
+            width: 180px;
+            height: 45px;
+            font-size: 0;
+            .language-inner{
+                -webkit-box-shadow: inset 2px 2px 12px 0px rgba(0,0,0,0.8);
+                -moz-box-shadow: inset 2px 2px 12px 0px rgba(0,0,0,0.8);
+                box-shadow: inset 2px 2px 12px 0px rgba(0,0,0,0.8);
+                z-index: -1;
+                padding-top: 12px;
+                background-color: #222;
+                height: 100%;
+                font-size: 12pt;
+                width: 50%;
+                display: inline-block;
+            }
+            .language-inner:first-child{
+                border-right: white solid 2px;
+            }
+            .language-active{
+                background-color: #888;
+            }
+        }
     }
 }

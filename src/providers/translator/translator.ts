@@ -250,6 +250,14 @@ export class TranslatorProvider {
             from: "From:",
             to: "To:"
         },
+        report: {
+            sent: "Report Sent",
+            error: "An Error Occurred",
+            problem: "Oops, We're not sure what the issue is, please try again in a few moments.",
+            make: "Report as inappropriate",
+            confirm: "Reporting this post will send a notification to the developers that could lead to this post being taken down or further action. Are you sure you'd like to do this?",
+            cancel: "Cancel"
+        },
         other: {
             cnd: "Cats/Dogs",
             complete: "Complete",
@@ -514,6 +522,14 @@ export class TranslatorProvider {
             noDesc: "*Sin descripción*",
             good: "¿Todo se ve bien?",
             noImage: "No se ha añadido imagen",
+        },
+        report: {
+            sent: "Reporte envíado",
+            error: "Ha Ocurrido un Error",
+            problem: "Ups, No sabemos bien cual fue el problema, por favor trata nueva vez en unos momentos.",
+            make: "Reportar como inapropiado",
+            confirm: "¿Al Reportar este “post” se estará enviando una notificación a los desarrolladores del app y se podría eliminar este post. Estás seguro que quieres hacer esto?",
+            cancel: "Cancelar"
         },
         other: {
             cnd: "Gatos/Perros",

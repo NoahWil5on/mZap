@@ -116,14 +116,17 @@ export class SettingsPage {
         this.storage.get('mzap_language').then(res => {
             switch (res) {
                 case 'en':
+                    this.language = 'es';
                     this.storage.set('mzap_language', 'es');
                     this.translate.selectLanguage(this.translate.es);
                     break;
                 case 'es':
+                    this.language = 'en';
                     this.storage.set('mzap_language', 'en');
                     this.translate.selectLanguage(this.translate.en);
                     break;
                 default:
+                    this.language = 'en';
                     this.storage.set('mzap_language', 'en');
                     this.translate.selectLanguage(this.translate.en);
                     break;
