@@ -13,6 +13,8 @@ import { AddResolveComponent } from './add-resolve/add-resolve';
 import { FerryComponent } from './ferry/ferry';
 import { EditShipComponent } from './edit-ship/edit-ship';
 import { ShipTutorialComponent } from './ship-tutorial/ship-tutorial';
+import { ReportComponent } from './report/report';
+import { ShareComponent } from './share/share';
 
 @NgModule({
 	declarations: [AddComponent,
@@ -28,7 +30,9 @@ import { ShipTutorialComponent } from './ship-tutorial/ship-tutorial';
     AddResolveComponent,
     FerryComponent,
     EditShipComponent,
-    ShipTutorialComponent],
+    ShipTutorialComponent,
+    ReportComponent,
+    ShareComponent],
 	imports: [],
 	exports: [AddComponent,
     TypeComponent,
@@ -43,6 +47,8 @@ import { ShipTutorialComponent } from './ship-tutorial/ship-tutorial';
     AddResolveComponent,
     FerryComponent,
     EditShipComponent,
-    ShipTutorialComponent]
+    ShipTutorialComponent,
+    ReportComponent,
+    ShareComponent]
 })
 export class ComponentsModule {}

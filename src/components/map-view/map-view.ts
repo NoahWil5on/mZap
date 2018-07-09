@@ -164,7 +164,10 @@ export class MapViewComponent {
             });
         });
     }
-    ngAfterViewInit() {        
+    ngAfterViewInit() {    
+        if(this.navParams.get('id')){
+            this.events.publish('deeplink');
+        } 
         //checks if this is NOT the first time you're opening up the map
         if (this.userInfo.zoom != null) {
             //initializes map
@@ -182,6 +185,9 @@ export class MapViewComponent {
         }
         //if this is the first time opening up maps then run this function
         this.runNavigation();
+    }
+    doShare(){
+        this.mapPage.shareShow = true;
     }
     getName(c_name){
         var name = "";
@@ -520,6 +526,9 @@ export class MapViewComponent {
         this.shipDrop = false;
         this.userInfo.activeData = {};
     }
+    zoom(direction){
+        this.map.setZoom(this.map.getZoom() + direction);
+    }
     translateStatus(status) {
         //console.log(status);
         switch (status) {
@@ -601,11 +610,21 @@ export class MapViewComponent {
     }
     ////////////////////////////////////////////////////////////////////////////////////////
     openChat(ship) {
+        if(!this.afAuth.auth.currentUser){
+            this.menuCtrl.close(); 
+            this.events.publish('login:open');
+            return;
+        }
         this.mapPage.shipChat = ship;
         this.mapPage.infoShow = true;
         this.mapPage.mapState = "comment";
     }
     openResolve() {
+        if(!this.afAuth.auth.currentUser){
+            this.menuCtrl.close(); 
+            this.events.publish('login:open');
+            return;
+        }
         this.mapPage.infoShow = true;
         this.mapPage.mapState = "edit";
     }
@@ -712,7 +731,8 @@ export class MapViewComponent {
             }
         })
     }
-    doOpen(data, marker) {
+    doOpen(data: any, marker?: any) {
+        if(!data || data == undefined) return;
         this.deactivate = true;
         this.myActiveData = data;
         this.dropDown = true;
@@ -728,7 +748,9 @@ export class MapViewComponent {
         this.likeValue = false;
         this.likeable(false);
         this.checkLikes(this.myActiveData.key, 'positions');
-        this.myActiveMarker = marker;
+        if(marker){
+            this.myActiveMarker = marker;
+        }
     }
     checkLikes(postId, pointType) {
         firebase.database().ref(`/${pointType}/${postId}/likes`).once('value', snapshot => {
@@ -841,6 +863,7 @@ export class MapViewComponent {
         //user changes pages and comes back they will be at the same lat/lng
         //and same zoom as when they left the map
         google.maps.event.addListener(this.map, 'bounds_changed', event => {
+            self.mapTouch();
             this.userInfo.lat = this.map.getCenter().lat();
             this.userInfo.lng = this.map.getCenter().lng();
             this.userInfo.zoom = this.map.getZoom();
@@ -876,6 +899,9 @@ export class MapViewComponent {
                 this.myCircle.setVisible(false);
             }
         }
+        google.maps.event.addListener(this.map, 'click', function(e){
+            self.mapTouch();
+        })
         google.maps.event.addListener(this.map, 'zoom_changed', function (e) {
             self.mapTouch()
             if (self.myCircle == undefined || !self.myCircle || self.myCircle == null) return;

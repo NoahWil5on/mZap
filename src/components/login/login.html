@@ -1,53 +1,60 @@
 <div>
-  <div id="shader">
-  </div>
-  <!-- All content ends up in 'main' -->
-  <div id="main">    
-    <!-- here the check and sometimes ex button are held -->
-    <ion-grid id="check-button">
-      <ion-row>
-        <ion-col text-center col-6 *ngIf="checkPage()">
-          <button ion-button clear (click)="doBack()">
-            <img src="assets/images/buttons/ex.png"/>
-          </button>
-        </ion-col>
-        <ion-col text-center>
-            <button ion-button clear (click)="skip()" *ngIf="checkCreate()">
-              <img src="assets/images/buttons/arrow.png"/>
-            </button>
-            <button ion-button clear (click)="submit()" [disabled]="!checkInput(press)" *ngIf="!checkCreate()">
-              <img src="assets/images/buttons/check.png"/>
-            </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <!-- login screen -->
-    <div *ngIf="mapPage.loginState == 'login'" class="section">
-      <div id="logo-div">
-        <img src="assets/images/logo.png" />
-      </div>
-      <input type="email" style="background-color: none; margin-top: 20px;" [(ngModel)]="email" [placeholder]="translate.text.login.email"/>
-      <input type="password" style="background-color: none" [(ngModel)]="password" [placeholder]="translate.text.login.password"/>
-      <!-- <p class="error">{{error}}</p> -->
-      <div id="nav-buttons">
-        <button ion-button clear (click)="mapPage.loginState = 'forgot'">{{translate.text.login.forgot}}</button>
-        <button ion-button clear (click)="mapPage.loginState = 'create'">{{translate.text.login.signUp}}</button>
-        <button ion-button clear (click)="setLang()">{{translate.text.other.language}}</button>
-      </div>
+    <div id="shader" (click)="close()">
     </div>
-    <!-- forgot password screen -->
-    <div *ngIf="mapPage.loginState == 'forgot'" class="section">
-      <div id="logo-div">
-        <img src="assets/images/logo.png" />
-      </div>
-      <forgot></forgot>
+    <!-- All content ends up in 'main' -->
+    <div id="main">
+        <!-- here the check and sometimes ex button are held -->
+        <ion-grid id="check-button">
+            <ion-row>
+                <ion-col text-center col-6 *ngIf="checkPage()">
+                    <button ion-button clear (click)="doBack()">
+                        <img src="assets/images/buttons/ex.png" />
+                    </button>
+                </ion-col>
+                <ion-col text-center col-6 *ngIf="mapPage.loginState == 'login'">
+                    <button ion-button clear (click)="close()">
+                        <img src="assets/images/buttons/ex.png" />
+                    </button>
+                </ion-col>
+                <ion-col text-center>
+                    <button ion-button clear (click)="skip()" *ngIf="checkCreate()">
+                        <img src="assets/images/buttons/arrow.png" />
+                    </button>
+                    <button ion-button clear (click)="submit()" [disabled]="!checkInput(press)" *ngIf="!checkCreate()">
+                        <img src="assets/images/buttons/check.png" />
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <!-- login screen -->
+        <div *ngIf="mapPage.loginState == 'login'" class="section">
+            <div id="logo-div">
+                <img src="assets/images/logo.png" />
+            </div>
+            <input type="email" style="background-color: none; margin-top: 20px;" [(ngModel)]="email" [placeholder]="translate.text.login.email"
+            />
+            <input type="password" style="background-color: none" [(ngModel)]="password" [placeholder]="translate.text.login.password"
+            />
+            <!-- <p class="error">{{error}}</p> -->
+            <div id="nav-buttons">
+                <button ion-button clear (click)="mapPage.loginState = 'forgot'">{{translate.text.login.forgot}}</button>
+                <button ion-button clear (click)="mapPage.loginState = 'create'">{{translate.text.login.signUp}}</button>
+                <button ion-button clear (click)="setLang()">{{translate.text.other.language}}</button>
+            </div>
+        </div>
+        <!-- forgot password screen -->
+        <div *ngIf="mapPage.loginState == 'forgot'" class="section">
+            <div id="logo-div">
+                <img src="assets/images/logo.png" />
+            </div>
+            <forgot></forgot>
+        </div>
+        <!-- create account screen -->
+        <div *ngIf="mapPage.loginState == 'create'" class="section">
+            <div id="logo-div" [class.hidden]="checkPhotoState()" class="show">
+                <img src="assets/images/logo.png" />
+            </div>
+            <create></create>
+        </div>
     </div>
-    <!-- create account screen -->
-    <div *ngIf="mapPage.loginState == 'create'" class="section">
-      <div id="logo-div" [class.hidden]="checkPhotoState()" class="show">
-        <img src="assets/images/logo.png" />
-      </div>
-      <create></create>
-    </div>
-  </div>
 </div>

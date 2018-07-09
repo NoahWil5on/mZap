@@ -1,3 +1,10 @@
-page-filter {
+.ios, .md{
+    page-filter {
+        .filter-button{
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+        }
 
+    }
 }

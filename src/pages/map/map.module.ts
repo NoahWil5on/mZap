@@ -20,6 +20,8 @@ import { AddResolveComponent } from '../../components/add-resolve/add-resolve';
 import { FerryComponent } from '../../components/ferry/ferry';
 import { EditShipComponent } from '../../components/edit-ship/edit-ship';
 import { ShipTutorialComponent } from '../../components/ship-tutorial/ship-tutorial';
+import { ReportComponent } from '../../components/report/report';
+import { ShareComponent } from '../../components/share/share';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { ShipTutorialComponent } from '../../components/ship-tutorial/ship-tutor
     AddResolveComponent,
     FerryComponent,
     EditShipComponent,
-    ShipTutorialComponent],
+    ShipTutorialComponent,
+    ReportComponent,
+    ShareComponent],
   imports: [
     IonicPageModule.forChild(MapPage)
   ],

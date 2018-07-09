@@ -1,10 +1,13 @@
 <ion-content>
     <info class="pop-up" *ngIf="infoShow"></info>
     <add class="pop-up" *ngIf="addShow"></add>
+    <share class="pop-up" *ngIf="shareShow"></share>
     <ferry class="pop-up" *ngIf="ferryShow"></ferry>
     <edit-ship class="pop-up" *ngIf="editShip"></edit-ship>
-    <login class="pop-up no-scroll" *ngIf="!userInfo.loggedIn"></login>
+    <login class="pop-up no-scroll" *ngIf="loginShow"></login>
+    <!-- *ngIf="!userInfo.loggedIn" -->
     <tutorial class="pop-up" *ngIf="tut"></tutorial>
     <ship-tutorial class="pop-up" *ngIf="shipTut"></ship-tutorial>
+    <report class="pop-up" *ngIf="reportShow"></report>
     <map-view></map-view>
 </ion-content>

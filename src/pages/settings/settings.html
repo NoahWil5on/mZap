@@ -24,7 +24,7 @@
     <button ion-button (click)="logout()" *ngIf="isLoggedIn()">{{translate.text.settings.logout}}</button>
     <button ion-button (click)="goLogin()" *ngIf="!isLoggedIn()">{{translate.text.settings.return}}</button>
     -->
-    <div>
+    <div *ngIf="isLoggedIn()">
         <h2>{{translate.text.settings.notifications}}</h2>
         <ion-item>
             <ion-label>{{translate.text.settings.posts}}</ion-label>
@@ -43,7 +43,17 @@
             <ion-toggle color="main" [(ngModel)]="likes" (ionChange)="toggle()"></ion-toggle>
         </ion-item> 
     </div>
-    <button ion-button clear class="language" (click)="setLang()">{{translate.text.other.language}}</button>
+    <ion-grid>
+        <ion-row>
+            <ion-col col-6 text-center>
+                <button ion-button clear class="language" (click)="setLang()">{{translate.text.other.language}}</button>
+            </ion-col>
+            <ion-col col-6 text-center *ngIf="isLoggedIn()">
+                <button ion-button clear class="language" (click)="doProfile()">{{translate.text.profile.profile}}</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    
     <!--
     <button ion-button (click)="about()">About</button>
     -->

@@ -95,6 +95,7 @@ export class TranslatorProvider {
             trashDescription: "Report an instance of garbage at this location",
             cndTitle: "Cats/Dogs",
             cndDescription: "Report a citing of stray animals",
+            fix: "Fix it",
             ok: "OK",
             cancel: "Cancel"
         },
@@ -159,7 +160,8 @@ export class TranslatorProvider {
             share: "Share mZAP",
         },
         discussion: {
-            discussion: "Discussion"
+            discussion: "Discussion",
+            first: "Hello! Be the first to comment on this post:)"
         },
         filter: {
             filter: "Filter",
@@ -262,8 +264,12 @@ export class TranslatorProvider {
             rocked: "Rocks in Road",
             drink: "Drinkable Water Needed",
             electricity: "Exposed Electricity",
-            language: "ENGLISH",
-            ferry: "Mark Ferry Location"
+            language: "English",
+            ferry: "Mark Ferry Location",
+            schedule: "Ferry Schedule",
+            search: "Search...",
+            share: "Share",
+            report: "Report Post"
         }
     }
     //Spanish Version of text
@@ -355,6 +361,7 @@ export class TranslatorProvider {
             cndTitle: "Gatos/Perros",
             cndDescription: "Reporte una cita de animales callejeros",
             ok: "OK",
+            fix: "Arreglar",
             cancel: "Cancelar",
         },
         profile: {
@@ -418,7 +425,8 @@ export class TranslatorProvider {
             share: "Compártelo mZAP",
         },
         discussion: {
-            discussion: "Discusión"
+            discussion: "Discusión",
+            first: "¡Hola! Sé el primero en comentar esta publicación:)"
         },
         filter: {
             filter: "Filtrar",
@@ -521,8 +529,12 @@ export class TranslatorProvider {
             rocked: "Rocas en la Carretera",
             electricity: "Electricidad Expuesta",
             drink: "Necesidad de Agua Potable",
-            language: "ESPAÑOL",
-            ferry: "Localizar Embarcación"
+            language: "Español",
+            ferry: "Localizar Embarcación",
+            schedule: "Horario de la Nave",
+            search: "Buscar...",
+            share: "Compartir...",
+            report: "Reportar Publicacion"
         }
     }
     

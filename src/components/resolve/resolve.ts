@@ -93,7 +93,59 @@ export class ResolveComponent {
         let imageViewer = this.imageViewerCtrl.create(myImage);
         imageViewer.present();
     }
+    doReport(){
+        var sentAlert = this.alertCtrl.create({
+            title: "Report Sent",
+            buttons: [{
+                text: 'OK'
+            }]
+        });
+        var errorAlert = this.alertCtrl.create({
+            title: "An Error Occurred",
+            subTitle: "We're not sure what the issue is, please try again in a few moments.",
+            buttons: [{
+                text: 'OK'
+            }]
+        });
+        var myAlert = this.alertCtrl.create({
+            title: "Report as inappropriate",
+            subTitle: "Reporting this post will send a notification to the developers that could lead to this post being taken down or further action. Are you sure you'd like to do this?",
+            buttons: [
+                'Cancel',
+                {text: 'OK',
+                handler: () => {
+                    this.sendReport(sentAlert, errorAlert);
+                }}
+            ]
+        });
+        myAlert.present();
+    }
+    sendReport(sent, error){
+        var image = this.userInfo.activeData.url;
+        var userId = this.userInfo.activeData.id;
+        var postKey = this.userInfo.activeData.key;
+        var reporterId = this.afAuth.auth.currentUser.uid;
 
+        // var text = `${this.myReport}\n\nSent From: ${this.myName}\nSender Email: ${this.myEmail}\n\nReport Details:\nPost ID:${postKey}\nUser ID:${userId}\nImage URL:${image}`;
+        
+        var report = {
+            image: image,
+            postKey: postKey,
+            postUserId: userId,
+            reporterId: reporterId,
+            reporterEmail: this.afAuth.auth.currentUser.email,
+            reporterName: this.afAuth.auth.currentUser.displayName,
+            seen: false,
+            deleted: false,
+            new: true
+        }
+        // var self = this;
+        firebase.database().ref(`reports`).push(report).then(() => {
+            sent.present();
+        }).catch(e => {
+            error.present();
+        });
+    }
     //dismiss this modal
     dismiss(data) {
         this.navCtrl.setRoot(MapPage);

@@ -72,6 +72,9 @@ export class LoginComponent {
         this.menuCtrl.enable(true);
         //this.userInfo.lookForUpdate();
     }
+    close(){
+        this.mapPage.loginShow = false;
+    }
     //once a user is signed in, update all necessary information and change page
     runUser(user) {
         var today = Date.now();
@@ -100,6 +103,7 @@ export class LoginComponent {
                         }
                         self.userInfo.pageState = 'map';
                         self.userInfo.loggedIn = true;
+                        self.close();
                         //self.mapPage.tut = true;
                     }).catch(e => {
                         alert(e.message);

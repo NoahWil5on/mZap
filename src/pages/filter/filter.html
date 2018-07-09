@@ -9,7 +9,9 @@
                 </ion-col>
                 <ion-col text-right>
                     <ion-buttons end>
-                        <button ion-button clear style="color: white;" (click)="dismiss()">X</button>
+                        <button ion-button clear style="color: white;" (click)="dismiss()">
+                            <ion-icon name="close" style="font-size: 24pt"></ion-icon>
+                        </button>
                     </ion-buttons>
                 </ion-col>
             </ion-row>
@@ -19,7 +21,7 @@
 
 
 <ion-content padding>
-    <ion-item>
+    <!-- <ion-item>
         <ion-label>{{translate.text.filter.type}}</ion-label>
         <ion-select [(ngModel)]="type" multiple="true" okText="OK" [cancelText]="translate.text.filter.cancel" (click)="typeClick()">
             <ion-option value="building">{{translate.text.other.building}}</ion-option>
@@ -27,22 +29,35 @@
             <ion-option value="pest">{{translate.text.other.pest}}</ion-option>
             <ion-option value="trash">{{translate.text.other.trash}}</ion-option>
             <ion-option value="cnd">{{translate.text.other.cnd}}</ion-option>
+            <ion-option value="water">{{translate.text.other.water}}</ion-option>
         </ion-select>
-    </ion-item>
-    <ion-item>
-        <ion-label>{{translate.text.filter.status}}</ion-label>
-        <ion-select [(ngModel)]="status" multiple="true" okText="OK" [cancelText]="translate.text.filter.cancel" (click)="statusClick()">
-            <ion-option value="To Do">{{translate.text.other.todo}}</ion-option>
-            <ion-option value="Complete">{{translate.text.other.complete}}</ion-option>
-        </ion-select>
-    </ion-item>
-    <ion-item>
-        <ion-label floating>Rating Range</ion-label>
-        <ion-range dualKnobs="true" [(ngModel)]="range" min="-5" max="50" pin="true" (click)="ratingClick()">
-            <ion-label range-left>-5</ion-label>
-            <ion-label range-right>50+</ion-label>
-        </ion-range>
-    </ion-item>
-    <button (click)="filter()" ion-button>Filter</button>
+    </ion-item> -->
+    <ion-list>
+        <ion-item>
+            <ion-label>{{translate.text.other.building}}</ion-label>
+            <ion-checkbox [(ngModel)]="building"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{translate.text.other.bug}}</ion-label>
+            <ion-checkbox [(ngModel)]="bugs"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{translate.text.other.pest}}</ion-label>
+            <ion-checkbox [(ngModel)]="pest"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{translate.text.other.trash}}</ion-label>
+            <ion-checkbox [(ngModel)]="trash"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{translate.text.other.cnd}}</ion-label>
+            <ion-checkbox [(ngModel)]="cnd"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{translate.text.other.water}}</ion-label>
+            <ion-checkbox [(ngModel)]="water"></ion-checkbox>
+        </ion-item>
+    </ion-list>
+    <button (click)="filter()" ion-button class="filter-button">Filter</button>
     <p class="error">{{error}}</p>
 </ion-content>

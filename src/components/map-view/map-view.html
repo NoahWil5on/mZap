@@ -3,9 +3,9 @@
     <div id="drop-down" [class.up]="!dropDown">
         <div class="info-grid" *ngIf="userInfo.activeData != {} && userInfo.activeData" [class.top-padding]="userInfo.isApp">
             <div class="map-info-col">
-                <div class="map-status">
+                <!-- <div class="map-status">
                     <p class="p-status">{{translateStatus(userInfo.activeData.status)}}</p>
-                </div>
+                </div> -->
                 <h2 class="h2-type">{{translateType(userInfo.activeData.type)}}</h2>
                 <p class="p-description" *ngIf="userInfo.activeData.description">
                     {{userInfo.activeData.description}}
@@ -17,17 +17,26 @@
         </div>
         <ion-grid class="button-grid" [class.grid-hidden]="!dropDown">
             <ion-row>
-                <ion-col col-4>
-                    <button ion-button (click)="openResolve()">
-                        <ion-icon name="hammer"></ion-icon>
+                <ion-col col-3 *ngIf="!userInfo.isApp">
+                </ion-col>
+                <ion-col col-3 *ngIf="userInfo.isApp">
+                    <button ion-button (click)="doShare()">
+                        <!-- <ion-icon name="hammer"></ion-icon> -->
+                        <span>{{translate.text.other.share}}</span>
                     </button>
                 </ion-col>
-                <ion-col col-4>
+                <ion-col col-3>
+                    <button ion-button (click)="openResolve()">
+                        <!-- <ion-icon name="hammer"></ion-icon> -->
+                        <span>{{translate.text.map.fix}}</span>
+                    </button>
+                </ion-col>
+                <ion-col col-3>
                     <button ion-button (click)="openChat(false)">
                         <ion-icon name="chatbubbles"></ion-icon>
                     </button>
                 </ion-col>
-                <ion-col col-4>
+                <ion-col col-3>
                     <button ion-button (click)="like(false)" *ngIf="userInfo.activeData != {}" [disabled]="deactivate">
                         <div class="likeValue" [class.show-like]="likeValue">
                             <p>+{{likes}}</p>
@@ -56,7 +65,7 @@
             <ion-row>
                 <ion-col col-4>
                     <button *ngIf="userInfo.activeShipData && afAuth.auth.currentUser && afAuth.auth.currentUser.uid === userInfo.activeShipData.id" ion-button (click)="mapPage.editShip = true">
-                        <ion-icon name="hammer"></ion-icon>
+                        <span>{{translate.text.map.fix}}</span>
                     </button>
                 </ion-col>
                 <ion-col col-4>
@@ -83,6 +92,7 @@
             </div>
         </button>
     </div>
+    <div class="nav-div filter" (click)="openFilter()">{{translate.text.other.search}}</div>
     <div class="nav-div nav-div-left">
 
     </div>
@@ -92,17 +102,24 @@
                 <img class="cog" src="assets/images/buttons/toggle_02.png" alt="nav" />
             </div>
         </button>
-        <!-- <button (click)="openFilter()">
-          <div class="nav-button green">
-              <img class="filter" src="assets/images/buttons/filter.png" alt="nav"/>
-          </div>
-      </button> -->
         <button (click)="setCenter()">
             <div class="nav-button green">
                 <img class="cog" src="assets/target.png" alt="nav" />
             </div>
         </button>
     </div>
+    <div class="nav-div nav-div-left">
+            <button (click)="zoom(1)">
+                <div class="nav-button green">
+                    <p class="bold">+</p>
+                </div>
+            </button>
+            <button (click)="zoom(-1)">
+                <div class="nav-button green">
+                    <p class="bold">-</p>
+                </div>
+            </button>
+        </div>
     <div id="center-div" *ngIf="isLoggedIn()">
         <div id="center-point">
             <img src="assets/location_marker.png" alt="Drop Position" [class.hidden]="!showButtons" [class.show]="showButtons" />

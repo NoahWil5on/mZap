@@ -15,9 +15,16 @@ import { ClickProvider } from '../../providers/click/click';
 export class FilterPage {
     range: any = {};
     status: any = ["To Do", "Complete"];
-    type: any = ["building", "bugs", "pest", "trash", "cnd"];
+    type: any = [];
     error: string = "";
     target: string = "";
+
+    bugs = true;
+    building = true;
+    water = true;
+    cnd = true;
+    trash = true;
+    pest = true;
     constructor(public navCtrl: NavController, public navParams: NavParams, public translate: TranslatorProvider,
                 public viewCtrl: ViewController, public userInfo: UserInfoProvider,
                 public click: ClickProvider) {
@@ -44,11 +51,20 @@ export class FilterPage {
     //when filter is clicked, all data from page is thrown into user-info provider
     //to be accessed by map.ts
     filter(){
-        this.click.click('filterFilter');
+        this.type = [];
+
+        if(this.water) this.type.push("water");
+        if(this.building) this.type.push("building");
+        if(this.cnd) this.type.push("cnd");
+        if(this.pest) this.type.push("pest");
+        if(this.bugs) this.type.push("bugs");
+        if(this.trash) this.type.push("trash");
+        
         if(this.status.length < 1 || this.type.length < 1){
             this.error = this.translate.text.filter.error;
             return;
         }
+
         var obj = {
             upper: this.range.upper,
             lower: this.range.lower,

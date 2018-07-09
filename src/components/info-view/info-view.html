@@ -37,23 +37,30 @@
     </ion-grid>-->
     <div id="comment" #commentContent>
         <div class="messages">
-            <div *ngFor="let message of messages">
-                <ion-grid class="message" [class.newMessage]="message.new">
-                    <ion-row class="header-row" (click)="goToProfile(message.id)">
-                        <ion-col no-padding col-3>
-                            <div class="image-div" [style.background-image]="'url(' + message.url + ')'"></div>
-                        </ion-col>
-                        <ion-col no-padding class="header-info">
-                            <p><b>{{message.name}}</b></p>
-                            <p class="meta">{{message.date}}</p>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row class="message-row">
-                        <ion-col no-padding>
-                            <p>{{message.message}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <div *ngIf="messages && messages.length > 0">
+                <div *ngFor="let message of messages">
+                    <ion-grid class="message" [class.newMessage]="message.new">
+                        <ion-row class="header-row" (click)="goToProfile(message.id)">
+                            <ion-col no-padding col-3>
+                                <div class="image-div" [style.background-image]="'url(' + message.url + ')'"></div>
+                            </ion-col>
+                            <ion-col no-padding class="header-info">
+                                <p>
+                                    <b>{{message.name}}</b>
+                                </p>
+                                <p class="meta">{{message.date}}</p>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row class="message-row">
+                            <ion-col no-padding>
+                                <p>{{message.message}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </div>
+            </div>
+            <div class="first" *ngIf="!messages || messages.length == 0">
+                <h2>{{translate.text.discussion.first}}</h2>
             </div>
         </div>
     </div>

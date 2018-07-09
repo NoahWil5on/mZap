@@ -7,22 +7,23 @@
             <div class="div-holder" *ngIf="checkLogin()">
                 <button ion-button style="height: 100%" clear (click)="profile()">
                     <div *ngIf="imgSrc">
-                        <div text-center class="image-div"[style.background-image]="'url(' + imgSrc + ')'">
+                        <div text-center class="image-div" [style.background-image]="'url(' + imgSrc + ')'">
                         </div>                                
-                        <h2 style="color: white">{{name}}</h2>
+                        <h2 style="color: white" text-center>{{name}}</h2>
                     </div>
                     <div *ngIf="!imgSrc">
                         <div text-center class="image-div">
                         </div>
-                        <h2 style="color: white">{{name}}</h2>
+                        <h2 style="color: white" text-center>{{name}}</h2>
                     </div>
                 </button>
             </div>
             <div class="div-holder" *ngIf="!checkLogin()">
-                <button ion-button style="height: 100%" clear (click)="register()">
+                <button ion-button style="height: 100%" clear (click)="profile()">
                     <div>
-                        <img src="assets/profile.png" alt="Profile Image" />
-                        <h2 style="color: black">{{translate.text.menu.user}}</h2>
+                        <div text-center class="image-div">
+                        </div>
+                        <h2 style="color: white" text-center>{{name}}</h2>
                     </div>
                 </button>
             </div>
@@ -63,6 +64,7 @@
             </button>
         </div>
         <button ion-button class="ship-button" (click)="shareLocation()">{{translate.text.other.ferry}}</button>
+        <button ion-button class="ship-button" (click)="openSchedule()" style="margin-top: 5px;">{{translate.text.other.schedule}}</button>
         <!-- <button ion-button class="ship-button" (click)="excel()">export excel</button> -->
         <ion-grid class="hide-symbols" [class.show-symbols]="share">
             <ion-row>

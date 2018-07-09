@@ -210,17 +210,12 @@ export class CreateComponent {
   }
   checkInput(press): boolean {
     var ready = false;
-    // /*Checks to make sure fields are filled in (no profile image required)*/
+    // /*Checks to make sure fields are filled in*/
     if (this.pass1 === this.pass2) {
       if (this.pass1.length > 0 && this.pass2.length > 0 && this.email.length > 0 && this.name.length > 0) {
-        console.log(this.pass1.length);
-        console.log(this.pass2.length);
-        console.log(this.name.length);
-        console.log(this.email.length);
         ready = true;
       }
       else{
-        console.log("perfect");
         if(press)this.error = this.translate.text.register.fill;
       }
     }

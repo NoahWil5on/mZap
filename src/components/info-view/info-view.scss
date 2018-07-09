@@ -9,6 +9,13 @@
         overflow: scroll;
         position: relative;
         display: block;
+        .first{
+            h2{
+                color: #888;
+                font-size: 15pt;
+                text-align: center;
+            }
+        }
         .likes{
             display: flex;
             flex-direction: column;

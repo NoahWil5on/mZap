@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 //page imports
 import { LoginPage } from '../login/login';
 import { AboutPage } from '../about/about';
+import { ProfilePage } from '../profile/profile';
 
 //firebase imports
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -14,6 +15,7 @@ import * as firebase from 'firebase';
 //provider imports
 import { TranslatorProvider } from '../../providers/translator/translator';
 import { ClickProvider } from '../../providers/click/click';
+import { UserInfoProvider } from '../../providers/user-info/user-info';
 
 @IonicPage()
 @Component({
@@ -28,12 +30,13 @@ export class SettingsPage {
     resolves: boolean = true;
     likes: boolean = true;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider, public click: ClickProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider, public click: ClickProvider, public userInfo: UserInfoProvider) {
         this.storage.get('mzap_language').then(language => {
             this.language = language;
         }).catch(e => {
             this.language = "es";
         });
+        if(!this.isLoggedIn()) return;
         firebase.database().ref(`users/${this.afAuth.auth.currentUser.uid}`).once('value', snapshot => {
             if(snapshot.hasChild('notifyComments')){
                 this.comments = snapshot.val().notifyComments
@@ -83,6 +86,11 @@ export class SettingsPage {
                 })
             })
         });   
+    }
+    doProfile(){
+        this.userInfo.profileView = this.afAuth.auth.currentUser.uid;
+        this.navCtrl.setRoot(ProfilePage);
+        this.userInfo.pageState = 'profile';
     }
     languageClick(){
         this.click.click('settingsSelectLanguage');

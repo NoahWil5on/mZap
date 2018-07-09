@@ -1,0 +1,38 @@
+<div id="shader" (click)="closeOut()"></div>
+<div id="main" #main>
+    <ion-grid class="nav-buttons">
+        <ion-row>
+            <ion-col text-center>
+                <button ion-button clear (click)="closeOut()">
+                    <img src="assets/images/buttons/ex.png" />
+                </button>
+            </ion-col>
+            <ion-col text-center>
+                <button ion-button clear (click)="sendReport()" [disabled]="!checkReport()">
+                    <img src="assets/images/buttons/check.png" />
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <div class="hidden" [class.show]="true">
+        <div id="select-div">
+            <ion-item>
+                <ion-label floating [class.red]="myName.trim() == ''">Your Name*</ion-label>
+                <ion-input [(ngModel)]="myName">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating [class.red]="!validateEmail(myEmail)">Your Email*</ion-label>
+                <ion-input [(ngModel)]="myEmail">
+                </ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating [class.red]="myReport.trim() == ''">Description*</ion-label>
+                <ion-textarea [(ngModel)]="myReport"></ion-textarea>
+            </ion-item>
+        </div>
+    </div>
+    <div class="hidden" [class.show]="false">
+        <!-- <confirm></confirm> -->
+    </div>
+</div>

@@ -2,7 +2,7 @@
   <ion-slides [class.absolute]="dataSet">
     <ion-slide>
       <form autocomplete="off">
-        <input type="email" class="text-field top" [(ngModel)]="name" name="myName" [placeholder]="translate.text.register.name" (keyup)="checkInput(press)"/>
+        <input type="text" class="text-field top" [(ngModel)]="name" name="myName" [placeholder]="translate.text.register.name" (keyup)="checkInput(press)" autofocus/>
         <input type="email" class="text-field" [(ngModel)]="email" name="myEmail" [placeholder]="translate.text.register.email" (keyup)="checkInput(press)"/>
         <input type="password" class="text-field" [(ngModel)]="pass1" name="myPass1" [placeholder]="translate.text.register.pass1" (keyup)="checkInput(press)"/>
         <input type="password" class="text-field" [(ngModel)]="pass2" name="myPass2" [placeholder]="translate.text.register.pass2" (keyup)="checkInput(press)"/>

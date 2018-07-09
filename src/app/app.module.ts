@@ -13,6 +13,7 @@ import { MediaCapture } from 'ionic-native';
 import { File } from '@ionic-native/file';
 import { DeviceOrientation } from '@ionic-native/device-orientation';
 import { Geolocation } from '@ionic-native/geolocation';
+import { EmailComposer } from '@ionic-native/email-composer';
 //import { CloudSettings } from '@ionic/cloud-angular';
 
 //Angular fire imports
@@ -166,6 +167,7 @@ export const firebaseConfig = {
     ClickProvider,
     MediaCapture,
     DeviceOrientation,
+    EmailComposer,
     Geolocation
   ]
 })

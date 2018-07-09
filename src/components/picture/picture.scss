@@ -40,6 +40,16 @@
                             width: 100% !important;
                             height: 100% !important;
                         }
+                        p{
+                            position: absolute;
+                            pointer-events: none;
+                            bottom: 0;
+                            color: gray;
+                            left: 50%;
+                            font-size: 14pt;
+                            transform: translate(-50%, 0%);
+                            font-weight: bold;
+                        }
                     }
                     label{
                         pointer-events: all;

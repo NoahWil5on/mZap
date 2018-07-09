@@ -1,19 +1,69 @@
 const functions = require('firebase-functions');
-const firebase = require("firebase/app");
 const admin = require('firebase-admin');
+const nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
 
-admin.initializeApp(functions.config().firebase);
+// var config = {
+//     apiKey: "AIzaSyAm-f7wqiP0Qa-FifoqrVa0rlCC1iZG3xk",
+//     authDomain: "mzap-45cd2.firebaseapp.com",
+//     databaseURL: "https://mzap-45cd2.firebaseio.com",
+//     projectId: "mzap-45cd2",
+//     storageBucket: "mzap-45cd2.appspot.com",
+//     messagingSenderId: "550547782302"
+//   };
+
+// admin.initializeApp({
+//     credential: admin.credential.cert({
+//         projectId: '<APP_ID>',
+//         clientEmail: "foo@<APP_ID>.iam.gserviceaccount.com",
+//         privateKey: "-----BEGIN PRIVATE KEY-----\n<MY_PRIVATE_KEY>\n-----END PRIVATE KEY-----\n"
+//       }),
+//     databaseURL: config.databaseURL
+//   });
+admin.initializeApp();
 
 const ref = admin.database().ref();
 
-exports.commentTrigger = functions.database.ref('/messages/{postId}/{messageId}').onWrite(event => {
-    var data = event.data.val();
+exports.reportTrigger = functions.database.ref('/reports/{userId}/{reportId}').onWrite((change,context) => {
+    var data = change.after.val();
+
+    var text = `${data.reporterText}\n\nSent From: ${data.reporterName}\nSender Email: ${data.reporterEmail}\n\nReport Details:\nPost ID:${data.postKey}\nUser ID:${data.postUserId}\nImage URL:${data.image}`;
+
+    var transporter = nodemailer.createTransport(smtpTransport({
+        service: 'yahoo',
+        auth: {
+          user: 'mzappers@yahoo.com',
+          pass: 'mzap12345'
+        }
+      }));
+      
+      var mailOptions = {
+        from: 'mzappers@yahoo.com',
+        to: 'mzappers@yahoo.com',
+        subject: 'mZAP Post Report',
+        text: text
+      };
+      var mailOptions2 = {
+        from: 'mzappers@yahoo.com',
+        to: `${data.reporterEmail}`,
+        subject: 'mZAP Post Report',
+        text: `Hello ${data.reporterName}!\n\nWe have recieved your report and hope to resolve this issue shortly. Thank you for contributing to the community!\n\nSincerely,\nmZAP Team`
+      };
+      
+      return transporter.sendMail(mailOptions).then(() => {
+        return transporter.sendMail(mailOptions2).then(() => {
+            return;
+        })
+      })
+})
+exports.commentTrigger = functions.database.ref('/messages/{postId}/{messageId}').onWrite((change,context) => {
+    var data = change.after.val();
 
     if (!data.id || data.id == "" || data.id == undefined || data.id == null) return
-    return ref.child(`/subscriptions/${event.params.postId}`).once('value').then(snapshot => {
+    return ref.child(`/subscriptions/${context.params.postId}`).once('value').then(snapshot => {
         var foundUser = false;
         if (!snapshot.val()) {
-            ref.child(`/subscriptions/${event.params.postId}`).push(data.id);
+            ref.child(`/subscriptions/${context.params.postId}`).push(data.id);
             return;
         }
         snapshot.forEach(function (element) {
@@ -22,34 +72,34 @@ exports.commentTrigger = functions.database.ref('/messages/{postId}/{messageId}'
                 foundUser = true;
                 return;
             }
-            checkNotify(id, 'notifyComments', data, event.params.postId);
+            checkNotify(id, 'notifyComments', data, context.params.postId);
         });
         if (!foundUser) {
-            ref.child(`/subscriptions/${event.params.postId}`).push(data.id);
+            ref.child(`/subscriptions/${context.params.postId}`).push(data.id);
             return;
         }
     })
 });
-exports.resolveTrigger = functions.database.ref('/resolves/{postId}/{resolveId}').onWrite(event => {
+exports.resolveTrigger = functions.database.ref('/resolves/{postId}/{resolveId}').onWrite((change,context) => {
     var data = {};
 
-    if (event.data.val().info) {
-        data.message = event.data.val().info;
+    if (change.after.val().info) {
+        data.message = change.after.val().info;
     }
     else {
         data.message = "";
     }
-    if (event.data.val().name) {
-        data.name = event.data.val().name;
+    if (change.after.val().name) {
+        data.name = change.after.val().name;
     }
-    if (event.data.val().id) {
-        data.id = event.data.val().id;
+    if (change.after.val().id) {
+        data.id = change.after.val().id;
     }
     if (!data.id || data.id == "" || data.id == undefined || data.id == null) return
-    return ref.child(`/subscriptions/${event.params.postId}`).once('value').then(snapshot => {
+    return ref.child(`/subscriptions/${context.params.postId}`).once('value').then(snapshot => {
         var foundUser = false;
         if (!snapshot.val()) {
-            ref.child(`/subscriptions/${event.params.postId}`).push(data.id);
+            ref.child(`/subscriptions/${context.params.postId}`).push(data.id);
             return;
         }
         snapshot.forEach(function (element) {
@@ -58,10 +108,10 @@ exports.resolveTrigger = functions.database.ref('/resolves/{postId}/{resolveId}'
                 foundUser = true;
                 return;
             }
-            checkNotify(id, 'notifyResolves', data, event.params.postId);
+            checkNotify(id, 'notifyResolves', data, evcontextent.params.postId);
         });
         if (!foundUser) {
-            ref.child(`/subscriptions/${event.params.postId}`).push(data.id);
+            ref.child(`/subscriptions/${context.params.postId}`).push(data.id);
             return;
         }
         return;
@@ -69,19 +119,19 @@ exports.resolveTrigger = functions.database.ref('/resolves/{postId}/{resolveId}'
 });
 //in this single case you don't need to check if you are already subscribed to the post because it has just been
 //created so no one can possibly be subscribed, no checks needed.
-exports.postCreateTrigger = functions.database.ref('/positions/{postId}').onCreate(event => {
-    var data = event.data.val();
+exports.postCreateTrigger = functions.database.ref('/positions/{postId}').onCreate((change,context) => {
+    var data = change.after.val();
     if (!data.id || data.id == "" || data.id == undefined || data.id == null) return;
-    return ref.child(`/subscriptions/${event.params.postId}`).push(data.id);
+    return ref.child(`/subscriptions/${context.params.postId}`).push(data.id);
 });
-exports.likeTrigger = functions.database.ref(`/userLikes/{userId}/likedPosts/{postId}`).onWrite(event => {
-    var data = Number(event.data.val());
-    return ref.child(`/subscriptions/${event.params.postId}`).once('value').then(snapshot => {
+exports.likeTrigger = functions.database.ref(`/userLikes/{userId}/likedPosts/{postId}`).onWrite((change,context) => {
+    var data = Number(change.after.val());
+    return ref.child(`/subscriptions/${context.params.postId}`).once('value').then(snapshot => {
         var foundUser = false;
         var myElement;
         snapshot.forEach(function (element) {
             var id = element.val();
-            if (id == event.params.userId) {
+            if (id == context.params.userId) {
                 myElement = element;
                 foundUser = true;
                 return;
@@ -93,11 +143,11 @@ exports.likeTrigger = functions.database.ref(`/userLikes/{userId}/likedPosts/{po
         //'like' value they submitted will help prevent a false positive on a toggle
         if (!foundUser) {
             if (data > 0) {
-                ref.child(`/subscriptions/${event.params.postId}`).push(event.params.userId);
+                ref.child(`/subscriptions/${context.params.postId}`).push(context.params.userId);
             }
         } else if (myElement) {
             if (data < 0) {
-                ref.child(`/subscriptions/${event.params.postId}/${myElement.key}`).remove();
+                ref.child(`/subscriptions/${context.params.postId}/${myElement.key}`).remove();
             }
         }
     });

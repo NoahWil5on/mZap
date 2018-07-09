@@ -1,6 +1,6 @@
 //vanilla ionic imports
 import { Component, ViewChild } from '@angular/core';
-import { Platform, MenuController, Nav, Events} from 'ionic-angular';
+import { Platform, MenuController, Nav, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
@@ -30,6 +30,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 //excel functions
 import * as XLSX from 'xlsx';
 import * as fileSave from 'file-saver';
+import { NavParams } from 'ionic-angular/navigation/nav-params';
 
 declare let FCMPlugin;
 @Component({
@@ -47,16 +48,19 @@ export class MyApp {
     profilePage = ProfilePage;
     settingsPage = SettingsPage;
     
-constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, public events: Events, /*public socialSharing: SocialSharingpublic push: Push private caller: CallNumber*/) {
+constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, public events: Events/*public socialSharing: SocialSharingpublic push: Push private caller: CallNumber*/) {
         platform.ready().then(() => {
+
 
             statusBar.styleDefault();
             splashScreen.hide();
             this.storage.get('mzap_language').then(res => {
-                if(!res){
-                    this.runLogin();
-                    return;
-                };
+                // console.log("here");
+                // if(!res){
+                //     this.rootPage = MapPage;
+                //     //this.runLogin();
+                //     return;
+                // };
                 switch(res){
                     case 'en':
                         this.translate.selectLanguage(this.translate.en);
@@ -67,12 +71,15 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
                     default: 
                         this.translate.selectLanguage(this.translate.es);
                         break;
+                }                
+                if(this.rootPage != MapPage){
+                    this.rootPage = MapPage;
                 }
-                this.runLogin();
-            }).catch(e => {
-                this.runLogin();
+                // this.rootPage = MapPage;
+                //this.runLogin();
             });
             if(typeof(FCMPlugin) != 'undefined'){
+                //this.rootPage = MapPage;
                 this.runSetup();
             }
         });
@@ -205,6 +212,13 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
     }
     //open profile page
     profile(){
+        if(!this.afAuth.auth.currentUser){
+            this.nav.setRoot(MapPage).then(() => {
+                this.menuCtrl.close(); 
+                this.events.publish('login:open');
+            });
+            return;
+        }
         this.userInfo.profileView = this.afAuth.auth.currentUser.uid;
         this.nav.setRoot(ProfilePage);
         this.userInfo.pageState = 'profile';
@@ -228,9 +242,19 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
         this.menuCtrl.close();
     }
     notifications(){
+        if(!this.afAuth.auth.currentUser){
+            this.nav.setRoot(MapPage).then(() => {
+                this.menuCtrl.close(); 
+                this.events.publish('login:open');
+            });
+            return;
+        }
         this.nav.setRoot(NotificationsPage);
         this.userInfo.pageState = 'notifications';
         this.menuCtrl.close();
+    }
+    openSchedule(){
+        window.open('https://docs.google.com/document/d/1mQW-GGq9E0DQG-EoR-bEdC_wHyRDjq8Hm2SLRjATZYo/edit?usp=sharing', '_system');
     }
     //open side nav
     openMenu(){
@@ -251,6 +275,13 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
         }
     }
     shareLocation(){
+        if(!this.afAuth.auth.currentUser){
+            this.nav.setRoot(MapPage).then(() => {
+                this.menuCtrl.close(); 
+                this.events.publish('login:open');
+            });
+            return;
+        }
         this.nav.setRoot(MapPage).then(() => {
             this.events.publish('ferry:open');
             this.menuCtrl.close();
@@ -280,6 +311,9 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
         this.afAuth.auth.signOut().then(out => {
             this.storage.remove('mzap_password').then(_ => {
                 this.storage.remove('mzap_email').then(_ => {
+                    this.name = "";
+                    this.userInfo.pageState = 'map';
+                    this.userInfo.user = undefined;
                     this.userInfo.loggedIn = false;
                     this.nav.setRoot(MapPage);
                     this.menuCtrl.close();

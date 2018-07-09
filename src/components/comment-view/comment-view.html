@@ -1,20 +1,25 @@
 <div class="messages">
-    <div *ngFor="let message of messages">
-        <ion-grid class="message">
-            <ion-row class="header-row">
-                <ion-col no-padding col-3>
-                    <img [src]="message.url" width="40" />
-                </ion-col>
-                <ion-col no-padding class="header-info">
-                    <p><b>{{message.name}}</b></p>
-                    <p style="color: #444">{{message.date}}</p>
-                </ion-col>
-            </ion-row>
-            <ion-row class="message-row">
-                <ion-col no-padding>
-                    <p>{{message.message}}</p>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+    <div *ngIf="messages && messages.length > 0">
+        <div *ngFor="let message of messages">
+            <ion-grid class="message">
+                <ion-row class="header-row">
+                    <ion-col no-padding col-3>
+                        <img [src]="message.url" width="40" />
+                    </ion-col>
+                    <ion-col no-padding class="header-info">
+                        <p><b>{{message.name}}</b></p>
+                        <p style="color: #444">{{message.date}}</p>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="message-row">
+                    <ion-col no-padding>
+                        <p>{{message.message}}</p>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+    </div>
+    <div *ngIf="!messages || messages.length == 0">
+        <h2>Hello! Be the first to comment on this post:)</h2>
     </div>
 </div>

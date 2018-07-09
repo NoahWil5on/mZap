@@ -24,6 +24,11 @@
                     <button ion-button block clear (click)="updateWindow()">{{translate.text.infoWindow.editPost}}</button>
                 </ion-col>
             </ion-row>
+            <ion-row *ngIf="!checkLogin()" style="border-top: none;">
+                <ion-col>
+                    <button ion-button block clear (click)="doReport()">{{translate.text.other.report}}</button>
+                </ion-col>
+            </ion-row>
         </ion-grid>
     </div>
     <div id="resolve-add">
