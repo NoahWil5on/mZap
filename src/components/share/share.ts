@@ -1,12 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { MapPage } from '../../pages/map/map';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { Events, AlertController } from 'ionic-angular';
+// import { Events, AlertController } from 'ionic-angular';
 
-import { TranslatorProvider } from '../../providers/translator/translator';
+// import { TranslatorProvider } from '../../providers/translator/translator';
 import { UserInfoProvider } from '../../providers/user-info/user-info';
 
-import * as firebase from 'firebase';
+// import * as firebase from 'firebase';
 
 @Component({
     selector: 'share',
@@ -29,12 +29,12 @@ export class ShareComponent {
         this.mapPage.shareShow = false;
     }
     shareTwitter() {
-    this.socialSharing.shareViaTwitter(this.userInfo.activeData.desc, null, `https://mzap.org/#/map/${this.userInfo.activeData.key}`);
+    this.socialSharing.shareViaTwitter(null, this.userInfo.activeData.refName, `https://mzap.org/#/map/${this.userInfo.activeData.key}`);
     }
     shareFacebook() {
-    this.socialSharing.shareViaFacebook(this.userInfo.activeData.desc, null, `https://mzap.org/#/map/${this.userInfo.activeData.key}`)
+    this.socialSharing.shareViaFacebook(null, this.userInfo.activeData.refName, `https://mzap.org/#/map/${this.userInfo.activeData.key}`)
     }
     shareWhatsapp() {
-    this.socialSharing.shareViaWhatsApp(this.userInfo.activeData.desc, null, `https://mzap.org/#/map/${this.userInfo.activeData.key}`)
+    this.socialSharing.shareViaWhatsApp(null, this.userInfo.activeData.refName, `https://mzap.org/#/map/${this.userInfo.activeData.key}`)
     }
 }

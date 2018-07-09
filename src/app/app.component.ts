@@ -30,7 +30,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 //excel functions
 import * as XLSX from 'xlsx';
 import * as fileSave from 'file-saver';
-import { NavParams } from 'ionic-angular/navigation/nav-params';
+// import { NavParams } from 'ionic-angular/navigation/nav-params';
 
 declare let FCMPlugin;
 @Component({
