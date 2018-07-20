@@ -1,0 +1,17 @@
+<div id="shader" (click)="closeOut()"></div>
+<div id="main" #main>
+    <ion-grid class="nav-buttons">
+        <ion-row>
+            <ion-col text-center>
+                <button ion-button clear (click)="closeOut()">
+                    <img src="assets/images/buttons/ex.png" />
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <div class="ferry-menu-buttons">
+        <button class="ferry-menu-button" (click)="doMark()">Mark Ferry Location</button>
+        <button class="ferry-menu-button" (click)="doSchedule()">View Ferry Schedule</button>
+        <button class="ferry-menu-button" (click)="doRating()">Punctuallity</button>
+    </div>    
+</div>

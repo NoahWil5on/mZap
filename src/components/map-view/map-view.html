@@ -92,7 +92,15 @@
             </div>
         </button>
     </div>
-    <div class="nav-div filter" (click)="openFilter()">{{translate.text.other.search}}</div>
+    <div class="top-div nav-div-right" [class.top]="userInfo.isApp">
+        <button (click)="mapPage.ferryMenuShow = true">
+            <div class="nav-button orange">
+                <img class="cog" src="assets/ferry.png" alt="nav" />
+            </div>
+        </button>
+    </div>
+
+    <div class="nav-div filter" (click)="openFilter()">{{translate.text.filter.filter}}...</div>
     <div class="nav-div nav-div-left">
 
     </div>
@@ -108,18 +116,18 @@
             </div>
         </button>
     </div>
-    <div class="nav-div nav-div-left">
-            <button (click)="zoom(1)">
-                <div class="nav-button green">
-                    <p class="bold">+</p>
-                </div>
-            </button>
-            <button (click)="zoom(-1)">
-                <div class="nav-button green">
-                    <p class="bold">-</p>
-                </div>
-            </button>
-        </div>
+    <div class="nav-div nav-div-left" *ngIf="!userInfo.isApp">
+        <button (click)="zoom(1)">
+            <div class="nav-button green">
+                <img class="cog" src="assets/zoom_in.png" alt="nav" />
+            </div>
+        </button>
+        <button (click)="zoom(-1)">
+            <div class="nav-button green">
+                <img class="cog" src="assets/zoom_out.png" alt="nav" />
+            </div>
+        </button>
+    </div>
     <div id="center-div" *ngIf="isLoggedIn()">
         <div id="center-point">
             <img src="assets/location_marker.png" alt="Drop Position" [class.hidden]="!showButtons" [class.show]="showButtons" />

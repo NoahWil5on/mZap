@@ -1,6 +1,7 @@
 //vanilla ionic imports
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, NgZone, Input } from '@angular/core';
 import { Platform, MenuController, Nav, Events } from 'ionic-angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
@@ -43,12 +44,13 @@ export class MyApp {
     rootPage: any;
     notificationCount: any = 0;
     share: boolean = false;
+    isOpen: boolean = false;
     
     ratedPage = TopRatedPage;
     profilePage = ProfilePage;
     settingsPage = SettingsPage;
     
-constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, public events: Events/*public socialSharing: SocialSharingpublic push: Push private caller: CallNumber*/) {
+constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, public events: Events, public ngZone: NgZone, public inAppBrowser: InAppBrowser/*public socialSharing: SocialSharingpublic push: Push private caller: CallNumber*/) {
         platform.ready().then(() => {
 
 
@@ -254,11 +256,20 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
         this.menuCtrl.close();
     }
     openSchedule(){
-        window.open('https://docs.google.com/document/d/1mQW-GGq9E0DQG-EoR-bEdC_wHyRDjq8Hm2SLRjATZYo/edit?usp=sharing', '_system');
+        if(this.userInfo.isApp){
+            this.inAppBrowser.create('https://docs.google.com/document/d/1mQW-GGq9E0DQG-EoR-bEdC_wHyRDjq8Hm2SLRjATZYo/edit?usp=sharing', '_blank', 'location=yes');
+        }else{
+            window.open('https://docs.google.com/document/d/1mQW-GGq9E0DQG-EoR-bEdC_wHyRDjq8Hm2SLRjATZYo/edit?usp=sharing', '_system');
+        }
     }
     //open side nav
     openMenu(){
         var self = this;
+        self.ngZone.run(() => {
+            setTimeout(() => {
+                self.isOpen = true;
+            }, 1);
+        })
         if(this.checkLogin()){
             firebase.database().ref('users').child(this.afAuth.auth.currentUser.uid).once('value').then((snapshot) => {
                 this.name = snapshot.val().name;
@@ -273,6 +284,15 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
                 }
             });
         }
+    }
+    closeMenu(){
+        var self = this;
+        self.ngZone.run(() => {
+            setTimeout(() => {
+                self.isOpen = false;
+            }, 1);
+        })
+        this.menuCtrl.close();
     }
     shareLocation(){
         if(!this.afAuth.auth.currentUser){
@@ -320,6 +340,12 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
                 })
             })
         });   
+    }
+    login(){
+        this.nav.setRoot(MapPage).then(() => {
+            this.menuCtrl.close(); 
+            this.events.publish('login:open');
+        });
     }
     // shareTwitter() {
     //     this.socialSharing.shareViaTwitter(null, null, "mzap.org");

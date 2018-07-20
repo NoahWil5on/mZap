@@ -151,7 +151,10 @@ export class MapViewComponent {
                     title: this.translate.text.shipReport.submitted,
                     subTitle: this.translate.text.shipReport.thanks,
                     buttons: [{
-                        text: 'OK'
+                        text: 'OK',
+                        handler: () => {
+                            this.mapPage.ferryMenuShow = false;
+                        }
                     }]
                 });
 

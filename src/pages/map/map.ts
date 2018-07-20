@@ -24,11 +24,15 @@ export class MapPage {
     ferryShow: boolean = false;
     reportShow: boolean = false;
     loginShow: boolean = false;
+    shareShow: boolean = false;
+    ferryRatingShow: boolean = false;
+    ferryMenuShow: boolean = false;
+
     shipChat: boolean = false;
     editShip: boolean = false;
     shipTut: boolean = false;
-    shareShow: boolean = false;
     tut: boolean = false;
+
     mapView: any;
     loginState: string = 'login';
     mapState: string = "comment";

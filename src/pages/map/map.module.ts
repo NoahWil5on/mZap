@@ -22,6 +22,8 @@ import { EditShipComponent } from '../../components/edit-ship/edit-ship';
 import { ShipTutorialComponent } from '../../components/ship-tutorial/ship-tutorial';
 import { ReportComponent } from '../../components/report/report';
 import { ShareComponent } from '../../components/share/share';
+import { FerryMenuComponent } from '../../components/ferry-menu/ferry-menu';
+import { FerryRatingComponent } from '../../components/ferry-rating/ferry-rating';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { ShareComponent } from '../../components/share/share';
     EditShipComponent,
     ShipTutorialComponent,
     ReportComponent,
-    ShareComponent],
+    ShareComponent,
+    FerryMenuComponent,
+    FerryRatingComponent],
   imports: [
     IonicPageModule.forChild(MapPage)
   ],

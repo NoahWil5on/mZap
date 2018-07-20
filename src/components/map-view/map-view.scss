@@ -2,8 +2,9 @@
     map-view {
         .filter{
             position: absolute;
-            width: 60%;
-            right: 15%;
+            width: 40%;
+            left: 50%;
+            transform: translate(-50%, 0%);
             height: 30px;
             padding-top: 5px;
             font-size: 12pt;

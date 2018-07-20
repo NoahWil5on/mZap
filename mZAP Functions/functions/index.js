@@ -120,7 +120,7 @@ exports.resolveTrigger = functions.database.ref('/resolves/{postId}/{resolveId}'
 //in this single case you don't need to check if you are already subscribed to the post because it has just been
 //created so no one can possibly be subscribed, no checks needed.
 exports.postCreateTrigger = functions.database.ref('/positions/{postId}').onCreate((change,context) => {
-    var data = change.after.val();
+    var data = change.val();
     if (!data.id || data.id == "" || data.id == undefined || data.id == null) return;
     return ref.child(`/subscriptions/${context.params.postId}`).push(data.id);
 });
@@ -152,6 +152,41 @@ exports.likeTrigger = functions.database.ref(`/userLikes/{userId}/likedPosts/{po
         }
     });
 })
+exports.shipTrigger = functions.database.ref(`/ships/{shipType}/{postId}`).onCreate((change,context) => {
+    var myShip = context.params.shipType;
+    var data = change.val();
+    var time = new Date(Number(data.date));
+    var seconds = 1000;
+    var minutes = seconds * 60;
+    var hours = minutes * 60;
+    var myTime = time.getMilliseconds() + (time.getSeconds() * seconds) + (time.getMinutes() * minutes) + (time.getHours() * hours);
+
+    var dayMod = (24 * hours);
+    var timeZone = (4 * hours);
+    myTime = (myTime - timeZone) % dayMod;
+
+    var time1 = (10 * hours);
+    return doTime(time1, myShip, myTime);
+});
+function doTime(target, ship, time){
+    var hours = 1000 * 60 * 60;
+    var dayMod = (24 * hours);
+    var maxMinutes = 30;
+    var minMinutes = 10;
+    var timeMax = (target + (1000 * 60 * maxMinutes)) % dayMod;
+    var timeMin = (target - (1000 * 60 * minMinutes)) % dayMod;
+
+    if(time < timeMax && time > timeMin){
+        return ref.child(`/shipScore/${ship}/record`).push({
+            date: Date.now(),
+            onTime: true,
+        });
+    }
+    return ref.child(`/shipScore/${ship}/record`).push({
+        date: Date.now(),
+        onTime: false,
+    });
+}
 function checkNotify(id, notifyType, data, postId) {
     if (!id || id == "" || id == undefined || id == null) return
     ref.child(`/users/${id}`).once('value', snapshot => {

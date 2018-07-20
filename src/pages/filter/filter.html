@@ -58,6 +58,20 @@
             <ion-checkbox [(ngModel)]="water"></ion-checkbox>
         </ion-item>
     </ion-list>
-    <button (click)="filter()" ion-button class="filter-button">{{translate.text.filter.filter}}</button>
+    <!-- <button (click)="filter()" ion-button class="filter-button">{{translate.text.filter.filter}}</button> -->
+    <ion-grid class="nav-buttons">
+        <ion-row>
+            <ion-col text-center>
+                <button ion-button clear (click)="dismiss()">
+                    <img src="assets/images/buttons/ex.png" />
+                </button>
+            </ion-col>
+            <ion-col text-center>
+                <button ion-button clear (click)="ilter()">
+                    <img src="assets/images/buttons/check.png" />
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
     <p class="error">{{error}}</p>
 </ion-content>

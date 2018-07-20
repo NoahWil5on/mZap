@@ -15,6 +15,8 @@ import { EditShipComponent } from './edit-ship/edit-ship';
 import { ShipTutorialComponent } from './ship-tutorial/ship-tutorial';
 import { ReportComponent } from './report/report';
 import { ShareComponent } from './share/share';
+import { FerryMenuComponent } from './ferry-menu/ferry-menu';
+import { FerryRatingComponent } from './ferry-rating/ferry-rating';
 
 @NgModule({
 	declarations: [AddComponent,
@@ -32,7 +34,9 @@ import { ShareComponent } from './share/share';
     EditShipComponent,
     ShipTutorialComponent,
     ReportComponent,
-    ShareComponent],
+    ShareComponent,
+    FerryMenuComponent,
+    FerryRatingComponent],
 	imports: [],
 	exports: [AddComponent,
     TypeComponent,
@@ -49,6 +53,8 @@ import { ShareComponent } from './share/share';
     EditShipComponent,
     ShipTutorialComponent,
     ReportComponent,
-    ShareComponent]
+    ShareComponent,
+    FerryMenuComponent,
+    FerryRatingComponent]
 })
 export class ComponentsModule {}

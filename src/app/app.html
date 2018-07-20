@@ -1,4 +1,9 @@
-<ion-menu side="left" type="push" [content]="mycontent" (ionOpen)="openMenu()">
+<div id="fill-div" [class.full-dark]="!isOpen">
+</div>
+<ion-menu side="left" type="push" [content]="mycontent" (ionOpen)="openMenu()" (ionClose)="closeMenu()">
+    <button id="back-button-div" [class.button-show]="isOpen" (click)="closeMenu()">
+        <img src="assets/arrow.png" alt="arrow" width="25px">
+    </button>
     <ion-content>
         <header text-center>
             <div class="menu-shader">
@@ -58,9 +63,14 @@
                 {{translate.text.menu.settings}}
             </button>
         </div>
-        <div class="background">
+        <div class="background" *ngIf="checkLogin()">
             <button class="menu-button" (click)="logout()">
                 {{translate.text.menu.logout}}
+            </button>
+        </div>
+        <div class="background" *ngIf="!checkLogin()">
+            <button class="menu-button" (click)="login()">
+                {{translate.text.menu.login}}
             </button>
         </div>
         <button ion-button class="ship-button" (click)="shareLocation()">{{translate.text.other.ferry}}</button>
@@ -108,4 +118,7 @@
     </ion-content>
 </ion-menu>
 
-<ion-nav #mycontent [root]="rootPage"></ion-nav>
+
+
+<ion-nav #mycontent [root]="rootPage" [class.half-dark]="isOpen">
+</ion-nav>

@@ -5,6 +5,18 @@
             margin: 0 auto;
             text-align: center;
         }
-
+        .nav-buttons{
+            pointer-events: all;
+            background-color: none;
+            width: 100%;
+            left: 0;
+            z-index: 10;
+            .button-ios, .button-md{
+                z-index: 20;
+                transform: translateY(0%);
+                height: auto;
+                padding: 0;
+            }
+        }
     }
 }

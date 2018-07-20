@@ -119,4 +119,5 @@
     <plugin name="cordova-plugin-geofence" spec="^0.7.0" />
     <plugin name="cordova-plugin-add-swift-support" spec="^1.6.0" />
     <plugin name="cordova-plugin-email-composer" spec="^0.8.15" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
 </widget>

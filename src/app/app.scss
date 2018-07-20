@@ -15,12 +15,54 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 .ios, .md{
+    #fill-div{
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        background-color: black !important;
+        z-index: 0;
+        margin: 0;
+        padding: 0;
+        transition: opacity .5s;
+    }
+    ion-nav{
+        opacity: 1;
+        // transition: opacity .5s;
+    }
+    .full-dark{
+        opacity: 0;
+    }
+    .half-dark{
+        opacity: .5;
+    }
     .error{
         font-style: italic;
         color: red;
         margin-left: auto;
         margin-right: auto;
         text-align: center;
+    }
+    #back-button-div{
+        position: absolute;
+        width: 75px;
+        height: 75px;
+        border-radius: 100%;
+        font-size: 30pt;
+        background-color: #ef2d56;
+        z-index: 100;
+        right: 0;
+        top: 50%;
+        transform: translate(50%, -50%) scale(0);
+        transition: transform .5s;
+        img{
+            position: absolute;
+            top: 50%;
+            left: 55%;
+            transform: translate(-50%, -50%);
+        }
+    }
+    .button-show{
+        transform: translate(50%, -50%) scale(1) !important;
     }
     .ionic-title{
         position: absolute;
@@ -46,7 +88,16 @@
         }
     }
     ion-menu{
+        z-index: 100;
+        .menu-inner{
+            z-index: 100;
+            -webkit-box-shadow: inset -2px 0px 5px 0px rgba(0,0,0,0.3);
+            -moz-box-shadow: inset -2px 0px 5px 0px rgba(0,0,0,0.3);
+            box-shadow: inset -2px 0px 5px 0px rgba(0,0,0,0.3);
+            contain: none;
+        }
         ion-content{
+            overflow: hidden;
             position: relative;
             .background{
                 position: relative;
