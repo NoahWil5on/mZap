@@ -54,7 +54,6 @@
     "cordova-plugin-email-composer": "^0.8.15",
     "cordova-plugin-fcm": "^2.1.2",
     "cordova-plugin-file": "^4.3.3",
-    "cordova-plugin-geofence": "^0.7.0",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-inappbrowser": "^3.0.0",
     "cordova-plugin-media-capture": "^1.4.3",
