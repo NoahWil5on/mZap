@@ -432,7 +432,7 @@ export class TranslatorProvider {
             settings: "Ajustes",
             logout: "Salir",
             share: "Compártelo mZAP",
-            login: "Login"
+            login: "Iniciar"
         },
         discussion: {
             discussion: "Discusión",

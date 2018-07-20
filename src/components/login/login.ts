@@ -212,6 +212,7 @@ export class LoginComponent {
     }
     skip(){
         this.userInfo.loggedIn = true;
+        this.mapPage.loginShow = false;
         this.mapPage.tut = true;
     }
     checkInput() {

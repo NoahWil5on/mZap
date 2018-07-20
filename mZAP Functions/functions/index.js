@@ -169,6 +169,8 @@ exports.shipTrigger = functions.database.ref(`/ships/{shipType}/{postId}`).onCre
     return doTime(time1, myShip, myTime);
 });
 function doTime(target, ship, time){
+    var now = Date.now();
+
     var hours = 1000 * 60 * 60;
     var dayMod = (24 * hours);
     var maxMinutes = 30;
@@ -177,13 +179,13 @@ function doTime(target, ship, time){
     var timeMin = (target - (1000 * 60 * minMinutes)) % dayMod;
 
     if(time < timeMax && time > timeMin){
-        return ref.child(`/shipScore/${ship}/record`).push({
-            date: Date.now(),
+        return ref.child(`/shipScore/${ship}/${now}`).set({
+            date: now,
             onTime: true,
         });
     }
-    return ref.child(`/shipScore/${ship}/record`).push({
-        date: Date.now(),
+    return ref.child(`/shipScore/${ship}/${now}`).set({
+        date: now,
         onTime: false,
     });
 }

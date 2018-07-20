@@ -255,13 +255,7 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
         this.userInfo.pageState = 'notifications';
         this.menuCtrl.close();
     }
-    openSchedule(){
-        if(this.userInfo.isApp){
-            this.inAppBrowser.create('https://docs.google.com/document/d/1mQW-GGq9E0DQG-EoR-bEdC_wHyRDjq8Hm2SLRjATZYo/edit?usp=sharing', '_blank', 'location=yes');
-        }else{
-            window.open('https://docs.google.com/document/d/1mQW-GGq9E0DQG-EoR-bEdC_wHyRDjq8Hm2SLRjATZYo/edit?usp=sharing', '_system');
-        }
-    }
+    
     //open side nav
     openMenu(){
         var self = this;

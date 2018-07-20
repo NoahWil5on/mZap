@@ -99,6 +99,7 @@ export class CreateComponent {
       }).then(_ => {
         loader.dismiss();
         this.userInfo.loggedIn = true;
+        this.mapPage.loginShow = false;
         this.mapPage.tut = true;
       });
     });

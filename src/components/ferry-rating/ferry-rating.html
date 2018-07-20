@@ -7,6 +7,29 @@
                     <img src="assets/images/buttons/ex.png" />
                 </button>
             </ion-col>
+            <ion-col text-center>
+                    <button ion-button clear (click)="checkRating()">
+                        <img src="assets/images/buttons/check.png" />
+                    </button>
+                </ion-col>
         </ion-row>
     </ion-grid>
+    <h2 class="rating">{{rating}}%</h2>
+    <ion-item margin-top>
+            <ion-label>{{translate.text.shipReport.ferry}}</ion-label>
+            <ion-select [(ngModel)]="ship" multiple="false">
+                <ion-option value="ship1">Cayo Blanco</ion-option>
+                <ion-option value="ship2">Cayo Largo</ion-option>
+                <ion-option value="ship3">Cayo Norte</ion-option>
+                <ion-option value="ship4">Isleño</ion-option>
+            </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>{{translate.text.shipReport.start}}</ion-label>
+        <ion-select [(ngModel)]="timeFrame" multiple="false">
+            <ion-option value="week">Week</ion-option>
+            <ion-option value="month">Month</ion-option>
+            <ion-option value="year">Year</ion-option>
+        </ion-select>
+    </ion-item>
 </div>
