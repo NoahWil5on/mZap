@@ -57,8 +57,6 @@ export class MapViewComponent {
     myCircle: any = undefined;
     myOptions: any = undefined;
     myPosition: any = undefined;
-    // myDirection: any;
-    // orientationSub: any;
 
     hybrid: boolean = false;
 
@@ -687,24 +685,6 @@ export class MapViewComponent {
             anchor: new google.maps.Point(15, 15),
             scaledSize: new google.maps.Size(30, 30),
         };
-        //geofence instance
-        // let fence = {
-        //     id: data.key,
-        //     latitude: data.lat,
-        //     longitude: data.lng,
-        //     radius: 10,
-        //     translateType: 1,
-        //     notification: {
-        //         id: data.key,
-        //         title: "You just crossed a fence",
-        //         text: "Test text",
-        //         openAppOnClick: true
-        //     }
-        // }
-        // this.geofence.addOrUpdate(fence).then(
-        //     () => console.log('Geofence added'),
-        //     (err) => {console.log(`Error: ${err}`)}
-        // );
 
         //creates the marker with the specified icon
         let marker = new google.maps.Marker({

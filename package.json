@@ -82,8 +82,7 @@
         "rxjs": "5.4.0",
         "sw-toolbox": "3.6.0",
         "xlsx": "^0.13.0",
-        "zone.js": "0.8.12",
-        "cordova-plugin-geofence": "^0.7.0"
+        "zone.js": "0.8.12"
     },
     "devDependencies": {
         "@ionic/app-scripts": "^2.1.4",
@@ -124,7 +123,6 @@
             "cordova-plugin-camera-preview": {},
             "cordova-plugin-device-orientation": {},
             "cordova-plugin-fcm": {},
-            "cordova-plugin-geofence": {},
             "cordova-plugin-add-swift-support": {},
             "cordova-plugin-email-composer": {},
             "cordova-plugin-inappbrowser": {}
