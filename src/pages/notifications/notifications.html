@@ -21,7 +21,7 @@
 
 <ion-content>
     <div *ngFor="let note of notes">
-        <ion-item  [class.blue]="!note.seen" (click)="openPost(note.key)">
+        <ion-item  [class.blue]="!note.seen" (click)="openPost(note)">
             <h2><b>{{note.name}}</b></h2>
             <p>{{note.message}}</p>
         </ion-item>

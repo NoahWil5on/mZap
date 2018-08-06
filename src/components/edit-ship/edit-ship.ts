@@ -40,6 +40,7 @@ export class EditShipComponent {
                     firebase.database().ref(`ships/${this.ship}/${data.key}`).set({
                         key: data.key,
                         date: data.date,
+                        arrival: data.arrive,
                         start: self.start,
                         end: self.end,
                         lat: data.lat,

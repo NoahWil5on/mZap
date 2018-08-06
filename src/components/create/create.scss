@@ -1,5 +1,8 @@
 .ios, .md{
     create {
+        .lower{
+            transform: translate(-50%, 50%) !important;
+        }
         ion-col{
             p{
                 position: absolute;

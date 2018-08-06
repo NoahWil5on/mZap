@@ -81,7 +81,7 @@ export class TranslatorProvider {
             verify: "Verifying User...",
             anonymousAlertTitle: "Sign in anonymously",
             anonymousAlertSubTitle: "When signed in anonymously you can view other's posts but you cannot interact with or create them",
-            ok: "OK"
+            ok: "OK",
         },
         map: {
             go: "Go",
@@ -97,7 +97,8 @@ export class TranslatorProvider {
             cndDescription: "Report a citing of stray animals",
             fix: "Fix it",
             ok: "OK",
-            cancel: "Cancel"
+            cancel: "Cancel",
+            edit: "Edit"
         },
         profile: {
             profile: "Profile",
@@ -122,7 +123,10 @@ export class TranslatorProvider {
             openAlb: "Open Album",
             register: "Register",
             fill: "Be sure to fill out all fields",
-            identical: "Passwords must be identical"
+            identical: "Passwords must be identical",
+            key: "Login Key*",
+            creating: "Creating Account...",
+            badKey: "Incorrect login key"
         },
         reports: {
             reports: "Reports",
@@ -251,6 +255,11 @@ export class TranslatorProvider {
             from: "From:",
             to: "To:"
         },
+        shipMenu: {
+            mark: "Mark Ferry Location",
+            schedule: "View Ferry Schedule",
+            punctual: "Punctuality"
+        },
         report: {
             sent: "Report Sent",
             error: "An Error Occurred",
@@ -302,8 +311,8 @@ export class TranslatorProvider {
             errorImage: "*Añadir una foto del incidente*",
             leaveTitle: "¿Estás seguro de que quieres abandonar esta publicación?",
             leaveSubTitle: "La foto que has enviado no se guardará",
-            leave: "Dejo",
-            stay: "Quedo"
+            leave: "sí",
+            stay: "no"
         },
         confirmation: {
             success: "¡Envio Exitoso!",
@@ -372,6 +381,7 @@ export class TranslatorProvider {
             ok: "OK",
             fix: "Arreglar",
             cancel: "Cancelar",
+            edit: "Editar"
         },
         profile: {
             profile: "Perfíl",
@@ -396,7 +406,10 @@ export class TranslatorProvider {
             openAlb: "Abrir Album",
             register: "Registrarse",
             fill: "Asegúrese de llenar todos los espacios",
-            identical: "Las contraseñas debe ser idénticas"
+            identical: "Las contraseñas debe ser idénticas",
+            key: "Clave de Acceso*",
+            creating: "Creando Cuenta...",
+            badKey: "clave de inicio de sesión incorrecta"
         },
         reports: {
             reports: "Reportes",
@@ -514,8 +527,8 @@ export class TranslatorProvider {
         },
         shipInformation: {
             depTime: "Tiempo de Salida:",
-            from: "Para:",
-            to: "De:"
+            from: "De:",
+            to: "Para:"
         },
         resolve: {
             noPost: "Nadie ha presentado una resolución todavía. Recoge a tus amigos y resuelve este post!",

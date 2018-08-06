@@ -129,10 +129,18 @@ export class MapViewComponent {
                         myStart = start;
                         latLng = new google.maps.LatLng(start.lat, start.lng);
                 }
+                var now = Date.now();
+                var arrive = now + 1000 * 60 * 60 * 1.5;
+
+                if((data.start == 'vq' || data.start == 'cul') &&
+                (data.end == 'vq' || data.end == 'cul')){
+                    arrive = now + 1000 * 60 * 60 * .75;
+                }
 
                 var shipData = {
                     key: "",
-                    date: Date.now(),
+                    date: now,
+                    arrival: arrive,
                     start: data.start,
                     end: data.end,
                     lat: myStart.lat,
@@ -265,37 +273,13 @@ export class MapViewComponent {
             anchor: new google.maps.Point(15, 15),
             scaledSize: new google.maps.Size(30, 30),
         };
-        var end = { lat: 0, lng: 0 };
-        switch (data.end) {
-            case 'faj':
-                end = {
-                    lat: 18.334442,
-                    lng: -65.631465
-                }
-                break;
-            case 'vq':
-                end = {
-                    lat: 18.152701,
-                    lng: -65.444698
-                }
-                break;
-            case 'cul':
-                end = {
-                    lat: 18.30123,
-                    lng: -65.30251
-                }
-                break;
-            case 'cei':
-                end = {
-                    lat: 18.22694,
-                    lng: -65.60559
-                }
-                break;
-            default:
-                break;
-        }
+        var end = this.getEndLocation(data.end);
+        
         var latLng;
         var hour2 = 1000 * 120 * 60;
+        if(data.arrival){
+            hour2 = data.arrival - data.date;
+        }
         if(difference < hour2){
             var lat = data.lat + ((end.lat - data.lat) * difference / hour2);
             var lng = data.lng + ((end.lng - data.lng) * difference / hour2);
@@ -342,6 +326,40 @@ export class MapViewComponent {
                 zIndex: 99
             });
         }
+    }
+    getEndLocation(c_end){
+        var end = {
+            lat: 0, lng: 0
+        };
+        switch (c_end) {
+            case 'faj':
+                end = {
+                    lat: 18.334442,
+                    lng: -65.631465
+                }
+                break;
+            case 'vq':
+                end = {
+                    lat: 18.152701,
+                    lng: -65.444698
+                }
+                break;
+            case 'cul':
+                end = {
+                    lat: 18.30123,
+                    lng: -65.30251
+                }
+                break;
+            case 'cei':
+                end = {
+                    lat: 18.22694,
+                    lng: -65.60559
+                }
+                break;
+            default:
+                break;
+        }
+        return end;
     }
     openShip(data, marker) {
         this.deactivate = true; 

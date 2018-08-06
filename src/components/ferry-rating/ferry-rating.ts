@@ -49,7 +49,7 @@ export class FerryRatingComponent {
                 if(item.val().onTime) positive++;
             });
             if(total > 0){
-                self.rating = ((positive/total) * 100).toFixed(1);
+                self.rating = Math.floor((positive/total) * 100) + "";
             }else{
                 self.rating = '--';
             }

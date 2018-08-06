@@ -17,14 +17,14 @@
         </div>
         <ion-grid class="button-grid" [class.grid-hidden]="!dropDown">
             <ion-row>
-                <ion-col col-3 *ngIf="!userInfo.isApp">
+                <ion-col col-3>
                 </ion-col>
-                <ion-col col-3 *ngIf="userInfo.isApp">
+                <!-- <ion-col col-3 *ngIf="userInfo.isApp">
                     <button ion-button (click)="doShare()">
-                        <!-- <ion-icon name="hammer"></ion-icon> -->
+                        <ion-icon name="hammer"></ion-icon>
                         <span>{{translate.text.other.share}}</span>
                     </button>
-                </ion-col>
+                </ion-col> -->
                 <ion-col col-3>
                     <button ion-button (click)="openResolve()">
                         <!-- <ion-icon name="hammer"></ion-icon> -->
@@ -65,7 +65,7 @@
             <ion-row>
                 <ion-col col-4>
                     <button *ngIf="userInfo.activeShipData && afAuth.auth.currentUser && afAuth.auth.currentUser.uid === userInfo.activeShipData.id" ion-button (click)="mapPage.editShip = true">
-                        <span>{{translate.text.map.fix}}</span>
+                        <span>{{translate.text.map.edit}}</span>
                     </button>
                 </ion-col>
                 <ion-col col-4>

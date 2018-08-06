@@ -6,14 +6,14 @@
                 <label>
                     <input #file type="file" accept="image/*" capture="camera" class="fileInput"/>
                 </label>
-                <p>{{translate.text.add.openCam}}</p>
+                <p [class.no-show]="add.dataSet">{{translate.text.add.openCam}}</p>
             </ion-col>
             <ion-col col-6 text-center>
                     <img src="assets/new/album.png"/>
                 <label>
                     <input #file1 type="file" accept="image/*" class="fileInput"/>
                 </label>
-                <p>{{translate.text.add.openAlb}}</p>
+                <p [class.no-show]="add.dataSet">{{translate.text.add.openAlb}}</p>
             </ion-col>
         </ion-row>
         <ion-row [class.hidden]="!userInfo.isApp">
@@ -21,13 +21,13 @@
                 <button ion-button clear (click)="cameraRequest()">
                     <img src="assets/new/camera.png"/>
                 </button>
-                <p>{{translate.text.add.openCam}}</p>
+                <p [class.no-show]="add.dataSet">{{translate.text.add.openCam}}</p>
             </ion-col>
             <ion-col col-6 text-center>
                 <button ion-button clear (click)="albumRequest()">
                     <img src="assets/new/album.png"/>
                 </button>
-                <p>{{translate.text.add.openAlb}}</p>
+                <p [class.no-show]="add.dataSet">{{translate.text.add.openAlb}}</p>
             </ion-col>
         </ion-row>
     </ion-grid>

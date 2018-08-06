@@ -34,7 +34,8 @@
         </div>
     </div>
     <div id="app">
-        <div id="modal">
+        <!--Delete Report-->
+        <div id="modal-delete" class="modal">
             <div class="modal-content">
                 <p>Are you sure you want to permanently delete this content?</p>
                 <div class="modal-buttons">
@@ -43,36 +44,72 @@
                 </div>
             </div>
         </div>
-        <h2>Reports <span style="color: red; font-size: 12pt; margin-left: 40px;">*reports in red have been deleted*<span></h2>
-        <button id="logout">Log Out</button>
-        <div id="reports">
-            <!-- <div class="report">
-                <div class="holder-div">
-                    <div class="div-3">
-                        <div style="margin-top: 30px">
-                            <label>Seen</label>
-                            <input type="checkbox" value="false" />
-                        </div>
-                    </div>
-                    <div class="div-6">
-                        <p><span>Reported By:</span> ajkld;fsjskdf</p>
-                        <p><span>Reporters Email:</span> ajkld;fsjskdf</p>
-                        <p><span>Post ID:</span> ajkld;fsjskdf</p>
-                        <p><span>Poster's ID:</span> ajkld;fsjskdf</p>
-                    </div>
-                    <div class="div-3">
-                        <div>
-                            <button>View Image</button>
-                        </div>
-                        <div>
-                            <button>Delete Post</button>
-                        </div>
-                        <div>
-                            <button>Delete Report</button>
-                        </div>
-                    </div>
+        <!--Gen Key-->
+        <div id="modal-keyGen" class="modal">
+            <div class="modal-content" style="height: 150px">
+                <p>Enter the amount of keys you'd like to generate (1-100)</p>
+                <input id="gen-number" type="number" min="1" max="100" step="1" />
+                <p class="keyNumber"></p>
+                <div class="modal-buttons">
+                    <button id="cancel-gen">Cancel</button>
+                    <button id="generate">Generate</button>
                 </div>
-            </div> -->
+            </div>
+        </div>
+        <!--Get Key-->
+        <div id="modal-getKey" class="modal">
+            <div class="modal-content">
+                <p id="keyVal"></p>
+                <p class="keyNumber"></p>
+                <div class="modal-buttons">
+                    <button id="cancel-get">Cancel</button>
+                    <button id="get-key">Get Key</button>
+                </div>
+            </div>
+        </div>
+        <div id="menu">
+            <div class="content">
+                <h2>Menu</h2>
+                <button onclick="openKeyModal()">Generate Login Keys</button>
+                <button onclick="openGetKeyModal()">Get Login Key</button>
+            </div>
+        </div>
+        <div id="main">
+            <h2 class="title">Reports</h2>
+            <div class="key">
+                <p class="red">*reports in red have been deleted*</p>
+                <p class="blue">*reports in blue are new*</p>
+            </div>
+            <button id="logout">Log Out</button>
+            <div id="reports">
+                <!-- <div class="report">
+                    <div class="holder-div">
+                        <div class="div-3">
+                            <div style="margin-top: 30px">
+                                <label>Seen</label>
+                                <input type="checkbox" value="false" />
+                            </div>
+                        </div>
+                        <div class="div-6">
+                            <p><span>Reported By:</span> ajkld;fsjskdf</p>
+                            <p><span>Reporters Email:</span> ajkld;fsjskdf</p>
+                            <p><span>Post ID:</span> ajkld;fsjskdf</p>
+                            <p><span>Poster's ID:</span> ajkld;fsjskdf</p>
+                        </div>
+                        <div class="div-3">
+                            <div>
+                                <button>View Image</button>
+                            </div>
+                            <div>
+                                <button>Delete Post</button>
+                            </div>
+                            <div>
+                                <button>Delete Report</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
         </div>
     </div>
 </body>

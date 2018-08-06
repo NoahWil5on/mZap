@@ -29,7 +29,15 @@ export class NotificationsPage {
               name: item.val().name,
               seen: item.val().seen,
               time: item.val().time,
+              postType: "positions",
+              shipNumber: "",
               key: post.key
+            }
+            if(item.val().postType){
+                note.postType = item.val().postType;
+            }
+            if(item.val().shipNumber){
+                note.shipNumber = item.val().shipNumber;
             }
             self.notes.push(note);
             if(!note.seen){
@@ -52,10 +60,16 @@ export class NotificationsPage {
     });
     firebase.database().ref(`notifications/${this.afAuth.auth.currentUser.uid}`).update({count: 0});
   }
-  openPost(key){
+  openPost(data){
     var self = this;
     this.navCtrl.setRoot(MapPage);
-    firebase.database().ref(`/positions/${key}`).once('value', snapshot => {      
+
+    var refLocation = `/positions/${data.key}`;
+    if(data.postType = 'ships'){
+        refLocation = `/${data.postType}/${data.shipNumber}/${data.key}`;
+    }
+
+    firebase.database().ref(refLocation).once('value', snapshot => {      
       self.userInfo.activeData = snapshot.val();    
     }).then(() => {
       self.userInfo.lat = self.userInfo.activeData.lat;

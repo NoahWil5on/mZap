@@ -29,6 +29,7 @@ export class SettingsPage {
     comments: boolean = true;
     resolves: boolean = true;
     likes: boolean = true;
+    ship: boolean = false;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider, public click: ClickProvider, public userInfo: UserInfoProvider) {
         this.storage.get('mzap_language').then(language => {
@@ -62,6 +63,12 @@ export class SettingsPage {
             else{
                 this.likes = true;
             }
+            if(snapshot.hasChild('notifyFerries')){
+                this.ship = snapshot.val().notifyFerries
+            }
+            else{
+                this.ship = false;
+            }
         });
     }
 
@@ -73,7 +80,8 @@ export class SettingsPage {
             notifyComments: this.comments,
             notifyMyPosts: this.myPost,
             notifyResolves: this.resolves,
-            notifyLikes: this.likes
+            notifyLikes: this.likes,
+            notifyFerries: this.ship
         })
     }
     //sign user out if signed in

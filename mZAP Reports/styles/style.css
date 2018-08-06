@@ -3,6 +3,15 @@
     padding: 0;
     font-family: sans-serif;
 }
+.title, .key{
+    display: inline-block;
+}
+.key .red{
+    color: red;
+}
+.key .blue{
+    color: blue;
+}
 #login{
     width: 100%;
     height: 100vh;
@@ -47,6 +56,7 @@
     font-size: 10pt;
 }
 #app{
+    font-size: 0pt;
     display: none;
 }
 h2{
@@ -64,6 +74,7 @@ h2{
     background-color: rgb(197, 227, 255)
 }
 p{
+    font-size: 12pt;
     margin: 0;
 }
 p span{
@@ -103,12 +114,18 @@ input[type='checkbox']:hover{
 button:hover{
     cursor: pointer;
 }
-#modal{
+.modal{
     background-color: rgba(0,0,0,.5);
     position: absolute;
     height: 100vh;
     width: 100%;
     display: none;
+}
+.modal-content .special{
+    color: blue;
+}
+.keyNumber{
+    margin-top: 10px;
 }
 .modal-content{
     padding: 10px;
@@ -120,6 +137,12 @@ button:hover{
     top: 50%;
     transform: translate(-50%, -50%);
 }
+.modal-content input{
+    border: solid 1px greenyellow;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+}
 .modal-buttons{
     position: absolute;
     bottom: 20px;
@@ -129,6 +152,34 @@ button:hover{
 }
 .modal-buttons button{
     padding: 5px;
+}
+#menu{
+    vertical-align: top;
+    width: 20%;
+    display: inline-block;
+    font-size: 12pt;
+}
+#menu h2{
+    background-color: #eee;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+#menu .content{
+    border-right: 1px solid black;
+    height: 100vh;
+}
+#menu button{
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    background-color: #79f132;
+    font-weight: bold;
+}
+#main{
+    vertical-align: top;
+    width: 80%;
+    display: inline-block;
+    font-size: 12pt;
 }
 /* .div-center{
     display: inline-block;

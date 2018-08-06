@@ -87,7 +87,12 @@ export class FerryComponent {
                 }else{
                     time = `${minutes} ${this.translate.text.shipReport.minutes}`;
                 }
-                if (difference < 1000 * 60 * 90) {
+                var targetTime = 1000 * 60 * 90;
+
+                if(snap.arrival){
+                    targetTime = snap.arrival - snap.date;
+                }
+                if (difference < targetTime) {
                     var noReport = this.alertCtrl.create({
                         title: this.translate.text.shipReport.oops,
                         subTitle: `${this.translate.text.shipReport.made} ${time}`,

@@ -1,5 +1,5 @@
 //vanilla ionic imports
-import { Component, ViewChild, NgZone, Input } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { Platform, MenuController, Nav, Events } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { StatusBar } from '@ionic-native/status-bar';

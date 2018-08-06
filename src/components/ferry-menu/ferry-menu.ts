@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MapPage } from '../../pages/map/map';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
-import { TranslatorProvider } from '../../providers/translator/translator';
+// import { TranslatorProvider } from '../../providers/translator/translator';
 import { UserInfoProvider } from '../../providers/user-info/user-info';
 
 import { AngularFireAuth } from 'angularfire2/auth';

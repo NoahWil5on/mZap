@@ -2,7 +2,7 @@
     <div id="shader" (click)="close()">
     </div>
     <!-- All content ends up in 'main' -->
-    <div id="main">
+    <div id="main" [class.create]="mapPage.loginState != 'login'">
         <!-- here the check and sometimes ex button are held -->
         <ion-grid id="check-button">
             <ion-row>
