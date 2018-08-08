@@ -24,7 +24,18 @@ import { ReportComponent } from '../../components/report/report';
 import { ShareComponent } from '../../components/share/share';
 import { FerryMenuComponent } from '../../components/ferry-menu/ferry-menu';
 import { FerryRatingComponent } from '../../components/ferry-rating/ferry-rating';
+// import{ ComponentsModule } from '../../components/components.module';
 
+// @NgModule({
+//     declarations: [
+//       MapPage],
+//     imports: [
+//         IonicPageModule.forChild(MapPage)
+//     ],
+//     exports: [
+//       MapPage
+//     ]
+//   })
 @NgModule({
   declarations: [
     MapPage,

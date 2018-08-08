@@ -71,6 +71,7 @@ import { HomePageModule } from '../pages/home/home.module';
 import { EditPostPageModule } from '../pages/edit-post/edit-post.module';
 import { AboutPageModule } from '../pages/about/about.module';
 import { NotificationsPageModule} from '../pages/notifications/notifications.module';
+// import { ComponentsModule } from '../components/components.module';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAm-f7wqiP0Qa-FifoqrVa0rlCC1iZG3xk",
@@ -80,23 +81,6 @@ export const firebaseConfig = {
   storageBucket: "mzap-45cd2.appspot.com",
   messagingSenderId: "550547782302"
 };
-// const cloudSettings: CloudSettings = {
-//   'core': {
-//     'app_id': '88f11293',
-//   },
-//   'push': {
-//     'sender_id': '550547782302',
-//     'pluginConfig': {
-//       'ios': {
-//         'badge': true,
-//         'sound': true
-//       },
-//       'android': {
-//         'iconColor': '#343434'
-//       }
-//     }
-//   }
-// };
 
 @NgModule({
   declarations: [
