@@ -1,5 +1,6 @@
 <div id="shader" (click)="closeOut()"></div>
 <div id="main" #main>
+    <h2 text-center>{{translate.text.shipMenu.title}}</h2>
     <ion-grid class="nav-buttons">
         <ion-row>
             <ion-col text-center>
@@ -10,8 +11,8 @@
         </ion-row>
     </ion-grid>
     <div class="ferry-menu-buttons">
-        <button class="ferry-menu-button" (click)="doMark()">Mark Ferry Location</button>
-        <button class="ferry-menu-button" (click)="doSchedule()">View Ferry Schedule</button>
-        <button class="ferry-menu-button" (click)="doRating()">Punctuallity</button>
+        <button class="ferry-menu-button" (click)="doMark()">{{translate.text.shipMenu.report}}</button>
+        <button class="ferry-menu-button" (click)="doSchedule()">{{translate.text.shipMenu.schedule}}</button>
+        <button class="ferry-menu-button" (click)="doRating()">{{translate.text.shipMenu.punctual}}</button>
     </div>    
 </div>

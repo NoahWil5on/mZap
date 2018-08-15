@@ -42,7 +42,7 @@
         </div>
         <div class="background">
             <button class="menu-button" (click)="notifications()" [class.nav-item]="checkPage('notifications')">
-                Notifications
+                {{translate.text.menu.notifications}}
             </button>
             <div class="notification" *ngIf="notificationCount != 0">
                 <p>{{notificationCount}}</p>
@@ -53,11 +53,11 @@
                 {{translate.text.menu.reports}}
             </button>
         </div>
-        <div class="background">
+        <!-- <div class="background">
             <button class="menu-button" (click)="topRated()" [class.nav-item]="checkPage('top')">
                 {{translate.text.menu.rankings}}
             </button>
-        </div>
+        </div> -->
         <div class="background">
             <button class="menu-button" (click)="settings()" [class.nav-item]="checkPage('settings')">
                 {{translate.text.menu.settings}}

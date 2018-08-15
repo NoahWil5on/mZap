@@ -17,6 +17,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { SettingsPage } from '../pages/settings/settings';
 import { ReportsPage } from '../pages/reports/reports';
 import { NotificationsPage } from '../pages/notifications/notifications';
+import { ConsentPage } from '../pages/consent/consent';
 //import { HomePage } from '../pages/home/home';
 
 //provider imports
@@ -73,10 +74,17 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
                     default: 
                         this.translate.selectLanguage(this.translate.es);
                         break;
-                }                
-                if(this.rootPage != MapPage){
-                    this.rootPage = MapPage;
-                }
+                }  
+                this.storage.get('mzap_password').then(pass => {
+                    if(!pass || pass == ''){
+                        this.rootPage = ConsentPage;
+                    }else{
+                        this.rootPage = MapPage;
+                    }
+                }).catch(e => {
+                    this.rootPage = ConsentPage;
+                });              
+                
                 // this.rootPage = MapPage;
                 //this.runLogin();
             });

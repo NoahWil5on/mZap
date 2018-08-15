@@ -3,7 +3,7 @@
         .ferry-menu-buttons{
             position: absolute;
             width: 100%;
-            top: calc(50% - 10px);
+            top: calc(50% + 10px);
             transform: translate(0, -50%);
             .ferry-menu-button{
                 padding: 8px;
@@ -17,6 +17,10 @@
                 text-align: center;
                 margin: 22px auto;
             }
+        }
+        h2{
+            color: #444;
+            font-size: 14pt;
         }
         #shader{
             width: 100vw;
@@ -35,20 +39,20 @@
             transform: translate(-50%,120%);
             background-color: white;
             //padding-top: 40px;
-            width: 280px;
-            height: 240px;
+            width: 290px;
+            height: 270px;
             @media screen and (min-device-width: 360px) {
                 width: 300px;
-                height: 240px;
+                height: 270px;
             }
             @media screen and (min-device-width: 500px) {
                 width: 400px;
-                height: 250px;
+                height: 280px;
                 transform: translate(-50%,140%);
             }
             @media screen and (min-device-width: 800px) {
                 width: 500px;
-                height: 300px;
+                height: 320px;
                 transform: translate(-50%,150%);
             }
             transition: all .5s;

@@ -4,6 +4,7 @@
       <button ion-button clear (click)="selectTrue(type.type)" [class.glow]="type.selected">
         <img [src]='type.url'/>
       </button>
+      <p>{{translateType(type.type)}}</p>
     </ion-col>
   </ion-row>
 </ion-grid>

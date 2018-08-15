@@ -101,9 +101,10 @@ export class CreateComponent {
                 url: this.url
             }).then(_ => {
                 loader.dismiss();
-                this.userInfo.loggedIn = true;
-                this.mapPage.loginShow = false;
-                this.mapPage.tut = true;
+                // this.userInfo.loggedIn = true;
+                // this.mapPage.loginShow = false;
+                // this.mapPage.tut = true;
+                this.mapPage.loginState = 'survey';
             });
         });
     }
@@ -126,11 +127,11 @@ export class CreateComponent {
             this.addPhoto();
             return
         }
-        this.verifyKey().then(res => {
-            if(!res){
-                this.error = this.translate.text.register.badKey;
-                return;
-            }
+        // this.verifyKey().then(res => {
+            // if(!res){
+            //     this.error = this.translate.text.register.badKey;
+            //     return;
+            // }
             var loader = this.loadingCtrl.create({
                 content: this.translate.text.register.creating
             });
@@ -138,7 +139,7 @@ export class CreateComponent {
             this.startTrue = false;
             /*Create user*/
             this.afAuth.auth.createUserWithEmailAndPassword(this.email, this.pass1).then(_ => {
-                firebase.database().ref(`loginKeys/${this.keyId}`).remove();
+                // firebase.database().ref(`loginKeys/${this.keyId}`).remove();
                 /*add user display name*/
                 this.afAuth.auth.currentUser.updateProfile({
                     displayName: this.name,
@@ -197,7 +198,7 @@ export class CreateComponent {
                 loader.dismiss();
                 return;
             });
-        });
+        // });
     }
     /*Fetch image from camera*/
     cameraRequest() {

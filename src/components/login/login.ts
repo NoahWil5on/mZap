@@ -2,6 +2,7 @@
 import { Component, NgZone } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController, MenuController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 //page imports
 import { MapPage } from '../../pages/map/map';
@@ -35,7 +36,7 @@ export class LoginComponent {
     forgotComponent: any;
     press: boolean = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public alertCtrl: AlertController, public afDB: AngularFireDatabase, public userInfo: UserInfoProvider, public loadingCtrl: LoadingController, public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider, public click: ClickProvider, public mapPage: MapPage, public ngZone: NgZone, public images: ImagesProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public alertCtrl: AlertController, public afDB: AngularFireDatabase, public userInfo: UserInfoProvider, public loadingCtrl: LoadingController, public menuCtrl: MenuController, private storage: Storage, public translate: TranslatorProvider, public click: ClickProvider, public mapPage: MapPage, public ngZone: NgZone, public images: ImagesProvider, public inAppBrowser: InAppBrowser) {
         this.menuCtrl.enable(false);
 
         this.storage.get('mzap_language').then(language => {
@@ -163,6 +164,7 @@ export class LoginComponent {
             loader.dismiss();
             this.runUser(this.afAuth.auth.currentUser);
         }).catch(e => {
+            console.log('bad');
             loader.dismiss();
             this.error = e.message;
         });
@@ -210,10 +212,38 @@ export class LoginComponent {
     languageClick() {
         this.click.click('settingsSelectLanguage');
     }
-    skip(){
+    skipSurvey(){
+        var surveyAlert = this.alertCtrl.create({
+            title: "Important! Please complete the survey.",
+            subTitle: 'Please click "survey". The first 200 users to fill out this survey will receive a $5 Amazon Gift Card',
+            buttons: [{
+                text: 'Skip',
+                handler: () => {
+                    this.userInfo.loggedIn = true;
+                    this.mapPage.loginShow = false;
+                    this.mapPage.tut = true;
+                }
+            },{
+                text: 'Survey',
+                handler: () => {
+                    this.doSurvey();
+                }
+            }]
+        });   
+        surveyAlert.present();     
+    }
+    doSurvey(){
         this.userInfo.loggedIn = true;
         this.mapPage.loginShow = false;
         this.mapPage.tut = true;
+        if(this.userInfo.isApp){
+            this.inAppBrowser.create('https://docs.google.com/document/d/1mQW-GGq9E0DQG-EoR-bEdC_wHyRDjq8Hm2SLRjATZYo/edit?usp=sharing', '_blank', 'location=yes');
+        }else{
+            window.open('https://docs.google.com/document/d/1mQW-GGq9E0DQG-EoR-bEdC_wHyRDjq8Hm2SLRjATZYo/edit?usp=sharing', '_system');
+        }
+    }
+    skip(){
+        this.mapPage.loginState = 'survey';
     }
     checkInput() {
         switch (this.mapPage.loginState) {
@@ -232,7 +262,7 @@ export class LoginComponent {
         if(!this.create){
             this.bounce = true;
         }
-        if(this.mapPage.loginState == 'login')
+        if(this.mapPage.loginState == 'login' || this.mapPage.loginState == 'survey')
             return false;
         if(this.create){
             if(!this.bounce){

@@ -51,6 +51,7 @@ import { HomePage } from '../pages/home/home';
 import { EditPostPage } from '../pages/edit-post/edit-post';
 import { AboutPage } from '../pages/about/about';
 import { NotificationsPage } from '../pages/notifications/notifications';
+import { ConsentPage } from '../pages/consent/consent';
 
 /*Import all modules (Ionic SHOULD do this for you but it doesn't which causes an error)*/
 import { LoginPageModule } from '../pages/login/login.module';
@@ -71,7 +72,7 @@ import { HomePageModule } from '../pages/home/home.module';
 import { EditPostPageModule } from '../pages/edit-post/edit-post.module';
 import { AboutPageModule } from '../pages/about/about.module';
 import { NotificationsPageModule} from '../pages/notifications/notifications.module';
-// import { ComponentsModule } from '../components/components.module';
+import { ConsentPageModule } from '../pages/consent/consent.module';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAm-f7wqiP0Qa-FifoqrVa0rlCC1iZG3xk",
@@ -111,7 +112,8 @@ export const firebaseConfig = {
     HomePageModule,
     EditPostPageModule,
     AboutPageModule,
-    NotificationsPageModule
+    NotificationsPageModule,
+    ConsentPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -133,7 +135,8 @@ export const firebaseConfig = {
     HomePage,
     EditPostPage,
     AboutPage,
-    NotificationsPage
+    NotificationsPage,
+    ConsentPage
   ],
   providers: [
     File,

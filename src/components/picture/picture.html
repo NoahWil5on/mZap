@@ -1,4 +1,5 @@
 <div class="pic-component-div" [class.data-set]="add.dataSet">
+    <p *ngIf="!add.dataSet" class="photo-title">{{translate.text.add.photoTitle}}</p>
     <ion-grid no-padding>
         <ion-row [class.hidden]="userInfo.isApp">
             <ion-col col-6 text-center>

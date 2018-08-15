@@ -3,6 +3,8 @@ import { Events } from 'ionic-angular';
 
 import { AddComponent } from '../add/add';
 
+import { TranslatorProvider } from '../../providers/translator/translator';
+
 @Component({
   selector: 'type',
   templateUrl: 'type.html'
@@ -10,7 +12,7 @@ import { AddComponent } from '../add/add';
 export class TypeComponent {
   types: any = [];
 
-  constructor(public add: AddComponent, public events: Events) {
+  constructor(public add: AddComponent, public events: Events, public translate: TranslatorProvider) {
     this.types.push({
       url: 'assets/images/buttons/cnd.png',
       type: 'cnd',
@@ -69,6 +71,9 @@ export class TypeComponent {
     if(this.add.type != undefined){
       this.checkSelection();
     }
+  }
+  translateType(type){
+      return this.translate.text.other[type];
   }
   checkSelection(){
     this.types.forEach(type => {

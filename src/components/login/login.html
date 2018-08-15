@@ -2,7 +2,7 @@
     <div id="shader" (click)="close()">
     </div>
     <!-- All content ends up in 'main' -->
-    <div id="main" [class.create]="mapPage.loginState != 'login'">
+    <div id="main" [class.create]="mapPage.loginState == 'create' || error.length > 0" [class.survey]="mapPage.loginState == 'survey'">
         <!-- here the check and sometimes ex button are held -->
         <ion-grid id="check-button">
             <ion-row>
@@ -17,10 +17,13 @@
                     </button>
                 </ion-col>
                 <ion-col text-center>
+                    <button ion-button clear (click)="skipSurvey()" *ngIf="mapPage.loginState == 'survey'">
+                        <img src="assets/images/buttons/arrow.png" />
+                    </button>
                     <button ion-button clear (click)="skip()" *ngIf="checkCreate()">
                         <img src="assets/images/buttons/arrow.png" />
                     </button>
-                    <button ion-button clear (click)="submit()" [disabled]="!checkInput(press)" *ngIf="!checkCreate()">
+                    <button ion-button clear (click)="submit()" [disabled]="!checkInput(press)" *ngIf="!checkCreate() && mapPage.loginState != 'survey'">
                         <img src="assets/images/buttons/check.png" />
                     </button>
                 </ion-col>
@@ -35,7 +38,7 @@
             />
             <input type="password" style="background-color: none" [(ngModel)]="password" [placeholder]="translate.text.login.password"
             />
-            <!-- <p class="error">{{error}}</p> -->
+            <p class="error">{{error}}</p>
             <div id="nav-buttons">
                 <button ion-button clear (click)="mapPage.loginState = 'forgot'">{{translate.text.login.forgot}}</button>
                 <button ion-button clear (click)="mapPage.loginState = 'create'">{{translate.text.login.signUp}}</button>
@@ -55,6 +58,12 @@
                 <img src="assets/images/logo.png" />
             </div>
             <create></create>
+        </div>
+        <div *ngIf="mapPage.loginState == 'survey'" class="section">
+            <div class="survey-div">
+                <button class="survey-button" (click)="doSurvey()">Survey</button>
+                <p>The first 200 users to fill out this survey will recieve a <span>$5 Amazon gift card</span></p>
+            </div>
         </div>
     </div>
 </div>

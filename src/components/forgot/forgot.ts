@@ -30,11 +30,11 @@ export class ForgotComponent {
 
     this.error = "";
     var self = this
-    this.afAuth.auth.sendPasswordResetEmail(this.email).then(function() {
+    this.afAuth.auth.sendPasswordResetEmail(this.email).then(() => {
       loader.dismiss();
       var sent = self.alertCtrl.create({
-        title: this.translate.text.forgot.sent,
-        subTitle: this.translate.text.forgot.check,
+        title: self.translate.text.forgot.sent,
+        subTitle: self.translate.text.forgot.check,
         buttons: ['OK']
       });
       sent.present();

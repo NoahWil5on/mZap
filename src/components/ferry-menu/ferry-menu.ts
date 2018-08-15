@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MapPage } from '../../pages/map/map';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
-// import { TranslatorProvider } from '../../providers/translator/translator';
+import { TranslatorProvider } from '../../providers/translator/translator';
 import { UserInfoProvider } from '../../providers/user-info/user-info';
 
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -14,7 +14,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class FerryMenuComponent {
     @ViewChild('main') main;
 
-    constructor(public mapPage: MapPage, public userInfo: UserInfoProvider, public inAppBrowser: InAppBrowser, public afAuth: AngularFireAuth) {
+    constructor(public mapPage: MapPage, public userInfo: UserInfoProvider, public inAppBrowser: InAppBrowser, public afAuth: AngularFireAuth, public translate: TranslatorProvider) {
         setTimeout(() => {
             this.main.nativeElement.style.transform = "translate(-50%,-50%)";
         }, 10);

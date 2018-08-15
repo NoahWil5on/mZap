@@ -1,5 +1,13 @@
 .ios, .md{
     picture {
+        .photo-title{
+            width: 80%;
+            margin: 5px auto;
+            font-size: 16pt;
+            font-style: italic;
+            text-align: center;
+            color: #444;
+        }
         .data-set{
             height: 66% !important;
             top: 100% !important;

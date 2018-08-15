@@ -1,5 +1,5 @@
 <div id="shader" (click)="notify()"></div>
-<div id="main" #main [class.not-type]="state != 'type'">
+<div id="main" #main [class.not-type]="state != 'type' && state != 'share'" [class.share]="state == 'share'">
   <ion-grid class="nav-buttons" *ngIf="state != 'share'">
     <ion-row>
       <ion-col text-center>
@@ -49,8 +49,8 @@
   <div class="hidden" [class.show]="state == 'share'">
     <div class="thanks">
       <h2 text-center padding>{{translate.text.add.thanks}}</h2>
-      <p text-center>{{translate.text.add.share}}</p>
-      <ion-grid *ngIf="userInfo.isApp">
+      <!-- <p text-center>{{translate.text.add.share}}</p> -->
+      <!-- <ion-grid *ngIf="userInfo.isApp">
         <ion-row>
           <ion-col text-center>
             <button ion-button icon-only clear (click)='shareTwitter()'>
@@ -68,7 +68,7 @@
               </button>
           </ion-col>
         </ion-row>
-      </ion-grid>
+      </ion-grid> -->
     </div>
   </div>
 </div>

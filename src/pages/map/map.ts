@@ -34,7 +34,7 @@ export class MapPage {
     tut: boolean = false;
 
     mapView: any;
-    loginState: string = 'login';
+    loginState: string = 'login'; //default 'login'
     mapState: string = "comment";
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public userInfo: UserInfoProvider, public events: Events, private afAuth: AngularFireAuth) {
@@ -74,6 +74,12 @@ export class MapPage {
         });
         this.events.subscribe('login:open', () => {
             this.loginShow = true;
+        });
+        this.events.subscribe('login:create', () => {
+            this.loginShow = true;
+            setTimeout(() => {
+                this.loginState = 'create';  
+            }, 100);            
         });
         this.events.subscribe('tut:open', () => {
             this.tut = true;

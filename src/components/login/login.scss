@@ -38,20 +38,61 @@
         }
         .create{
             width: 280px !important;
-            height: 320px;
+            height: 350px !important;
             @media screen and (min-device-width: 360px) {
                 width: 300px !important;
-                height: 320px !important;
+                height: 350px !important;
             }
             @media screen and (min-device-width: 500px) {
                 width: 400px !important;
-                height: 320px !important;
+                height: 350px !important;
             }
             @media screen and (min-device-width: 800px) {
                 width: 500px !important;
-                height: 320px !important;
+                height: 350px !important;
             }
         }
+        .survey{
+            width: 280px !important;
+            height: 200px !important;
+            @media screen and (min-device-width: 360px) {
+                width: 300px !important;
+                height: 200px !important;
+            }
+            @media screen and (min-device-width: 500px) {
+                width: 400px !important;
+                height: 240px !important;
+            }
+            @media screen and (min-device-width: 800px) {
+                width: 500px !important;
+                height: 250px !important;
+            }
+        }
+        .survey-div{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            .survey-button{  
+                width: 100%;            
+                font-size: 18pt;
+                font-weight: bold;
+                color: white;
+                background-color: #f48a00;
+                padding: 10px 20px;
+                border-radius: 5px;
+            }
+            p{
+                margin-top: 20px;
+                color: black;
+                text-align: center;
+                span{
+                    color: #3fbc05;
+                    font-weight: bold;
+                }
+            }
+        }        
         #logo-div{
             width: 100%;
             border-radius: 4px;

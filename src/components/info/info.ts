@@ -250,11 +250,20 @@ export class InfoComponent {
     return false;
   }
   doCommentInfo(){
-    var alert = this.alertCtrl.create({
-      title: this.translate.text.infoWindow.aboutTitle,
-      message: this.translate.text.infoWindow.aboutMessage,
-      buttons: ['OK']
-    });
+    var alert;
+    if(this.mapPage.shipChat){
+        alert = this.alertCtrl.create({
+            title: this.translate.text.infoWindow.aboutTitle,
+            message: this.translate.text.infoWindow.shipAboutMessage,
+            buttons: ['OK']
+        });
+    }else{
+        alert = this.alertCtrl.create({
+            title: this.translate.text.infoWindow.aboutTitle,
+            message: this.translate.text.infoWindow.aboutMessage,
+            buttons: ['OK']
+        });
+    } 
     alert.present();
   }
 }

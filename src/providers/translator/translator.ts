@@ -29,7 +29,8 @@ export class TranslatorProvider {
             leaveTitle: "Are you sure you want to abandon this post?",
             leaveSubTitle: "The photo you've submitted will not be saved",
             leave: "Leave",
-            stay: "Stay"
+            stay: "Stay",
+            photoTitle: "add a photo of what you're reporting"
         },
         confirmation: {
             success: "Successfully Submitted!",
@@ -70,6 +71,7 @@ export class TranslatorProvider {
             info: "Info",
             aboutTitle: "What is the commenting feature?",
             aboutMessage: "When you comment on a post everyone will be able to see your comment. This feature allows community members to better communicate what needs to be done in order to resolve an issue.",
+            shipAboutMessage: "When you comment on a post everyone will be able to see your comment. This feature allows community members to know whats happening with the ships."
         },
         login: {
             email: "Email",
@@ -126,7 +128,8 @@ export class TranslatorProvider {
             identical: "Passwords must be identical",
             key: "Login Key*",
             creating: "Creating Account...",
-            badKey: "Incorrect login key"
+            badKey: "Incorrect login key",
+            sixChar: "Password must be at least 6 characters"
         },
         reports: {
             reports: "Reports",
@@ -162,7 +165,8 @@ export class TranslatorProvider {
             settings: "Settings",
             logout: "Logout",
             share: "Share mZAP",
-            login: "Login"
+            login: "Login",
+            notifications: "Notifications"
         },
         discussion: {
             discussion: "Discussion",
@@ -248,7 +252,9 @@ export class TranslatorProvider {
             oops: "Oops! You can't do that yet",
             made: "Someone recently made a positing about this ship, try again in",
             hours: "1 hour? and ? minute(s)",
-            minutes: "minutes"
+            minutes: "minutes",
+            invalid: "The arrival and departure locations cannot be the same",
+            invalidTitle: "Error: Invalid Entry"
         },
         shipInformation: {
             depTime: "Departure Time:",
@@ -256,9 +262,14 @@ export class TranslatorProvider {
             to: "To:"
         },
         shipMenu: {
-            mark: "Mark Ferry Location",
-            schedule: "View Ferry Schedule",
-            punctual: "Punctuality"
+            title: "Ship Information",
+            report: "Report location",
+            schedule: "View Schedule",
+            punctual: "% Punctual",
+            week: "Week",
+            month: "Month",
+            year: "Year",
+            onTime: "on time"
         },
         report: {
             sent: "Report Sent",
@@ -268,14 +279,21 @@ export class TranslatorProvider {
             confirm: "Reporting this post will send a notification to the developers that could lead to this post being taken down or further action. Are you sure you'd like to do this?",
             cancel: "Cancel"
         },
+        consent: {
+            click: 'By clicking "Join Study" you agree to the terms provided on the information sheet',
+            terms: "Read Information Sheet",
+            join: "Join Study",
+            error: "You must view the information sheet in order to join"
+        },
         other: {
-            cnd: "Cats/Dogs",
+            cnd: "Cats / Dogs",
             complete: "Complete",
             todo: "To Do",
             building: "Abandoned Building",
             pest: "Pests",
             trash: "Trash",
             bug: "Mosquitos",
+            bugs: "Mosquitos",
             water: "Standing Water",
             road: "Blocked Road",
             tree: "Fallen Tree",
@@ -312,7 +330,8 @@ export class TranslatorProvider {
             leaveTitle: "¿Estás seguro de que quieres abandonar esta publicación?",
             leaveSubTitle: "La foto que has enviado no se guardará",
             leave: "sí",
-            stay: "no"
+            stay: "no",
+            photoTitle: "agrega una foto de lo que estás informando"
         },
         confirmation: {
             success: "¡Envio Exitoso!",
@@ -353,6 +372,7 @@ export class TranslatorProvider {
             info: "Detalles",
             aboutTitle: "¿Cuál es la función de comentarios?",
             aboutMessage: "Cuando comenta una publicación, todos podrán ver su comentario. Esta característica permite a los miembros de la comunidad comunicar mejor lo que se debe hacer para resolver un problema.",
+            shipAboutMessage: "Cuando comentas en un post, todas las personas podrán ver su comentario. Esta función permite que los miembros de la comunidad sepan que está pasando con las embarcaciones."
         },
         login: {
             email: "Correo Electrónico",
@@ -409,7 +429,8 @@ export class TranslatorProvider {
             identical: "Las contraseñas debe ser idénticas",
             key: "Clave de Acceso*",
             creating: "Creando Cuenta...",
-            badKey: "clave de inicio de sesión incorrecta"
+            badKey: "clave de inicio de sesión incorrecta",
+            sixChar: "La contraseña debe tener al menos 6 caracteres"
         },
         reports: {
             reports: "Reportes",
@@ -445,7 +466,8 @@ export class TranslatorProvider {
             settings: "Ajustes",
             logout: "Salir",
             share: "Compártelo mZAP",
-            login: "Iniciar"
+            login: "Iniciar",
+            notifications: "Notificaciones"
         },
         discussion: {
             discussion: "Discusión",
@@ -523,12 +545,24 @@ export class TranslatorProvider {
             oops: "¡Uy, por ahora no puedes realizar esto!",
             made: "Alguien recientemente creó un post acerca de esta embarcación, trata nuevamente en",
             hours: "1 hora? y ? minuto(s)",
-            minutes: "minuto(s)"
+            minutes: "minuto(s)",
+            invalid: "Los lugares de llegada y salida no pueden ser iguales",
+            invalidTitle: "Error: Entrada no Válida"
         },
         shipInformation: {
             depTime: "Tiempo de Salida:",
             from: "De:",
             to: "Para:"
+        },
+        shipMenu: {
+            title: "Información Embarcaciónes",
+            report: "Reportar Ubicación",
+            schedule: "Ver Itinerario",
+            punctual: "% Puntualidad",
+            week: "Semana",
+            month: "Mes",
+            year: "Año",
+            onTime: "a tiempo"
         },
         resolve: {
             noPost: "Nadie ha presentado una resolución todavía. Recoge a tus amigos y resuelve este post!",
@@ -546,14 +580,21 @@ export class TranslatorProvider {
             confirm: "¿Al Reportar este “post” se estará enviando una notificación a los desarrolladores del app y se podría eliminar este post. Estás seguro que quieres hacer esto?",
             cancel: "Cancelar"
         },
+        consent: {
+            click: 'Al hacer clic en "Únete Estudio", acepta los términos provistos en la hoja informativa.',
+            terms: "Lea Hoja Informativa",
+            join: "Únete Estudio",
+            error: "Debes ver la hoja Informativa para unirte"
+        },
         other: {
-            cnd: "Gatos/Perros",
+            cnd: "Gatos / Perros",
             complete: "Completar",
             todo: "Incompleto",
             building: "Edificación Abandonada",
             pest: "Plagas",
-            trash: "Desperdicio/Basura",
+            trash: "Desperdicio / Basura",
             bug: "Mosquitos",
+            bugs: "Mosquitos",
             water: "Agua Estancada",
             road: "Camino Bloqueado",
             tree: "Arbol Caido",

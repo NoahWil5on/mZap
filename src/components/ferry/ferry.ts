@@ -108,6 +108,15 @@ export class FerryComponent {
                 }
                 submit.present();
             })
+        }else{
+            var badData = this.alertCtrl.create({
+                title: this.translate.text.shipReport.invalidTitle,
+                subTitle: this.translate.text.shipReport.invalid,
+                buttons: [{
+                    text: 'OK'
+                }]
+            })
+            badData.present();
         }
     }
     closeOut() {

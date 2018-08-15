@@ -7,9 +7,9 @@
         <input type="email" class="text-field" [(ngModel)]="email" name="myEmail" [placeholder]="translate.text.register.email" (keyup)="checkInput(press)"/>
         <input type="password" class="text-field" [(ngModel)]="pass1" name="myPass1" [placeholder]="translate.text.register.pass1" (keyup)="checkInput(press)"/>
         <input type="password" class="text-field" [(ngModel)]="pass2" name="myPass2" [placeholder]="translate.text.register.pass2" (keyup)="checkInput(press)"/>
-        <input type="text" class="text-field" [(ngModel)]="userKey" name="myKey" [placeholder]="translate.text.register.key" (keyup)="checkInput(press)"/>
+        <!-- <input type="text" class="text-field" [(ngModel)]="userKey" name="myKey" [placeholder]="translate.text.register.key" (keyup)="checkInput(press)"/> -->
       </form>
-      <p class="error" style="color: #333" *ngIf="!error || error.length == 0">Password must be at least 6 characters</p>
+      <p class="error" style="color: #333" *ngIf="!error || error.length == 0">{{translate.text.register.sixChar}}</p>
       <p class="error">{{error}}</p>
     </ion-slide>
     <ion-slide>
