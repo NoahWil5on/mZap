@@ -39,7 +39,6 @@
         "@ngx-translate/http-loader": "^0.1.0",
         "angularfire2": "^4.0.0-rc.1",
         "cordova-android": "^6.2.3",
-        "cordova-background-geolocation-lt": "^2.9.1",
         "cordova-ios": "^4.4.0",
         "cordova-plugin-add-swift-support": "^1.6.0",
         "cordova-plugin-background-fetch": "^5.1.1",
@@ -103,14 +102,6 @@
             "cordova-plugin-statusbar": {},
             "cordova-plugin-whitelist": {},
             "ionic-plugin-keyboard": {},
-            "cordova-background-geolocation-lt": {
-                "LICENSE": "4bbb513c013111eae951647fd4f9e79f127fce6f7a00e9d327db9ea2a053a0df",
-                "BACKGROUND_MODE_LOCATION": "<string>location</string>",
-                "LOCATION_ALWAYS_AND_WHEN_IN_USE_USAGE_DESCRIPTION": "[CHANGEME] Always use is required for constant background location-tracking",
-                "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Background location-tracking is required",
-                "LOCATION_WHEN_IN_USE_USAGE_DESCRIPTION": "[CHANGEME] Background location-tracking is required",
-                "MOTION_USAGE_DESCRIPTION": "[CHANGEME] Using the accelerometer increases battery-efficiency by intelligently toggling location-tracking only when the device is detected to be moving"
-            },
             "cordova-plugin-x-socialsharing": {},
             "cordova-plugin-background-mode": {},
             "cordova-sms-plugin": {},

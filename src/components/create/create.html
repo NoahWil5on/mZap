@@ -1,5 +1,5 @@
 <div>
-    <h1 class="add-photo" *ngIf="slides.getActiveIndex() == 1 && !dataSet">Add a profile photo!</h1>
+    <h1 class="add-photo" *ngIf="slides.getActiveIndex() == 1 && !dataSet">{{translate.text.register.photoTitle}}</h1>
   <ion-slides [class.absolute]="dataSet" pager="false">
     <ion-slide>
       <form autocomplete="off">

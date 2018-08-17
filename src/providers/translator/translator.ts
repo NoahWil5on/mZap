@@ -129,7 +129,8 @@ export class TranslatorProvider {
             key: "Login Key*",
             creating: "Creating Account...",
             badKey: "Incorrect login key",
-            sixChar: "Password must be at least 6 characters"
+            sixChar: "Password must be at least 6 characters",
+            photoTitle: "Add a profile photo!"
         },
         reports: {
             reports: "Reports",
@@ -280,9 +281,9 @@ export class TranslatorProvider {
             cancel: "Cancel"
         },
         consent: {
-            click: 'By clicking "Join Study" you agree to the terms provided on the information sheet',
+            click: 'By clicking "Join Project" you agree to the terms provided on the information sheet',
             terms: "Read Information Sheet",
-            join: "Join Study",
+            join: "Join Project",
             error: "You must view the information sheet in order to join"
         },
         other: {
@@ -430,7 +431,8 @@ export class TranslatorProvider {
             key: "Clave de Acceso*",
             creating: "Creando Cuenta...",
             badKey: "clave de inicio de sesión incorrecta",
-            sixChar: "La contraseña debe tener al menos 6 caracteres"
+            sixChar: "La contraseña debe tener al menos 6 caracteres",
+            photoTitle: "¡Agrega una foto de perfil!"
         },
         reports: {
             reports: "Reportes",
@@ -581,10 +583,10 @@ export class TranslatorProvider {
             cancel: "Cancelar"
         },
         consent: {
-            click: 'Al hacer clic en "Únete Estudio", acepta los términos provistos en la hoja informativa.',
+            click: 'Al hacer clic en "Únete al Proyecto", acepta los términos provistos en la hoja informativa.',
             terms: "Lea Hoja Informativa",
-            join: "Únete Estudio",
-            error: "Debes ver la hoja Informativa para unirte"
+            join: "Únete al Proyecto",
+            error: "Debes lea la hoja Informativa para unirte"
         },
         other: {
             cnd: "Gatos / Perros",

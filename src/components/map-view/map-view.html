@@ -100,7 +100,7 @@
         </button>
     </div>
 
-    <div class="nav-div filter" (click)="openFilter()">{{translate.text.filter.filter}}...</div>
+    <div class="nav-div filter" (click)="openFilter()" [class.extra-top]="userInfo.isApp">{{translate.text.filter.filter}}...</div>
     <div class="nav-div nav-div-left">
 
     </div>
