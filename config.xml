@@ -3,7 +3,7 @@
     <name>mZAP</name>
     <description>Environmental risk crowdsourcing app</description>
     <author email="noahwilson.2015@gmail.com" href="http://google.com">mZAP team</author>
-    <content original-src="index.html" src="http://10.162.14.228:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-navigation href="http://10.162.15.249:8100" />
@@ -68,19 +68,20 @@
         <icon height="29" src="resources/ios/icon/icon-small.png" width="29" />
         <icon height="58" src="resources/ios/icon/icon-small@2x.png" width="58" />
         <icon height="87" src="resources/ios/icon/icon-small@3x.png" width="87" />
-        <splash src="res/screen/ios/Default@2x~iphone~anyany.png" />
-        <splash src="res/screen/ios/Default@2x~iphone~comany.png" />
-        <splash src="res/screen/ios/Default@2x~iphone~comcom.png" />
-        <splash src="res/screen/ios/Default@3x~iphone~anyany.png" />
-        <splash src="res/screen/ios/Default@3x~iphone~anycom.png" />
-        <splash src="res/screen/ios/Default@3x~iphone~comany.png" />
-        <splash src="res/screen/ios/Default@2x~ipad~anyany.png" />
-        <splash src="res/screen/ios/Default@2x~ipad~comany.png" />
+        <splash src="resources/ios/splash/Default@2x~iphone~anyany.png" />
+        <splash src="resources/ios/splash/Default@2x~iphone~comany.png" />
+        <splash src="resources/ios/splash/Default@2x~iphone~comcom.png" />
+        <splash src="resources/ios/splash/Default@3x~iphone~anyany.png" />
+        <splash src="resources/ios/splash/Default@3x~iphone~anycom.png" />
+        <splash src="resources/ios/splash/Default@3x~iphone~comany.png" />
+        <splash src="resources/ios/splash/Default@2x~ipad~anyany.png" />
+        <splash src="resources/ios/splash/Default@2x~ipad~comany.png" />
     </platform>
     <allow-navigation href="http://10.162.2.119:8100" />
     <allow-navigation href="http://192.168.0.8:8100" />
     <allow-navigation href="http://10.162.14.228:8100" />
     <engine name="android" spec="^6.2.3" />
+    <engine name="ios" spec="^4.4.0" />
     <plugin name="cordova-background-geolocation-lt" spec="^2.9.1">
         <variable name="LICENSE" value="4bbb513c013111eae951647fd4f9e79f127fce6f7a00e9d327db9ea2a053a0df" />
         <variable name="BACKGROUND_MODE_LOCATION" value="&lt;string&gt;location&lt;/string&gt;" />
