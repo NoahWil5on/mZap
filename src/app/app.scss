@@ -16,8 +16,8 @@
 // automatically applied to the <body> element in the app.
 .ios, .md{
     body{
-        padding-top: constant(safe-area-inset-top);
-        padding-top: env(safe-area-inset-top);
+        padding-top: constant(safe-area-inset-top) !important;
+        padding-top: env(safe-area-inset-top) !important;
     }
     #fill-div{
         width: 100vw;
