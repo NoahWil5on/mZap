@@ -119,7 +119,7 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
             (data) => {
                 if(data.wasTapped){
                     if(data.url){
-                        self.inAppBrowser.create(data.url, '_blank', 'location=yes');
+                        self.inAppBrowser.create(`${data.url}`);
                     }
                 }else{
                     self.vibrate.vibrate(500);    
