@@ -114,14 +114,16 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
         }, 15000);*/
     }
     runSetup(){     
+        var self = this;
           FCMPlugin.onNotification(
             (data) => {
                 if(data.wasTapped){
                     if(data.url){
-                        this.inAppBrowser.create(data.url, '_blank', 'location=yes');
+                        self.inAppBrowser.create(data.url, '_blank', 'location=yes');
                     }
-                }
-                this.vibrate.vibrate(500);
+                }else{
+                    self.vibrate.vibrate(500);    
+                }                
             },
             (e) => {
               console.log("notification error " + e);
