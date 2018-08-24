@@ -481,6 +481,7 @@ function sendNotification(id, data, notifyType) {
         notification: {
             title: header,
             body: message,
+            sound: "default"
         },
         data: {
             type: myType,

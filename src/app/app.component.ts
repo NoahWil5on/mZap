@@ -5,6 +5,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
+import { Vibration } from '@ionic-native/vibration';
 //import { SocialSharing } from '@ionic-native/social-sharing';
 // import { Push, PushToken } from '@ionic/cloud-angular';
 // import { CallNumber } from '@ionic-native/call-number';
@@ -51,7 +52,7 @@ export class MyApp {
     profilePage = ProfilePage;
     settingsPage = SettingsPage;
     
-constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, public events: Events, public ngZone: NgZone, public inAppBrowser: InAppBrowser/*public socialSharing: SocialSharingpublic push: Push private caller: CallNumber*/) {
+constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, public events: Events, public ngZone: NgZone, public inAppBrowser: InAppBrowser, public vibrate: Vibration/*public socialSharing: SocialSharingpublic push: Push private caller: CallNumber*/) {
         platform.ready().then(() => {
 
 
@@ -115,7 +116,12 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
     runSetup(){     
           FCMPlugin.onNotification(
             (data) => {
-              console.log("got data " + data);
+                if(data.wasTapped){
+                    if(data.url){
+                        this.inAppBrowser.create(data.url, '_blank', 'location=yes');
+                    }
+                }
+                this.vibrate.vibrate(500);
             },
             (e) => {
               console.log("notification error " + e);
