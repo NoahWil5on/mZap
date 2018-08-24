@@ -56,6 +56,59 @@ exports.reportTrigger = functions.database.ref('/reports/{userId}/{reportId}').o
         })
     })
 })
+exports.shipCommentTrigger = functions.database.ref('/shipMessages/{postId}/{messageId}').onWrite((change, context) => {
+    var data = change.after.val();
+
+    if (!data.id || data.id == "" || data.id == undefined || data.id == null) return
+    return ref.child(`/subscriptions/${context.params.postId}`).once('value').then(snapshot => {
+        var foundUser = false;
+        if (!snapshot.val()) {
+            ref.child(`/subscriptions/${context.params.postId}`).push(data.id);
+            return;
+        }
+        snapshot.forEach(function (element) {
+            var id = element.val();
+            if (id == data.id) {
+                foundUser = true;
+                return;
+            }
+            checkNotify(id, 'notifyComments', data, context.params.postId);
+        });
+        if (!foundUser) {
+            ref.child(`/subscriptions/${context.params.postId}`).push(data.id);
+            return;
+        }
+    })
+});
+exports.shipPostCreateTrigger = functions.database.ref('/ships/{shipId}/{postId}').onCreate((change, context) => {
+    var data = change.val();
+    if (!data.id || data.id == "" || data.id == undefined || data.id == null) return;
+    return ref.child(`/subscriptions/${context.params.postId}`).push(data.id);
+});
+exports.shipLikeTrigger = functions.database.ref(`/userShipLikes/{userId}/likedPosts/{postId}`).onWrite((change, context) => {
+    var data = Number(change.after.val());
+    return ref.child(`/subscriptions/${context.params.postId}`).once('value').then(snapshot => {
+        var foundUser = false;
+        var myElement;
+        snapshot.forEach(function (element) {
+            var id = element.val();
+            if (id == context.params.userId) {
+                myElement = element;
+                foundUser = true;
+                return;
+            }
+        });
+        if (!foundUser) {
+            if (data > 0) {
+                ref.child(`/subscriptions/${context.params.postId}`).push(context.params.userId);
+            }
+        } else if (myElement) {
+            if (data <= 0) {
+                ref.child(`/subscriptions/${context.params.postId}/${myElement.key}`).remove();
+            }
+        }
+    });
+})
 exports.commentTrigger = functions.database.ref('/messages/{postId}/{messageId}').onWrite((change, context) => {
     var data = change.after.val();
 
@@ -146,7 +199,7 @@ exports.likeTrigger = functions.database.ref(`/userLikes/{userId}/likedPosts/{po
                 ref.child(`/subscriptions/${context.params.postId}`).push(context.params.userId);
             }
         } else if (myElement) {
-            if (data < 0) {
+            if (data <= 0) {
                 ref.child(`/subscriptions/${context.params.postId}/${myElement.key}`).remove();
             }
         }
@@ -219,7 +272,7 @@ exports.notifyShipTrigger = functions.database.ref(`/users/{userId}/notifyFerrie
     var data = change.after.val();
     var user = context.params.userId;
     return ref.child(`/users/${user}/token`).once('value', snap => {
-        if (snap.val()) return;
+        if (!snap.val()) return;
         if (data) {
             return admin.messaging().subscribeToTopic(snap.val(), 'ferries');
         } else {
@@ -331,6 +384,11 @@ function doTime(target, time) {
     
 }
 function checkNotify(id, notifyType, data, postId) {
+    var refLocation = "positions";
+
+    if(data.postType && data.postType == "ships"){
+        refLocation = `ships/${data.shipNumber}`;
+    }
     if (!id || id == "" || id == undefined || id == null) return
     ref.child(`/users/${id}`).once('value', snapshot => {
         if (!snapshot.hasChild(notifyType)) {
@@ -342,7 +400,7 @@ function checkNotify(id, notifyType, data, postId) {
             });
             notify(id, notifyType, data, postId);
         } else {
-            ref.child(`/positions/${postId}`).once('value', snap => {
+            ref.child(`/${refLocation}/${postId}`).once('value', snap => {
                 if (id == snap.val().id) {
                     if (snapshot.val().notifyMyPosts)
                         notify(id, notifyType, data, postId);
@@ -430,11 +488,9 @@ function sendNotification(id, data, notifyType) {
     };
     if(data.topic){
         payload.topic = data.topic;
-    }
-
-    if(payload.topic){
         return admin.messaging().send(payload);
     }
+
     return ref.child(`/users/${id}`).once('value', snapshot => {
         let token = snapshot.val().pushToken;
         if (token && token != undefined && token != null) {

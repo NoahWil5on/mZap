@@ -20,32 +20,32 @@ export class TutorialComponent {
     this.types.push({
       name: this.translate.text.other.trash,
       src: "assets/images/buttons/trash.png",
-      description: "Indicates there is trash in the area that needs to be cleaned up."
+      description: this.translate.text.tutorial.trash
     });
     this.types.push({
       name: this.translate.text.other.pest,
       src: "assets/images/buttons/pest.png",
-      description: "Indicates that there are pests or rodents in the area that need to be taken care of."
+      description: this.translate.text.tutorial.pests
     });
     this.types.push({
       name: this.translate.text.other.building,
       src: "assets/images/buttons/building.png",
-      description: "Indicates that there is an abandoned building in the area"
+      description: this.translate.text.tutorial.building
     });
     this.types.push({
       name: this.translate.text.other.bug,
       src: "assets/images/buttons/bug.png",
-      description: "Indicates that there is a mosquito problem in this area."
+      description: this.translate.text.tutorial.bug
     });
     this.types.push({
       name: this.translate.text.other.cnd,
       src: "assets/images/buttons/cnd.png",
-      description: "Indicates that there are stray or lost animals/pets in the area."
+      description: this.translate.text.tutorial.cnd
     });
     this.types.push({
       name: this.translate.text.other.water,
       src: "assets/images/buttons/droplet.png",
-      description: "Indicates that there is standing water that mosquitos may be using to breed."
+      description: "There is standing water that mosquitos may be using to breed."
     });
     // this.types.push({
     //   name: this.translate.text.other.road,

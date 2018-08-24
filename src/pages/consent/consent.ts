@@ -64,10 +64,9 @@ export class ConsentPage {
         this.consent = true;
         this.error = "";
         if(this.userInfo.isApp){
-            this.inAppBrowser.create('https://www.rit.edu/infocenter/sites/rit.edu.infocenter/files/images/2018-19%20calendar%20%2B%207-week%20calendar%205318.pdf', '_blank', 'location=yes');
+            this.inAppBrowser.create('https://mzap.org/consent.pdf', '_blank', 'location=yes');
         }else{
-            window.open('https://www.rit.edu/infocenter/sites/rit.edu.infocenter/files/images/2018-19%20calendar%20%2B%207-week%20calendar%205318.pdf', '_system');
+            window.open('https://mzap.org/consent.pdf', '_system');
         }
     }
-    // "https://www.rit.edu/infocenter/sites/rit.edu.infocenter/files/images/2018-19%20calendar%20%2B%207-week%20calendar%205318.pdf"
 }

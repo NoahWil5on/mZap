@@ -4,9 +4,11 @@
             <div class="image-div">
                 <img src="assets/images/logo.png" alt="mZAP" />
             </div>
-            <p class="error">{{error}}</p>
-            <button [class.need-click]="error.length > 0" (click)="doTerms()">{{translate.text.consent.terms}}</button>
-            <button class="language-button" (click)="setLang()">{{translate.text.other.language}}</button>
+            <div style="position: relative;">
+                <p class="error">{{error}}</p>
+                <button [class.need-click]="error.length > 0" (click)="doTerms()">{{translate.text.consent.terms}}</button>
+                <button class="language-button" (click)="setLang()">{{translate.text.other.language}}</button>
+            </div>
         </div>
     </div>
     <div class="options">

@@ -15,9 +15,16 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 .error{
+                    margin: 0;
                     color: white;
                     font-style: italic;
                     text-align: center;
+                    position: absolute;
+                    top: 0;
+                    left: 50%;
+                    width: 100%;
+                    padding-bottom: 10px;
+                    transform: translate(-50%, -100%);
                 }                
                 .image-div{
                     position: relative;
@@ -26,7 +33,7 @@
                     border-radius: 100%;
                     padding: 5px 30px;
                     padding-top: 10px;
-                    margin-bottom: 50px;
+                    margin-bottom: 60px;
                     width: 150px;
                     height: 150px;
                     img{
@@ -58,7 +65,8 @@
             }
         }
         .options{
-            position: fixed;
+            padding-bottom: 10px;
+            position: absolute;
             bottom: 0;
             width: 100%;
             background-color: #3fbc05;

@@ -62,7 +62,7 @@
         <div *ngIf="mapPage.loginState == 'survey'" class="section">
             <div class="survey-div">
                 <button class="survey-button" (click)="doSurvey()">Survey</button>
-                <p>The first 200 users to fill out this survey will recieve a <span>$5 Amazon gift card</span></p>
+                <p>{{money}}</p>
             </div>
         </div>
     </div>

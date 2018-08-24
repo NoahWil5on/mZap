@@ -30,6 +30,11 @@ export class LoginComponent {
     name: string = "";
     password: string = "";
     error: string = "";
+
+    money: string = "The first 200 users to fill out this survey will recieve a $5 Amazon gift card";
+    moneyTitle: string = "Important! Please complete the survey.";
+    moneySubTitle: string = `Please click "survey". The first 200 users to fill out this survey will receive a $5 Amazon Gift Card`;
+
     language: any = "";
     create: any;
     bounce: boolean = true;
@@ -63,6 +68,18 @@ export class LoginComponent {
         }).catch(e => {
             return;
         });
+        var self = this;
+        firebase.database().ref(`money`).once('value').then(res => {
+            if(res.val()){
+                self.money = "The first 200 users to fill out this survey will recieve a $5 Amazon gift card";
+                self.moneyTitle = self.moneyTitle;
+                self.moneySubTitle = self.moneySubTitle;
+            }else{
+                self.money = "Filling out the survey provides us with vital information about the app.";
+                self.moneyTitle = self.moneyTitle;
+                self.moneySubTitle = self.moneySubTitle;
+            }
+        });
         this.mapPage.loginState = 'login';
         this.menuCtrl.enable(false);
     }
@@ -74,7 +91,9 @@ export class LoginComponent {
         //this.userInfo.lookForUpdate();
     }
     close(){
-        this.mapPage.loginShow = false;
+        if(this.mapPage.loginState == "login"){
+            this.mapPage.loginShow = false;
+        }
     }
     //once a user is signed in, update all necessary information and change page
     runUser(user) {
@@ -214,8 +233,8 @@ export class LoginComponent {
     }
     skipSurvey(){
         var surveyAlert = this.alertCtrl.create({
-            title: "Important! Please complete the survey.",
-            subTitle: 'Please click "survey". The first 200 users to fill out this survey will receive a $5 Amazon Gift Card',
+            title: this.moneyTitle,
+            subTitle: this.moneySubTitle,
             buttons: [{
                 text: 'Skip',
                 handler: () => {
@@ -237,9 +256,9 @@ export class LoginComponent {
         this.mapPage.loginShow = false;
         this.mapPage.tut = true;
         if(this.userInfo.isApp){
-            this.inAppBrowser.create('https://docs.google.com/document/d/1mQW-GGq9E0DQG-EoR-bEdC_wHyRDjq8Hm2SLRjATZYo/edit?usp=sharing', '_blank', 'location=yes');
+            this.inAppBrowser.create('https://goo.gl/xQECWy', '_blank', 'location=yes');
         }else{
-            window.open('https://docs.google.com/document/d/1mQW-GGq9E0DQG-EoR-bEdC_wHyRDjq8Hm2SLRjATZYo/edit?usp=sharing', '_system');
+            window.open('https://goo.gl/xQECWy', '_system');
         }
     }
     skip(){
