@@ -73,9 +73,15 @@ export class LoginComponent {
         firebase.database().ref(`money`).once('value').then(res => {
             if(res.val()){
                 self.isMoney = true;
+                self.money = this.translate.text.register.msurvey;
+                self.moneyTitle = this.translate.text.register.msurveyTitle;
+                self.moneySubTitle = this.translate.text.register.msurveySub;
                 return;
             }
             self.isMoney = false;
+            self.money = this.translate.text.register.survey;
+            self.moneyTitle = this.translate.text.register.surveyTitle;
+            self.moneySubTitle = this.translate.text.register.surveySub;
         });
         this.mapPage.loginState = 'login';
         this.menuCtrl.enable(false);
