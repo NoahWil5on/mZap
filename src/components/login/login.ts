@@ -34,6 +34,7 @@ export class LoginComponent {
     money: string = "The first 200 users to fill out this survey will recieve a $5 Amazon gift card";
     moneyTitle: string = "Important! Please complete the survey.";
     moneySubTitle: string = `Please click "survey". The first 200 users to fill out this survey will receive a $5 Amazon Gift Card`;
+    isMoney: boolean = true;
 
     language: any = "";
     create: any;
@@ -71,14 +72,10 @@ export class LoginComponent {
         var self = this;
         firebase.database().ref(`money`).once('value').then(res => {
             if(res.val()){
-                self.money = "The first 200 users to fill out this survey will recieve a $5 Amazon gift card";
-                self.moneyTitle = self.moneyTitle;
-                self.moneySubTitle = self.moneySubTitle;
-            }else{
-                self.money = "Filling out the survey provides us with vital information about the app.";
-                self.moneyTitle = self.moneyTitle;
-                self.moneySubTitle = self.moneySubTitle;
+                self.isMoney = true;
+                return;
             }
+            self.isMoney = false;
         });
         this.mapPage.loginState = 'login';
         this.menuCtrl.enable(false);
@@ -121,6 +118,7 @@ export class LoginComponent {
                                 }
                             );
                         }
+                        FCMPlugin.subscribeToTopic('mzap');
                         self.userInfo.pageState = 'map';
                         self.userInfo.loggedIn = true;
                         self.close();
@@ -204,6 +202,7 @@ export class LoginComponent {
     }
     //set language
     setLang() {
+        var self = this;
         //check which language is selected
         this.storage.get('mzap_language').then(res => {
             switch (res) {
@@ -219,6 +218,15 @@ export class LoginComponent {
                     this.storage.set('mzap_language', 'en');
                     this.translate.selectLanguage(this.translate.en);
                     break;
+            }
+            if(self.isMoney){
+                self.money = this.translate.text.register.msurvey;
+                self.moneyTitle = this.translate.text.register.msurveyTitle;
+                self.moneySubTitle = this.translate.text.register.msurveySub;
+            }else{
+                self.money = this.translate.text.register.survey;
+                self.moneyTitle = this.translate.text.register.surveyTitle;
+                self.moneySubTitle = this.translate.text.register.surveySub;
             }
         }, e => {
             this.storage.set('mzap_language', 'en');

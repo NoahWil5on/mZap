@@ -1,6 +1,6 @@
 <div id="fill-div" [class.full-dark]="!isOpen">
 </div>
-<ion-menu side="left" type="push" [content]="mycontent" (ionOpen)="openMenu()" (ionClose)="closeMenu()">
+<ion-menu side="left" type="push" swipeEnabled="false" [content]="mycontent" (ionOpen)="openMenu()" (ionClose)="closeMenu()">
     <button id="back-button-div" [class.button-show]="isOpen" (click)="closeMenu()">
         <img src="assets/arrow.png" alt="arrow" width="25px">
     </button>

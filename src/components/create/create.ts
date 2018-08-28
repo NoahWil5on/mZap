@@ -175,6 +175,7 @@ export class CreateComponent {
                                 console.log("token error " + e);
                             }
                         );
+                        FCMPlugin.subscribeToTopic('mzap');
                     }
                     firebase.database().ref('/userRating/').child(this.afAuth.auth.currentUser.uid).set({
                         likes: 0,

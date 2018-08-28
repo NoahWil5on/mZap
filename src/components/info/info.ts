@@ -144,7 +144,7 @@ export class InfoComponent {
                 time: Date.now(),
                 url: url,
                 postType: "positions",
-                shipNumber: undefined
+                shipNumber: null
             }
             var myDir = 'messages';
             if (this.mapPage.shipChat) {

@@ -129,6 +129,9 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
               console.log("notification error " + e);
             }
           );
+        //   FCMPlugin.onTokenRefresh().subscribe(token => {
+        //     FCMPlugin.registerToken(token);
+        //   });
     }
     runLogin(){
         this.storage.get('mzap_email').then(email => {
@@ -182,6 +185,7 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
                                 console.log("token error " + e);
                                 }
                             );
+                            FCMPlugin.subscribeToTopic('mzap');
                         }
                         self.userInfo.pageState = 'map';
                         self.userInfo.loggedIn = true;

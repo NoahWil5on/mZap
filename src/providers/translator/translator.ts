@@ -130,7 +130,14 @@ export class TranslatorProvider {
             creating: "Creating Account...",
             badKey: "Incorrect login key",
             sixChar: "Password must be at least 6 characters",
-            photoTitle: "Add a profile photo!"
+            photoTitle: "Add a profile photo!",
+            surveyMain: "survey",
+            msurvey: "A $2.00 gift card will be sent to your email after completion of this survey.",
+            msurveyTitle: "Please complete the following Survey!",
+            msurveySub: "Don’t miss the chance of completing the survey and receiving a gift card!",
+            survey: "Complete this survey to help us learn more about the community in Culebra and their usage of ¡mZAP!",
+            surveyTitle: "Please complete the following Survey!",
+            surveySub: "Completing this survey will help us better understand the community of Culebra and its use of technology.",
         },
         reports: {
             reports: "Reports",
@@ -438,7 +445,14 @@ export class TranslatorProvider {
             creating: "Creando Cuenta...",
             badKey: "clave de inicio de sesión incorrecta",
             sixChar: "La contraseña debe tener al menos 6 caracteres",
-            photoTitle: "¡Agrega una foto de perfil!"
+            photoTitle: "¡Agrega una foto de perfil!",
+            surveyMain: "encuesta",
+            msurvey: "Por llenar la siguiente encuesta, se le enviará a su correo electrónico una tarjeta de regalo de $2.00.",
+            msurveyTitle: "¡Por favor llene la siguiente encuesta!",
+            msurveySub: "¡No pierda la oportunidad de completar la encuesta y recibir una tarjeta de regalo!",
+            survey: "Complete esta encuesta para ayudarnos a conocer más sobre la comunidad en Culebra y el uso de ¡mZAP!",
+            surveyTitle: "¡Por favor llene la siguiente encuesta!",
+            surveySub: "Completar esta encuesta nos ayudará a entender mejor a la comunidad de Culebra y su uso de la tecnología.",
         },
         reports: {
             reports: "Reportes",

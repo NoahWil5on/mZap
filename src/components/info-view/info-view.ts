@@ -60,7 +60,7 @@ export class InfoViewComponent {
     
     //fetch all messages
     var myDir = 'messages';
-    if(this.mapPage.shipChat) myDir = 'shipMessages'
+    if(this.mapPage.shipChat) myDir = 'shipMessages';
     firebase.database().ref(`/${myDir}/`).child(this.id).on('value', snapshots => {
         self.messages = [];
         //for every message found, add to array
