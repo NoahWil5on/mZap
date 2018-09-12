@@ -45,7 +45,7 @@ export class TutorialComponent {
     this.types.push({
       name: this.translate.text.other.water,
       src: "assets/images/buttons/droplet.png",
-      description: "There is standing water that mosquitos may be using to breed."
+      description: this.translate.text.tutorial.water
     });
     // this.types.push({
     //   name: this.translate.text.other.road,

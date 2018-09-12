@@ -54,10 +54,14 @@ export class MyApp {
     
 constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private afAuth: AngularFireAuth, private menuCtrl: MenuController, private userInfo: UserInfoProvider, public translate: TranslatorProvider, private storage: Storage, private click: ClickProvider, public events: Events, public ngZone: NgZone, public inAppBrowser: InAppBrowser, public vibrate: Vibration/*public socialSharing: SocialSharingpublic push: Push private caller: CallNumber*/) {
         platform.ready().then(() => {
-
+            if (splashScreen) {
+                setTimeout(() => {
+                    splashScreen.hide();
+                }, 100);
+            }
 
             statusBar.styleDefault();
-            splashScreen.hide();
+            //splashScreen.hide();
             this.storage.get('mzap_language').then(res => {
                 // console.log("here");
                 // if(!res){

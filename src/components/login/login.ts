@@ -123,8 +123,8 @@ export class LoginComponent {
                                 console.log("token error " + e);
                                 }
                             );
+                            FCMPlugin.subscribeToTopic('mzap');
                         }
-                        FCMPlugin.subscribeToTopic('mzap');
                         self.userInfo.pageState = 'map';
                         self.userInfo.loggedIn = true;
                         self.close();

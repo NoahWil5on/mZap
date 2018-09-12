@@ -180,7 +180,8 @@ export class MapViewComponent {
         //checks if this is NOT the first time you're opening up the map
         if (this.userInfo.zoom != null) {
             //initializes map
-            let latLng = new google.maps.LatLng(this.userInfo.lat, this.userInfo.lng);
+            let latLng;
+            latLng = new google.maps.LatLng(this.userInfo.lat, this.userInfo.lng);
             let options = {
                 center: latLng,
                 zoom: this.userInfo.zoom,
@@ -189,7 +190,6 @@ export class MapViewComponent {
             };
             this.initMap(options, false);
 
-            //if the user allows you to see their position add a blinking dot to their location
             return;
         }
         //if this is the first time opening up maps then run this function
@@ -454,6 +454,10 @@ export class MapViewComponent {
 
         //check if the user will let you see their position
         this.geolocation.getCurrentPosition({ enableHighAccuracy: true }).then(function (position) {
+            if(!position || position == undefined){
+                self.doDefaultLocation(self);
+                return;
+            }
             self.userInfo.allowPosition = true;
             let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             let options = {
@@ -464,15 +468,18 @@ export class MapViewComponent {
             };
             self.initMap(options, true);
         }).catch(function () {
-            let latLng = new google.maps.LatLng(18.318407, -65.296514);
-            let options = {
-                center: latLng,
-                zoom: 12,
-                disableDefaultUI: true,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
-            self.initMap(options, false);
+            self.doDefaultLocation(self);
         });
+    }
+    doDefaultLocation(self){
+        let latLng = new google.maps.LatLng(18.318407, -65.296514);
+        let options = {
+            center: latLng,
+            zoom: 12,
+            disableDefaultUI: true,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        self.initMap(options, false);
     }
     //any time the "menu" button is clicked
     openMenu() {
@@ -792,7 +799,16 @@ export class MapViewComponent {
         return false;
     }
     initMap(options, bool) {
-        this.map = new google.maps.Map(this.mapElement.nativeElement, options);
+        if(typeof(google) != undefined){
+            this.map = new google.maps.Map(this.mapElement.nativeElement, options);
+        }else{
+            var myAlert = this.alertCtrl.create({
+                title: "major error, google maps can't load",
+                buttons: ["OK"]
+            });
+            myAlert.present();
+            return;
+        }
         //Use self in event listeners because it moves out of the map's scope
         var self = this;
         /*Waits for map to load and then adds all the points to the map*/
