@@ -72,7 +72,7 @@ export class FerryComponent {
                 var difference = Date.now() - snap.date;
 
                 var time = "";                
-                var minutes = Math.floor((1000 * 60 * 90 - difference) / (60 * 1000));
+                var minutes = Math.floor((1000 * 60 * 60 - difference) / (60 * 1000));
                 if (minutes === 0) {
                     minutes++;
                 }         
@@ -87,7 +87,7 @@ export class FerryComponent {
                 }else{
                     time = `${minutes} ${this.translate.text.shipReport.minutes}`;
                 }
-                var targetTime = 1000 * 60 * 90;
+                var targetTime = 1000 * 60 * 60;
 
                 if(snap.arrival){
                     targetTime = snap.arrival - snap.date;

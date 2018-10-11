@@ -255,6 +255,12 @@ export class TranslatorProvider {
             help6: "If a ferry is gray on the map this means that it was reported between 1.5 and 3 hours ago so information about the ferry may be inaccurate.",
             help7: "Ferry locations are always estimates based on information about when the ferry departed and where the ferry is headed.<br/><br/>The \"red\" line of a ferry's path represents distance the ferry has already traveled. The gray line represents distance left to be traveled.",
         },
+        resolveTutorial:{
+            help1: "mZAP's \"resolve\" feature is a tool that allows users to let everyone know that a report has been fixed. To use it, click on \"Fix It\".",
+            help2: "Here you can add a photo and a comment about what you did to fix the problem!",
+            help3: "After you post a resolve, other users will be able to see your resolution on the \"Fix It\" page.",
+            help4: "Posts that have been resolved will appear grayed out on the map."
+        },
         shipReport: {
             ready: "Are you sure you want to submit this report?",
             submitted: "Successfully submitted!",
@@ -336,7 +342,7 @@ export class TranslatorProvider {
             cancel: "Cancelar",
             error: "Leene todos los espacios",
             thanks: "¡Gracias!",
-            share: "¡Dile a tus amigos acerca mZAP!",
+            share: "¡Dile a tus amigos acerca ¡mZAP!",
             show: "Nombre de usuario visible",
             noShow: "El nombre de usuario NO está visible",
             errorType: "*Añadir un tipo al informe*",
@@ -377,7 +383,7 @@ export class TranslatorProvider {
             submitting: "Enviando Contenido...",
             submitted: "¡Envio Exitoso!",
             ok: "OK",
-            error: "Leene todos los espacios",
+            error: "Llene todos los espacios",
             marking: "Marcando como completado...",
             marked: "¡Marcado como completado!",
             editPost: "Editar publicación",
@@ -390,7 +396,7 @@ export class TranslatorProvider {
         },
         login: {
             email: "Correo Electrónico",
-            noLogin: "No se puede firmar usuario en este momento",
+            noLogin: "No se puede confirmar usuario en este momento",
             password: "Contraseña",
             signUp: "CREAR UNA CUENTA",
             forgot: "OLVIDÓ LA CUENTA",
@@ -411,7 +417,7 @@ export class TranslatorProvider {
             trashTitle: "Desperdicio/Basura",
             trashDescription: "Reporte una isntancia de basura en esta ubicacióm",
             cndTitle: "Gatos/Perros",
-            cndDescription: "Reporte una cita de animales callejeros",
+            cndDescription: "Reporte una cita de animales realengos",
             ok: "OK",
             fix: "Arreglar",
             cancel: "Cancelar",
@@ -427,7 +433,7 @@ export class TranslatorProvider {
             status: "Estado: ",
             map: "Ver en el Mapa",
             posts: "mensajes",
-            resolves: "resolvers",
+            resolves: "resolver",
         },
         register: {
             create: "Crear una cuenta",
@@ -562,6 +568,12 @@ export class TranslatorProvider {
             help6: "Si el ícono de la embarcación está gris, significa que el reporte se generó entre 1.5 a 3 horas. Entonces la información sobre ese reporte podría no estar actualizada.",
             help7: "La localización del ferry/lancha son siempre estimados en base a la información reportada sobre de donde salió la embarcación y cual es su destino.<br/><br/>La línea \"roja\" representa la trayectoria que la embarcación ha recorrido. La línea \"gris\" representa la distancia que aún resta por terminar",
         },
+        resolveTutorial:{
+            help1: "mZAP posee una herramienta que permite a los usuarios informar a todos que un reporte se ha solucionado. Para poder utilizar esta herramienta presione \"Arreglar\".",
+            help2: "En esta area puede agregar una foto y un comentario sobre lo que hizo para solucionar este reporte.",
+            help3: "Después de publicar una resolución, otros usuarios podrán ver su resolución en la página de \"arreglar\".",
+            help4: "Los reportes que se hayan resuelto aparecerán color gris en el mapa."
+        },
         shipReport: {
             ready: "¿Estás seguro/a que quieres someter este reporte?",
             submitted: "¡Exitosamente sometido!",
@@ -575,7 +587,7 @@ export class TranslatorProvider {
             hours: "1 hora? y ? minuto(s)",
             minutes: "minuto(s)",
             invalid: "Los lugares de llegada y salida no pueden ser iguales",
-            invalidTitle: "Error: Entrada no Válida"
+            invalidTitle: "Error: Entrada inválida"
         },
         shipInformation: {
             depTime: "Tiempo de Salida:",
@@ -605,7 +617,7 @@ export class TranslatorProvider {
             error: "Ha Ocurrido un Error",
             problem: "Ups, No sabemos bien cual fue el problema, por favor trata nueva vez en unos momentos.",
             make: "Reportar como inapropiado",
-            confirm: "¿Al Reportar este “post” se estará enviando una notificación a los desarrolladores del app y se podría eliminar este post. Estás seguro que quieres hacer esto?",
+            confirm: "¿Al Reportar este “reporte” se estará enviando una notificación a los desarrolladores del app y se podría eliminar este post. Estás seguro que quieres hacer esto?",
             cancel: "Cancelar"
         },
         consent: {

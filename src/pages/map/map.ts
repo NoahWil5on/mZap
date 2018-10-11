@@ -31,6 +31,7 @@ export class MapPage {
     shipChat: boolean = false;
     editShip: boolean = false;
     shipTut: boolean = false;
+    resolveTut: boolean = false;
     tut: boolean = false;
 
     mapView: any;
@@ -70,7 +71,14 @@ export class MapPage {
                     firebase.database().ref(`users/${this.afAuth.auth.currentUser.uid}/shipTut`).set(true);
                 }
             })
-
+        });
+        this.events.subscribe('position:open', () => {
+            firebase.database().ref(`users/${this.afAuth.auth.currentUser.uid}`).once('value', snap => {
+                if (snap.val().resolveTut === undefined || !snap.val().resolveTut) {
+                    this.resolveTut = true;
+                    firebase.database().ref(`users/${this.afAuth.auth.currentUser.uid}/resolveTut`).set(true);
+                }
+            })
         });
         this.events.subscribe('login:open', () => {
             this.loginShow = true;

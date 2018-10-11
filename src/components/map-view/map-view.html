@@ -107,7 +107,8 @@
     <div class="nav-div nav-div-right">
         <button (click)="toggleMap()">
             <div class="nav-button green">
-                <img class="cog" src="assets/images/buttons/toggle_02.png" alt="nav" />
+                <img class="toggle" *ngIf="!hybrid" src="assets/images/buttons/toggle_sattelite.png" alt="nav" />
+                <img class="toggle" *ngIf="hybrid" src="assets/images/buttons/toggle_roads.png" alt="nav" />
             </div>
         </button>
         <button (click)="setCenter()">

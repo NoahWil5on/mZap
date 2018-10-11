@@ -272,4 +272,7 @@ export class InfoComponent {
         }
         alert.present();
     }
+    doResolveTutorial(){
+        this.mapPage.resolveTut = true;
+    }
 }

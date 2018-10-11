@@ -368,7 +368,7 @@ function doTime(target, time) {
     var hours = 1000 * 60 * 60;
     target *= hours;
     var dayMod = (24 * hours);
-    var maxMinutes = 30;
+    var maxMinutes = 15;
     var minMinutes = 30;
     var timeMax = (target + (1000 * 60 * maxMinutes)) % dayMod;
     var timeMin = (target - (1000 * 60 * minMinutes)) % dayMod;

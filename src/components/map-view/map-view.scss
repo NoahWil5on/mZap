@@ -380,6 +380,18 @@
             margin: 0 auto;
             height: 30px;
         }
+        .toggle{
+            pointer-events:none; 
+            top: 3.1px;
+            left: .1px;
+            position: relative;
+            display: block;
+            text-align: center;
+            margin: 0 auto;
+            height: 44px;
+            width: 44px;
+            border-radius: 100%;
+        }
         // .filter{
         //     pointer-events:none; 
         //     top: 14px;

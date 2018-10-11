@@ -20,6 +20,7 @@ import { AddResolveComponent } from '../../components/add-resolve/add-resolve';
 import { FerryComponent } from '../../components/ferry/ferry';
 import { EditShipComponent } from '../../components/edit-ship/edit-ship';
 import { ShipTutorialComponent } from '../../components/ship-tutorial/ship-tutorial';
+import { ResolveTutorialComponent } from '../../components/resolve-tutorial/resolve-tutorial';
 import { ReportComponent } from '../../components/report/report';
 import { ShareComponent } from '../../components/share/share';
 import { FerryMenuComponent } from '../../components/ferry-menu/ferry-menu';
@@ -61,7 +62,8 @@ import { FerryRatingComponent } from '../../components/ferry-rating/ferry-rating
     ReportComponent,
     ShareComponent,
     FerryMenuComponent,
-    FerryRatingComponent],
+    FerryRatingComponent,
+    ResolveTutorialComponent],
   imports: [
     IonicPageModule.forChild(MapPage)
   ],

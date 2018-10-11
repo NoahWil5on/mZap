@@ -130,11 +130,19 @@ export class MapViewComponent {
                         latLng = new google.maps.LatLng(start.lat, start.lng);
                 }
                 var now = Date.now();
-                var arrive = now + 1000 * 60 * 60 * 1.5;
+                var arrive = this.getArrive(1.5);
 
                 if((data.start == 'vq' || data.start == 'cul') &&
                 (data.end == 'vq' || data.end == 'cul')){
-                    arrive = now + 1000 * 60 * 60 * .75;
+                    arrive = this.getArrive(.75)
+                }
+                else if((data.start == 'vq' || data.start == 'cei') &&
+                (data.end == 'vq' || data.end == 'cei')){
+                    arrive = this.getArrive(.75)
+                }
+                else if((data.start == 'cul' || data.start == 'cei') &&
+                (data.end == 'cul' || data.end == 'cei')){
+                    arrive = this.getArrive(1)
                 }
 
                 var shipData = {
@@ -172,6 +180,10 @@ export class MapViewComponent {
                 this.makeShipMarkers(shipData);
             });
         });
+    }
+    getArrive(hours){
+        var now = Date.now();
+        return now + 1000 * 60 * 60 * hours;
     }
     ngAfterViewInit() {    
         if(this.navParams.get('id')){
@@ -239,6 +251,18 @@ export class MapViewComponent {
             case 'ship4':
                 shipName = "Isleño"
                 break;
+            case 'ship5':
+                shipName = "Schoodic Explorer";
+                break;
+            case 'ship6':
+                shipName = "Big Cat";
+                break;
+            case 'ship7':
+                shipName = "Mr. Vean";
+                break;
+            case 'ship8':
+                shipName = "Mr. Cade";
+                break;
             default: 
                 break;
         }
@@ -259,12 +283,24 @@ export class MapViewComponent {
             case 'ship4':
                 color = 'yellow';
                 break;
+            case 'ship5':
+                color = 'purple';
+                break;
+            case 'ship6':
+                color = 'pink';
+                break;
+            case 'ship7':
+                color = 'aqua';
+                break;
+            case 'ship8':
+                color = 'black';
+                break; 
             default:
                 break;
         }
         var difference = Date.now() - data.date;
-        if(difference > 1000 * 180 * 60){return}
-        else if(difference > 1000 * 90 * 60){color = "gray"};
+        if(difference > 1000 * 90 * 60){return}
+        else if(difference > 1000 * 50 * 60){color = "gray"};
 
         var image = {
             url: `assets/images/icons/ship_${color}.png`,
@@ -726,6 +762,7 @@ export class MapViewComponent {
         /*Allows an info window to pop up when a point is clicked*/
         google.maps.event.addListener(marker, 'click', function (e) {
             self.doOpen(data, marker);
+            self.events.publish('position:open', {});
         });
         google.maps.event.addListener(this.map, 'zoom_changed', function (e) {
             var zoom = self.map.getZoom();
@@ -838,7 +875,7 @@ export class MapViewComponent {
 
                     }
                 });
-                var ships = ['ship1', 'ship2', 'ship3', 'ship4'];
+                var ships = ['ship1', 'ship2', 'ship3', 'ship4', 'ship5', 'ship6', 'ship7', 'ship8'];
                 ships.forEach(ship => {
                     firebase.database().ref(`ships/${ship}`).limitToLast(2).once('value').then(snapshot => {
                         snapshot.forEach(item => {

@@ -64,9 +64,9 @@ export class ConsentPage {
         this.consent = true;
         this.error = "";
         if(this.userInfo.isApp){
-            this.inAppBrowser.create('https://mzap.org/consent.pdf', '_blank', 'location=yes');
+            this.inAppBrowser.create('https://goo.gl/Mu8eBP', '_blank', 'location=yes');
         }else{
-            window.open('https://mzap.org/consent.pdf', '_system');
+            window.open('https://goo.gl/Mu8eBP', '_system');
         }
     }
 }
