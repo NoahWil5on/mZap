@@ -11,8 +11,11 @@
                     {{userInfo.activeData.description}}
                 </p>
             </div>
-            <div class="div-image" [style.background-image]="'url(' + userInfo.activeData.url + ')'">
+            <!-- <div class="div-image" [style.background-image]="'url(' + userInfo.activeData.url + ')'">
                 <img [src]="userInfo.activeData.url" class="invisable" #thisImage (click)="presentImage(thisImage)" />
+            </div> -->
+            <div class="div-image">
+                <img [src]="userInfo.activeData.url" class="report-image" #thisImage (click)="presentImage(thisImage)" />
             </div>
         </div>
         <ion-grid class="button-grid" [class.grid-hidden]="!dropDown">
