@@ -25,6 +25,7 @@ import { ReportComponent } from '../../components/report/report';
 import { ShareComponent } from '../../components/share/share';
 import { FerryMenuComponent } from '../../components/ferry-menu/ferry-menu';
 import { FerryRatingComponent } from '../../components/ferry-rating/ferry-rating';
+import { ThanksComponent } from '../../components/thanks/thanks';
 // import{ ComponentsModule } from '../../components/components.module';
 
 // @NgModule({
@@ -63,7 +64,8 @@ import { FerryRatingComponent } from '../../components/ferry-rating/ferry-rating
     ShareComponent,
     FerryMenuComponent,
     FerryRatingComponent,
-    ResolveTutorialComponent],
+    ResolveTutorialComponent,
+    ThanksComponent],
   imports: [
     IonicPageModule.forChild(MapPage)
   ],

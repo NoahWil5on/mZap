@@ -79,17 +79,17 @@
         <ion-grid class="hide-symbols" [class.show-symbols]="share">
             <ion-row>
                 <ion-col text-center>
-                    <a href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fmzap.org%2F">
+                    <a href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fmzap.org%2F" (click)="shareClick('twitter')">
                         <ion-icon name="logo-twitter" style="color: #00aced; font-size: 24pt"></ion-icon>
                     </a>
                 </ion-col>
                 <ion-col text-center>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=mzap.org">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=mzap.org" (click)="shareClick('facebook')">
                         <ion-icon name="logo-facebook" style="color: #3b5998; font-size: 24pt"></ion-icon>
                     </a>
                 </ion-col>
                 <ion-col text-center>
-                    <a href="whatsapp://send?text=https%3A%2F%2Fmzap.org%2F">
+                    <a href="whatsapp://send?text=https%3A%2F%2Fmzap.org%2F" (click)="shareClick('whatsapp')">
                         <ion-icon name="logo-whatsapp" style="color: #34af23; font-size: 24pt"></ion-icon>
                     </a>
                 </ion-col>

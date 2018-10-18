@@ -365,6 +365,18 @@ constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
             this.events.publish('login:open');
         });
     }
+    shareClick(media){
+        firebase.database().ref('smClicks').child(media).once('value').then((snapshot) => {
+            var myValue;
+            if(!snapshot.val() || snapshot.val() == undefined){
+                myValue = 0;
+            }else{
+                myValue = Number(snapshot.val());
+            }
+            myValue++;
+            firebase.database().ref('smClicks').child(media).set(myValue);
+        });
+    }
     // shareTwitter() {
     //     this.socialSharing.shareViaTwitter(null, null, "mzap.org");
     // }

@@ -219,6 +219,7 @@ export class TranslatorProvider {
         resolve: {
             noPost: "No one has submitted a resolve yet. Gather up your friends and resolve this post!",
             add: "Add a Resolve!",
+            add2: "Add Another Resolve!",
             note: "Note(optional)",
             noDesc: "*No Description*",
             good: "Does Everthing Look Good?",
@@ -307,7 +308,7 @@ export class TranslatorProvider {
         },
         other: {
             cnd: "Cats / Dogs",
-            complete: "Complete",
+            complete: "Resolved",
             todo: "To Do",
             building: "Abandoned Building",
             pest: "Pests",
@@ -606,7 +607,8 @@ export class TranslatorProvider {
         },
         resolve: {
             noPost: "Nadie ha presentado una resolución todavía. Recoge a tus amigos y resuelve este post!",
-            add: "¡Añada una resolución!",
+            add: "¡Añada una Resolución!",
+            add2: "¡Añadir Otro Resolver!",
             note: "Nota (opcional)",
             noDesc: "*Sin descripción*",
             good: "¿Todo se ve bien?",
@@ -628,7 +630,7 @@ export class TranslatorProvider {
         },
         other: {
             cnd: "Gatos / Perros",
-            complete: "Completar",
+            complete: "Resuelto",
             todo: "Incompleto",
             building: "Edificación Abandonada",
             pest: "Plagas",

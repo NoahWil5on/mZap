@@ -36,7 +36,7 @@ export class AddResolveComponent {
   imageData: any;
   submitting: boolean = false;
 
-  constructor(public userInfo: UserInfoProvider, public imageViewerCtrl: ImageViewerController, public images: ImagesProvider, public ngZone: NgZone, public info: InfoComponent, public events: Events, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public translate: TranslatorProvider, public navCtrl: NavController, public afAuth: AngularFireAuth) {
+  constructor(public userInfo: UserInfoProvider, public imageViewerCtrl: ImageViewerController, public images: ImagesProvider, public ngZone: NgZone, public info: InfoComponent, public events: Events, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public translate: TranslatorProvider, public navCtrl: NavController, public afAuth: AngularFireAuth, public mapPage: MapPage) {
 
   }
   ngAfterViewInit() {
@@ -118,7 +118,7 @@ export class AddResolveComponent {
     });
   }
   dismiss(data) {
-    this.navCtrl.setRoot(MapPage);
+    this.mapPage.thanksShow = true;
   }
   submit() {
     if(this.submitting) return;
@@ -169,7 +169,8 @@ export class AddResolveComponent {
         });
 
         loader.dismiss();
-        successAlert.present();
+        //successAlert.present();
+        self.dismiss(false);
       }).catch(e => {
         loader.dismiss();
         alert("Error: " + e.message);

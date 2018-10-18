@@ -25,6 +25,7 @@ export class MapPage {
     reportShow: boolean = false;
     loginShow: boolean = false;
     shareShow: boolean = false;
+    thanksShow: boolean = false;
     ferryRatingShow: boolean = false;
     ferryMenuShow: boolean = false;
 
