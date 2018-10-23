@@ -3,6 +3,7 @@
   <ion-slides pager>
     <ion-slide>
         <div class="center">
+            <p *ngIf="!info.dataSet" class="photo-title">{{translate.text.resolve.addImage}}</p>
             <ion-grid no-padding class="show" [class.hidden]="info.dataSet">
                 <ion-row [class.hidden]="userInfo.isApp">
                     <ion-col col-6 text-center>

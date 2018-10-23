@@ -224,6 +224,7 @@ export class TranslatorProvider {
             noDesc: "*No Description*",
             good: "Does Everthing Look Good?",
             noImage: "No Image Added",
+            addImage: "Add an image of what you've fixed!"
         },
         forgot: {
             forgot: "Forgot Password",
@@ -613,6 +614,7 @@ export class TranslatorProvider {
             noDesc: "*Sin descripción*",
             good: "¿Todo se ve bien?",
             noImage: "No se ha añadido imagen",
+            addImage: "¡Añade una imagen de lo que has arreglado!"
         },
         report: {
             sent: "Reporte envíado",

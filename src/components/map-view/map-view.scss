@@ -154,18 +154,18 @@
                             border-radius: 100%;
                             // background-position: center center;
                             // background-size: cover;
-                            -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
-                            -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
-                            box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+                            // -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+                            // -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
+                            // box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
                             background-color: black;
-                            z-index: 10;
+                            // z-index: 10;
                             .report-image{
-                                z-index: 0;
+                                // z-index: 0;
+                                // width: 100%;
+                                object-fit: cover;
                                 width: 100%;
-                                position: absolute;
-                                top: 50%;
-                                left: 50%;
-                                transform: translate(-50%, -50%);
+                                height: 100%;
+                                // transform: translate(-50%, -50%);
                             }
                         }
                     //}
