@@ -24,16 +24,6 @@
                 font-weight: bold;
             }
         }
-        .div-image{
-            background-color: black;
-            .report-image{
-                width: 100%;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
-        }
         @media screen and (min-device-width: 360px) {                    
             .h2-type{ font-size: 18pt !important;}
             .p-description{ font-size: 9.5pt !important;}                    
@@ -162,13 +152,20 @@
                             height: 70px;
                             overflow: hidden;
                             border-radius: 100%;
-                            background-position: center center;
-                            background-size: cover;
+                            // background-position: center center;
+                            // background-size: cover;
                             -webkit-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
                             -moz-box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
                             box-shadow: 0px 0px 3px 1px rgba(0,0,0,0.75);
-                            .invisable{
-                                opacity: 0;
+                            background-color: black;
+                            z-index: 10;
+                            .report-image{
+                                z-index: 0;
+                                width: 100%;
+                                position: absolute;
+                                top: 50%;
+                                left: 50%;
+                                transform: translate(-50%, -50%);
                             }
                         }
                     //}

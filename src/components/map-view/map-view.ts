@@ -223,7 +223,7 @@ export class MapViewComponent {
                 name = "Culebra";
                 break;
             case 'cei':
-                name = "Ceibra";
+                name = "Ceiba";
                 break;
             default:
                 break;

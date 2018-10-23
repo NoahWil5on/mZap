@@ -1,6 +1,6 @@
 //vanilla ionic imports
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { Slides, Events, AlertController, LoadingController, NavController } from 'ionic-angular';
+import { Slides, Events, /*AlertController,*/ LoadingController, NavController } from 'ionic-angular';
 
 //component imports
 import { InfoComponent } from '../info/info';
@@ -36,7 +36,7 @@ export class AddResolveComponent {
   imageData: any;
   submitting: boolean = false;
 
-  constructor(public userInfo: UserInfoProvider, public imageViewerCtrl: ImageViewerController, public images: ImagesProvider, public ngZone: NgZone, public info: InfoComponent, public events: Events, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public translate: TranslatorProvider, public navCtrl: NavController, public afAuth: AngularFireAuth, public mapPage: MapPage) {
+  constructor(public userInfo: UserInfoProvider, public imageViewerCtrl: ImageViewerController, public images: ImagesProvider, public ngZone: NgZone, public info: InfoComponent, public events: Events, public loadingCtrl: LoadingController, /*public alertCtrl: AlertController,*/ public translate: TranslatorProvider, public navCtrl: NavController, public afAuth: AngularFireAuth, public mapPage: MapPage) {
 
   }
   ngAfterViewInit() {
@@ -127,15 +127,15 @@ export class AddResolveComponent {
     let loader = this.loadingCtrl.create({
       content: this.translate.text.infoWindow.submitting
     })
-    let successAlert = this.alertCtrl.create({
-      title: this.translate.text.infoWindow.submitted,
-      buttons: [{
-        text: this.translate.text.infoWindow.ok,
-        handler: () => {
-          this.dismiss(false);
-        }
-      }]
-    });
+    // let successAlert = this.alertCtrl.create({
+    //   title: this.translate.text.infoWindow.submitted,
+    //   buttons: [{
+    //     text: this.translate.text.infoWindow.ok,
+    //     handler: () => {
+    //       this.dismiss(false);
+    //     }
+    //   }]
+    // });
 
     loader.present();
 

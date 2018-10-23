@@ -219,7 +219,7 @@ export class TranslatorProvider {
         resolve: {
             noPost: "No one has submitted a resolve yet. Gather up your friends and resolve this post!",
             add: "Add a Resolve!",
-            add2: "Add Another Resolve!",
+            add2: "Add Another Resolution?",
             note: "Note(optional)",
             noDesc: "*No Description*",
             good: "Does Everthing Look Good?",
@@ -608,7 +608,7 @@ export class TranslatorProvider {
         resolve: {
             noPost: "Nadie ha presentado una resolución todavía. Recoge a tus amigos y resuelve este post!",
             add: "¡Añada una Resolución!",
-            add2: "¡Añadir Otro Resolver!",
+            add2: "¿Quieres añadir otra resolución?",
             note: "Nota (opcional)",
             noDesc: "*Sin descripción*",
             good: "¿Todo se ve bien?",
