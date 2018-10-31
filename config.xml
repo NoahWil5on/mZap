@@ -55,7 +55,7 @@
             <string>mZAP would like to access your camera. You can use your camera to capture photos of environmental risks you identify while you use the app.</string>
         </edit-config>
         <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
-            <string>mZAP would like to access your photo libray. You can use your photo library to submit photos of environmental risks you identify while you use the app.</string>
+            <string>mZAP would like to access your photo library. You can use your photo library to submit photos of environmental risks you identify while you use the app.</string>
         </edit-config>
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
