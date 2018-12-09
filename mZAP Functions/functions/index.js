@@ -133,41 +133,43 @@ exports.commentTrigger = functions.database.ref('/messages/{postId}/{messageId}'
         }
     })
 });
-exports.resolveTrigger = functions.database.ref('/resolves/{postId}/{resolveId}').onWrite((change, context) => {
+exports.resolveTrigger = functions.database.ref('/resolves/{postId}/{resolveId}').onCreate((change, context) => {
     var data = {};
 
-    if (change.after.val().info) {
-        data.message = change.after.val().info;
+    if (change.val().info != undefined) {
+        data.message = change.val().info;
     }
     else {
         data.message = "";
     }
-    if (change.after.val().name) {
-        data.name = change.after.val().name;
+    if (change.val().name) {
+        data.name = change.val().name;
     }
-    if (change.after.val().id) {
-        data.id = change.after.val().id;
+    if (change.val().id) {
+        data.id = change.val().id;
     }
     if (!data.id || data.id == "" || data.id == undefined || data.id == null) return
     return ref.child(`/subscriptions/${context.params.postId}`).once('value').then(snapshot => {
-        var foundUser = false;
-        if (!snapshot.val()) {
-            ref.child(`/subscriptions/${context.params.postId}`).push(data.id);
-            return;
-        }
-        snapshot.forEach(function (element) {
-            var id = element.val();
-            if (id == data.id) {
-                foundUser = true;
+        return ref.child(`/resolves/${context.params.postId}/${context.params.resolveId}`).update({date: Date.now()}).then(() => {
+            var foundUser = false;
+            if (!snapshot.val()) {
+                ref.child(`/subscriptions/${context.params.postId}`).push(data.id);
                 return;
             }
-            checkNotify(id, 'notifyResolves', data, context.params.postId);
-        });
-        if (!foundUser) {
-            ref.child(`/subscriptions/${context.params.postId}`).push(data.id);
+            snapshot.forEach(function (element) {
+                var id = element.val();
+                if (id == data.id) {
+                    foundUser = true;
+                    return;
+                }
+                checkNotify(id, 'notifyResolves', data, context.params.postId);
+            });
+            if (!foundUser) {
+                ref.child(`/subscriptions/${context.params.postId}`).push(data.id);
+                return;
+            }
             return;
-        }
-        return;
+        });        
     })
 });
 //in this single case you don't need to check if you are already subscribed to the post because it has just been
